@@ -1,318 +1,319 @@
 const PageServices = [
   {
-    name: 'electrician',
-    postName: 'Electrician',
+    name: 'Electricians',
+    postName: 'Electrical',
     services: [
-      'Wiring', 
-      'Fault Finding', 
-      'Repairs'
+      'Wiring installation and repairs',
+      'Lighting installations',
+      'Troubleshooting electrical issues',
+      'General electrical maintenance'
     ],
     simpleDescription: 'Item which trips the electrics identified, issues with appliances, or few sockets.',
     complexDescription: 'Multiple appliances affected with several issues.'
   },
   {
-    name: 'plumber',
-    postName: 'Plumber',
+    name: 'Plumbers',
+    postName: 'Plumbering',
     services: [
-      'Leak Fixing', 
-      'Pipe Replacement', 
-      'Drain Cleaning'
+      'Pipe installations',
+      'Leak repairs',
+      'Faucet replacements',
+      'Bathroom and kitchen plumbing issues'
     ],
-    simpleDescription: 'Issues with a single leaking pipe or blocked drain.',
+     simpleDescription: 'Issues with a single leaking pipe or blocked drain.',
     complexDescription: 'Multiple leaks or entire plumbing system requiring replacement.'
   },
   {
-    name: 'carpenter',
-    postName: 'Carpenter',
+    name: 'Carpenters & Woodworkers',
+    postName: 'Carpentering and Woodwork',
     services: [
-      'Shelving', 
-      'Cabinet Making', 
-      'Furniture Repair'
+      'Installing shelves',
+      'Cabinetry installation',
+      'Furniture repairs',
+      'Custom woodwork installations'
     ],
-    simpleDescription: 'Basic furniture assembly or shelf installation.',
+       simpleDescription: 'Basic furniture assembly or shelf installation.',
     complexDescription: 'Custom woodwork or large-scale carpentry projects.'
   },
   {
-    name: 'painter',
-    postName: 'Painter',
+    name: 'Painters and Decorators',
+    postName: 'Painting and Decoration',
     services: [
-      'Interior Painting', 
-      'Exterior Painting', 
-      'Wallpapering'
+      'Interior and exterior painting',
+      'Wallpapering',
+      'Wall repairs and touch-ups'
     ],
     simpleDescription: 'Touch-ups or small painting jobs.',
     complexDescription: 'Full-house painting or exterior jobs with prep work.'
   },
   {
-    name: 'hvac',
-    postName: 'HVAC Technician',
+    name: 'HVAC Technicians',
+    postName: 'HVAC Maintenance',
     services: [
-      'Air Conditioning Repair', 
-      'Heating Systems', 
-      'Ventilation'
+      'Air conditioning unit maintenance and repair',
+      'Heating system repair',
+      'Ventilation system maintenance'
     ],
-    simpleDescription: 'Single HVAC unit repair or routine maintenance.',
+     simpleDescription: 'Single HVAC unit repair or routine maintenance.',
     complexDescription: 'Multiple systems requiring repair or replacement.'
   },
   {
-    name: 'roofer',
-    postName: 'Roofer',
+    name: 'Roofers',
+    postName: 'Roofing',
     services: [
-      'Roof Repair', 
-      'Gutter Cleaning', 
-      'Roof Installation'
+      'Roof repairs and maintenance',
+      'Waterproofing services',
+      'Gutter cleaning or replacements'
     ],
-    simpleDescription: 'Small leaks or gutter blockages.',
+     simpleDescription: 'Small leaks or gutter blockages.',
     complexDescription: 'Full roof replacement or extensive repairs.'
   },
   {
-    name: 'tiler',
-    postName: 'Tiler',
+    name: 'Tilers',
+    postName: 'Tiling',
     services: [
-      'Floor Tiling', 
-      'Wall Tiling', 
-      'Bathroom Tiling'
+      'Floor tile installation',
+      'Wall tile installation',
+      'Specialized bathroom and kitchen tiling'
     ],
-    simpleDescription: 'Small tile repairs or single-room tiling jobs.',
+     simpleDescription: 'Small tile repairs or single-room tiling jobs.',
     complexDescription: 'Large areas or custom tiling designs.'
   },
   {
-    name: 'handyman',
+    name: 'Handyman Services',
     postName: 'Handyman',
     services: [
-      'Furniture Assembly', 
-      'Repairs', 
-      'Miscellaneous Tasks'
+      'General repair tasks',
+      'Minor installations',
+      'Door repairs',
+      'Furniture assembly'
     ],
-    simpleDescription: 'Small home repairs or installations.',
+     simpleDescription: 'Small home repairs or installations.',
     complexDescription: 'Larger projects needing multiple skill sets.'
   },
   {
-    name: 'pestControl',
+    name: 'Pest Control',
     postName: 'Pest Control',
     services: [
-      'Pest Extermination', 
-      'Inspections', 
-      'Fumigation'
+      'Pest inspections',
+      'Fumigation services',
+      'Extermination of pests'
     ],
-    simpleDescription: 'Minor pest problems requiring treatment.',
+     simpleDescription: 'Minor pest problems requiring treatment.',
     complexDescription: 'Widespread infestations requiring comprehensive services.'
   },
   {
-    name: 'windowCleaner',
-    postName: 'Window Cleaner',
+    name: 'Window Cleaners',
+    postName: 'Window Cleaning',
     services: [
-      'Interior Cleaning', 
-      'Exterior Cleaning', 
-      'High Rise Window Cleaning'
+      'Interior and exterior window cleaning',
+      'High-rise window cleaning for multi-story homes'
     ],
-    simpleDescription: 'Cleaning of interior windows.',
+     simpleDescription: 'Cleaning of interior windows.',
     complexDescription: 'Cleaning of large exterior areas or high-rise windows.'
   },
   {
-    name: 'landscaper',
-    postName: 'Landscaper',
+    name: 'Landscapers and Gardeners',
+    postName: 'Landscaping and Gardening',
     services: [
-      'Lawn Mowing', 
-      'Tree Trimming', 
-      'Garden Design'
+      'Lawn mowing',
+      'Planting and landscaping',
+      'Tree trimming',
+      'Garden design'
     ],
-    simpleDescription: 'Basic lawn care or trimming.',
+       simpleDescription: 'Basic lawn care or trimming.',
     complexDescription: 'Full garden redesign or large tree trimming.'
   },
   {
-    name: 'poolTechnician',
-    postName: 'Pool Technician',
+    name: 'Pool Maintenance Technicians',
+    postName: 'Pool Maintenance',
     services: [
-      'Pool Cleaning', 
-      'Water Quality Checks', 
-      'Equipment Repairs'
+      'Pool cleaning and maintenance',
+      'Water quality checks',
+      'Pool equipment repairs'
     ],
-    simpleDescription: 'Routine pool cleaning and chemical checks.',
+     simpleDescription: 'Routine pool cleaning and chemical checks.',
     complexDescription: 'Full equipment overhauls or repairs.'
   },
   {
-    name: 'fenceInstaller',
-    postName: 'Fence Installer',
+    name: 'Fence and Gate Installer',
+    postName: 'Fencing and Gate Installation',
     services: [
-      'Fence Installation', 
-      'Fence Repair', 
-      'Gate Installation'
+      'Fence repairs',
+      'Gate installations',
+      'Security and aesthetic maintenance'
     ],
-    simpleDescription: 'Small fence repairs or replacements.',
+     simpleDescription: 'Small fence repairs or replacements.',
     complexDescription: 'New fence installations or large-scale repairs.'
   },
   {
-    name: 'outdoorLighting',
-    postName: 'Outdoor Lighting',
+    name: 'Outdoor Lighting Installers',
+    postName: 'Outdoor Lighting Installation',
     services: [
-      'Outdoor Light Setup', 
-      'Security Light Installation', 
-      'Garden Lighting'
+      'Setting up outdoor lights',
+      'Fixing security lights',
+      'Garden lighting installation'
     ],
-    simpleDescription: 'Simple outdoor lighting setups.',
+     simpleDescription: 'Simple outdoor lighting setups.',
     complexDescription: 'Comprehensive outdoor lighting design and installation.'
   },
   {
-    name: 'interiorDesigner',
-    postName: 'Interior Designer',
+    name: 'Interior Designers',
+    postName: 'Interior Design',
     services: [
-      'Design Consultations', 
-      'Furniture Arrangements', 
-      'Décor Recommendations'
+      'In-home consultations for design',
+      'Furniture arrangement services',
+      'Décor recommendations'
     ],
-    simpleDescription: 'Basic interior styling and furniture rearrangements.',
+     simpleDescription: 'Basic interior styling and furniture rearrangements.',
     complexDescription: 'Full home redesign or custom décor solutions.'
   },
   {
-    name: 'curtainInstaller',
-    postName: 'Curtain Installer',
+    name: 'Curtain and Blind Installers',
+    postName: 'Curtain and Blind Installation',
     services: [
-      'Curtain Installation', 
-      'Blind Installation', 
-      'Window Treatment Customization'
+      'Curtain installations',
+      'Blind repairs or replacements',
+      'Window treatment customization'
     ],
-    simpleDescription: 'Basic curtain and blind setups.',
+      simpleDescription: 'Basic curtain and blind setups.',
     complexDescription: 'Custom window treatment designs and installations.'
   },
   {
-    name: 'upholsterer',
-    postName: 'Upholsterer',
+    name: 'Furniture Upholstery Services',
+    postName: 'Furniture Upholstery',
     services: [
-      'Sofa Upholstery', 
-      'Chair Upholstery', 
-      'Furniture Repair'
+      'Reupholstering sofas and chairs',
+      'On-site upholstery services',
+      'Pick-up and delivery for larger items'
     ],
-    simpleDescription: 'Basic reupholstering or furniture repair.',
+      simpleDescription: 'Basic reupholstering or furniture repair.',
     complexDescription: 'Large or custom reupholstery projects.'
   },
   {
-    name: 'plasterer',
-    postName: 'Plasterer',
+    name: 'Plasterers and POP Installers',
+    postName: 'Plastering and POP Installation',
     services: [
-      'Ceiling Installation', 
-      'Wall Repair', 
-      'Plaster Moulding'
+      'Ceiling installation and repair',
+      'Wall repairs',
+      'Decorative mouldings using Plaster of Paris (POP)'
     ],
     simpleDescription: 'Small wall repairs or ceiling touch-ups.',
     complexDescription: 'Large-scale plastering or custom moulding work.'
   },
   {
-    name: 'applianceTechnician',
-    postName: 'Appliance Technician',
+    name: 'Home Appliance Technicians',
+    postName: 'Home Appliance Maintenance',
     services: [
-      'Refrigerator Repairs', 
-      'Washing Machine Repair', 
-      'Dishwasher Maintenance'
+      'Repairs for refrigerators and washing machines',
+      'Oven and dishwasher maintenance',
+      'Servicing other household appliances'
     ],
     simpleDescription: 'Repair of a single appliance or unit.',
     complexDescription: 'Multiple appliance repairs or replacements.'
   },
   {
-    name: 'generatorTechnician',
-    postName: 'Generator Technician',
+    name: 'Generator Technicians',
+    postName: 'Generator Maintenance',
     services: [
-      'Generator Installation', 
-      'Generator Repair', 
-      'Servicing Backup Systems'
+      'Installation of home generators',
+      'Repairs and servicing of backup power systems'
     ],
-    simpleDescription: 'Minor generator repairs or servicing.',
+      simpleDescription: 'Minor generator repairs or servicing.',
     complexDescription: 'Full generator installation or major repairs.'
   },
   {
-    name: 'solarTechnician',
-    postName: 'Solar Technician',
+    name: 'Solar Panel Installers and Technicians',
+    postName: 'Solar Installation',
     services: [
-      'Panel Installation', 
-      'Inverter Repair', 
-      'Solar System Maintenance'
+      'Solar panel installation',
+      'Maintenance of inverters and panels',
+      'Renewable energy solutions'
     ],
-    simpleDescription: 'Basic solar panel installation.',
+     simpleDescription: 'Basic solar panel installation.',
     complexDescription: 'Full solar system design and installation.'
   },
   {
-    name: 'homeEntertainment',
-    postName: 'Home Entertainment',
+    name: 'Home Entertainment System Installers',
+    postName: 'Home Entertainment Installation',
     services: [
-      'Home Theatre Setup', 
-      'Sound System Installation', 
-      'TV and Cable Setup'
+      'Home theatre system setup',
+      'Sound system installations',
+      'Cable and TV installations'
     ],
-    simpleDescription: 'Basic home entertainment system installation.',
+     simpleDescription: 'Basic home entertainment system installation.',
     complexDescription: 'Custom home theatre setups with full wiring.'
   },
   {
-    name: 'hairStylist',
-    postName: 'Hair Stylist',
+    name: 'Hair Stylists and Barbers',
+    postName: 'Hair Styling and Barbering',
     services: [
-      'Hairstyling', 
-      'Haircuts', 
-      'Braiding'
+      'On-demand hairstyling services',
+      'Braiding and haircut services',
+      'Convenient in-home barber services'
     ],
-    simpleDescription: 'Basic hairstyling or trimming.',
+     simpleDescription: 'Basic hairstyling or trimming.',
     complexDescription: 'Specialty haircuts or complex styling.'
   },
   {
-    name: 'makeupArtist',
-    postName: 'Makeup Artist',
+    name: 'Makeup Artists',
+    postName: 'Makeup',
     services: [
-      'Event Makeup', 
-      'Photoshoot Makeup', 
-      'Everyday Makeup'
+      'In-home makeup for events',
+      'Makeup for photoshoots',
+      'Everyday or special occasion makeup services'
     ],
-    simpleDescription: 'Simple makeup for events or photoshoots.',
+     simpleDescription: 'Simple makeup for events or photoshoots.',
     complexDescription: 'Full makeup application for special events.'
   },
   {
-    name: 'massageTherapist',
-    postName: 'Massage Therapist',
+    name: 'Massage Therapists and Spa Services',
+    postName: 'Massage and Spa',
     services: [
-      'At-Home Massage', 
-      'Facials', 
-      'Spa Treatments'
+      'At-home massage services',
+      'Facials and skincare treatments',
+      'Relaxation and convenience-focused spa services'
     ],
-    simpleDescription: 'Simple massage or facial treatment.',
+     simpleDescription: 'Simple massage or facial treatment.',
     complexDescription: 'Full-body massage or extended spa services.'
   },
   {
-    name: 'nailTechnician',
-    postName: 'Nail Technician',
+    name: 'Nail Technicians',
+    postName: 'Nail Services',
     services: [
-      'Manicures', 
-      'Pedicures', 
-      'Nail Art'
+      'Manicures and pedicures',
+      'On-site nail care services for convenience'
     ],
-    simpleDescription: 'Basic manicures or pedicures.',
+     simpleDescription: 'Basic manicures or pedicures.',
     complexDescription: 'Custom nail art or full-service manicures/pedicures.'
   },
   {
-    name: 'houseCleaner',
-    postName: 'House Cleaner',
+    name: 'House Cleaners and Deep Clean Specialists',
+    postName: 'House Cleaning',
     services: [
-      'Regular Cleaning', 
-      'Deep Cleaning', 
-      'Post-Renovation Cleaning'
+      'General home cleaning',
+      'Deep cleaning and post-renovation cleaning',
+      'Spring-cleaning services'
     ],
-    simpleDescription: 'Regular cleaning or tidying.',
+     simpleDescription: 'Regular cleaning or tidying.',
     complexDescription: 'Full deep cleaning or specialized cleaning services.'
   },
   {
-    name: 'carpetCleaner',
-    postName: 'Carpet Cleaner',
+    name: 'Carpet and Upholstery Cleaners',
+    postName: 'Carpet and Upholstery Cleaning',
     services: [
-      'Carpet Cleaning', 
-      'Upholstery Cleaning'
+      'Specialized cleaning for carpets and rugs',
+      'Upholstery cleaning using professional equipment'
     ],
-    simpleDescription: 'Basic carpet or rug cleaning.',
+     simpleDescription: 'Basic carpet or rug cleaning.',
     complexDescription: 'Heavy-duty cleaning or specialized services for upholstery.'
   },
   {
-    name: 'laundry',
-    postName: 'Laundry Services',
+    name: 'Laundry and Dry-Cleaning Services',
+    postName: 'Laundry and Dry-Cleaning',
     services: [
-      'Pick-Up and Delivery', 
-      'Ironing', 
-      'Folding'
+      'Laundry pick-up and delivery',
+      'Ironing or folding included with service'
     ],
     simpleDescription: 'Basic laundry service or ironing.',
     complexDescription: 'Laundry with special folding or delivery services.'
@@ -324,7 +325,7 @@ const PageServices = [
       'Cleaning services for moving in or out',
       'Tailored for new or leaving homeowners'
     ],
-    simpleDescription: 'Cleaning services designed for moving in or out of a home.',
+     simpleDescription: 'Cleaning services designed for moving in or out of a home.',
     complexDescription: 'Professional cleaning services that cater specifically to individuals moving into or out of a property. These services ensure that the home is spotless and ready for the next occupant, whether you’re moving in or leaving behind a clean space.'
   },
   {
@@ -356,7 +357,7 @@ const PageServices = [
       'Fire and smoke detector installation',
       'Regular maintenance for safety compliance'
     ],
-    simpleDescription: 'Installation and maintenance of fire and smoke alarms for safety.',
+     simpleDescription: 'Installation and maintenance of fire and smoke alarms for safety.',
     complexDescription: 'Installations of high-quality fire and smoke detectors to ensure your property is protected against fire hazards. We also offer ongoing maintenance services to keep your detectors in top condition and comply with safety regulations.'
   },
   {
@@ -366,7 +367,7 @@ const PageServices = [
       'Bathing and grooming for pets',
       'Nail trimming and fur cutting'
     ],
-    simpleDescription: 'Grooming services for pets including bathing and trimming.',
+     simpleDescription: 'Grooming services for pets including bathing and trimming.',
     complexDescription: 'Our professional pet groomers provide a full range of services, including bathing, fur cutting, nail trimming, and overall grooming to keep your pet looking and feeling their best.'
   },
   {
@@ -379,7 +380,6 @@ const PageServices = [
     simpleDescription: 'Pet sitting and dog walking services for busy pet owners.',
     complexDescription: 'If you’re unable to care for your pet, our pet sitters provide a safe and comfortable environment for them.'
   }
-  
 ];
 
 export default PageServices;

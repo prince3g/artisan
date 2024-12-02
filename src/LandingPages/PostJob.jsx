@@ -126,9 +126,7 @@ const PostJob = () => {
                 {/* Render the textarea when either "Simple" or "Complex" is selected */}
                 {activeIndex !== null && (
                   <div className="Gland-Quest-data">
-                    <label htmlFor="descriptionTextarea">
-                      Provide more details about your {activeIndex === 0 ? 'Simple' : 'Complex'} issue
-                    </label>
+                   <label>Add a description to your job</label>
                     <textarea
                       id="descriptionTextarea"
                       className="description-textarea"
