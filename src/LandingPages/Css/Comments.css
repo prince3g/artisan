@@ -9,7 +9,18 @@
     grid-gap: 50px;
     gap: 50px;
 }
-
+@media screen and (max-width:1000px){
+  .comment-sec{
+    display: block !important;
+  }
+  .rating-secc{
+    position: relative !important;
+    top: 0px !important;
+    width: 100% !important;
+    border-radius: 10px !important;
+    margin-bottom: 50px !important;
+  }
+}
 .rating-secc{
     position: sticky;
     width: 300px;
