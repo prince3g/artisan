@@ -73,6 +73,7 @@ const ArtisanProfile = () => {
 
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, [messages, hasSentFirstMessage]);
+  
 
   return (
     <div>
