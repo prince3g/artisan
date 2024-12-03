@@ -358,7 +358,7 @@ function Home() {
   </div>
 
   </div>
-  <div className='Cosii-mam-foot'><a href='#'>How SimserviceHub Works</a></div>
+  <div className='Cosii-mam-foot'><Link to="how-sim-works">How SimserviceHub Works</Link></div>
   </div>
 </div>
 

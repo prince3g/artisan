@@ -11,6 +11,8 @@ import SiteNav from './assets/SiteNav';
 import Home from './LandingPages/Home';
 import SearchResult from './LandingPages/SearchResult';
 import ArtisanProfile from './LandingPages/ArtisanProfile';
+import PostJob from './LandingPages/PostJob';
+import HowSimsWorks from './LandingPages/HowSimsWorks';
 // import AboutUs from './LandingPages/AboutUs';
 // import TermsOfUse from './LandingPages/TermsOfUse';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
@@ -34,6 +36,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search-results" element={<SearchResult />} />
           <Route path="/artisan-profile" element={<ArtisanProfile />} />
+          <Route path="/post-job" element={<PostJob />} />
+          <Route path="/how-sim-works" element={<HowSimsWorks />} />
           {/* <Route path="/about-us" element={<AboutUs />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

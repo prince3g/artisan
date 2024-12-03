@@ -10,6 +10,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import CallIcon from '@mui/icons-material/Call';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CloseIcon from '@mui/icons-material/Close';
 
 import ChatInput from './ChatInput';
 
@@ -26,6 +27,9 @@ const ArtisanProfile = () => {
   const [welcomeMessageTime, setWelcomeMessageTime] = useState(''); // Time of the welcome message
 
   const [activeSection, setActiveSection] = useState("chat");
+
+  const [isToggled, setIsToggled] = useState(false);
+
 
   const handleToggleView = () => {
     setIsExpanded(!isExpanded);
@@ -75,8 +79,21 @@ const ArtisanProfile = () => {
   }, [messages, hasSentFirstMessage]);
   
 
+
+
+
+  const handleSectionClick = (section) => {
+    setActiveSection(section);
+    setIsToggled(true);
+  };
+
+  const handleCloseClick = () => {
+    setActiveSection(null);
+    setIsToggled(false);
+  };
+
   return (
-    <div>
+    <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
       <div className="navigating-ttarvs">
         <div className="large-container">
           <p>
@@ -96,18 +113,22 @@ const ArtisanProfile = () => {
         
 
                   <div className="ggaa-navsi">
-                  <button onClick={() => setActiveSection("chat")}>
+                  <button onClick={() => handleSectionClick("chat")}>
                     <ChatIcon /> <span className="toolTipsa">Chat</span>
                   </button>
-                  <button onClick={() => setActiveSection("call")}>
+                  <button onClick={() => handleSectionClick("call")}>
                     <CallIcon /> <span className="toolTipsa">Call</span>
                   </button>
+
                   <button>
                       <Favorite /> <span className="toolTipsa">Favourite</span>
                     </button>
-                  <button onClick={() => setActiveSection("review")}>
+
+                  <button onClick={() => handleSectionClick("review")}>
                     <Star /> <span className="toolTipsa">Review</span>
                   </button>
+                  
+
                 </div>
 
 
@@ -175,6 +196,11 @@ const ArtisanProfile = () => {
             </div>
 
             <div className="Chattt-sec">
+              
+            <div className="Chattt-Topp-3">
+                    <button className="active-togl-atti" onClick={handleCloseClick}><CloseIcon /></button>
+                </div>
+                
             {activeSection === "chat" && (
               <div className="Chattt-Topp">
                 <div className="Chattt-Topp-1">
@@ -182,13 +208,13 @@ const ArtisanProfile = () => {
                 </div>
                 <div className="Chattt-Topp-2">
                   <span>
-                    Online <i className="online"></i>
+                     Online<i className="online"></i>
                   </span>
                   <span>
-                    Chats <b>{messages.length}</b>
+                  <div>Chats</div> <b>{messages.length}</b>
                   </span>
                   <button onClick={handleNewChat}>
-                    <ChatIcon /> New chat
+                    <ChatIcon /> <div>New chat</div>
                   </button>
                 </div>
               </div>
@@ -314,7 +340,30 @@ const ArtisanProfile = () => {
 
 
 {activeSection === "review" && (
-        <div id="review-MM-sec">review-MM-sec</div>
+        <div id="review-MM-sec" className='review-kka'>
+          <div className='review-kka-box'>
+          <h2>Drop a review for ❤️  Prince</h2>
+
+          <div className='review-kka-input'>
+            <label>Rate Prince</label>
+            <select>
+            <option>Choose a star</option>
+              <option>1 Star</option>
+              <option>2 Stars</option>
+              <option>3 Stars</option>
+              <option>4 Stars</option>
+              <option>5 Stars</option>
+            </select>
+            </div>
+            <div className='review-kka-input'>
+              <label>Drop a review</label>
+            <textarea placeholder='Type your review...'></textarea>
+          </div>
+          <div className='review-kka-input'>
+           <button>Send</button>
+          </div>
+        </div>
+        </div>
       )}
           </div>
         </div>
@@ -325,7 +374,7 @@ const ArtisanProfile = () => {
       <div className='large-container'>
        <Comments />
        <div className='Drop-Revvo'>
-        <button>Drop a Review</button>
+        <button onClick={() => handleSectionClick("review")}>Drop a Review</button>
       </div>
       </div>
     </div>
