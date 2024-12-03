@@ -13,6 +13,7 @@ import SearchResult from './LandingPages/SearchResult';
 import ArtisanProfile from './LandingPages/ArtisanProfile';
 import PostJob from './LandingPages/PostJob';
 import HowSimsWorks from './LandingPages/HowSimsWorks';
+import LeaveReview from './LandingPages/LeaveReview';
 // import AboutUs from './LandingPages/AboutUs';
 // import TermsOfUse from './LandingPages/TermsOfUse';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/artisan-profile" element={<ArtisanProfile />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/how-sim-works" element={<HowSimsWorks />} />
+          <Route path="/leave-review" element={<LeaveReview />} />
           {/* <Route path="/about-us" element={<AboutUs />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

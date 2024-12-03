@@ -81,7 +81,7 @@ const SearchResult = () => {
             <h6><span><Star /><Star /><Star /><Star /><Star /></span> <span>Reviews (150)</span></h6>
             <div className='Rev-FFaos-Btns'>
               <button><Favorite />Add to Favourite</button>
-              <button><Share />Share</button>
+            
             </div>
           </div>
         </div>

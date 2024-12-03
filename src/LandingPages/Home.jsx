@@ -370,7 +370,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>How Was Your Experience? Leave a Review</h3>
     <p>Help us build a trustworthy community by sharing your experience with our tradespeople. Your feedback is invaluable.  </p>
-    <a href='#'>Leave a Review</a>
+    <Link to="/leave-review" >Leave a Review</Link>
   </div>
   </div>
 
@@ -379,7 +379,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Request a Quote</h3>
     <p>Tell us your requirements, and we’ll connect you with up to three verified tradesperson.  </p>
-    <a href='#'>Request a Quote</a>
+    <Link to="/Request-quote" >Request a Quote</Link>
   </div>
   </div>
 
@@ -389,7 +389,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Are You a Tradesperson? Join SimserviceHub Today!</h3>
     <p>Over 100,000 homeowners rely on SimserviceHub to find skilled, verified tradesperson. Sign up and grow your business today!   </p>
-    <a href='#'>Tradesperson Sign-Up</a>
+    <Link to="/tradesperson-sign-up" >Tradesperson Sign-Up</Link>
   </div>
   </div>
 

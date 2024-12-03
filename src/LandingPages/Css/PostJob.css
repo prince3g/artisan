@@ -75,6 +75,7 @@
     font-weight: 600;
     margin-bottom: 5px;
 }
+.Gland-Quest-data input,
 .Gland-Quest-data textarea,
 .Gland-Quest-data select{
     position: relative;
@@ -86,6 +87,7 @@
     transition: all 0.3s ease-in-out;
     margin-top: 10px;
   }
+  .Gland-Quest-data input:focus,
   .Gland-Quest-data textarea:focus,
   .Gland-Quest-data select:focus {
     border-color: #B1BD3B;
@@ -204,3 +206,174 @@
   .Gland-Cnt-Btn button:last-child:hover{
     background-color: #96a131;
   }
+
+
+  .suggestions-list {
+    margin-top: 5px;
+    padding: 0 !important;
+    list-style-type: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .suggestions-list li {
+    padding: 10px !important;
+    cursor: pointer;
+    margin: 0px !important;
+    border:none !important;
+    border-radius: 0px !important;
+  }
+  
+  .suggestions-list li:hover {
+    background-color: #f0f0f0 !important;
+  }
+  
+  .error-message{
+    color: #f51111;
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .glahs-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+
+
+  /* Opticas */
+
+  .Opticas{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: #eeeded;
+    overflow: hidden;
+    margin-top: 10px;
+    border-radius: 5px;
+    gap: 5px;
+    grid-gap: 5px;
+  }
+
+  .Opticas button{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    background-color: transparent;
+    border-radius: inherit;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
+  .Opticas button:hover{
+    background-color: #e4e2e2;
+  }
+
+ button.active-dect-btn{
+    background-color: #B1BD3B !important;
+    color: #fff !important;
+    border-color: #B1BD3B !important;
+  }
+
+  .omac-p{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+  .omac-p:first-child{
+    margin-top: 10px;
+  }
+  .Gland-Quest-data h6{
+    font-size: 13px;
+    font-weight: normal;
+    color: #505050;
+  }
+  .omac-p h6{
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    color: #505050;
+  }
+
+  .omac-p h4{
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .omac-p-btns{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    grid-gap: 5px;
+    margin-top: 15px;
+  }
+
+  .omac-p-btns button{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    border:1px solid #cccbcb;
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  @media screen and (max-width:400px){
+    .omac-p-btns button{
+      font-size: 9px !important;
+      height: 20px !important;
+    }
+  }
+
+  .omac-p-btns button:hover{
+    background-color: #e4e2e2;
+  }
+
+  .not-applicable-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .styled-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+    user-select: none;
+  }
+  
+  .styled-checkbox {
+    width: 13px !important;
+    height: 13px !important;
+    font-size: 10px !important;
+    cursor: pointer;
+    accent-color: #007bff; 
+    margin: 0px !important;
+    margin-right: 5px !important;
+  }
+  
+  
+  .not-applicable-section h5 {
+    font-size: 13px !important;
+    font-weight: normal !important;
+    color: #505050 !important;
+  }
+  
