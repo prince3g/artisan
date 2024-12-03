@@ -353,9 +353,8 @@
   
   .styled-checkbox-label {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     cursor: pointer;
-    white-space: nowrap;
     width: 100%;
     user-select: none;
   }
@@ -368,6 +367,7 @@
     accent-color: #007bff; 
     margin: 0px !important;
     margin-right: 5px !important;
+    margin-top: 4px !important;
   }
   
   
@@ -377,3 +377,39 @@
     color: #505050 !important;
   }
   
+
+
+
+  /* word-counter */
+
+  .word-counter{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #505050;
+  }
+
+  .ghha-foot{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+  }
+
+  .ghha-foot p{
+    font-size: 14px;
+    color: #505050;
+  }
+
+  .ghha-foot p a{
+    color: #B1BD3B;
+    font-weight: 500;
+  }
+  .ghha-foot p a:hover{
+    text-decoration: underline;
+  }
