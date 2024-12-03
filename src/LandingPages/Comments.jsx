@@ -10,7 +10,7 @@ const Comments = () => {
     <div className='rating-secc-box'>
     <p><Star />Artisan Rating</p>
     <div className="cart-pro-rating-sec">
-            <a href="#" className="t-cart-pro-rating">
+            <div className="t-cart-pro-rating">
                 <h2>
                     3.7 <span>out of 5</span>
                 </h2>
@@ -22,7 +22,7 @@ const Comments = () => {
                 <Star />
                 </h5>
                 <h6>61 Reviews</h6>
-            </a>
+            </div>
             <div className="s-cart-pro-rating">
                 <div className="rating-barSec Onprogress">
                     <span>5 Star</span>

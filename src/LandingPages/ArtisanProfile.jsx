@@ -374,7 +374,10 @@ const ArtisanProfile = () => {
       <div className='large-container'>
        <Comments />
        <div className='Drop-Revvo'>
-        <button onClick={() => handleSectionClick("review")}>Drop a Review</button>
+       <button onClick={() => {
+        handleSectionClick("review");
+        window.scrollTo(0, 0);  // Scrolls to the top of the page
+      }}>Drop a Review</button>
       </div>
       </div>
     </div>
