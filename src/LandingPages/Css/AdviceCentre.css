@@ -92,6 +92,10 @@
     grid-gap: 50px;
 }
 
+.About-Page .IIai-Main{
+    grid-template-columns: 1fr auto;
+}
+
 @media screen and (max-width:1000px){
     .IIai-Main{
         display: block !important;
@@ -212,6 +216,23 @@
     font-size: 15px;
     font-weight: 600;
     margin-top: 10px;
+}
+.Ooo-Body ol,
+.Ooo-Body ul{
+    margin: 20px 0px;
+    margin-left: 20px;
+}
+.Ooo-Body ul li{
+    list-style: disc !important;
+    margin-top: 7px;
+    color: #505050;
+}
+.Ooo-Body ol li{
+    list-style: decimal !important;
+    margin-top: 7px;
+}
+.Ooo-Body ol li p{
+    color: #505050;
 }
 
 .Ooo-Body p{
