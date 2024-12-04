@@ -15,7 +15,11 @@ import PostJob from './LandingPages/PostJob';
 import HowSimsWorks from './LandingPages/HowSimsWorks';
 import LeaveReview from './LandingPages/LeaveReview';
 import RequestQuote from './LandingPages/RequestQuote';
-// import AboutUs from './LandingPages/AboutUs';
+import SavedTrades from './LandingPages/SavedTrades';
+import AdviceCentre from './LandingPages/AdviceCentre';
+import AdviceNigeria from './LandingPages/AdviceNigeria';
+import Benefit from './LandingPages/Benefit';
+import AboutUs from './LandingPages/AboutUs';
 // import TermsOfUse from './LandingPages/TermsOfUse';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 // import Cookies from './LandingPages/Cookies';
@@ -42,7 +46,12 @@ function App() {
           <Route path="/how-sim-works" element={<HowSimsWorks />} />
           <Route path="/leave-review" element={<LeaveReview />} />
           <Route path="/request-quote" element={<RequestQuote />} />
-          {/* <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/saved-trades" element={<SavedTrades />} />
+          <Route path="/advice-centre" element={<AdviceCentre />} />
+          <Route path="/advice-nigeria" element={<AdviceNigeria />} />
+          <Route path="/benefits" element={<Benefit />} />
+          <Route path="/about" element={<AboutUs />} />
+          {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />

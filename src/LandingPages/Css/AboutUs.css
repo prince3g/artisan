@@ -1,0 +1,60 @@
+/* About-Page */
+
+.About-Page{
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 600px;
+}
+
+.About-Page .AA-page-header{
+    padding: 40px 0px;
+}
+
+.Adverri-Bozxi{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: #394c13;
+    color: #fff;
+    border-radius: 8px;
+    text-align: center;
+}
+@media screen and (max-width:1000px){
+    .About-Page .IIai-1{
+        margin-bottom: 0px !important;
+        margin-top: 40px !important;
+    }
+}
+.Adverri-Bozxi h3{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width:500px){
+    .Adverri-Bozxi h3{
+        font-size: 23px !important;
+    }
+}
+
+.Adverri-Bozxi a{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 25px;
+    border:1px solid #F8FB88;
+    color: #F8FB88;
+    padding: 13px 0px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+}
+
+.Adverri-Bozxi a:hover{
+    background-color: rgba(255,255,255,0.2);
+}

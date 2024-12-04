@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './Css/PostJob.css';
+import './Css/Main.css';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Assuming this contains your trade data
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const LeaveReview = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -97,6 +99,11 @@ const LeaveReview = () => {
 
   return (
     <div className="Gradnded-page">
+                    <div className='navigating-ttarvs'>
+        <div className='site-container'>
+            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Leave a Review </p>
+          </div>
+          </div>
       <div className="site-container">
         <div className="Gradnded-main">
           <div className="Gradnded-Box">
