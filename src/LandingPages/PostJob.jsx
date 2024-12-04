@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Import the PageServices data
 import './Css/Main.css';
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Css/PostJob.css';
+// import './Css/PostJob.css';
 
 const PostJob = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -81,16 +79,13 @@ const PostJob = () => {
       category: selectedService.name,
       title: selectedService.name,
       location: "N0 10 station Road Ph, R/s",
-      customer: "8545252a-56a4-426f-ab8b-81c33df99046",
+      customer: "fd91931a-d092-46e8-9a6c-4ef7da63fb99",
       budget: 50.00,
       type: activeIndex === 0 ? 'Simple' : 'Complex',
       description: textareaContent,
     };
 
 
-    console.log("jobData")
-    console.log(jobData)
-    console.log("jobData")
 
     try {
       const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/`, {
