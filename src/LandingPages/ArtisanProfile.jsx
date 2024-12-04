@@ -19,6 +19,8 @@ import ChatBanner from './Img/nochat-banner.svg';
 import Comments from './Comments';
 
 const ArtisanProfile = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]); // To store messages
   const [showTyping, setShowTyping] = useState(false); // Control "Typing..." message

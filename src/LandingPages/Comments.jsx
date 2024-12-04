@@ -4,6 +4,9 @@ import Star from '@mui/icons-material/Star';
 
 
 const Comments = () => {
+
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   return (
    <div className='comment-sec'>
     <div className='rating-secc'>

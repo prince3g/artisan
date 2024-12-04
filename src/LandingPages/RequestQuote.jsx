@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices';
 
 const RequestQuote = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [jobDescription, setJobDescription] = useState('');
   const [wordCount, setWordCount] = useState(0);
   const [query, setQuery] = useState('');

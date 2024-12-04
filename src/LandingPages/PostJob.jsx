@@ -1,56 +1,115 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
-import PageServices from '../data/PageServices'; // Import the PageServices data
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Css/PostJob.css';
 
 const PostJob = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [activeService, setActiveService] = useState(null);
-  const [expandedService, setExpandedService] = useState(null); // Track expanded service
-  const [activeIndex, setActiveIndex] = useState(null); // Track active sub-service item
+  const [expandedService, setExpandedService] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
   const [textareaContent, setTextareaContent] = useState('');
-  const navigate = useNavigate();  // Initialize the navigate function
+  const [pagination, setPagination] = useState({ count: 0, next: null, previous: null });
+  const navigate = useNavigate();
+
+  const fetchServices = async (url = `${djangoHostname}/api/jobs/auth/service-categories/`) => {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setServices((prev) => [...prev, ...data.results]);
+        setPagination({ count: data.count, next: data.next, previous: data.previous });
+      } else {
+        console.error('Failed to fetch services:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const handleLoadMore = () => {
+    if (pagination.next) {
+      fetchServices(pagination.next);
+    }
+  };
 
   const handleServiceChange = (event) => {
-    const selectedName = event.target.value;
-    const service = PageServices.find((s) => s.name === selectedName);
+    const selectedId = parseInt(event.target.value, 10);
+    const service = services.find((s) => s.id === selectedId);
     setSelectedService(service);
-    setActiveService(null); // Reset active service when a new category is selected
-    setExpandedService(null); // Reset expanded service
-    setActiveIndex(null); // Reset active sub-service item
+    setActiveService(null);
+    setExpandedService(null);
+    setActiveIndex(null);
   };
 
   const handleServiceClick = (index) => {
     setActiveService(index);
-    // Toggle the expanded service when clicked
     setExpandedService(expandedService === index ? null : index);
   };
 
-  // Helper function to convert plural to singular
-  const toSingular = (str) => {
-    if (str.endsWith("s")) {
-      return str.slice(0, -1); // Remove the "s" at the end
-    }
-    return str;
-  };
+  const toSingular = (str) => (str.endsWith('s') ? str.slice(0, -1) : str);
 
-  // Handle click on sub-service items
   const handleClick = (index) => {
-    setActiveIndex(index); // Update active index
+    setActiveIndex(index);
   };
 
   const handleChange = (event) => {
-    setTextareaContent(event.target.value); // Update state when content changes
+    setTextareaContent(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(textareaContent); // Use the content of the textarea
-    // You can also add form submission logic here, like sending data to an API
+
+    if (!selectedService || activeIndex === null || !textareaContent.trim()) {
+      alert('Please complete all the required fields.');
+      return;
+    }
+
+    const jobData = {
+      service_details: selectedService.unique_id,
+      category: selectedService.name,
+      title: selectedService.name,
+      location: "N0 10 station Road Ph, R/s",
+      customer: "8545252a-56a4-426f-ab8b-81c33df99046",
+      budget: 50.00,
+      type: activeIndex === 0 ? 'Simple' : 'Complex',
+      description: textareaContent,
+    };
+
+
+    console.log("jobData")
+    console.log(jobData)
+    console.log("jobData")
+
+    try {
+      const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Job posted successfully:', result);
+        alert('Your job has been posted successfully!');
+        navigate('/success');
+      } else {
+        console.error('Failed to post job:', response.statusText);
+        alert('Failed to post the job. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error while posting the job:', error);
+      alert('An error occurred while posting the job.');
+    }
   };
 
   const handleBackClick = () => {
-    navigate(-1);  // Go back to the previous page
+    navigate(-1);
   };
 
   return (
@@ -71,26 +130,36 @@ const PostJob = () => {
                     className="service-dropdown"
                     onChange={handleServiceChange}
                   >
-                    <option value="" disabled selected>Select a category</option>
-                    {PageServices.map((service, index) => (
-                      <option key={index} value={service.name}>
+                    <option value="" disabled selected>
+                      Select a category
+                    </option>
+                    {services.map((service) => (
+                      <option key={service.id} value={service.id}>
                         {service.postName}
                       </option>
                     ))}
                   </select>
+                  {pagination.next && (
+                    <button className="load-more-btn" onClick={handleLoadMore}>
+                      Load More
+                    </button>
+                  )}
                 </div>
 
                 {selectedService && (
                   <div className="service-details Gland-Quest-data">
                     <label>
-                      What do you need{' '}{/[aeiouAEIOU]/.test(toSingular(selectedService.name)) ? 'an ' : 'a '}{' '}
+                      What do you need{' '}
+                      {/[aeiouAEIOU]/.test(toSingular(selectedService.name)) ? 'an ' : 'a '}
                       {toSingular(selectedService.name).replace(/&/g, 'an')} for?
                     </label>
                     <ul className="service-list">
                       {selectedService.services.map((service, index) => (
                         <li
                           key={index}
-                          className={`service-item ${activeService === index ? 'active-gland-list-Li' : ''}`}
+                          className={`service-item ${
+                            activeService === index ? 'active-gland-list-Li' : ''
+                          }`}
                           onClick={() => handleServiceClick(index)}
                         >
                           {service}
@@ -100,21 +169,24 @@ const PostJob = () => {
                   </div>
                 )}
 
-                {/* New div added here */}
                 {expandedService !== null && (
                   <div className="Gland-Quest-data gahys-li">
                     <label>Which best describes your issues?</label>
                     <ul>
                       <li
-                        className={`sub-service-item ${activeIndex === 0 ? 'active-ooo-lip' : ''}`}
-                        onClick={() => handleClick(0)} // Click handler for the 'Simple' item
+                        className={`sub-service-item ${
+                          activeIndex === 0 ? 'active-ooo-lip' : ''
+                        }`}
+                        onClick={() => handleClick(0)}
                       >
                         <p>Simple</p>
                         <span>E.g. {selectedService.simpleDescription}</span>
                       </li>
                       <li
-                        className={`sub-service-item ${activeIndex === 1 ? 'active-ooo-lip' : ''}`}
-                        onClick={() => handleClick(1)} // Click handler for the 'Complex' item
+                        className={`sub-service-item ${
+                          activeIndex === 1 ? 'active-ooo-lip' : ''
+                        }`}
+                        onClick={() => handleClick(1)}
                       >
                         <p>Complex</p>
                         <span>E.g. {selectedService.complexDescription}</span>
@@ -123,10 +195,9 @@ const PostJob = () => {
                   </div>
                 )}
 
-                {/* Render the textarea when either "Simple" or "Complex" is selected */}
                 {activeIndex !== null && (
                   <div className="Gland-Quest-data">
-                   <label>Add a description to your job</label>
+                    <label>Add a description to your job</label>
                     <textarea
                       id="descriptionTextarea"
                       className="description-textarea"

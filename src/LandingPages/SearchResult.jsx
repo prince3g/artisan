@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Css/SearchResult.css';
 import SearchIcon from '@mui/icons-material/Search';
@@ -21,6 +22,10 @@ import ServiceSlider from "../assets/ServiceSlider";
 
 
 const SearchResult = () => {
+  
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+  const [artisanData, setArtisanData] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -28,10 +33,32 @@ const SearchResult = () => {
   const service = searchParams.get('service');
   const services = JSON.parse(decodeURIComponent(searchParams.get('services') || '[]'));
 
+  const service_details_id = decodeURIComponent(searchParams.get('service_details_id'));
+
+  
+  useEffect(() => {
+    const fetchArtisans = async () => {
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisans/by-service/${service_details_id}`);
+        const data = await response.json();
+        setArtisanData(data);
+      } catch (error) {
+        console.error('Error fetching artisan data:', error);
+      }
+    };
+
+    fetchArtisans();
+  }, [service_details_id]);
+
+
   const handleServiceClick = (clickedService) => {
     // Navigate to a new search results page for the clicked service
     navigate(`/search-results?trade=${trade}&service=${clickedService}&services=${encodeURIComponent(JSON.stringify(services))}`);
   };
+
+
+  // to={`/search-results?trade=${selectedService.name}&service=${service}&service_details_id=${selectedService.unique_id}&services=${encodeURIComponent(
+  //   JSON.stringify(selectedService.services)
 
   return (
     <div className='Search-Page'>
@@ -77,10 +104,12 @@ const SearchResult = () => {
     </li>
   ))}
 </ul>
+
+
           <div className='Rev-FFaos'>
             <h6><span><Star /><Star /><Star /><Star /><Star /></span> <span>Reviews (150)</span></h6>
             <div className='Rev-FFaos-Btns'>
-              <button><Favorite />Add to Favourite</button>
+              <button><Favorite />Add to Favouriteqqqqqqqqqqqqqqqqq</button>
             
             </div>
           </div>
@@ -92,6 +121,8 @@ const SearchResult = () => {
           <div className='Carded-Box-1'>
             <img src={HghImg1}></img>
           </div>
+
+
           <div className='Carded-Box-2'>
             <div className='oo-dlsts'>
               <h3>Ndubusis Prince Godson <span><Handyman /> Electrician</span></h3>
@@ -124,6 +155,8 @@ const SearchResult = () => {
           <div className='Carded-Box-1'>
             <img src={HghImg2}></img>
           </div>
+
+
           <div className='Carded-Box-2'>
             <div className='oo-dlsts'>
               <h3>Ndubusis Prince Godson <span><Handyman /> Electrician</span></h3>

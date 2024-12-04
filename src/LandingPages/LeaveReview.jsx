@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Assuming this contains your trade data
 
 const LeaveReview = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState('');
