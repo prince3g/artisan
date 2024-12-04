@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Import the PageServices data
-import './Css/PostJob.css';
+import './Css/Main.css';
 
 const PostJob = () => {
   const [selectedService, setSelectedService] = useState(null);

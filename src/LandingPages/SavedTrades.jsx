@@ -1,12 +1,10 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import './Css/SearchResult.css';
-import SearchIcon from '@mui/icons-material/Search';
-import ArrowForward from '@mui/icons-material/ArrowForward';
+import React from 'react';
+import './Css/Main.css';
+
 import { Link } from "react-router-dom";
 
 import Star from '@mui/icons-material/Star'; 
 import Favorite from '@mui/icons-material/Favorite'; 
-import Share from '@mui/icons-material/Share';
 import Handyman from '@mui/icons-material/Handyman';
 import MyLocation from '@mui/icons-material/MyLocation';
 import Visibility from '@mui/icons-material/Visibility';
@@ -16,77 +14,23 @@ import HghImg1 from './Img/hghImgs/1.png';
 import HghImg2 from './Img/hghImgs/2.png';
 import HghImg3 from './Img/hghImgs/3.png';
 
-import ServiceSlider from "../assets/ServiceSlider";
-
-
-
-const SearchResult = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const trade = searchParams.get('trade');
-  const service = searchParams.get('service');
-  const services = JSON.parse(decodeURIComponent(searchParams.get('services') || '[]'));
-
-  const handleServiceClick = (clickedService) => {
-    // Navigate to a new search results page for the clicked service
-    navigate(`/search-results?trade=${trade}&service=${clickedService}&services=${encodeURIComponent(JSON.stringify(services))}`);
-  };
-
+const SavedTrades = () => {
   return (
-    <div className='Search-Page'>
-      <div className='Serahc-page-Box-Header'>
+    <div className="Gradnded-page">
+              <div className='navigating-ttarvs'>
         <div className='site-container'>
-          <h2>Tradesperson(s) for <span>{service}</span></h2>
-          <div className='Ppa-bagdes'>
-            <div className='Ppa-bagdes-ga'>
-              <span>{trade}</span>
-              <span>{service}</span>
+            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Saved Trades </p>
+          </div>
+          </div>
+      <div className="site-container">
+        <div className="Gradnded-main">
+          <div className="Gradnded-Box">
+            <div className="Gradnded-Box-header">
+              <h2 className="big-text">Saved Trades</h2>
             </div>
-            <div className='Ppa-bagdes-ga'>
-              <h6><SearchIcon /> Search result - {services.length}</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className='navigating-ttarvs'>
-        <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon />{trade} <ChevronRightIcon /> {service} <ChevronRightIcon /> Search result - {services.length}</p>
-          </div>
-          </div>
-
-      <div className='garoo-Body-sec'>
-        <div className='site-container'>
-        <div className='garoo-Gird'>
-        <div className='garoo-Gird-part1'>
-        <div className='garoo-Gird-part1-main'>
-          <h3>{trade}<ArrowForward /></h3>
-          <ul>
-  {services.map((srv, index) => (
-    <li
-      key={index}
-      className={srv === service ? 'active-service' : ''}
-      onClick={() => {
-        handleServiceClick(srv); // Navigate to the new page
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top of the page
-      }}
-      style={{ cursor: 'pointer' }}
-    >
-      {srv}
-    </li>
-  ))}
-</ul>
-          <div className='Rev-FFaos'>
-            <h6><span><Star /><Star /><Star /><Star /><Star /></span> <span>Reviews (150)</span></h6>
-            <div className='Rev-FFaos-Btns'>
-            <Link to="/leave-review"><button><Star />Leave a Review</button></Link>
-            
-            </div>
-          </div>
-        </div>
-        </div>
-        <div className='garoo-Gird-part2'>
+            <div className="Gradnded-Box-Body">
+             
+            <div className='garoo-Gird-part2'>
           <div className='Carded-Box'>
           <div className='Carded-Box-Grid'>
           <div className='Carded-Box-1'>
@@ -219,23 +163,14 @@ const SearchResult = () => {
 
 
         </div>
-        </div>
-        </div>
-         
-        </div>
 
-        <div className='service-sec'>
-  <div className='site-container'>
-    <div className='service-header'>
-      <h2 className='mid-text'>Browse Our Top Service Categories </h2>
-    </div>
-
-    <ServiceSlider />
-  </div>
-</div>
-
+             
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SearchResult;
+export default SavedTrades;

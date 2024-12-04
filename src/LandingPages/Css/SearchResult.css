@@ -527,6 +527,13 @@
     font-size: 15px;
     color: #394c13;
 }
+.Gradnded-Box-Body .GLnad-btns-2 button{
+    background-color: #394c13;
+    border-color: #394c13;
+}
+.Gradnded-Box-Body .GLnad-btns-2 button svg{
+    color: #fff;
+}
 .GLnad-btns-2 a{
     position: relative;
     width: auto;

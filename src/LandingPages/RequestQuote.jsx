@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Css/PostJob.css';
+import './Css/Main.css';
 import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices';
 
