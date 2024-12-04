@@ -112,7 +112,7 @@ function SiteNav() {
 
             <li>
               <h3><img src={DropIcon3} alt="Icon 3" />Saved Trades</h3>
-              <p>All your saved trades in one place</p>
+              <p>Easily access your saved tradesperson and keep track of those you may want to hire in the future.</p>
               <Link to="/saved-trades" onClick={handleNavLinkClick}>View saved trades</Link>
             </li>
 

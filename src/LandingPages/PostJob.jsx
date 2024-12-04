@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Import the PageServices data
 import './Css/Main.css';
 
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 const PostJob = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [activeService, setActiveService] = useState(null);
@@ -55,6 +57,12 @@ const PostJob = () => {
 
   return (
     <div className="Gradnded-page">
+                        <div className='navigating-ttarvs'>
+        <div className='site-container'>
+            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Post a job </p>
+          </div>
+          </div>
+
       <div className="site-container">
         <div className="Gradnded-main">
           <div className="Gradnded-Box">

@@ -3,6 +3,12 @@ import './Css/Main.css';
 import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices';
 
+import { Link } from 'react-router-dom';
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+
+
 const RequestQuote = () => {
   const [jobDescription, setJobDescription] = useState('');
   const [wordCount, setWordCount] = useState(0);
@@ -71,6 +77,11 @@ const RequestQuote = () => {
 
   return (
     <div className="Gradnded-page">
+                        <div className='navigating-ttarvs'>
+        <div className='site-container'>
+            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Request a quote </p>
+          </div>
+          </div>
       <div className="site-container">
         <div className="Gradnded-main">
           <div className="Gradnded-Box">
@@ -168,6 +179,12 @@ const RequestQuote = () => {
                           </label>
                         </div>
                     </div>
+                    <div className="ghha-foot">
+                        <p>If you're new to SimserviceHub, we'll set up an account for you with your email above. 
+                            This will make it easier to access your conversation with trades and manage your jobs.
+                            Read our <Link to="terms-of-use">Terms of use</Link> and <Link to="/privacy-policy">Privacy notice</Link></p>
+                  </div>
+
                   </div>
                 )}
               </div>
@@ -180,11 +197,7 @@ const RequestQuote = () => {
                 Submit
               </button>
             </div>
-            <div className="ghha-foot">
-                 <p>If you're new to SimserviceHub, we'll set up an account for you with your email above. 
-                    This will make it easier to access your conversation with trades and manage your jobs.
-                     Read our <a href="#">Terms of use</a> and <a href="#">Privacy notice</a></p>
-           </div>
+          
           </div>
         </div>
       </div>

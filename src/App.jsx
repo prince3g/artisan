@@ -17,6 +17,8 @@ import LeaveReview from './LandingPages/LeaveReview';
 import RequestQuote from './LandingPages/RequestQuote';
 import SavedTrades from './LandingPages/SavedTrades';
 import AdviceCentre from './LandingPages/AdviceCentre';
+import AdviceNigeria from './LandingPages/AdviceNigeria';
+import Benefit from './LandingPages/Benefit';
 // import AboutUs from './LandingPages/AboutUs';
 // import TermsOfUse from './LandingPages/TermsOfUse';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
@@ -46,6 +48,8 @@ function App() {
           <Route path="/request-quote" element={<RequestQuote />} />
           <Route path="/saved-trades" element={<SavedTrades />} />
           <Route path="/advice-centre" element={<AdviceCentre />} />
+          <Route path="/advice-nigeria" element={<AdviceNigeria />} />
+          <Route path="/benefits" element={<Benefit />} />
           {/* <Route path="/about-us" element={<AboutUs />} />
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

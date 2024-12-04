@@ -289,7 +289,7 @@
 .All-DropDown ul li p{
   font-size: 15px;
   color: #4B4B4B;
-  min-height: 70px;
+  min-height: 90px;
 }
 
 .All-DropDown ul li a{
@@ -303,6 +303,7 @@
   font-size: 14px;
   transition: all 0.3s ease-in-out;
   text-align: center;
+  margin-top: 10px;
 }
 .All-DropDown ul li a:hover{
   color: #B1BD3B;
@@ -610,4 +611,54 @@
 .Services-PopUp-Box-Main ul li  span svg,
 .Services-PopUp-Box-Main ul li a svg{
   font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* navigating-ttarvs */
+
+.navigating-ttarvs{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+@media screen and (max-width:500px){
+  .navigating-ttarvs p{
+      gap: 5px !important;
+      grid-gap: 5px !important;
+      font-size: 12px !important;
+  }
+  .navigating-ttarvs p svg{
+    font-size: 10px !important;
+  }
+}
+
+.navigating-ttarvs p{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  grid-gap: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.navigating-ttarvs p svg{
+  font-size: 12px;
 }

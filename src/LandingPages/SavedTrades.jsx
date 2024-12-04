@@ -19,7 +19,7 @@ const SavedTrades = () => {
     <div className="Gradnded-page">
               <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Saved Trades </p>
+            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Saved Trades </p>
           </div>
           </div>
       <div className="site-container">

@@ -1,0 +1,239 @@
+/* advice-page */
+
+.advice-page{
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+}
+
+.AA-page-header{
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: linear-gradient(135deg, #000000, #9ACD32);
+    color: #fff;
+}
+.AA-Hero-Sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    overflow: hidden;
+}
+
+@media screen and (max-width:1000px){
+    .AA-Hero-Sec{
+        display: block !important;
+    }
+}
+
+.AA-Hero-Sec-1{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 50px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.AA-Hero-Sec-1 .hero-dlts-main a{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+    margin-top: 30px;
+    padding: 15px 20px;
+    background-color:#B1BD3B;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.AA-Hero-Sec-1 .hero-dlts-main a:hover{
+    background-color: #96a133;
+  }
+
+
+.AA-Hero-Sec-2{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.AA-Hero-Sec-2 img{
+    max-width: 100%;
+}
+
+
+/* IIai-sec */
+
+.IIai-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.IIai-Main{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 50px;
+}
+
+@media screen and (max-width:1000px){
+    .IIai-Main{
+        display: block !important;
+    }
+    .IIai-1{
+        width: 100% !important;
+        display: block !important;
+        position: relative !important;
+        top: 0px !important;
+        margin-bottom: 30px !important;
+    }
+}
+
+.IIai-1{
+    position: sticky;
+    width: 330px;
+    height: auto;
+    min-height: 200px;
+    top: 100px;
+    left: 0;
+    z-index: 200;
+}
+
+.IIai-1-Box{
+    position: inherit;
+    width: inherit;
+    height: inherit;
+    min-height: inherit;
+    top: inherit;
+    left: inherit;
+    z-index: inherit;
+}
+
+.IIai-1-Box-Card{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border:1px solid #cccbcb;
+    padding:20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    grid-gap: 20px;
+    transition: all 0.3s ease-in-out;
+}
+@media screen and (max-width:300px){
+    .IIai-1-Box-Card{
+        flex-direction: column !important;
+        justify-content: center !important;
+        text-align: center;
+    }
+}
+
+.IIai-1-Box-Card:first-child{
+    margin-top: 0px;
+}
+
+.active-IIai-1-Box-Card,
+.IIai-1-Box-Card:hover{
+    background-color: #B1BD3B;
+    color: #fff !important;
+}
+
+.active-IIai-1-Box-Card img,
+.IIai-1-Box-Card:hover img{
+    filter: invert(100%) brightness(100%);
+    -webkit-filter: invert(100%) brightness(100%);
+}
+.IIai-1-Box-Card img{
+    width: 40px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.IIai-1-Box-Card p{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.IIai-1-Box-Card a{
+    position: relative;
+   margin-top: 10px;
+   display: inline-flex;
+}
+
+
+
+/* IIai-2 */
+
+.IIai-2{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.Ooo-header{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.Ooo-header p{
+    display: block;
+    margin-top: 15px;
+    color: #505050;
+}
+
+.Ooo-Body{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.Ooo-Body h4{
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.Ooo-Body p{
+    display: block;
+    margin-top: 7px;
+    color: #505050;
+}
+
+.Ooo-Body img{
+    max-width: 100%;
+}
+
+
+.ddd-aha .IIai-sec{
+    margin-top: 50px;
+}
+
+@media screen and (max-width:1000px){
+    .ddd-aha .IIai-1{
+        display: none !important;
+    }
+    .ddd-aha .IIai-sec{
+        margin-top: 30px !important;
+    }
+}
