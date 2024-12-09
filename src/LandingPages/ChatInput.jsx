@@ -6,6 +6,8 @@ import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const ChatInput = ({ onNewMessage }) => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);

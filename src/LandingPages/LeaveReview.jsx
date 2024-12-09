@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const LeaveReview = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState('');

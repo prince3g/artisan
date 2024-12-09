@@ -68,6 +68,7 @@ const PageServices = [
      simpleDescription: 'Small leaks or gutter blockages.',
     complexDescription: 'Full roof replacement or extensive repairs.'
   },
+
   {
     name: 'Tilers',
     postName: 'Tiling',
@@ -79,6 +80,7 @@ const PageServices = [
      simpleDescription: 'Small tile repairs or single-room tiling jobs.',
     complexDescription: 'Large areas or custom tiling designs.'
   },
+
   {
     name: 'Handyman Services',
     postName: 'Handyman',
@@ -102,6 +104,7 @@ const PageServices = [
      simpleDescription: 'Minor pest problems requiring treatment.',
     complexDescription: 'Widespread infestations requiring comprehensive services.'
   },
+
   {
     name: 'Window Cleaners',
     postName: 'Window Cleaning',
@@ -112,6 +115,7 @@ const PageServices = [
      simpleDescription: 'Cleaning of interior windows.',
     complexDescription: 'Cleaning of large exterior areas or high-rise windows.'
   },
+
   {
     name: 'Landscapers and Gardeners',
     postName: 'Landscaping and Gardening',
@@ -124,6 +128,7 @@ const PageServices = [
        simpleDescription: 'Basic lawn care or trimming.',
     complexDescription: 'Full garden redesign or large tree trimming.'
   },
+  
   {
     name: 'Pool Maintenance Technicians',
     postName: 'Pool Maintenance',

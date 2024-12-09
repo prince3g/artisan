@@ -10,6 +10,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 
 const RequestQuote = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  
   const [jobDescription, setJobDescription] = useState('');
   const [wordCount, setWordCount] = useState(0);
   const [query, setQuery] = useState('');
