@@ -82,7 +82,7 @@ const PostJob = () => {
       category: selectedService.name,
       title: selectedService.name,
       location: "N0 10 station Road Ph, R/s",
-      customer: "fd91931a-d092-46e8-9a6c-4ef7da63fb99",
+      customer: "4ec2ee73-11f4-450b-bcb2-6eb500b9fc5a",
       budget: 50.00,
       type: activeIndex === 0 ? 'Simple' : 'Complex',
       description: textareaContent,
