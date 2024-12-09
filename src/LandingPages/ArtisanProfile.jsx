@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Css/ArtisanProfile.css';
 import UserImg from './Img/user-img.jpg';
 import Star from '@mui/icons-material/Star';
@@ -20,6 +21,18 @@ import Comments from './Comments';
 
 const ArtisanProfile = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+
+  // Extracting data from the URL
+
+  const service = decodeURIComponent(searchParams.get('service') || '');
+  const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
+  const service_details = decodeURIComponent(searchParams.get('service_details') || '');
+  const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
+  const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
+
   
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]); // To store messages
@@ -82,8 +95,6 @@ const ArtisanProfile = () => {
   
 
 
-
-
   const handleSectionClick = (section) => {
     setActiveSection(section);
     setIsToggled(true);
@@ -94,13 +105,16 @@ const ArtisanProfile = () => {
     setIsToggled(false);
   };
 
+
+
   return (
     <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
       <div className="navigating-ttarvs">
         <div className="large-container">
           <p>
-            Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '}
-            <ChevronRightIcon /> Tailor <ChevronRightIcon /> Prince Godson{' '}
+            {/* Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '} */}
+            Simservicehub <ChevronRightIcon />  {service_details}
+            <ChevronRightIcon /> {service} <ChevronRightIcon /> {artisan_name}{' '}
             <ChevronRightIcon /> Profile
           </p>
         </div>
@@ -140,7 +154,7 @@ const ArtisanProfile = () => {
                     </div>
                     <div className="Uuua-2">
                       <div>
-                        <h3>Prince Godson</h3>
+                        <h3>{artisan_name}</h3>
                         <h6>
                           <span>
                             <Star />
@@ -158,10 +172,10 @@ const ArtisanProfile = () => {
                     <h6>Artisan Profile</h6>
                     <p>
                       <span>
-                        <Handyman /> Fashion Designer
+                        <Handyman /> {service_details}
                       </span>
                       <span>
-                        <MyLocation /> Umuahia
+                        <MyLocation /> {artisan_location}
                       </span>
                     </p>
                     <h4>
@@ -206,7 +220,7 @@ const ArtisanProfile = () => {
             {activeSection === "chat" && (
               <div className="Chattt-Topp">
                 <div className="Chattt-Topp-1">
-                  <h3>Chat with Prince Godson</h3>
+                  <h3>Chat with {artisan_name}</h3>
                 </div>
                 <div className="Chattt-Topp-2">
                   <span>
@@ -330,8 +344,8 @@ const ArtisanProfile = () => {
             <div className='Call-Sec'>
               <div className='call-Box'>
               <img src={UserImg} alt="User" />
-                <h3>Prince Godson</h3>
-                <p>Phone no: 09037494084</p>
+                <h3>{artisan_name}</h3>
+                <p>Phone no: {artisan_phone}</p>
                 <div className='kka-btns'>
                   <button><ChatIcon /></button>
                 <a href='tel:09037494084'> <CallIcon />Call Prince</a>

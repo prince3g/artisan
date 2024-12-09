@@ -294,7 +294,14 @@ const SearchResult = () => {
                           </div>
                           <div className='GLnad-btns-2'>
                           <button><Favorite /></button>
-                          <Link to="/artisan-profile">View Profile</Link>
+                          <Link to={`/artisan-profile?service_details=${encodeURIComponent(artisan.service_details.name)}
+                          &service=${encodeURIComponent(service)}
+                          &artisan_location=${encodeURIComponent(artisan.location)}
+                          &artisan_phone=${encodeURIComponent(artisan.user.phone)}
+                          &artisan_name=${encodeURIComponent(artisan.user.first_name + " " + artisan.user.last_name)}`}>
+                            View Profile
+                          </Link>
+
                           </div>
                       </div>
                     </div>
