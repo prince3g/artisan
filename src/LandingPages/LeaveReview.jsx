@@ -3,6 +3,8 @@ import './Css/Main.css';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Assuming this contains your trade data
 
+import { Link } from 'react-router-dom';
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const LeaveReview = () => {
@@ -99,7 +101,7 @@ const LeaveReview = () => {
     <div className="Gradnded-page">
                     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Leave a Review </p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/leave-review">Leave a Review </Link> </p>
           </div>
           </div>
       <div className="site-container">

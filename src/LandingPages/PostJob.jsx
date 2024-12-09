@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 import PageServices from '../data/PageServices'; // Import the PageServices data
 import './Css/Main.css';
 
+
+import { Link } from 'react-router-dom';
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const PostJob = () => {
@@ -59,7 +62,7 @@ const PostJob = () => {
     <div className="Gradnded-page">
                         <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Post a job </p>
+            <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-job"> Post a job</Link> </p>
           </div>
           </div>
 

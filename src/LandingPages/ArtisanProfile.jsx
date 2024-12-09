@@ -18,6 +18,9 @@ import ChatBanner from './Img/nochat-banner.svg';
 
 import Comments from './Comments';
 
+
+import { Link } from "react-router-dom";
+
 const ArtisanProfile = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]); // To store messages
@@ -97,7 +100,7 @@ const ArtisanProfile = () => {
       <div className="navigating-ttarvs">
         <div className="large-container">
           <p>
-            Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '}
+          <Link to="/">Simservicehub</Link> <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '}
             <ChevronRightIcon /> Tailor <ChevronRightIcon /> Prince Godson{' '}
             <ChevronRightIcon /> Profile
           </p>
