@@ -419,7 +419,7 @@ const LeaveReview = () => {
       try {
         const response = await fetch(`${djangoHostname}/api/jobs/auth/service-categories/`);
         const data = await response.json();
-        setServiceCategories(data.results); // Set the service categories state to the 'results' array
+        setServiceCategories(data); // Set the service categories state to the 'results' array
       } catch (error) {
         console.error('Error fetching service categories:', error);
       }

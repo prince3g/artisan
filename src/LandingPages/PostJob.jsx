@@ -1,13 +1,8 @@
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
-import PageServices from '../data/PageServices'; // Import the PageServices data
 import './Css/Main.css';
-
-
 import { Link } from 'react-router-dom';
-
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React, { useState, useEffect } from 'react';
-// import './Css/PostJob.css';
 
 const PostJob = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -17,16 +12,15 @@ const PostJob = () => {
   const [expandedService, setExpandedService] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const [textareaContent, setTextareaContent] = useState('');
-  const [pagination, setPagination] = useState({ count: 0, next: null, previous: null });
   const navigate = useNavigate();
 
-  const fetchServices = async (url = `${djangoHostname}/api/jobs/auth/service-categories/`) => {
+  // Fetch all services in one go (no pagination)
+  const fetchServices = async () => {
     try {
-      const response = await fetch(url);
+      const response = await fetch(`${djangoHostname}/api/jobs/auth/service-categories/`);
       if (response.ok) {
         const data = await response.json();
-        setServices((prev) => [...prev, ...data.results]);
-        setPagination({ count: data.count, next: data.next, previous: data.previous });
+        setServices(data);  // Directly set the results without pagination handling
       } else {
         console.error('Failed to fetch services:', response.statusText);
       }
@@ -38,12 +32,6 @@ const PostJob = () => {
   useEffect(() => {
     fetchServices();
   }, []);
-
-  const handleLoadMore = () => {
-    if (pagination.next) {
-      fetchServices(pagination.next);
-    }
-  };
 
   const handleServiceChange = (event) => {
     const selectedId = parseInt(event.target.value, 10);
@@ -88,8 +76,6 @@ const PostJob = () => {
       description: textareaContent,
     };
 
-
-
     try {
       const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/`, {
         method: 'POST',
@@ -118,11 +104,11 @@ const PostJob = () => {
 
   return (
     <div className="Gradnded-page">
-                        <div className='navigating-ttarvs'>
+      <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-job"> Post a job</Link> </p>
-          </div>
-          </div>
+          <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-job"> Post a job</Link> </p>
+        </div>
+      </div>
 
       <div className="site-container">
         <div className="Gradnded-main">
@@ -149,27 +135,19 @@ const PostJob = () => {
                       </option>
                     ))}
                   </select>
-                  {pagination.next && (
-                    <button className="load-more-btn" onClick={handleLoadMore}>
-                      Load More
-                    </button>
-                  )}
                 </div>
 
                 {selectedService && (
                   <div className="service-details Gland-Quest-data">
                     <label>
                       What do you need{' '}
-                      {/[aeiouAEIOU]/.test(toSingular(selectedService.name)) ? 'an ' : 'a '}
-                      {toSingular(selectedService.name).replace(/&/g, 'an')} for?
+                      {/[aeiouAEIOU]/.test(toSingular(selectedService.name)) ? 'an ' : 'a '}{toSingular(selectedService.name).replace(/&/g, 'an')} for?
                     </label>
                     <ul className="service-list">
                       {selectedService.services.map((service, index) => (
                         <li
                           key={index}
-                          className={`service-item ${
-                            activeService === index ? 'active-gland-list-Li' : ''
-                          }`}
+                          className={`service-item ${activeService === index ? 'active-gland-list-Li' : ''}`}
                           onClick={() => handleServiceClick(index)}
                         >
                           {service}
@@ -184,18 +162,14 @@ const PostJob = () => {
                     <label>Which best describes your issues?</label>
                     <ul>
                       <li
-                        className={`sub-service-item ${
-                          activeIndex === 0 ? 'active-ooo-lip' : ''
-                        }`}
+                        className={`sub-service-item ${activeIndex === 0 ? 'active-ooo-lip' : ''}`}
                         onClick={() => handleClick(0)}
                       >
                         <p>Simple</p>
                         <span>E.g. {selectedService.simpleDescription}</span>
                       </li>
                       <li
-                        className={`sub-service-item ${
-                          activeIndex === 1 ? 'active-ooo-lip' : ''
-                        }`}
+                        className={`sub-service-item ${activeIndex === 1 ? 'active-ooo-lip' : ''}`}
                         onClick={() => handleClick(1)}
                       >
                         <p>Complex</p>

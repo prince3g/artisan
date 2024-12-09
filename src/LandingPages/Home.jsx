@@ -50,7 +50,7 @@ function Home() {
       try {
         const response = await fetch(`${djangoHostname}/api/jobs/auth/service-categories/`);
         const data = await response.json();
-        setServices(data.results);
+        setServices(data);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally {
