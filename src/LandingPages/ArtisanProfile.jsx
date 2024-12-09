@@ -114,12 +114,16 @@ const ArtisanProfile = () => {
     <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
       <div className="navigating-ttarvs">
         <div className="large-container">
-          <p>
-          <Link to="/">{/* Simservicehub</Link> <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '} */}
-            Simservicehub <ChevronRightIcon />  {service_details}
-            <ChevronRightIcon /> {service} <ChevronRightIcon /> {artisan_name}{' '}
-            <ChevronRightIcon /> Profile
-          </p>
+        <p>
+          <Link to="/">
+            Simservicehub
+          </Link>
+          <ChevronRightIcon /> {service_details}
+          <ChevronRightIcon /> {service}
+          <ChevronRightIcon /> {artisan_name}
+          <ChevronRightIcon /> Profile
+        </p>
+
         </div>
       </div>
 
