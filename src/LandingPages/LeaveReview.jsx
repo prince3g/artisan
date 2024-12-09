@@ -364,6 +364,11 @@
 
 import React, { useState, useEffect } from 'react';
 import './Css/Main.css';
+import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
+import PageServices from '../data/PageServices'; // Assuming this contains your trade data
+
+import { Link } from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 

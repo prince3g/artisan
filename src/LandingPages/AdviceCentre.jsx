@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Css/AdviceCentre.css';
 
+
 import AAHeroImg from './Img/AA-hero-Img.png';
 
 import SearchIcon from './Img/search-icon.svg';
@@ -36,7 +37,7 @@ const AdviceCentre = () => {
 
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Advice Centre </p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> </p>
           </div>
           </div>
 

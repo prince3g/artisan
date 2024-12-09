@@ -27,7 +27,7 @@ const AboutUs = () => {
     </div>
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> About SimserviceHub </p>
+            <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/about">About SimserviceHub</Link> </p>
           </div>
           </div>
 

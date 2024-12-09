@@ -19,6 +19,9 @@ import ChatBanner from './Img/nochat-banner.svg';
 
 import Comments from './Comments';
 
+
+import { Link } from "react-router-dom";
+
 const ArtisanProfile = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const location = useLocation();
@@ -112,7 +115,7 @@ const ArtisanProfile = () => {
       <div className="navigating-ttarvs">
         <div className="large-container">
           <p>
-            {/* Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '} */}
+          <Link to="/">{/* Simservicehub</Link> <ChevronRightIcon /> Trades <ChevronRightIcon /> Fashion{' '} */}
             Simservicehub <ChevronRightIcon />  {service_details}
             <ChevronRightIcon /> {service} <ChevronRightIcon /> {artisan_name}{' '}
             <ChevronRightIcon /> Profile

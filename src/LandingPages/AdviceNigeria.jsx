@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Css/AdviceCentre.css';
 
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import AdviceIcon from './Img/advice.png';
@@ -16,7 +17,7 @@ const AdviceNigeria = () => {
 
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Advice Centre <ChevronRightIcon /> Essential Advice for Nigerian Homeowners</p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/advice-nigeria">Essential Advice for Nigerian Homeowners</Link> </p>
           </div>
           </div>
 

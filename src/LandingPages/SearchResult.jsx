@@ -90,7 +90,7 @@ const SearchResult = () => {
 
       <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon />{trade} <ChevronRightIcon /> {service} <ChevronRightIcon /> Search result - {artisanData.length}</p>
+            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon />{trade} <ChevronRightIcon /> {service} <ChevronRightIcon /> Search result - {services.length}</p>
           </div>
           </div>
 

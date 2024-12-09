@@ -15,7 +15,7 @@ const Benefit = () => {
 
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Advice Centre <ChevronRightIcon /> How This Platform Benefits Nigerian Homeowners</p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/benefits">How This Platform Benefits Nigerian Homeowners</Link> </p>
           </div>
           </div>
 
