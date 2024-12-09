@@ -369,7 +369,6 @@ import PageServices from '../data/PageServices'; // Assuming this contains your 
 
 import { Link } from 'react-router-dom';
 
-import { useNavigate } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const LeaveReview = () => {
@@ -400,7 +399,7 @@ const LeaveReview = () => {
   const [serviceCategories, setServiceCategories] = useState([]); // Initialize service categories state
   const [reviewData, setReviewData] = useState({
     service_category_id: '',  // This should use the unique_id when trade is selected
-    customer_id: "26d17a45-3c8f-4098-8120-de467abe136f",
+    customer_id: "ffc0dd7e-460b-4021-a782-41205ad5e988",
     reliability_rating: null,
     workmanship_rating: null,
     tidiness_rating: null,
@@ -511,6 +510,7 @@ const LeaveReview = () => {
   const handleCheckboxChangeCourtesy = (e) => {
     setIsCheckedCourtesy(e.target.checked);
   };
+
 
   return (
     <div className="Gradnded-page">
