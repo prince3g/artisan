@@ -77,7 +77,7 @@ const ArtisanProfile = () => {
         },
         body: JSON.stringify({
           artisan: sanitizedId, // Hardcoded artisan ID
-          reviewer_name: "bbf61256-c56a-4020-baca-85300caec0a2", // Hardcoded artisan ID
+          reviewer_name: "4ec2ee73-11f4-450b-bcb2-6eb500b9fc5a", // Hardcoded artisan ID
           artisan_name,
           rating,
           review_text: review, // Match review variable
