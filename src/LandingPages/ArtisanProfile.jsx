@@ -34,7 +34,9 @@ const ArtisanProfile = () => {
   const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
   const service_details = decodeURIComponent(searchParams.get('service_details') || '');
   const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
+  const artisan_unique_id = decodeURIComponent(searchParams.get('artisan_unique_id') || '');
   const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
+  
 
   
   const [isExpanded, setIsExpanded] = useState(false);
@@ -48,6 +50,57 @@ const ArtisanProfile = () => {
 
   const [isToggled, setIsToggled] = useState(false);
 
+
+
+  const [rating, setRating] = useState(""); // For storing selected rating
+  const [review, setReview] = useState(""); // For storing the review text
+  const [loading, setLoading] = useState(false); // To show loading state during API call
+  const [message, setMessage] = useState(""); // For feedback messages
+
+  const handleReviewSubmit = async () => {
+    if (!rating || !review.trim()) {
+      setMessage("Please provide a rating and a review.");
+      return;
+    }
+  
+    setLoading(true);
+    setMessage("");
+  
+    try {
+
+      const sanitizedId = artisan_unique_id.trim();
+
+      const response = await fetch(`${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          artisan: sanitizedId, // Hardcoded artisan ID
+          reviewer_name: "4ec2ee73-11f4-450b-bcb2-6eb500b9fc5a", // Hardcoded artisan ID
+          artisan_name,
+          rating,
+          review_text: review, // Match review variable
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setMessage("Review submitted successfully!");
+        setRating("");
+        setReview("");
+      } else {
+        setMessage(`Error: ${data.message || "Failed to submit review."}`);
+      }
+    } catch (error) {
+      setMessage("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
 
   const handleToggleView = () => {
     setIsExpanded(!isExpanded);
@@ -107,7 +160,6 @@ const ArtisanProfile = () => {
     setActiveSection(null);
     setIsToggled(false);
   };
-
 
 
   return (
@@ -280,12 +332,14 @@ const ArtisanProfile = () => {
     </div>
   )}
 
+
   {/* Welcome message */}
   {showWelcomeMessage && (
     <div className="Chatting-Clamp">
       <div className="Mnachatting-box">
         <p>
-          Thank you for reaching out! ❤️ Whether you have a project in mind or just want to discuss your ideas, I'm here to bring your vision to life. 💡
+          Thank you for reaching out! ❤️ Whether you have a project in mind or just want to discuss your ideas, 
+          I'm here to bring your vision to life. 💡
         </p>
         <div className="Mess-hsja">
           <span>{welcomeMessageTime}</span>
@@ -337,12 +391,12 @@ const ArtisanProfile = () => {
 
 
 
-              <div className="Chattt-Foot">
-                <ChatInput onNewMessage={handleNewMessage} />
-              </div>
+  <div className="Chattt-Foot">
+    <ChatInput onNewMessage={handleNewMessage} />
+  </div>
 
-              </div>
-            </div>
+  </div>
+</div>
 
 )}
 
@@ -355,14 +409,14 @@ const ArtisanProfile = () => {
                 <p>Phone no: {artisan_phone}</p>
                 <div className='kka-btns'>
                   <button><ChatIcon /></button>
-                <a href='tel:09037494084'> <CallIcon />Call Prince</a>
+                <a href='tel:09037494084'> <CallIcon />Call {artisan_name}</a>
                 </div>
               </div>
             </div>
             )}
 
 
-{activeSection === "review" && (
+{/* {activeSection === "review" && (
         <div id="review-MM-sec" className='review-kka'>
           <div className='review-kka-box'>
           <h2>Drop a review for ❤️  Prince</h2>
@@ -387,23 +441,60 @@ const ArtisanProfile = () => {
           </div>
         </div>
         </div>
+      )} */}
+
+{activeSection === "review" && (
+        <div id="review-MM-sec" className='review-kka'>
+          <div className='review-kka-box'>
+            <h2>Drop a review for ❤️ {artisan_name}</h2>
+
+            <div className='review-kka-input'>
+              <label>Rate {artisan_name}</label>
+              <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                <option value="">Choose a star</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+              </select>
+            </div>
+            <div className='review-kka-input'>
+              <label>Drop a review</label>
+              <textarea
+                placeholder='Type your review...'
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+              ></textarea>
+            </div>
+            <div className='review-kka-input'>
+              <button onClick={handleReviewSubmit} disabled={loading}>
+                {loading ? "Sending..." : "Send"}
+              </button>
+            </div>
+            {message && <p className="feedback-message">{message}</p>}
+          </div>
+        </div>
       )}
+
+
           </div>
         </div>
       </div>
     </div>
 
-    <div className='Artisan-comment-sec'>
-      <div className='large-container'>
-       <Comments />
-       <div className='Drop-Revvo'>
-       <button onClick={() => {
-        handleSectionClick("review");
-        window.scrollTo(0, 0);  // Scrolls to the top of the page
-      }}>Drop a Review</button>
+      <div className='Artisan-comment-sec'>
+        <div className='large-container'>
+          <Comments artisanUniqueId={artisan_unique_id} />
+          <div className='Drop-Revvo'>
+            <button onClick={() => {
+              handleSectionClick("review");
+              window.scrollTo(0, 0); // Scrolls to the top of the page
+            }}>Drop a Review</button>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
+
 
     </div>
   );

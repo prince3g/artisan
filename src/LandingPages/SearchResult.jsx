@@ -298,8 +298,10 @@ const SearchResult = () => {
                           &service=${encodeURIComponent(service)}
                           &artisan_location=${encodeURIComponent(artisan.location)}
                           &artisan_phone=${encodeURIComponent(artisan.user.phone)}
+                          &artisan_unique_id=${encodeURIComponent(artisan.user.unique_id)}
                           &artisan_name=${encodeURIComponent(artisan.user.first_name + " " + artisan.user.last_name)}`}>
                             View Profile
+
                           </Link>
 
                           </div>

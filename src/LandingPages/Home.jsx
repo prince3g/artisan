@@ -36,6 +36,10 @@ function Home() {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
   const [services, setServices] = useState([]);
+
+  const [profiles, setProfiles] = useState([]);
+
+
   const [currentSearch, setCurrentSearch] = useState('trade');
   const [showDropdown, setShowDropdown] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -44,13 +48,30 @@ function Home() {
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [loading, setLoading] = useState(true);
 
+    // Fetch artisan-profile data from the API
+    useEffect(() => {
+      const fetchProfiles = async () => {
+        try {
+          const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+          const data = await response.json();
+          setProfiles(Array.isArray(data) ? data : []); // Ensure data is an array
+        } catch (error) {
+          console.error("Error fetching profiles:", error);
+        }
+      };
+    
+      fetchProfiles();
+    }, []);
+    
+
+  
   // Fetch services data from the API
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await fetch(`${djangoHostname}/api/jobs/auth/service-categories/`);
         const data = await response.json();
-        setServices(data.results);
+        setServices(data);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally {
@@ -88,6 +109,26 @@ function Home() {
       }
     }
   };
+
+  const handleSearchN = () => {
+    if (currentSearch === 'name' && Array.isArray(profiles)) {
+      const filteredProfiles = profiles.filter((profile) =>
+        profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      
+      if (filteredProfiles.length > 0) {
+        setPopupContent({
+          title: "Matching Profiles",
+          list: filteredProfiles.map((profile) => `${profile.user.first_name} ${profile.user.last_name}`),
+        });
+      } else {
+        setPopupContent({ title: "No profiles found", list: [] });
+      }
+      setShowPopup(true);
+    }
+  };
+  
 
   // const handleSearch = () => {
   //   if (currentSearch === 'trade') {
@@ -146,94 +187,120 @@ function Home() {
         <div className="hero-cont">
           <div className="hero-dlts">
             <div className="hero-dlts-main">
-              <h6>SimserviceHub Trusted Artisan </h6>
+              <h6>SimserviceHub Trusted Tradesperson </h6>
               <h2 className="big-text">
-                Discover Vetted <span>Artisan</span> for Every Home Project
+                Discover Vetted <span>Tradesperson</span> for Every Home Project
               </h2>
-              <p>Your trusted platform for connecting with experienced, reliable Artisans.</p>
+              <p>Your trusted platform for connecting with experienced, reliable Tradespersons.</p>
 
               <div className="Search-Sec">
                 <div className="top-Search">
-                  {currentSearch === 'trade' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="trade-input">Search for a Specific Trade</label>
-                      <input
-                        type="text"
-                        placeholder="Trade Type (e.g., Plumber, Electrician)"
-                        autoComplete="off"
-                        id="trade-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                      {showDropdown && inputValue && (
-                        <div className="dropdown">
-                          {services
-                            .filter((search) => search.name.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                            .map((search, index) => (
-                              <div
-                                key={index}
-                                className="dropdown-item"
-                                onClick={() => handleDropdownClick(search.name)}
-                              >
-                                {search.name}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {currentSearch === 'location' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="location-input">Search by Location</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Location (e.g., Lagos)"
-                        autoComplete="off"
-                        id="location-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                      {showDropdown && inputValue && (
-                        <div className="dropdown">
-                          {locations
-                            .filter((state) => state.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                            .map((state, index) => (
-                              <div
-                                key={index}
-                                className="dropdown-item"
-                                onClick={() => handleDropdownClick(state)}
-                              >
-                                {state}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {currentSearch === 'name' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="name-input">Search by Name</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Artisan Name (e.g., John Jerry)"
-                        autoComplete="off"
-                        id="name-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                    </div>
-                  )}
-                  <button className="search-btn" onClick={handleSearch}>
+
+        {currentSearch === 'trade' && (
+      <div className="Seach-OO1">
+        <label htmlFor="trade-input">Search for a Specific Trade</label>
+        <input
+          type="text"
+          placeholder="Trade Type (e.g., Plumber, Electrician)"
+          autoComplete="off"
+          id="trade-input"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onFocus={() => setShowDropdown(true)} // Show dropdown on focus
+          onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+        />
+        {showDropdown && (
+          <div className="dropdown">
+            {services
+              .filter((service) =>
+                service.name.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+              )
+              .map((service, index) => (
+                <div
+                  key={index}
+                  className="dropdown-item"
+                  onClick={() => handleDropdownClick(service.name)} // Select item
+                >
+                  {service.name}
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+    )}
+
+{currentSearch === 'location' && (
+  <div className="Seach-OO1">
+    <label htmlFor="location-input">Search by Location</label>
+    <input
+      type="text"
+      placeholder="Enter Location (e.g., Lagos)"
+      autoComplete="off"
+      id="location-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
+    {showDropdown && (
+      <div className="dropdown">
+        {locations
+          .filter((state) =>
+            state.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+          )
+          .map((state, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(state)}
+            >
+              {state}
+            </div>
+          ))}
+      </div>
+    )}
+  </div>
+)}
+
+{currentSearch === 'name' && (
+  <div className="Seach-OO1">
+    <label htmlFor="name-input">Search by Name</label>
+    <input
+      type="text"
+      placeholder="Enter Name (e.g., John Doe)"
+      autoComplete="off"
+      id="name-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
+    {showDropdown && (
+      <div className="dropdown">
+        {profiles
+          .filter((profile) =>
+            profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+          .map((profile, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
+            >
+              {profile.user.first_name} {profile.user.last_name}
+            </div>
+          ))}
+      </div>
+    )}
+  </div>
+)}
+                  <button className="search-btn" onClick={handleSearchN}>
                     <img src={SearchIcon} alt="Search Icon" />
                     Search
                   </button>
                 </div>
+
                 <div className="Sub-Search">
                   <button onClick={() => handleSearchTypeChange('location')}>
                     {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
@@ -357,19 +424,19 @@ function Home() {
   <div className='Oggg-Grid'>
   <div className='Oggg-Part1'>
     <div className='Oggg-header'>
-  <h2 className='big-text'>Why Choose SimserviceHub’s <span>Artisan</span> Network?</h2>
+  <h2 className='big-text'>Why Choose SimserviceHub’s <span>Tradesperson</span> Network?</h2>
   </div>
   <div className='Oggg-Card'>
     <h3><CheckCircle /> Guaranteed Work Quality</h3>
-    <p>SimserviceHub offers quality assurance for all Artisan projects. T & Cs apply</p>
+    <p>SimserviceHub offers quality assurance for all tradesperson projects. T & Cs apply</p>
   </div>
   <div className='Oggg-Card'>
     <h3><Verified /> Rigorous Screening Process </h3>
-    <p>All Artisan undergo a thorough verification process, including background and skill checks.</p>
+    <p>All tradesperson undergo a thorough verification process, including background and skill checks.</p>
   </div>
   <div className='Oggg-Card'>
-    <h3><People /> Trusted service </h3>
-    <p>We maintain transparency and trust.</p>
+    <h3><People /> Trusted by Thousands </h3>
+    <p>With over 2 million reviews from satisfied clients, we maintain transparency and trust.</p>
   </div>
   </div>
   <div className='Oggg-Part2'>
@@ -384,7 +451,7 @@ function Home() {
 <div className='Cosii-mam'>
   <div className='site-container'>
   <div className='Cosii-mam-header'>
-    <h2 className='mid-text'>How to Hire the Right Artisan with SimserviceHub</h2>
+    <h2 className='mid-text'>How to Hire the Right Tradesperson with SimserviceHub</h2>
   </div>
   <div className='Cosii-mam-Grid'>
   <div className='Cosii-mam-Card'>
@@ -435,7 +502,7 @@ function Home() {
     <img src={HghImg2}></img>
     <div className='hgahgs-Card-Dlt'>
     <h3>Request a Quote</h3>
-    <p>Tell us your requirements, and we’ll connect you with up to three verified Artisan.  </p>
+    <p>Tell us your requirements, and we’ll connect you with up to three verified tradesperson.  </p>
     <Link to="/request-quote" >Request a Quote</Link>
   </div>
   </div>
@@ -446,7 +513,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Customers rely on Simservicehub to find skilled, verified trades person.</h3>
     <p>Sign up and grow your Business Today.</p>
-    <Link to="/artisan-overview" >Artisan Sign-Up</Link>
+    <Link to="/artisan-sign-up" >Artisan Sign-Up</Link>
   </div>
   </div>
 
