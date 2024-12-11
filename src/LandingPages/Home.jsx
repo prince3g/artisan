@@ -36,6 +36,10 @@ function Home() {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
   const [services, setServices] = useState([]);
+
+  const [profiles, setProfiles] = useState([]);
+
+
   const [currentSearch, setCurrentSearch] = useState('trade');
   const [showDropdown, setShowDropdown] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -44,6 +48,22 @@ function Home() {
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [loading, setLoading] = useState(true);
 
+    // Fetch artisan-profile data from the API
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+        const data = await response.json();
+        setProfiles(data);
+      } catch (error) {
+        console.error("Error fetching profiles:", error);
+      }
+    };
+  
+    fetchProfiles();
+  }, []);
+
+  
   // Fetch services data from the API
   useEffect(() => {
     const fetchServices = async () => {
@@ -88,6 +108,27 @@ function Home() {
       }
     }
   };
+
+  const handleSearchN = () => {
+    if (currentSearch === 'name') {
+      const filteredProfiles = profiles.filter((profile) =>
+        profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+      );
+  
+      if (filteredProfiles.length > 0) {
+        setPopupContent({
+          title: "Matching Profiles",
+          list: filteredProfiles.map((profile) => `${profile.user.first_name} ${profile.user.last_name}`),
+        });
+        setShowPopup(true);
+      } else {
+        setPopupContent({ title: "No profiles found", list: [] });
+        setShowPopup(true);
+      }
+    }
+  };
+  
 
   // const handleSearch = () => {
   //   if (currentSearch === 'trade') {
@@ -154,6 +195,7 @@ function Home() {
 
               <div className="Search-Sec">
                 <div className="top-Search">
+
                   {currentSearch === 'trade' && (
                     <div className="Seach-OO1">
                       <label htmlFor="trade-input">Search for a Specific Trade</label>
@@ -184,6 +226,8 @@ function Home() {
                       )}
                     </div>
                   )}
+
+                  
                   {currentSearch === 'location' && (
                     <div className="Seach-OO1">
                       <label htmlFor="location-input">Search by Location</label>
@@ -214,26 +258,47 @@ function Home() {
                       )}
                     </div>
                   )}
-                  {currentSearch === 'name' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="name-input">Search by Name</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Trade Name (e.g., Electrician)"
-                        autoComplete="off"
-                        id="name-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                    </div>
-                  )}
-                  <button className="search-btn" onClick={handleSearch}>
+
+                      {currentSearch === 'name' && (
+                        <div className="Seach-OO1">
+                          <label htmlFor="name-input">Search by Name</label>
+                          <input
+                            type="text"
+                            placeholder="Enter Name (e.g., John Doe)"
+                            autoComplete="off"
+                            id="name-input"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onFocus={() => setShowDropdown(true)}
+                            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                          />
+                          {showDropdown && inputValue && (
+                            <div className="dropdown">
+                              {profiles
+                                .filter((profile) =>
+                                  profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                  profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+                                )
+                                .map((profile, index) => (
+                                  <div
+                                    key={index}
+                                    className="dropdown-item"
+                                    onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
+                                  >
+                                    {profile.user.first_name} {profile.user.last_name}
+                                  </div>
+                                ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                  <button className="search-btn" onClick={handleSearchN}>
                     <img src={SearchIcon} alt="Search Icon" />
                     Search
                   </button>
                 </div>
+
                 <div className="Sub-Search">
                   <button onClick={() => handleSearchTypeChange('location')}>
                     {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
