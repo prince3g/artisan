@@ -63,9 +63,9 @@ const AboutUs = () => {
 
                 <h4>Who is SimserviceHub?</h4>
 
-                <p>SimserviceHub is Nigeria's trusted platform for connecting homeowners and businesses with skilled tradespeople. Our goal is to set new standards for quality and reliability in home and business improvements across all 36 states.</p>
+                <p>SimserviceHub is Nigeria's trusted platform for connecting Customers and businesses with skilled tradespeople. Our goal is to set new standards for quality and reliability in home and business improvements across all 36 states.</p>
 
-                <p>Since our inception, we have been dedicated to building a marketplace where homeowners find reliable tradespeople for every project, and tradespeople get the tools and support they need to grow their business. We are proud to serve as a bridge between skilled professionals and clients, ensuring every job meets high standards of trust and quality.</p>
+                <p>Since our inception, we have been dedicated to building a marketplace where Customers find reliable tradespeople for every project, and tradespeople get the tools and support they need to grow their business. We are proud to serve as a bridge between skilled professionals and clients, ensuring every job meets high standards of trust and quality.</p>
 
                 <p>With a commitment to continuous growth, we are expanding our reach to create lasting positive impacts in communities nationwide.</p>
 
@@ -84,7 +84,7 @@ const AboutUs = () => {
                     </li>
 
                     <li>
-                        <h4>Customer-Cantered</h4>
+                        <h4>Customer centered</h4>
                         <p>We adapt based on real customer insights, continuously refining our services to meet their needs</p>
                     </li>
 

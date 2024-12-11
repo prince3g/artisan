@@ -101,7 +101,7 @@
 //     <div className="Gradnded-page">
 //                     <div className='navigating-ttarvs'>
 //         <div className='site-container'>
-//             <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Leave a Review </p>
+//             <p>Simservicehub <ChevronRightIcon /> Customer <ChevronRightIcon /> Leave a Review </p>
 //           </div>
 //           </div>
 //       <div className="site-container">
@@ -516,7 +516,7 @@ const LeaveReview = () => {
     <div className="Gradnded-page">
       <div className="navigating-ttarvs">
         <div className="site-container">
-          <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Leave a Review</p>
+          <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/leave-review"> Leave a Review</Link> </p>
         </div>
       </div>
       <div className="site-container">

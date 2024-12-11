@@ -81,7 +81,8 @@ const RequestQuote = () => {
     <div className="Gradnded-page">
                         <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Homeowner <ChevronRightIcon /> Request a quote </p>
+            <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/request-quote"> Request a quote</Link> </p>
+            
           </div>
           </div>
       <div className="site-container">

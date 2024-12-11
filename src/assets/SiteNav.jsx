@@ -79,15 +79,15 @@ function SiteNav() {
                   }}
                   className={isDropdownVisible ? "active" : ""}
                 >
-                  Homeowner
+                  Customer
                 </Link>
               </li>
               <li><Link to="/about" onClick={handleNavLinkClick}>About Us</Link></li>
-              <li><Link to="/tradesperson-signup" onClick={handleNavLinkClick}>Tradesperson Sign-Up</Link></li>
+              <li><Link to="/artisan-signup" onClick={handleNavLinkClick}>Artisan Sign-Up</Link></li>
             </ul>
             <ul className="Ul-Last">
-              <li><Link to="/homeowner-login" className="home-login" onClick={handleNavLinkClick}>Homeowner login</Link></li>
-              <li><Link to="/trade-login" className="trade-login" onClick={handleNavLinkClick}>Trade login</Link></li>
+              <li><Link to="/customer-login" className="home-login" onClick={handleNavLinkClick}>Customer login</Link></li>
+              <li><Link to="/artisan-login" className="trade-login" onClick={handleNavLinkClick}>Artisan login</Link></li>
             </ul>
           </div>
           <div
@@ -106,13 +106,13 @@ function SiteNav() {
           <ul>
             <li>
               <h3><img src={DropIcon1} alt="Icon 1" />Review a Trade</h3>
-              <p>Have you completed a project recently? Let your tradesperson know how they did.</p>
+              <p>Have you completed a project recently? Let your Artisan know how they did.</p>
               <Link to="/leave-review" onClick={handleNavLinkClick}>Leave a review</Link>
             </li>
 
             <li>
               <h3><img src={DropIcon3} alt="Icon 3" />Saved Trades</h3>
-              <p>Easily access your saved tradesperson and keep track of those you may want to hire in the future.</p>
+              <p>Easily access your saved Artisan and keep track of those you may want to hire in the future.</p>
               <Link to="/saved-trades" onClick={handleNavLinkClick}>View saved trades</Link>
             </li>
 

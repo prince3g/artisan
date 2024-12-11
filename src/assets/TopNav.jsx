@@ -5,7 +5,7 @@ function TopNav() {
     <nav className="TopNav">
         
         <div className="large-container">
-            <p><a href="#">SimserviceHub</a>: Connecting Homeowners and Skilled Tradesperson Across Nigeria</p>
+            <p><a href="#">SimserviceHub</a>: Connecting Customers and Skilled Tradesperson Across Nigeria</p>
         </div>
      
     </nav>

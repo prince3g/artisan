@@ -41,7 +41,7 @@ const LocationList = () => {
       <div className="site-container">
         <div className='Locate_Ssef_Main'>
           <div className="Locate_Ssef_Header" onClick={toggleVisibility}>
-            <h2 className="mid-text">Find Local Tradespeople in Your Area</h2>
+            <h2 className="mid-text">Find Local Artisan in Your Area</h2>
             <span>{isVisible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</span>
           </div>
           <div className={`location-Sec ${isVisible ? 'show' : 'hide'}`}>

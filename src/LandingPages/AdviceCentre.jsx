@@ -23,7 +23,7 @@ const AdviceCentre = () => {
                 <h2 className="big-text">
                 <span>Inspiration</span> & Advice Centre 
                 </h2>
-                <p>Looking for ideas and guidance? Visit our Advice Centre for industry insights, expert tips, and inspiration from our vetted tradesperson.</p>
+                <p>Looking for ideas and guidance? Visit our Advice Centre for industry insights, expert tips, and inspiration from our vetted Artisan.</p>
 
                 <Link to="/"><img src={SearchIcon}></img>Search for a trade</Link>
                 </div>
@@ -48,18 +48,18 @@ const AdviceCentre = () => {
         <div className='IIai-1-Box'>
         <Link to="/advice-nigeria" className="IIai-1-Box-Card">
         <img src={AdviceIcon} alt="Advice Icon" />
-        <p>Essential Advice for Nigerian Homeowners</p>
+        <p>Essential Advice for Nigerian Customers</p>
       </Link>
       <Link to="/benefits" className="IIai-1-Box-Card">
         <img src={Authenticity} alt="Authenticity Icon" />
-        <p>How This Platform Benefits Nigerian Homeowners</p>
+        <p>How This Platform Benefits Nigerian Customers</p>
       </Link>
         </div>
         </div>
         <div className='IIai-2'>
             <div className='Ooo-header'>
                 <h3 className='mid-text'>Tailored Tips For Home Projects</h3>
-                <p>We understand that each home improvement job is unique. That’s why our app includes specific advice and resources for a wide range of home projects. Here’s how we support homeowners in finding the right experts for each job:</p>
+                <p>We understand that each home improvement job is unique. That’s why our app includes specific advice and resources for a wide range of home projects. Here’s how we support Customers in finding the right experts for each job:</p>
             </div>
 
             <div className='Ooo-Body'>
