@@ -49,19 +49,20 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
     // Fetch artisan-profile data from the API
-  useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
-        const data = await response.json();
-        setProfiles(data);
-      } catch (error) {
-        console.error("Error fetching profiles:", error);
-      }
-    };
-  
-    fetchProfiles();
-  }, []);
+    useEffect(() => {
+      const fetchProfiles = async () => {
+        try {
+          const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+          const data = await response.json();
+          setProfiles(Array.isArray(data) ? data : []); // Ensure data is an array
+        } catch (error) {
+          console.error("Error fetching profiles:", error);
+        }
+      };
+    
+      fetchProfiles();
+    }, []);
+    
 
   
   // Fetch services data from the API
@@ -110,22 +111,21 @@ function Home() {
   };
 
   const handleSearchN = () => {
-    if (currentSearch === 'name') {
+    if (currentSearch === 'name' && Array.isArray(profiles)) {
       const filteredProfiles = profiles.filter((profile) =>
         profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
         profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
       );
-  
+      
       if (filteredProfiles.length > 0) {
         setPopupContent({
           title: "Matching Profiles",
           list: filteredProfiles.map((profile) => `${profile.user.first_name} ${profile.user.last_name}`),
         });
-        setShowPopup(true);
       } else {
         setPopupContent({ title: "No profiles found", list: [] });
-        setShowPopup(true);
       }
+      setShowPopup(true);
     }
   };
   
@@ -196,103 +196,105 @@ function Home() {
               <div className="Search-Sec">
                 <div className="top-Search">
 
-                  {currentSearch === 'trade' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="trade-input">Search for a Specific Trade</label>
-                      <input
-                        type="text"
-                        placeholder="Trade Type (e.g., Plumber, Electrician)"
-                        autoComplete="off"
-                        id="trade-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                      {showDropdown && inputValue && (
-                        <div className="dropdown">
-                          {services
-                            .filter((search) => search.name.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                            .map((search, index) => (
-                              <div
-                                key={index}
-                                className="dropdown-item"
-                                onClick={() => handleDropdownClick(search.name)}
-                              >
-                                {search.name}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
+        {currentSearch === 'trade' && (
+      <div className="Seach-OO1">
+        <label htmlFor="trade-input">Search for a Specific Trade</label>
+        <input
+          type="text"
+          placeholder="Trade Type (e.g., Plumber, Electrician)"
+          autoComplete="off"
+          id="trade-input"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onFocus={() => setShowDropdown(true)} // Show dropdown on focus
+          onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+        />
+        {showDropdown && (
+          <div className="dropdown">
+            {services
+              .filter((service) =>
+                service.name.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+              )
+              .map((service, index) => (
+                <div
+                  key={index}
+                  className="dropdown-item"
+                  onClick={() => handleDropdownClick(service.name)} // Select item
+                >
+                  {service.name}
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+    )}
 
-                  
-                  {currentSearch === 'location' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="location-input">Search by Location</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Location (e.g., Lagos)"
-                        autoComplete="off"
-                        id="location-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                      {showDropdown && inputValue && (
-                        <div className="dropdown">
-                          {locations
-                            .filter((state) => state.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                            .map((state, index) => (
-                              <div
-                                key={index}
-                                className="dropdown-item"
-                                onClick={() => handleDropdownClick(state)}
-                              >
-                                {state}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
+{currentSearch === 'location' && (
+  <div className="Seach-OO1">
+    <label htmlFor="location-input">Search by Location</label>
+    <input
+      type="text"
+      placeholder="Enter Location (e.g., Lagos)"
+      autoComplete="off"
+      id="location-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
+    {showDropdown && (
+      <div className="dropdown">
+        {locations
+          .filter((state) =>
+            state.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+          )
+          .map((state, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(state)}
+            >
+              {state}
+            </div>
+          ))}
+      </div>
+    )}
+  </div>
+)}
 
-                      {currentSearch === 'name' && (
-                        <div className="Seach-OO1">
-                          <label htmlFor="name-input">Search by Name</label>
-                          <input
-                            type="text"
-                            placeholder="Enter Name (e.g., John Doe)"
-                            autoComplete="off"
-                            id="name-input"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onFocus={() => setShowDropdown(true)}
-                            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                          />
-                          {showDropdown && inputValue && (
-                            <div className="dropdown">
-                              {profiles
-                                .filter((profile) =>
-                                  profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                  profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
-                                )
-                                .map((profile, index) => (
-                                  <div
-                                    key={index}
-                                    className="dropdown-item"
-                                    onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
-                                  >
-                                    {profile.user.first_name} {profile.user.last_name}
-                                  </div>
-                                ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-
+{currentSearch === 'name' && (
+  <div className="Seach-OO1">
+    <label htmlFor="name-input">Search by Name</label>
+    <input
+      type="text"
+      placeholder="Enter Name (e.g., John Doe)"
+      autoComplete="off"
+      id="name-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
+    {showDropdown && (
+      <div className="dropdown">
+        {profiles
+          .filter((profile) =>
+            profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+          .map((profile, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
+            >
+              {profile.user.first_name} {profile.user.last_name}
+            </div>
+          ))}
+      </div>
+    )}
+  </div>
+)}
                   <button className="search-btn" onClick={handleSearchN}>
                     <img src={SearchIcon} alt="Search Icon" />
                     Search
