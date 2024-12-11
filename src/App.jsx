@@ -20,7 +20,7 @@ import AdviceCentre from './LandingPages/AdviceCentre';
 import AdviceNigeria from './LandingPages/AdviceNigeria';
 import Benefit from './LandingPages/Benefit';
 import AboutUs from './LandingPages/AboutUs';
-// import TermsOfUse from './LandingPages/TermsOfUse';
+import ArtisanOverview from './LandingPages/ArtisanOverview';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 // import Cookies from './LandingPages/Cookies';
 // import ContactUs from './LandingPages/ContactUs';
@@ -51,6 +51,9 @@ function App() {
           <Route path="/advice-nigeria" element={<AdviceNigeria />} />
           <Route path="/benefits" element={<Benefit />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/artisan-overview" element={<ArtisanOverview />} />
+
+
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
