@@ -27,7 +27,7 @@ const HowSimsWorks = () => {
             </div>
             <div className='Gent-Tt-Dlt'>
                 <h2 className='big-text'>How SimserviceHub Works</h2>
-                <p>Hiring a skilled tradesperson through SimserviceHub is simple and stress-free. Just let us know what you need, and our smart matching process will help connect you to the best professionals across Nigeria, bringing quality and trust to every project.</p>
+                <p>Hiring a skilled Artisan through SimserviceHub is simple and stress-free. Just let us know what you need, and our smart matching process will help connect you to the best professionals across Nigeria, bringing quality and trust to every project.</p>
             </div>
             </div>
            
@@ -74,14 +74,14 @@ const HowSimsWorks = () => {
         <div className='Hhh_ss_Work_Card'>
             <img src={Un6}></img>
             <h3>Check Reviews</h3>
-            <p>Previous customers leave feedback after each job, allowing you to see their experiences. Reviews ensure you can choose a reliable tradesperson with confidence.</p>
+            <p>Previous customers leave feedback after each job, allowing you to see their experiences. Reviews ensure you can choose a reliable Artisan with confidence.</p>
         </div>
 
 
         <div className='Hhh_ss_Work_Card'>
             <img src={Un7}></img>
             <h3>Getting the Job Done</h3>
-            <p>Once you’ve agreed on the terms, pricing, and schedule, your tradesperson will get started on your project, keeping you updated along the way.</p>
+            <p>Once you’ve agreed on the terms, pricing, and schedule, your Artisan will get started on your project, keeping you updated along the way.</p>
         </div>
 
 

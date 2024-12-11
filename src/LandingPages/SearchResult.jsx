@@ -75,7 +75,7 @@ const SearchResult = () => {
     <div className='Search-Page'>
       <div className='Serahc-page-Box-Header'>
         <div className='site-container'>
-          <h2>Tradesperson(s) for <span>{service}</span></h2>
+          <h2>Artisan(s) for <span>{service}</span></h2>
           <div className='Ppa-bagdes'>
             <div className='Ppa-bagdes-ga'>
               <span>{trade}</span>
@@ -90,7 +90,7 @@ const SearchResult = () => {
 
       <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p>Simservicehub <ChevronRightIcon /> Trades <ChevronRightIcon />{trade} <ChevronRightIcon /> {service} <ChevronRightIcon /> Search result - {services.length}</p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> Search result - {services.length}</p>
           </div>
           </div>
 

@@ -12,7 +12,6 @@ const Footer = () => {
           <li><Link to="/privacy-policy">Privacy Policy</Link></li>
           <li><Link to="/cookies">Cookies</Link></li>
           <li><Link to="/contact-us">Contact Us</Link></li>
-          <li><Link to="/careers">Careers</Link></li>
           <li><Link to="/sitemap">Sitemap</Link></li>
         </ul>
         <div className="footer-social">
