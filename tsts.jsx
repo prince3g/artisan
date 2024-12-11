@@ -180,7 +180,6 @@ function Home() {
   };
 
 
-
   return (
     <div className="Home-page">
     <div className="hero-sec">
@@ -196,88 +195,113 @@ function Home() {
 
               <div className="Search-Sec">
                 <div className="top-Search">
-                {currentSearch === 'trade' && (
-            <div className="Seach-OO1">
-              <label htmlFor="trade-input">Search for a Specific Trade</label>
-              <input
-                type="text"
-                placeholder="Trade Type (e.g., Plumber, Electrician)"
-                autoComplete="off"
-                id="trade-input"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onFocus={() => setShowDropdown(true)} // Show dropdown on focus
-                onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
-              />
-                {showDropdown  && inputValue && (
-                <div className="dropdown">
-                  {services
-                    .filter((service) => service.name.toLowerCase().includes(inputValue.toLowerCase())) // Filter dynamically
-                    .map((service, index) => (
-                      <div
-                        key={index}
-                        className="dropdown-item"
-                        onClick={() => handleDropdownClick(service.name)} // Select item
-                      >
-                        {service.name}
-                      </div>
-                    ))}
+
+        {currentSearch === 'trade' && (
+      <div className="Seach-OO1">
+        <label htmlFor="trade-input">Search for a Specific Trade</label>
+        <input
+          type="text"
+          placeholder="Trade Type (e.g., Plumber, Electrician)"
+          autoComplete="off"
+          id="trade-input"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onFocus={() => setShowDropdown(true)} // Show dropdown on focus
+          onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+        />
+        {showDropdown && (
+          <div className="dropdown">
+            {services
+              .filter((service) =>
+                service.name.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+              )
+              .map((service, index) => (
+                <div
+                  key={index}
+                  className="dropdown-item"
+                  onClick={() => handleDropdownClick(service.name)} // Select item
+                >
+                  {service.name}
                 </div>
-              )}
+              ))}
+          </div>
+        )}
+      </div>
+    )}
+
+{currentSearch === 'location' && (
+  <div className="Seach-OO1">
+    <label htmlFor="location-input">Search by Location</label>
+    <input
+      type="text"
+      placeholder="Enter Location (e.g., Lagos)"
+      autoComplete="off"
+      id="location-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
+    {showDropdown && (
+      <div className="dropdown">
+        {locations
+          .filter((state) =>
+            state.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+          )
+          .map((state, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(state)}
+            >
+              {state}
             </div>
-          )}
+          ))}
+      </div>
+    )}
+  </div>
+)}
 
+{currentSearch === 'name' && (
+  <div className="Seach-OO1">
+    <label htmlFor="name-input">Search by Name</label>
+    <input
+      type="text"
+      placeholder="Enter Name (e.g., John Doe)"
+      autoComplete="off"
+      id="name-input"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onFocus={() => setShowDropdown(true)} // Always show dropdown on focus
+      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide after a delay to allow clicks
+    />
 
-                  {currentSearch === 'location' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="location-input">Search by Location</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Location (e.g., Lagos)"
-                        autoComplete="off"
-                        id="location-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                      {showDropdown && inputValue && (
-                        <div className="dropdown">
-                          {locations
-                            .filter((state) => state.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                            .map((state, index) => (
-                              <div
-                                key={index}
-                                className="dropdown-item"
-                                onClick={() => handleDropdownClick(state)}
-                              >
-                                {state}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {currentSearch === 'name' && (
-                    <div className="Seach-OO1">
-                      <label htmlFor="name-input">Search by Name</label>
-                      <input
-                        type="text"
-                        placeholder="Enter Trade Name (e.g., Electrician)"
-                        autoComplete="off"
-                        id="name-input"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                      />
-                    </div>
-                  )}
-                  <button className="search-btn" onClick={handleSearch}>
+    {showDropdown && (
+      <div className="dropdown">
+        {profiles
+          .filter((profile) =>
+            profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+            profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+          .map((profile, index) => (
+            <div
+              key={index}
+              className="dropdown-item"
+              onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
+            >
+              {profile.user.first_name} {profile.user.last_name}
+            </div>
+          ))}
+      </div>
+    )}
+  </div>
+)}
+                  <button className="search-btn" onClick={handleSearchN}>
                     <img src={SearchIcon} alt="Search Icon" />
                     Search
                   </button>
                 </div>
+
                 <div className="Sub-Search">
                   <button onClick={() => handleSearchTypeChange('location')}>
                     {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
