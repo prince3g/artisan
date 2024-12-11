@@ -446,7 +446,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Customers rely on Simservicehub to find skilled, verified trades person.</h3>
     <p>Sign up and grow your Business Today.</p>
-    <Link to="/artisan-sign-up" >Artisan Sign-Up</Link>
+    <Link to="/artisan-overview" >Artisan Sign-Up</Link>
   </div>
   </div>
 
