@@ -187,11 +187,11 @@ function Home() {
         <div className="hero-cont">
           <div className="hero-dlts">
             <div className="hero-dlts-main">
-              <h6>SimserviceHub Trusted Tradesperson </h6>
+              <h6>SimserviceHub Trusted Artisan </h6>
               <h2 className="big-text">
-                Discover Vetted <span>Tradesperson</span> for Every Home Project
+                Discover Vetted <span>Artisan</span> for Every Home Project
               </h2>
-              <p>Your trusted platform for connecting with experienced, reliable Tradespersons.</p>
+              <p>Your trusted platform for connecting with experienced, reliable Artisans.</p>
 
               <div className="Search-Sec">
                 <div className="top-Search">
@@ -424,15 +424,15 @@ function Home() {
   <div className='Oggg-Grid'>
   <div className='Oggg-Part1'>
     <div className='Oggg-header'>
-  <h2 className='big-text'>Why Choose SimserviceHub’s <span>Tradesperson</span> Network?</h2>
+  <h2 className='big-text'>Why Choose SimserviceHub’s <span>Artisan</span> Network?</h2>
   </div>
   <div className='Oggg-Card'>
     <h3><CheckCircle /> Guaranteed Work Quality</h3>
-    <p>SimserviceHub offers quality assurance for all tradesperson projects. T & Cs apply</p>
+    <p>SimserviceHub offers quality assurance for all Artisan projects. T & Cs apply</p>
   </div>
   <div className='Oggg-Card'>
     <h3><Verified /> Rigorous Screening Process </h3>
-    <p>All tradesperson undergo a thorough verification process, including background and skill checks.</p>
+    <p>All Artisan undergo a thorough verification process, including background and skill checks.</p>
   </div>
   <div className='Oggg-Card'>
     <h3><People /> Trusted by Thousands </h3>
@@ -451,7 +451,7 @@ function Home() {
 <div className='Cosii-mam'>
   <div className='site-container'>
   <div className='Cosii-mam-header'>
-    <h2 className='mid-text'>How to Hire the Right Tradesperson with SimserviceHub</h2>
+    <h2 className='mid-text'>How to Hire the Right Artisan with SimserviceHub</h2>
   </div>
   <div className='Cosii-mam-Grid'>
   <div className='Cosii-mam-Card'>
@@ -502,7 +502,7 @@ function Home() {
     <img src={HghImg2}></img>
     <div className='hgahgs-Card-Dlt'>
     <h3>Request a Quote</h3>
-    <p>Tell us your requirements, and we’ll connect you with up to three verified tradesperson.  </p>
+    <p>Tell us your requirements, and we’ll connect you with up to three verified Artisan.  </p>
     <Link to="/request-quote" >Request a Quote</Link>
   </div>
   </div>
