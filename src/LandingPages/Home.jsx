@@ -415,8 +415,8 @@ function Home() {
     <p>All Artisan undergo a thorough verification process, including background and skill checks.</p>
   </div>
   <div className='Oggg-Card'>
-    <h3><People /> Trusted by Thousands </h3>
-    <p>With over 2 million reviews from satisfied clients, we maintain transparency and trust.</p>
+    <h3><People /> Trusted service</h3>
+    <p>We maintain transparency and trust.</p>
   </div>
   </div>
   <div className='Oggg-Part2'>
@@ -493,7 +493,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Customers rely on Simservicehub to find skilled, verified trades person.</h3>
     <p>Sign up and grow your Business Today.</p>
-    <Link to="/artisan-sign-up" >Artisan Sign-Up</Link>
+    <Link to="/artisan-overview" >Artisan Sign-Up</Link>
   </div>
   </div>
 
