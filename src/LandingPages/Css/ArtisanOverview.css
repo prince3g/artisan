@@ -34,3 +34,172 @@
     background-repeat: no-repeat;
     z-index: -4;
 }
+
+/* GGfag-sec */
+
+.GGfag-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+}
+
+.GGfag-Top{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.GGfag-Top p{
+    margin-top: 20px;
+    color: #505050;
+}
+.GGfag-Top img{
+    max-width: 800px;
+    margin: 40px 0px;
+}
+
+/* GGfag-Grid */
+
+.GGfag-Grid{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 70px;
+    gap: 70px;
+    margin-top: 30px;
+}
+.GGfag-Grid h3{
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 20px;
+    border-left: 4px solid #9ACD32;
+}
+
+.GGfag-Grid ul{
+    position: relative;
+    width: 100%;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+.GGfag-Grid ul li{
+    list-style: disc !important;
+    margin-top: 10px !important;
+    color: #505050;
+    font-size: 14px;
+}
+
+
+/* Jhsia-sec */
+
+.Jhsia-sec{
+    position: relative;
+    text-align: center;
+    padding: 50px 0px;
+    margin-top: 30px;
+}
+
+.Jhsia-sec a{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 13px 20px;
+    width: 250px;
+    font-size: 17px;
+    margin-top: 30px;
+    background-color: #B1BD3B;
+    color: #fff;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.Jhsia-sec a:hover{
+    background-color: #929d32;
+}
+
+
+.Gakajs-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.Gakajs-Header{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+.Gakajs-Header p{
+    margin-top: 15px;
+    color: #505050;
+}
+
+
+.hash-Op .hgahgs-Card-Dlt a{
+    margin-top: 40px !important;
+    background-color: transparent !important;
+    border:1px solid #B1BD3B !important;
+    color: #B1BD3B !important;
+}
+
+.hash-Op .hgahgs-Card-Dlt a:hover{
+    background-color: #B1BD3B !important;
+    color: #fff !important;
+}
+
+/* allsk-sec */
+
+.allsk-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 50px 100px;
+}
+@media screen and (max-width:1000px){
+    .allsk-sec{
+        padding: 50px 0px !important;
+    }
+}
+
+.allsk-sec h1{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.allsk-sec ul li,
+.allsk-sec p{
+    position: relative;
+    margin-top: 10px;
+    color: #505050;
+}
+.allsk-sec ul{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.allsk-sec ul li{
+    list-style: disc !important;
+}
+strong{
+    color: #000 !important;
+}
+
+.allsk-sec h2{
+    font-size: 20px;
+    font-weight: 600;
+    margin: 20px 0px;
+}
+
+.allsk-sec h3{
+    font-size: 17px;
+    font-weight: 600;
+    margin: 20px 0px;
+}

@@ -21,6 +21,9 @@ import AdviceNigeria from './LandingPages/AdviceNigeria';
 import Benefit from './LandingPages/Benefit';
 import AboutUs from './LandingPages/AboutUs';
 import ArtisanOverview from './LandingPages/ArtisanOverview';
+import BusinessTips from './LandingPages/BusinessTips';
+import VettingProcess from './LandingPages/VettingProcess';
+import HowWorkComesYourWay from './LandingPages/HowWorkComesYourWay';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 // import Cookies from './LandingPages/Cookies';
 // import ContactUs from './LandingPages/ContactUs';
@@ -52,6 +55,9 @@ function App() {
           <Route path="/benefits" element={<Benefit />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/artisan-overview" element={<ArtisanOverview />} />
+          <Route path="/business-tips" element={<BusinessTips />} />
+          <Route path="/vetting-process" element={<VettingProcess />} />
+          <Route path="/how-work-comes-your-way" element={<HowWorkComesYourWay />} />
 
 
           {/* 
