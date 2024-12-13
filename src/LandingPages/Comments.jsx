@@ -51,8 +51,6 @@ const Comments = ({ artisanUniqueId }) => {
 
   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
 
-
-
   return (
    <div className='comment-sec'>
     <div className='rating-secc'>
@@ -258,10 +256,10 @@ const Comments = ({ artisanUniqueId }) => {
                   <div className="s-comment-1">
                     <div className="s-comment-1-flex">
                       <div className="s-comment-10">
-                        <span>{review.artisan_name.charAt(0).toLowerCase()}</span>
+                        <span>{review.reviewer_name_display.charAt(0).toLowerCase()}</span>
                       </div>
                       <div className="s-comment-11">
-                        <span>{review.reviewer_name}</span>
+                        <span>{review.reviewer_name_display}</span>
                         <p>{new Date(review.created_at).toLocaleDateString()}</p>
                       </div>
                     </div>
