@@ -1,0 +1,73 @@
+.portfolio-slider {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 30px;
+  }
+  
+  .main-media {
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+    object-fit: contain;
+    object-position: center;
+    background-color: #F1F1F1;
+    border:none;
+    outline: none;
+  }
+  
+  .thumbnails {
+    width: 100%;
+    position: relative;
+  }
+  
+  .thumbnail {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .thumbnail-image {
+    width: 100%;
+    height: 100px;
+    opacity: 0.6;
+    cursor: pointer;
+    border: 4px solid transparent;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .thumbnail.active .thumbnail-image {
+    opacity: 1;
+    border-color: #b3c138;
+  }
+  
+  .navigation-buttons button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #fff !important;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    -webkit-box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+  }
+  
+  .navigation-buttons button.prev-button{
+    left: -20px;
+  }
+
+  .navigation-buttons button.next-button{
+    right: -20px;
+  }
+
+  .navigation-buttons button svg{
+    font-size: 16px;
+    color: #000 !important;
+  }
+  .navigation-buttons button:hover{
+    background-color: #d5d4d4 !important;
+  }

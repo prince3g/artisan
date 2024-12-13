@@ -781,3 +781,16 @@
   border-color: #B1BD3B;
   color: #fff;
 }
+
+
+
+
+
+
+
+.service-slider-container .slick-prev:before, .service-slider-container .slick-next:before{
+  color: #B1BD3B !important;
+  font-size: 30px !important;
+  font-weight: 500 !important;
+}
+

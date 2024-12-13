@@ -3,6 +3,8 @@ import './Css/Comments.css';
 import Star from '@mui/icons-material/Star';
 import axios from 'axios';
 
+import PortfolioSlider from './PortfolioSlider';
+
 const Comments = ({ artisanUniqueId }) => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [reviews, setReviews] = useState([]);
@@ -144,6 +146,8 @@ const Comments = ({ artisanUniqueId }) => {
     </div>
     <div>
     <div className="comments-sec">
+      
+      <PortfolioSlider />
       <div className="comments-sec-head">
         <h3>Reviews</h3>
       </div>
