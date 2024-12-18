@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './Css/Comments.css';
 import Star from '@mui/icons-material/Star';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import PortfolioSlider from './PortfolioSlider';
+
+import MessageIcon from '@mui/icons-material/Message';
 
 const Comments = ({ artisanUniqueId }) => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -138,6 +140,53 @@ const Comments = ({ artisanUniqueId }) => {
                     </div>
                   );
                 })}
+
+          <div className="rating-barSec Onprogress">
+                    <span>Work Manship</span>
+                    <div className="progress">
+                        <div className="progress-main progress-main-80"></div>
+                    </div>
+                    <span>9.8</span>
+                </div>
+
+                <div className="rating-barSec Onprogress">
+                    <span>Tidiness</span>
+                    <div className="progress">
+                        <div className="progress-main progress-main-80"></div>
+                    </div>
+                    <span>9.8</span>
+                </div>
+
+
+                <div className="rating-barSec Onprogress">
+                    <span>Reliability</span>
+                    <div className="progress">
+                        <div className="progress-main progress-main-80"></div>
+                    </div>
+                    <span>9.8</span>
+                </div>
+
+
+                <div className="rating-barSec Onprogress">
+                    <span>Courtesy</span>
+                    <div className="progress">
+                        <div className="progress-main progress-main-80"></div>
+                    </div>
+                    <span>9.8</span>
+                </div>
+
+                <div className="Gland-Btns">
+                <Link to="/leave-review">
+                    <Star /> Leave a Review
+                  </Link>
+                  
+                  <Link to="/chat-with-artisan" className='Chhah-btns'>
+                    <MessageIcon /> Chat with Artisan
+                  </Link>
+                 
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -147,7 +196,7 @@ const Comments = ({ artisanUniqueId }) => {
       
       <PortfolioSlider />
       <div className="comments-sec-head">
-        <h3>Reviews</h3>
+        <h3>Customer reviews</h3>
       </div>
       {/* <div className="comments-sec-main">
         <div className="comments-sec-box">

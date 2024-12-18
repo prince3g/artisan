@@ -203,3 +203,18 @@ strong{
     font-weight: 600;
     margin: 20px 0px;
 }
+
+
+.Start_Vid{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.Start_Vid img{
+    max-width: 70%;
+}
