@@ -11,7 +11,8 @@
 }
 @media screen and (max-width:1000px){
   .comment-sec{
-    display: block !important;
+    display:flex !important;
+    flex-direction: column-reverse !important;
   }
   .rating-secc{
     position: relative !important;
@@ -176,17 +177,20 @@
     position: relative;
     width: 100%;
     height: auto;
-    margin-top: 20px;
   }
   .comments-sec-head{
     position: relative;
     width: 100%;
     height: auto;
+    margin-top: 20px;
+    border-bottom: 1px solid #dfdede;
+    border-top: 1px solid #dfdede;
+    padding: 10px 0px;
+    margin-bottom: 15px;
   }
   .comments-sec-head h3{
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
   }
   
   .comments-sec-main{
@@ -320,3 +324,67 @@
     color:#888888;
   }
   
+
+
+
+
+  /* Gland-Btns */
+
+  .Gland-Btns{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    grid-gap: 15px;
+  }
+
+  .Gland-Btns a{
+    position: relative;
+    width: 100%;
+    height: auto;
+    height: 50px;
+    border:1px solid #394c13;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    gap: 8px;
+    grid-gap: 8px;
+    color: #394c13;
+    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+  }
+  
+
+  .Gland-Btns a svg{
+    font-size: 17px;
+  }
+
+  .Gland-Btns a:hover{
+    background-color: #ebe9e9;
+  }
+
+  .Chhah-btns{
+    background-color: #B1BD3B !important;
+    border-color: #B1BD3B !important;
+    color: #fff !important;
+  }
+  .Chhah-btns:hover{
+    background-color: #99a432 !important;
+    border-color: #99a432 !important;
+  }
+
+
+  @media screen and (max-width:1000px){
+    .Chhah-btns{
+      position: fixed !important;
+      bottom: 10px !important;
+      transform: translateX(-50%) !important;
+      left: 50% !important;
+      z-index: 1500 !important;
+      width: 80% !important;
+    }
+  }

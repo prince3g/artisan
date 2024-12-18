@@ -12,6 +12,9 @@ import HghImg2 from './Img/UooaImgs/2.png';
 import HghImg3 from './Img/UooaImgs/3.png';
 
 
+import StatVid from './Img/stats.gif'
+
+
 
 const ArtisanOverview = () => {
   return (
@@ -116,6 +119,10 @@ const ArtisanOverview = () => {
 
        </div>
 
+
+    <div className='Start_Vid'>
+      <img src={StatVid}></img>
+    </div>
 
       </div>
     </div>
