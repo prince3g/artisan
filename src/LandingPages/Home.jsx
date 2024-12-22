@@ -268,7 +268,7 @@ function Home() {
     <label htmlFor="name-input">Search by Name</label>
     <input
       type="text"
-      placeholder="Enter Trade Name (e.g., Electrician)"
+      placeholder="Enter Trade Name (e.g., John Doe)"
       autoComplete="off"
       id="name-input"
       value={inputValue}

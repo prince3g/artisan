@@ -25,6 +25,7 @@ import BusinessTips from './LandingPages/BusinessTips';
 import VettingProcess from './LandingPages/VettingProcess';
 import HowWorkComesYourWay from './LandingPages/HowWorkComesYourWay';
 import ArtisanChattingPage from './LandingPages/ArtisanChattingPage';
+import ArtisanSignUp from './LandingPages/ArtisanSignUp';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 // import Cookies from './LandingPages/Cookies';
 // import ContactUs from './LandingPages/ContactUs';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/vetting-process" element={<VettingProcess />} />
           <Route path="/how-work-comes-your-way" element={<HowWorkComesYourWay />} />
           <Route path="/chat-with-artisan" element={<ArtisanChattingPage />} />
+          <Route path="/artisan-sign-up" element={<ArtisanSignUp />} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />

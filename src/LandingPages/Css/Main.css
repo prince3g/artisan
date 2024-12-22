@@ -29,6 +29,10 @@
     border-top:5px solid #394c13; */
 }
 
+.Shirolls_Box{
+  width: 630px;
+}
+
 @media screen and (max-width:1000px){
     .Gradnded-Box{
         width: 100% !important;
@@ -44,6 +48,7 @@
     width: 100%;
     height: auto;
 }
+
 
 .Gradnded-Box-header p{
     font-size: 15px;
@@ -70,10 +75,15 @@
     margin-top: 20px;
 }
 
+.Gland-Quest-data h5,
 .Gland-Quest-data label{
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 5px;
+}
+.Gland-Quest-data h5{
+  text-transform: uppercase !important;
+  font-weight: 10px !important;
 }
 .Gland-Quest-data input,
 .Gland-Quest-data textarea,
@@ -113,6 +123,23 @@
     height: auto;
   }
 
+  .GG-UL-Flex{
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    grid-gap: 20px !important;
+  }
+
+  .GG-UL-Flex li{
+    height: 70px !important;
+  }
+
+  @media screen and (max-width:600px){
+    .GG-UL-Flex{
+      display: block !important;
+    }
+  }
+
 .Gland-Quest-data ul li{
     position: relative;
     width: 100%;
@@ -128,7 +155,9 @@
     cursor: pointer;
     padding-right: 30px;
   }
-
+  .Gland-Quest-data ul li span span{
+    font-size: 12px !important;
+  }
 .Gland-Quest-data ul li::before{
     content: '';
     position: absolute;
@@ -205,6 +234,11 @@
   }
   .Gland-Cnt-Btn button:last-child:hover{
     background-color: #96a131;
+  }
+
+  .Shirolls_Box .Gland-Cnt-Btn button{
+    width: 100% !important;
+    height: 50px !important;
   }
 
 

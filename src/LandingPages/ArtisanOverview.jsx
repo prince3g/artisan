@@ -15,6 +15,13 @@ import HghImg3 from './Img/UooaImgs/3.png';
 import StatVid from './Img/stats.gif'
 
 
+import CheckIcon from '@mui/icons-material/Check';
+
+
+import GInggal from './Img/GInggal.png';
+
+import Hi1 from './Img/hi1.png';
+import Hi2 from './Img/hi2.png';
 
 const ArtisanOverview = () => {
   return (
@@ -27,7 +34,7 @@ const ArtisanOverview = () => {
                 <h2 className="big-text">
                 Win Local Jobs and Expand Your Business with <span>SimserviceHub</span>
                 </h2>
-                <p>We’re here to connect you with homeowners across Nigeria who are actively searching for trusted tradespeople like you. Join our growing platform to gain visibility and unlock access to clients looking for services in your field.</p>
+                <p>We’re here to connect you with Costumer across Nigeria who are actively searching for trusted tradespeople like you. Join our growing platform to gain visibility and unlock access to clients looking for services in your field.</p>
 
                 </div>
             </div>
@@ -78,7 +85,7 @@ const ArtisanOverview = () => {
        
        <div className='Jhsia-sec'>
         <h2 className='big-text'>Say Yes To Work You Want</h2>
-        <Link to="artisan-sign-up">Join Now</Link>
+        <Link to="/artisan-sign-up">Join Now</Link>
        </div>
 
 
@@ -100,7 +107,7 @@ const ArtisanOverview = () => {
   <div className='hgahgs-Card'>
     <img src={HghImg2}></img>
     <div className='hgahgs-Card-Dlt'>
-    <h3>Comprehensive Vetting Process for Nigerian Tradesperson: Ensuring Trust, Quality, and Reliability</h3>
+    <h3>Comprehensive Vetting Process for Nigerian Artisan: Ensuring Trust, Quality, and Reliability</h3>
     <Link to="/vetting-process" >Read</Link>
   </div>
   </div>
@@ -123,6 +130,56 @@ const ArtisanOverview = () => {
     <div className='Start_Vid'>
       <img src={StatVid}></img>
     </div>
+
+
+    <div className='auuys8-sec'>
+      <h3 className='mid-text'>What Do I Get for My Membership with SimserviceHub?</h3>
+
+      <ul>
+        <li>
+        <CheckIcon/>
+          <span>Present your business professionally with a custom profile page on SimserviceHub, where you can list your skills and showcase your areas of expertise to potential clients.</span>
+        </li>
+
+        <li>
+        <CheckIcon/>
+          <span>Upload high-quality photos of your top projects to highlight your capabilities. This visual display allows clients to see your skills and the quality of your work firsthand.</span>
+        </li>
+
+        <li>
+        <CheckIcon/>
+          <span>Invite clients to leave reviews and rate your services. Positive feedback builds your credibility and encourages others to choose you with confidence.</span>
+        </li>
+
+      </ul>
+
+      <div className='GInggal-Sec'>
+        <img src={GInggal}></img>
+      </div>
+    </div>
+
+
+
+    <div className='Gkaujs-Sec'>
+       <div className='Gkaujs-Card'>
+       <img src={Hi1}></img>
+        <h3>12-Month Assurance for Costumer and Artisan</h3>
+        <p>With SimserviceHub 's 12-month assurance, Costumer gain additional confidence when booking services through our platform. This assurance emphasizes our dedication to quality and reliability, reassuring clients of our Artisans’ commitment to delivering dependable work. Artisan also benefit from this endorsement, as it strengthens trust with clients and provides an added layer of credibility for their services.</p>
+       </div>
+
+       <div className='Gkaujs-Card'>
+        <img src={Hi2}></img>
+        <h3>Support Every Step of the Way</h3>
+        <p>With SimserviceHub, you’re never on your own. We’re here to make sure your membership works hard for you, whether you’re a homeowner seeking reliable service or a Artisan showcasing your skills. Our dedicated support team will assist you in getting the most value from your membership and provide guidance if any issues arise. Plus, if you ever face any misunderstandings or challenging feedback, we’re ready to step in and help mediate for a positive outcome, ensuring trust and satisfaction on all sides.</p>
+       </div>
+
+       </div>
+
+
+       <div className='Jhsia-sec hhhaa-btn'>
+        <Link to="/artisan-sign-up">Artisan Sign up</Link>
+       </div>
+
 
       </div>
     </div>
