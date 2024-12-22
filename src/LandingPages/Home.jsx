@@ -251,89 +251,6 @@ function Home() {
                 />
 
 
-<<<<<<< HEAD
-{currentSearch === 'location' && (
-  <div className="Seach-OO1">
-    <label htmlFor="location-input">Search by Location</label>
-    <input
-      type="text"
-      placeholder="Enter Location (e.g., Lagos)"
-      autoComplete="off"
-      id="location-input"
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-      onFocus={() => setShowDropdown(true)} // Show full list on focus
-      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Add delay to allow clicks
-    />
-    {showDropdown && (
-      <div className="dropdown">
-        {locations
-          .filter((state) => 
-            !inputValue || state.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
-          )
-          .map((state, index) => (
-            <div
-              key={index}
-              className="dropdown-item"
-              onClick={() => handleDropdownClick(state)} // Select item
-            >
-              {state}
-            </div>
-          ))}
-      </div>
-    )}
-  </div>
-)}
-
-{currentSearch === 'name' && (
-  <div className="Seach-OO1">
-    <label htmlFor="name-input">Search by Name</label>
-    <input
-      type="text"
-      placeholder="Enter Trade Name (e.g., John Doe)"
-      autoComplete="off"
-      id="name-input"
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-      onFocus={() => setShowDropdown(true)} // Show full list on focus
-      onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Add delay to allow clicks
-    />
-    {showDropdown && (
-      <div className="dropdown">
-        {profiles
-          .filter((profile) => 
-            !inputValue ||
-            profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
-            profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
-          )
-          .map((profile, index) => (
-            <div
-              key={index}
-              className="dropdown-item"
-              onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)} // Select item
-            >
-              {profile.user.first_name} {profile.user.last_name}
-            </div>
-          ))}
-      </div>
-    )}
-  </div>
-)}
-
-                  <button className="search-btn" onClick={handleSearch}>
-                    <img src={SearchIcon} alt="Search Icon" />
-                    Search
-                  </button>
-                </div>
-                <div className="Sub-Search">
-                  <button onClick={() => handleSearchTypeChange('location')}>
-                    {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
-                  </button>
-                  <span>or</span>
-                  <button onClick={() => handleSearchTypeChange('name')}>
-                    {currentSearch === 'name' ? 'Search for a Specific Trade' : 'Search by Name'}
-                  </button>
-=======
               {showDropdown && (
                 <div className="dropdown">
                   {services
@@ -349,7 +266,6 @@ function Home() {
                         {service.name}
                       </div>
                     ))}
->>>>>>> 69b77bae5f2329fcba7a3ff9589dfd465e74362d
                 </div>
               )}
             </div>
