@@ -1,55 +1,196 @@
-import React, { useState } from 'react';
-import './Css/Main.css';
-import { useNavigate } from 'react-router-dom'; 
-import PageServices from '../data/PageServices'; 
-
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./Css/Main.css";
+import { useNavigate } from "react-router-dom";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Link } from "react-router-dom";
 
 const ArtisanSignUp = () => {
-  
-  const [query, setQuery] = useState('');
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+  const [services, setServices] = useState([]);
+  const [query, setQuery] = useState("");
+  const [unique_id, setUnique_id] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [error, setError] = useState('');
-  const [selectedTrade, setSelectedTrade] = useState('');
-  const navigate = useNavigate();  // Initialize the navigate function
+  const [error, setError] = useState("");
+  const [selectedTrade, setSelectedTrade] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    trade: "",
+    businessName: "",
+    businessLocation: "",
+    lookingFor: "",
+    businessType: "",
+    employeeCount: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    confirmPassword: "", // Added confirmPassword field
+    businessEmail: "",
+    businessPhone: "",
+    mobile_number: "",
+    skills: ["Plumbing", "Electrical", "Carpentry"], // Add default skills here
+  });
 
+  useEffect(() => {
+    const fetchServices = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${djangoHostname}/api/jobs/auth/service-categories/`
+        );
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, [djangoHostname]);
 
   const handleInputChange = (e) => {
-    const input = e.target.value.trim();
-    setQuery(input);
-    setSelectedTrade(''); // Clear previously selected trade when typing
-
-    if (input === '') {
-      setSuggestions([]);
-      setError('');
-      // Reset all active states when clearing input
-      resetAllActiveStates();
-    } else {
-      const filteredSuggestions = PageServices.filter((service) =>
-        service.name.toLowerCase().includes(input.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-
-      if (filteredSuggestions.length === 0) {
-        setError('Trade does not exist');
+    const { name, value } = e.target;
+  
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  
+    if (name === "trade") {
+      const input = value.trim();
+      setQuery(input);
+  
+      if (input === "") {
+        setSuggestions([]);
+        setError("");
       } else {
-        setError('');
+        const filteredSuggestions = services.filter((service) =>
+          service.name.toLowerCase().includes(input.toLowerCase())
+        );
+        setSuggestions(filteredSuggestions);
+  
+        if (filteredSuggestions.length === 0) {
+          setError("Trade does not exist");
+        } else {
+          setError("");
+        }
       }
     }
   };
+  
+  const handleSuggestionClick = (service, unique_id) => {
+    setSelectedTrade({
+      name: service.name,
+      unique_id: unique_id, // Save the unique_id of the selected trade
+    });
+    setQuery(service.name); // Populate the input with the selected trade name
+    setUnique_id(unique_id); // Populate the unique_id state
+    setFormData((prevData) => ({
+      ...prevData,
+      trade: service.name, // Set the selected trade in formData
+    }));
+    setSuggestions([]); // Clear the suggestions after selection
+    setError(""); // Clear any existing error message
+  };
+  
 
-  const handleSuggestionClick = (name) => {
-    setQuery(name);
-    setSuggestions([]);
-    setError('');
-    setSelectedTrade(name);
-    // Reset all active states when selecting a new suggestion
-    resetAllActiveStates();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    setLoading(true);
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false); // Stop loading if there is an error
+      return;
+    }
+
+    const requestPayload = {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      password: formData.password,
+      email: formData.businessEmail,
+      user_type: "artisan",
+      phone: formData.businessPhone,
+      mobile_number: formData.mobile_number,
+    };
+
+    try {
+      const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestPayload),
+      });
+
+      if (!response1.ok) {
+        const errorData = await response1.json();
+        console.error("Error during first request:", errorData);
+        setError("An error occurred during the registration. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      const response1Data = await response1.json();
+      console.log("First request successful:", response1Data);
+
+      if (!selectedTrade || !selectedTrade.unique_id) {
+        setError("Please select a valid trade.");
+        setLoading(false);
+        return;
+      }
+
+      const artisanProfilePayload = {
+        service_details_id: unique_id,
+        businessName: formData.businessName,
+        businessLocation: formData.businessLocation,
+        lookingFor: formData.lookingFor,
+        businessType: formData.businessType,
+        employeeCount: formData.employeeCount,
+        skills: formData.skills && formData.skills.length > 0 ? formData.skills.join(", ") : "Plumbing, Electrical, Carpentry",
+        experience: formData.experience || 0,
+        location: formData.businessLocation,
+        user_id: response1Data.unique_id,
+      };
+
+      const response2 = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(artisanProfilePayload),
+      });
+
+      if (response2.ok) {
+        const result = await response2.json();
+        console.log("Second request successful:", result);
+        navigate("/success-page");
+      } else {
+        const errorData = await response2.json();
+        console.error("Error during second request:", errorData);
+        setError("An error occurred during registration. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("An unexpected error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const handleInputClick = () => {
+    if (!query || !query.trim()) {
+      setSuggestions(services);
+    }
+    setError('');
+  };
+  
+  
   const resetAllActiveStates = () => {
     setActiveReliabilityButton(null);
     setActiveWorkmanshipButton(null);
@@ -62,12 +203,6 @@ const ArtisanSignUp = () => {
     setIsCheckedCourtesy(false);
   };
 
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(textareaContent); // Use the content of the textarea
-    // You can also add form submission logic here, like sending data to an API
-  };
 
   const handleBackClick = () => {
     navigate(-1);  // Go back to the previous page
@@ -101,7 +236,7 @@ const ArtisanSignUp = () => {
     );
   };
 
-
+  
   return (
     <div className="Gradnded-page">
                     <div className='navigating-ttarvs'>
@@ -119,38 +254,53 @@ const ArtisanSignUp = () => {
               <div className="Gland-Quest">
                 <div className="Gland-Quest-data">
                   <label htmlFor="serviceSelect">What type of work do you do?</label>
+
                   <input
                     type="text"
                     placeholder="Search category"
-                    value={query}
+                    value={selectedTrade.name || query} // Use selectedTrade.name when it's set, otherwise fallback to query
                     onChange={handleInputChange}
+                    onClick={handleInputClick}
                   />
+
                   {suggestions.length > 0 && (
                     <ul className="suggestions-list">
                       {suggestions.map((service, index) => (
                         <li
                           key={index}
-                          onClick={() => handleSuggestionClick(service.name)}
+                          onClick={() => handleSuggestionClick(service.name, service.unique_id)}
                           className="suggestion-item"
                         >
                           {service.name}
                         </li>
                       ))}
                     </ul>
+
                   )}
+
                   {error && <div className="error-message">{error}</div>}
                 </div>
+
 
                 {selectedTrade && (
                   <div className="glahs-sec">
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">What is your business called?</label>
-                    <input type="text" name="" placeholder="Enter your business name*" />
+                    <input type="text"
+                     name="businessName" 
+                     value={formData.businessName}
+                     onChange={handleInputChange}
+                     placeholder="Enter your business name*" />
                   </div>
             
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">Where is your business located?</label>
-                    <input type="text" name="" placeholder="Enter your business address*" />
+                    <input 
+                     type="text"
+                     name="businessLocation"
+                     value={formData.businessLocation}
+                     onChange={handleInputChange}
+                     placeholder="Enter your business address*" />
                   </div>
             
                   <div className="Gland-Quest-data">
@@ -200,25 +350,46 @@ const ArtisanSignUp = () => {
                     ))}
                   </ul>
                 </div>
-
             
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">Final details</label>
-                    <input type="text" name="" placeholder="Your first name*" />
-                    <input type="text" name="" placeholder="Your surname*" />
-                    <input type="text" name="" placeholder="Your business email*" />
-                    <input type="text" name="" placeholder="Your business phone*" />
-                    <input type="text" name="" placeholder="Your mobile phone - optional" />
+                    <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
+                    <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
+                    
+                    <input  type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange}/>
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
+                      {error && <div className="error-message">{error}
+                        
+                    
+                    </div>}
+
+                    <input type="email" name="businessEmail" placeholder="Your business email" value={formData.businessEmail} onChange={handleInputChange} />
+                    <input type="tel"  name="businessPhone" placeholder="Your business phone" value={formData.businessPhone} onChange={handleInputChange} />
+                    <input type="tel" name="mobile_number" placeholder="Your mobile phone - optional" value={formData.mobile_number} onChange={handleInputChange}/>
                   </div>
+
                 </div>
+
                 )}
               </div>
             </div>
 
             <div className="Gland-Cnt-Btn">
-                <button type="submit" className="post-job-btn" onClick={handleSubmit}>
-                  Continue
+            <div className="Gland-Cnt-Btn">
+            <button
+                  type="submit"
+                  className="post-job-btn"
+                  onClick={handleSubmit}
+                  disabled={loading} // Disable the button while loading
+                >
+                  {loading ? (
+                    <span className="loader">Submitting ...</span> // Add a loader icon or animation here
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
+            </div>
+
               </div>
 
                    <div className="ghha-foot">
@@ -234,3 +405,4 @@ const ArtisanSignUp = () => {
 };
 
 export default ArtisanSignUp;
+
