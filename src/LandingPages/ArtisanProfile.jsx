@@ -23,6 +23,7 @@ import Comments from './Comments';
 import { Link } from "react-router-dom";
 
 const ArtisanProfile = () => {
+  
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const location = useLocation();
   const navigate = useNavigate();
