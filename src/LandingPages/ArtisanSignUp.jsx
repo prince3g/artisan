@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "./Css/Main.css";
-import { useNavigate } from "react-router-dom";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import './Css/Main.css';
+import { useNavigate } from 'react-router-dom'; 
+import PageServices from '../data/PageServices'; 
+
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+
+
+import { Link } from 'react-router-dom';
 
 const ArtisanSignUp = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -236,7 +242,36 @@ const ArtisanSignUp = () => {
     );
   };
 
-  
+
+
+
+
+
+  const [skills, setSkills] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
+
+  const addSkill = () => {
+    if (skillInput.trim() && !skills.includes(skillInput)) {
+      setSkills([...skills, skillInput]);
+      setSkillInput(""); // Clear the input after adding
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setSkills(skills.filter((skill) => skill !== skillToRemove));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
+  };
+
+
+
+
+
   return (
     <div className="Gradnded-page">
                     <div className='navigating-ttarvs'>
@@ -350,22 +385,50 @@ const ArtisanSignUp = () => {
                     ))}
                   </ul>
                 </div>
+
+                <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">What are your skills</label>
+                    <div className="flangSec">
+                      <input
+                        type="text"
+                        placeholder="Enter a skill*"
+                        value={skillInput}
+                        onChange={(e) => setSkillInput(e.target.value)}
+                        onKeyPress={handleKeyPress} // Add skill on Enter
+                      />
+                      <button onClick={addSkill}>
+                        <AddIcon /> Add Skill
+                      </button>
+                    </div>
+                    <div className="skills-container">
+                      {skills.map((skill, index) => (
+                        <div className="skill-box" key={index}>
+                          {skill}
+                          <button
+                            className="remove-skill-btn"
+                            onClick={() => removeSkill(skill)}
+                          >
+                            <CloseIcon />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
             
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">Final details</label>
-                    <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
-                    <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
-                    
-                    <input  type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange}/>
-                    <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
-                      {error && <div className="error-message">{error}
-                        
-                    
-                    </div>}
+                    <input type="text" name="" placeholder="Your first name*" />
+                    <input type="text" name="" placeholder="Your surname*" />
+                    <input type="text" name="" placeholder="Your business email*" />
+                    <input type="text" name="" placeholder="Your business phone*" />
+                    <input type="text" name="" placeholder="Your mobile phone - optional" />
 
-                    <input type="email" name="businessEmail" placeholder="Your business email" value={formData.businessEmail} onChange={handleInputChange} />
-                    <input type="tel"  name="businessPhone" placeholder="Your business phone" value={formData.businessPhone} onChange={handleInputChange} />
-                    <input type="tel" name="mobile_number" placeholder="Your mobile phone - optional" value={formData.mobile_number} onChange={handleInputChange}/>
+                    <textarea
+                      id="descriptionTextarea"
+                      className="description-textarea"
+                      value=""
+                      placeholder="Tell us about yourself.."
+                    />
                   </div>
 
                 </div>
