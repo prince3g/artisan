@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices'; 
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 import { Link } from 'react-router-dom';
 
@@ -100,6 +103,35 @@ const ArtisanSignUp = () => {
       </ul>
     );
   };
+
+
+
+
+
+
+  const [skills, setSkills] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
+
+  const addSkill = () => {
+    if (skillInput.trim() && !skills.includes(skillInput)) {
+      setSkills([...skills, skillInput]);
+      setSkillInput(""); // Clear the input after adding
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setSkills(skills.filter((skill) => skill !== skillToRemove));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
+  };
+
+
+
 
 
   return (
@@ -201,6 +233,34 @@ const ArtisanSignUp = () => {
                   </ul>
                 </div>
 
+                <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">What are your skills</label>
+                    <div className="flangSec">
+                      <input
+                        type="text"
+                        placeholder="Enter a skill*"
+                        value={skillInput}
+                        onChange={(e) => setSkillInput(e.target.value)}
+                        onKeyPress={handleKeyPress} // Add skill on Enter
+                      />
+                      <button onClick={addSkill}>
+                        <AddIcon /> Add Skill
+                      </button>
+                    </div>
+                    <div className="skills-container">
+                      {skills.map((skill, index) => (
+                        <div className="skill-box" key={index}>
+                          {skill}
+                          <button
+                            className="remove-skill-btn"
+                            onClick={() => removeSkill(skill)}
+                          >
+                            <CloseIcon />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
             
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">Final details</label>
@@ -209,6 +269,13 @@ const ArtisanSignUp = () => {
                     <input type="text" name="" placeholder="Your business email*" />
                     <input type="text" name="" placeholder="Your business phone*" />
                     <input type="text" name="" placeholder="Your mobile phone - optional" />
+
+                    <textarea
+                      id="descriptionTextarea"
+                      className="description-textarea"
+                      value=""
+                      placeholder="Tell us about yourself.."
+                    />
                   </div>
                 </div>
                 )}
