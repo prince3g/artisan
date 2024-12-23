@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './Css/Main.css';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+// Add other necessary imports, like navigation, if used
+import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices'; 
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -19,7 +19,7 @@ const ArtisanSignUp = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState("");
   const [selectedTrade, setSelectedTrade] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
