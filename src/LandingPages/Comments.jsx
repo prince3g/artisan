@@ -8,11 +8,14 @@ import PortfolioSlider from './PortfolioSlider';
 import MessageIcon from '@mui/icons-material/Message';
 
 const Comments = ({ artisanUniqueId }) => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
   const [ratingCounts, setRatingCounts] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+  const artisanUniqueID = artisanUniqueId
 
 
 
@@ -47,6 +50,8 @@ const Comments = ({ artisanUniqueId }) => {
     }
   }, [artisanUniqueId]);
 
+
+
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star key={index} style={{ color: index < rating ? '#ffc107' : '#e4e5e9' }} />
@@ -69,8 +74,6 @@ const Comments = ({ artisanUniqueId }) => {
                 <h2>
                   {averageRating} <span>out of 5</span>
                 </h2>
-
-                
 
                 <h5>
                 <Star />
@@ -180,7 +183,7 @@ const Comments = ({ artisanUniqueId }) => {
                     <Star /> Leave a Review
                   </Link>
                   
-                  <Link to="/chat-with-artisan" className='Chhah-btns'>
+                  <Link to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueID}&service=${artisanUniqueID}`} className='Chhah-btns'>
                     <MessageIcon /> Chat with Artisan
                   </Link>
                  
@@ -194,7 +197,7 @@ const Comments = ({ artisanUniqueId }) => {
     <div>
     <div className="comments-sec">
       
-      <PortfolioSlider />
+      <PortfolioSlider artisanUniqueID = {artisanUniqueID}/>
       <div className="comments-sec-head">
         <h3>Customer reviews</h3>
       </div>

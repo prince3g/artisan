@@ -44,9 +44,19 @@ const mediaData = [
   { type: "image", src: image3 },
 ];
 
-const PortfolioSlider = () => {
+const PortfolioSlider = (artisanUniqueID) => {
+
+
+
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const artisanUniqueId = artisanUniqueID.artisanUniqueID
+
+
+
   const [currentSlide, setCurrentSlide] = useState(0);
   const mainSliderRef = useRef(null); // Reference for the main slider
+
+  const [artisanData, setArtisanData] = useState([]); // Initialize service categories state
 
   const settings = {
     dots: false,
@@ -93,6 +103,41 @@ const PortfolioSlider = () => {
     };
   }, []);
 
+
+  
+  useEffect(() => {
+    const sanitizedId = artisanUniqueId?.trim(); // Ensure artisanUniqueId is defined
+  
+    const fetchArtisanDetail = async () => {
+      if (!sanitizedId) {
+        console.error('Artisan Unique ID is missing');
+        return;
+      }
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Match server-side CORS_ALLOW_CREDENTIALS
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log("Fetched Artisan Data:", data);
+        setArtisanData(data);
+      } catch (error) {
+        console.error('Error fetching artisan data:', error);
+      }
+    };
+  
+    fetchArtisanDetail();
+  }, [artisanUniqueId, djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
+  
+
   const plumberingServices = [
     "Pipe Installation and Repair",
     "Leak Detection and Repair",
@@ -129,6 +174,8 @@ const PortfolioSlider = () => {
     setIsVisible(!isVisible);
   };
 
+
+
   
   return (
     <div className="portfolio-slider">
@@ -142,7 +189,11 @@ const PortfolioSlider = () => {
                     </div>
                     <div className="Uuua-2">
                       <div>
-                        <h3>Ndubuisi Prince Godson</h3>
+                      <h3>
+                        {artisanData.user?.first_name && artisanData.user?.last_name
+                          ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
+                          : "Artisan Name"}
+                      </h3>
                         <h5> Artisan Portfolio </h5>
                       </div>
                     </div>
@@ -163,16 +214,30 @@ const PortfolioSlider = () => {
       {isVisible && (
          <ul>
          <h3>
-           Plumber  <span>{plumberingServices.length} Skills</span>
+         {artisanData.service_details?.name && artisanData.service_details?.name? 
+            `${artisanData.service_details.name}`: "Artisan Skills"} 
+            
+             
+           <span>&nbsp; &nbsp; {artisanData.skills ? artisanData.skills.split(',').length : 0} &nbsp; &nbsp; Skills</span>
          </h3>
-         <div className="Ull-is">
-         {plumberingServices.map((service, index) => (
-           <li key={index}>
-             <CheckCircleIcon/>
-             {service}
-           </li>
-         ))}
-         </div>
+
+         {/* {artisanData.user?.first_name && artisanData.user?.last_name
+              ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
+              : "Artisan Name"}
+                */}
+
+          <div className="Ull-is">
+                {artisanData.skills ? (
+                  artisanData.skills.split(',').map((skill, index) => (
+                    <li key={index}>
+                      <CheckCircleIcon />
+                      {skill.trim()}
+                    </li>
+                  ))
+                ) : (
+                  <li>No skills available</li>
+                )}
+              </div>
        </ul>
       )}
     </div>
@@ -188,7 +253,8 @@ const PortfolioSlider = () => {
             </p>
           </td>
           <td>
-            <span>Prince Godson</span>
+            <span>{artisanData.user?.first_name && artisanData.user?.last_name? 
+            `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</span>
           </td>
         </tr>
         <tr>
@@ -204,7 +270,7 @@ const PortfolioSlider = () => {
         <tr>
           <td>
             <p>
-              <HomeIcon style={{ marginRight: '8px' }} /> Address
+              <HomeIcon style={{ marginRight: '8px' }} /> {artisanData.location? `${artisanData.location}`: "Address"}
             </p>
           </td>
           <td>
@@ -241,7 +307,10 @@ const PortfolioSlider = () => {
             </p>
           </td>
           <td>
-            <span>2023</span>
+          <span>
+            {artisanData?.user?.date_joined? new Date(artisanData.user.date_joined).toLocaleString('default', { year: 'numeric', month: 'long' })
+              : 'Date Unavailable'}
+          </span>
           </td>
         </tr>
         <tr>
@@ -355,14 +424,16 @@ const PortfolioSlider = () => {
         <span>
           <PhoneIcon /> Contact Number
         </span>
-        <a href="tel:09037494084">09037494084</a>
+        <a href="tel:09037494084">{artisanData.user?.phone && artisanData.user?.phone? 
+            `${artisanData.user.phone}`: "Artisan Phone"}</a>
       </li>
       <li>
         <span>
           <LanguageIcon /> Website
         </span>
-        <a href="https://www.princegodson.com" target="_blank" rel="noopener noreferrer">
-          www.princegodson.com
+        <a href={`mailto:${artisanData.user?.email ? artisanData.user.email : "example@example.com"}`}  target="_blank" rel="noopener noreferrer">
+        {artisanData.user?.email && artisanData.user?.email? 
+            `${artisanData.user.email}`: "Artisan Email"}
         </a>
       </li>
     </ul>

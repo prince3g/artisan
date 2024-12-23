@@ -23,6 +23,7 @@ import Comments from './Comments';
 import { Link } from "react-router-dom";
 
 const ArtisanChattingPage = () => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,9 +35,13 @@ const ArtisanChattingPage = () => {
   const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
   const service_details = decodeURIComponent(searchParams.get('service_details') || '');
   const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
-  const artisan_unique_id = decodeURIComponent(searchParams.get('artisan_unique_id') || '');
+
+  const artisanUniqueID = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
+
   const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
-  
+
+
+  const [artisanData, setArtisanData] = useState([]); // Initialize service categories state
 
   
   const [isExpanded, setIsExpanded] = useState(false);
@@ -103,7 +108,6 @@ const ArtisanChattingPage = () => {
   };
   
   
-
   const handleToggleView = () => {
     setIsExpanded(!isExpanded);
   };
@@ -163,6 +167,39 @@ const ArtisanChattingPage = () => {
     setIsToggled(false);
   };
 
+  useEffect(() => {
+    const sanitizedId = artisanUniqueID?.trim(); // Ensure artisanUniqueId is defined
+  
+    const fetchArtisanDetail = async () => {
+      if (!sanitizedId) {
+        console.error('Artisan Unique ID is missing');
+        return;
+      }
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Match server-side CORS_ALLOW_CREDENTIALS
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        //console.log("Fetched Artisan Data:", data);
+        setArtisanData(data);
+      } catch (error) {
+        console.error('Error fetching artisan data:', error);
+      }
+    };
+  
+    fetchArtisanDetail();
+  }, [artisanUniqueID, djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
+  
+
 
   return (
     <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
@@ -173,11 +210,12 @@ const ArtisanChattingPage = () => {
             Simservicehub
           </Link>
           <ChevronRightIcon /> {service_details}
-          <ChevronRightIcon /> {service}
+          <ChevronRightIcon /> {artisanData.service_details?.name && artisanData.service_details?.name? `${artisanData.service_details.name}`: "Artisan Name"}
           <ChevronRightIcon /> {artisan_name}
 
             <ChevronRightIcon /> <Link to="/artisan-profile">Artisan Profile</Link>
-            <ChevronRightIcon /> <Link to="/chat-with-artisan">Chat with Artisan</Link>
+            <ChevronRightIcon /> <Link to="/chat-with-artisan">Chat with {artisanData.user?.first_name && artisanData.user?.last_name
+                          ? `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</Link>
         </p>
 
         </div>
@@ -229,17 +267,18 @@ const ArtisanChattingPage = () => {
                     </div>
                   </div>
                   <div className="aius">
-                    <h6>Artisan Profile</h6>
+                    <h6>{artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: " "} &nbsp; Profile</h6>
                     <p>
                       <span>
-                        <Handyman /> {service_details}
+                        <Handyman /> {artisanData.service_details?.name && artisanData.service_details?.name?`${artisanData.service_details.name}`: "Artisan Skills"} 
                       </span>
                       <span>
-                        <MyLocation /> {artisan_location}
+                        <MyLocation /> {artisanData.location? `${artisanData.location}`: "Address"}
                       </span>
                     </p>
                     <h4>
-                      <DateRangeIcon /> Member Since 5th of July 2024
+                      <DateRangeIcon /> Member Since {artisanData?.user?.date_joined? new Date(artisanData.user.date_joined).toLocaleString('default', { year: 'numeric', month: 'long' })
+                        : 'Date Unavailable'}
                     </h4>
                   </div>
                 </div>
@@ -261,12 +300,15 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>Skills</h4>
                     <ul>
-                      <li>Suite / Coat Making</li>
-                      <li>Native / Traditional wears</li>
-                      <li>Coorperate / Office Wears</li>
-                      <li>Men Wears</li>
+                      {artisanData.skills 
+                        ? artisanData.skills.split(',').map((skill, index) => (
+                            <li key={index}>{skill.trim()}</li>
+                          ))
+                        : <li>No skills available</li>
+                      }
                     </ul>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -280,7 +322,7 @@ const ArtisanChattingPage = () => {
             {activeSection === "chat" && (
               <div className="Chattt-Topp">
                 <div className="Chattt-Topp-1">
-                  <h3>Chat with {artisan_name}</h3>
+                  <h3>Chat with {artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: " "} &nbsp;</h3>
                 </div>
                 <div className="Chattt-Topp-2">
                   <span>
@@ -406,11 +448,11 @@ const ArtisanChattingPage = () => {
             <div className='Call-Sec'>
               <div className='call-Box'>
               <img src={UserImg} alt="User" />
-                <h3>{artisan_name}</h3>
-                <p>Phone no: {artisan_phone}</p>
+                <h3>{artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</h3>
+                <p>Phone no: {artisanData.user?.phone && artisanData.user?.phone?  `${artisanData.user.phone}`: "Artisan Phone"}</p>
                 <div className='kka-btns'>
                   <button><ChatIcon /></button>
-                <a href='tel:09037494084'> <CallIcon />Call {artisan_name}</a>
+                  <a href={`${artisanData.user?.phone ? artisanData.user.phone : "09012120987"}`} > <CallIcon />Call {artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</a>
                 </div>
               </div>
             </div>
