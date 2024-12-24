@@ -12,6 +12,7 @@ import CallIcon from '@mui/icons-material/Call';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import ChatInput from './ChatInput';
 
@@ -287,11 +288,12 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>About</h4>
                     <p className={`about-text ${isExpanded ? 'expanded' : ''}`}>
-                      We create outfits that befit your personality..., think classy,
+                      {/* We create outfits that befit your personality..., think classy,
                       think Impression stitches. Our mission is to redefine fashion by
                       creating timeless designs and ensuring quality in every stitch.
                       Experience unparalleled craftsmanship with our bespoke tailoring
-                      service, where every detail is tailored to perfection.
+                      service, where every detail is tailored to perfection. */}
+                      {artisanData.user?.about_artisan && artisanData.user?.about_artisan? `${artisanData.user.about_artisan}`: "Artisan Name"}
                     </p>
                     <span className="viewMoreOrLess" onClick={handleToggleView}>
                       {isExpanded ? 'View less' : 'View more'}
@@ -300,12 +302,16 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>Skills</h4>
                     <ul>
-                      {artisanData.skills 
-                        ? artisanData.skills.split(',').map((skill, index) => (
-                            <li key={index}>{skill.trim()}</li>
-                          ))
-                        : <li>No skills available</li>
-                      }
+                    {artisanData.skills ? (
+                      artisanData.skills.map((skill, index) => (
+                        <li key={index}>
+                          <CheckCircleIcon />
+                          {skill.trim()}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No skills available</li>
+                    )}
                     </ul>
                   </div>
 
