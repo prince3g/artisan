@@ -399,7 +399,7 @@ const LeaveReview = () => {
   const [serviceCategories, setServiceCategories] = useState([]); // Initialize service categories state
   const [reviewData, setReviewData] = useState({
     service_category_id: '',  // This should use the unique_id when trade is selected
-    customer_id: "b80a0ca4-3e57-4eb2-a278-905f83843616",
+    customer_id: "36feaf4e-b40d-435d-a73a-8d4289ba4760",
     reliability_rating: null,
     workmanship_rating: null,
     tidiness_rating: null,
