@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Css/ArtisanOverview.css';
 
@@ -23,7 +23,19 @@ import GInggal from './Img/GInggal.png';
 import Hi1 from './Img/hi1.png';
 import Hi2 from './Img/hi2.png';
 
+import CallIcon from '@mui/icons-material/Call';
+
+import CloseIcon from "@mui/icons-material/Close";
+
 const ArtisanOverview = () => {
+
+  const [isHidden, setIsHidden] = useState(false); // State to track visibility
+
+  const handleClose = () => {
+    setIsHidden(true); // Hide the section
+  };
+
+
   return (
    <div className='artisan-page'>
     <div className='AA-page-header'>
@@ -183,6 +195,28 @@ const ArtisanOverview = () => {
 
       </div>
     </div>
+
+
+    <div style={{ display: isHidden ? 'none' : 'block' }} className='Call_Cnt_sect'>
+      <div className='Call_Cnt_Top'>
+        <span onClick={handleClose} style={{ cursor: 'pointer' }}>
+          <CloseIcon />
+        </span>
+      </div>
+      <div className='Call_Cnt_Sub'>
+        <div className='Call_Cnt_Sub_1'>
+          <span><CallIcon /></span>
+        </div>
+        <div className='Call_Cnt_Sub_2'>
+          <p>Speak to an advisor today:</p>
+          <h3>Call +442038905470</h3>
+        </div>
+      </div>
+      <div className='Call_Cnt_Bottom'>
+        <Link to="">View our prices</Link>
+      </div>
+    </div>
+
 
 
 

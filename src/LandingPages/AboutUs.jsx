@@ -121,7 +121,7 @@ const AboutUs = () => {
             <div className='Adverri-Bozxi'>
                 <h3>Looking to become a SimserviceHub member?</h3>
                 <p>All you need to do is pass our checks</p>
-                <a href='#'>Sign up today</a>
+                <Link to="/artisan-overview">Sign up today</Link>
             </div>
         </div>
         </div>

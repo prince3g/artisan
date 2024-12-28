@@ -26,6 +26,9 @@ import VettingProcess from './LandingPages/VettingProcess';
 import HowWorkComesYourWay from './LandingPages/HowWorkComesYourWay';
 import ArtisanChattingPage from './LandingPages/ArtisanChattingPage';
 import ArtisanSignUp from './LandingPages/ArtisanSignUp';
+import TermsPage from './LandingPages/TermsPage';
+import TradespersonTerms from './LandingPages/TradespersonTerms';
+import HomeownersTerms from './LandingPages/HomeownersTerms';
 // import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 // import Cookies from './LandingPages/Cookies';
 // import ContactUs from './LandingPages/ContactUs';
@@ -62,6 +65,9 @@ function App() {
           <Route path="/how-work-comes-your-way" element={<HowWorkComesYourWay />} />
           <Route path="/chat-with-artisan" element={<ArtisanChattingPage />} />
           <Route path="/artisan-sign-up" element={<ArtisanSignUp />} />
+          <Route path="/terms-of-use" element={<TermsPage />} />
+          <Route path="/terms-of-use-tradeperson" element={<TradespersonTerms />} />
+          <Route path="/terms-of-use-homeowners" element={<HomeownersTerms/>} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />

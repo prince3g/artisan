@@ -662,3 +662,12 @@
 .navigating-ttarvs p svg{
   font-size: 12px;
 }
+
+
+
+
+.allsk-sec a{
+  text-decoration: underline !important;
+  color: #96a133 !important;
+  font-weight: 500 !important;
+}
