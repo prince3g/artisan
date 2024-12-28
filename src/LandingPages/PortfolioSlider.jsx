@@ -180,7 +180,7 @@ const PortfolioSlider = (artisanUniqueID) => {
   return (
     <div className="portfolio-slider">
     <div className="poooap-Header">
-      <h2>I'm a great and deligent plumber and I love serving my clients very well, and I make sure I deliver well.</h2>
+      <h2>{artisanData.user?.about_artisan && artisanData.user?.about_artisan? `${artisanData.user.about_artisan}`: "Artisan Name"}</h2>
 
       
       <div className="Uuua-sec">
@@ -213,13 +213,12 @@ const PortfolioSlider = (artisanUniqueID) => {
       </h2>
       {isVisible && (
          <ul>
-         <h3>
-         {artisanData.service_details?.name && artisanData.service_details?.name? 
-            `${artisanData.service_details.name}`: "Artisan Skills"} 
-            
-             
-           <span>&nbsp; &nbsp; {artisanData.skills ? artisanData.skills.split(',').length : 0} &nbsp; &nbsp; Skills</span>
-         </h3>
+        <h3>
+          {artisanData.service_details?.name 
+            ? artisanData.service_details.name 
+            : "Artisan Skills"}
+          <span>&nbsp; &nbsp; {artisanData.skills ? artisanData.skills.length : 0} &nbsp; &nbsp; Skills</span>
+        </h3>
 
          {/* {artisanData.user?.first_name && artisanData.user?.last_name
               ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
@@ -227,17 +226,17 @@ const PortfolioSlider = (artisanUniqueID) => {
                 */}
 
           <div className="Ull-is">
-                {artisanData.skills ? (
-                  artisanData.skills.split(',').map((skill, index) => (
-                    <li key={index}>
-                      <CheckCircleIcon />
-                      {skill.trim()}
-                    </li>
-                  ))
-                ) : (
-                  <li>No skills available</li>
-                )}
-              </div>
+            {artisanData.skills ? (
+              artisanData.skills.map((skill, index) => (
+                <li key={index}>
+                  <CheckCircleIcon />
+                  {skill.trim()}
+                </li>
+              ))
+            ) : (
+              <li>No skills available</li>
+            )}
+          </div>
        </ul>
       )}
     </div>
