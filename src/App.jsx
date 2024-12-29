@@ -29,8 +29,9 @@ import ArtisanSignUp from './LandingPages/ArtisanSignUp';
 import TermsPage from './LandingPages/TermsPage';
 import TradespersonTerms from './LandingPages/TradespersonTerms';
 import HomeownersTerms from './LandingPages/HomeownersTerms';
-// import PrivacyPolicy from './LandingPages/PrivacyPolicy';
-// import Cookies from './LandingPages/Cookies';
+import PrivacyPolicy from './LandingPages/PrivacyPolicy';
+import CookiesPage from './LandingPages/CookiesPage';
+import CookieConsent from './LandingPages/CookieConsent';
 // import ContactUs from './LandingPages/ContactUs';
 // import Careers from './LandingPages/Careers';
 // import Sitemap from './LandingPages/Sitemap';
@@ -39,8 +40,9 @@ import Footer from './LandingPages/Footer';
 function App() {
   return (
     <div>
-    
     <Router>
+    <CookieConsent />
+
     <ScrollToTop />
 
       <SiteNav />
@@ -68,6 +70,8 @@ function App() {
           <Route path="/terms-of-use" element={<TermsPage />} />
           <Route path="/terms-of-use-tradeperson" element={<TradespersonTerms />} />
           <Route path="/terms-of-use-homeowners" element={<HomeownersTerms/>} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookies" element={<CookiesPage />} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />
