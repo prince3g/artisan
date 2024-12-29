@@ -671,3 +671,8 @@
   color: #96a133 !important;
   font-weight: 500 !important;
 }
+
+.glla-header{
+  position: relative;
+  margin-bottom: 30px;
+}
