@@ -127,7 +127,7 @@ const PortfolioSlider = (artisanUniqueID) => {
         }
   
         const data = await response.json();
-        console.log("Fetched Artisan Data:", data);
+       // console.log("Fetched Artisan Data:", data);
         setArtisanData(data);
       } catch (error) {
         console.error('Error fetching artisan data:', error);

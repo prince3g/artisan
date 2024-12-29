@@ -1,340 +1,567 @@
+// import React, { useEffect, useState } from 'react';
+// import './Css/Comments.css';
+// import Star from '@mui/icons-material/Star';
+// import axios from 'axios';
+// import { Link } from 'react-router-dom';
+// import PortfolioSlider from './PortfolioSlider';
+
+// import MessageIcon from '@mui/icons-material/Message';
+
+// const Comments = ({ artisanUniqueId }) => {
+
+//   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+//   const [reviews, setReviews] = useState([]);
+//   const [error, setError] = useState(null);
+//   const [averageRating, setAverageRating] = useState(0);
+//   const [ratingCounts, setRatingCounts] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+//   const artisanUniqueID = artisanUniqueId
+
+
+
+//   useEffect(() => {
+//     const fetchReviews = async () => {
+//       try {
+//         const sanitizedId = artisanUniqueId.trim();
+//         const response = await axios.get(
+//           `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${sanitizedId}/`
+//         );
+//         setReviews(response.data);
+
+//         // Calculate average rating
+//         const totalRatings = response.data.reduce((sum, review) => sum + review.rating, 0);
+//         const avgRating = response.data.length > 0 ? totalRatings / response.data.length : 0;
+//         setAverageRating(avgRating.toFixed(1)); // Round to 1 decimal place
+
+//         // Count reviews by star rating
+//         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+//         response.data.forEach((review) => {
+//           counts[review.rating]++;
+//         });
+//         setRatingCounts(counts);
+//       } catch (err) {
+//         console.error('Error fetching reviews:', err);
+//         setError('Failed to load reviews. Please try again later.');
+//       }
+//     };
+
+//     if (artisanUniqueId) {
+//       fetchReviews();
+//     }
+//   }, [artisanUniqueId]);
+
+
+
+//   const renderStars = (rating) => {
+//     return Array.from({ length: 5 }, (_, index) => (
+//       <Star key={index} style={{ color: index < rating ? '#ffc107' : '#e4e5e9' }} />
+//     ));
+//   };
+
+//   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
+
+//   return (
+//    <div className='comment-sec'>
+//     <div className='rating-secc'>
+//     <div className='rating-secc-box'>
+//     <p><Star />Artisan Rating</p>
+
+
+//     <div className="cart-pro-rating-sec">
+
+
+//             <div className="t-cart-pro-rating">
+//                 <h2>
+//                   {averageRating} <span>out of 5</span>
+//                 </h2>
+
+//                 <h5>
+//                 <Star />
+//                 <Star />
+//                 <Star />
+//                 <Star />
+//                 <Star />
+                
+//                 </h5>
+//                 <h6>{reviews.length} Reviews</h6>
+                
+//             </div>
+
+//             <div className="s-cart-pro-rating">
+//               {Object.keys(ratingCounts)
+//                 .reverse()
+//                 .map((star) => {
+//                   const count = ratingCounts[star];
+//                   const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+//                   return (
+//                     <div key={star} className="rating-barSec Onprogress">
+//                       <span>{star} Star</span>
+//                       <div className="progress">
+//                         <div
+//                           className="progress-main"
+//                           style={{ width: `${percentage}%` }}
+//                         ></div>
+//                       </div>
+//                       <span>{count}</span>
+//                     </div>
+
+                    
+//                   );
+//                 })
+//                 }
+
+
+
+
+
+//                 <div className="rating-barSec Onprogress">
+//                     <span>Tidiness</span>
+//                     <div className="progress">
+//                         <div className="progress-main progress-main-80"></div>
+//                     </div>
+//                     <span>9.8</span>
+//                 </div>
+
+
+//                 <div className="rating-barSec Onprogress">
+//                     <span>Reliability</span>
+//                     <div className="progress">
+//                         <div className="progress-main progress-main-80"></div>
+//                     </div>
+//                     <span>9.8</span>
+//                 </div>
+
+
+//                 <div className="rating-barSec Onprogress">
+//                     <span>Courtesy</span>
+//                     <div className="progress">
+//                         <div className="progress-main progress-main-80"></div>
+//                     </div>
+//                     <span>9.8</span>
+//                 </div>
+
+//                 <div className="Gland-Btns">
+//                 <Link to={`/leave-review?artisanUniqueID=${artisanUniqueID}`}>
+//                     <Star /> Leave a Review
+//                   </Link>
+                  
+//                   <Link to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueID}&service=${artisanUniqueID}`} className='Chhah-btns'>
+//                     <MessageIcon /> Chat with Artisan
+//                   </Link>
+                 
+//                 </div>
+
+
+//             </div>
+//         </div>
+//     </div>
+//     </div>
+//     <div>
+//     <div className="comments-sec">
+      
+//       <PortfolioSlider artisanUniqueID = {artisanUniqueID}/>
+//       <div className="comments-sec-head">
+//         <h3>Customer reviews</h3>
+//       </div>
+//     <div className="comments-sec-main">
+//           {error && <p className="error">{error}</p>}
+//           {reviews.length > 0 ? (
+//             reviews.map((review) => (
+//               <div key={review.id} className="comments-sec-box">
+//                 <div className="s-comment">
+//                   <div className="s-comment-1">
+//                     <div className="s-comment-1-flex">
+//                       <div className="s-comment-10">
+//                         <span>{review.reviewer_name_display.charAt(0).toLowerCase()}</span>
+//                       </div>
+//                       <div className="s-comment-11">
+//                         <span>{review.reviewer_name_display}</span>
+//                         <p>{new Date(review.created_at).toLocaleDateString()}</p>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="s-comment-2">
+//                     <span>{renderStars(review.rating)}</span>
+//                     <p>{review.review_text}</p>
+//                   </div>
+//                 </div>
+//               </div>
+//             ))
+//           ) : (
+//             <p>No reviews available.</p>
+//           )}
+//         </div>
+//     </div>
+
+//     </div>
+//    </div>
+//   );
+// };
+
+// export default Comments;
+
+
+// import React, { useEffect, useState } from 'react';
+// import './Css/Comments.css';
+// import Star from '@mui/icons-material/Star';
+// import axios from 'axios';
+// import { Link } from 'react-router-dom';
+// import PortfolioSlider from './PortfolioSlider';
+// import MessageIcon from '@mui/icons-material/Message';
+
+// const Comments = ({ artisanUniqueId }) => {
+//   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+//   const [reviews, setReviews] = useState([]);
+//   const [error, setError] = useState(null);
+//   const [averageRating, setAverageRating] = useState(0);
+//   const [ratingCounts, setRatingCounts] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+//   const [subRatings, setSubRatings] = useState({
+//     reliability: 0,
+//     workmanship: 0,
+//     tidiness: 0,
+//     courtesy: 0,
+//   });
+
+//   useEffect(() => {
+//     const fetchReviews = async () => {
+//       try {
+//         const sanitizedId = artisanUniqueId.trim();
+//         const response = await axios.get(
+//           `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${sanitizedId}/`
+//         );
+//         const data = response.data;
+
+//         setReviews(data);
+
+//         // Calculate average rating
+//         const totalRatings = data.reduce((sum, review) => sum + review.rating, 0);
+//         const avgRating = data.length > 0 ? totalRatings / data.length : 0;
+//         setAverageRating(avgRating.toFixed(1)); // Round to 1 decimal place
+
+//         // Count reviews by star rating
+//         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+//         let reliabilitySum = 0,
+//           workmanshipSum = 0,
+//           tidinessSum = 0,
+//           courtesySum = 0;
+
+//         data.forEach((review) => {
+//           counts[review.rating]++;
+//           reliabilitySum += review.reliability_rating;
+//           workmanshipSum += review.workmanship_rating;
+//           tidinessSum += review.tidiness_rating;
+//           courtesySum += review.courtesy_rating;
+//         });
+
+//         setRatingCounts(counts);
+
+//         // Calculate sub-ratings
+//         const numReviews = data.length;
+//         setSubRatings({
+//           reliability: numReviews > 0 ? (reliabilitySum / numReviews).toFixed(1) : 0,
+//           workmanship: numReviews > 0 ? (workmanshipSum / numReviews).toFixed(1) : 0,
+//           tidiness: numReviews > 0 ? (tidinessSum / numReviews).toFixed(1) : 0,
+//           courtesy: numReviews > 0 ? (courtesySum / numReviews).toFixed(1) : 0,
+//         });
+//       } catch (err) {
+//         console.error('Error fetching reviews:', err);
+//         setError('Failed to load reviews. Please try again later.');
+//       }
+//     };
+
+//     if (artisanUniqueId) {
+//       fetchReviews();
+//     }
+//   }, [artisanUniqueId]);
+
+//   const renderStars = (rating) => {
+//     return Array.from({ length: 5 }, (_, index) => (
+//       <Star key={index} style={{ color: index < rating ? '#ffc107' : '#e4e5e9' }} />
+//     ));
+//   };
+
+//   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
+
+//   return (
+//     <div className='comment-sec'>
+//       <div className='rating-secc'>
+//         <div className='rating-secc-box'>
+//           <p>
+//             <Star /> Artisan Rating
+//           </p>
+//           <div className='cart-pro-rating-sec'>
+//             <div className='t-cart-pro-rating'>
+//               <h2>
+//                 {averageRating} <span>out of 5</span>
+//               </h2>
+//               <h5>
+//                 {renderStars(averageRating)}
+//               </h5>
+//               <h6>{reviews.length} Reviews</h6>
+//             </div>
+
+//             <div className='s-cart-pro-rating'>
+//               {Object.keys(ratingCounts)
+//                 .reverse()
+//                 .map((star) => {
+//                   const count = ratingCounts[star];
+//                   const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+//                   return (
+//                     <div key={star} className='rating-barSec Onprogress'>
+//                       <span>{star} Star</span>
+//                       <div className='progress'>
+//                         <div className='progress-main' style={{ width: `${percentage}%` }}></div>
+//                       </div>
+//                       <span>{count}</span>
+//                     </div>
+//                   );
+//                 })}
+//               {Object.entries(subRatings).map(([key, value]) => (
+//                 <div key={key} className='rating-barSec Onprogress'>
+//                   <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+//                   <div className='progress'>
+//                     <div className='progress-main' style={{ width: `${value * 10}%` }}></div>
+//                   </div>
+//                   <span>{value}</span>
+//                 </div>
+//               ))}
+//               <div className='Gland-Btns'>
+//                 <Link to={`/leave-review?artisanUniqueID=${artisanUniqueId}`}>
+//                   <Star /> Leave a Review
+//                 </Link>
+//                 <Link
+//                   to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueId}&service=${artisanUniqueId}`}
+//                   className='Chhah-btns'
+//                 >
+//                   <MessageIcon /> Chat with Artisan
+//                 </Link>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       <div>
+//         <div className='comments-sec'>
+//           <PortfolioSlider artisanUniqueID={artisanUniqueId} />
+//           <div className='comments-sec-head'>
+//             <h3>Customer reviews</h3>
+//           </div>
+//           <div className='comments-sec-main'>
+//             {error && <p className='error'>{error}</p>}
+//             {reviews.length > 0 ? (
+//               reviews.map((review) => (
+//                 <div key={review.id} className='comments-sec-box'>
+//                   <div className='s-comment'>
+//                     <div className='s-comment-1'>
+//                       <div className='s-comment-1-flex'>
+//                         <div className='s-comment-10'>
+//                           <span>{review.reviewer_name_display.charAt(0).toLowerCase()}</span>
+//                         </div>
+//                         <div className='s-comment-11'>
+//                           <span>{review.reviewer_name_display}</span>
+//                           <p>{new Date(review.created_at).toLocaleDateString()}</p>
+//                         </div>
+//                       </div>
+//                     </div>
+//                     <div className='s-comment-2'>
+//                       <span>{renderStars(review.rating)}</span>
+//                       <p>{review.review_text}</p>
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))
+//             ) : (
+//               <p>No reviews available.</p>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Comments;
+
 import React, { useEffect, useState } from 'react';
 import './Css/Comments.css';
 import Star from '@mui/icons-material/Star';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PortfolioSlider from './PortfolioSlider';
-
 import MessageIcon from '@mui/icons-material/Message';
 
 const Comments = ({ artisanUniqueId }) => {
-
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
-  const [averageRating, setAverageRating] = useState(0);
+  const [averageRating, setAverageRating] = useState('0.0');
   const [ratingCounts, setRatingCounts] = useState({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
-  const artisanUniqueID = artisanUniqueId
-
-
+  const [subRatings, setSubRatings] = useState({
+    reliability: '0.0',
+    workmanship: '0.0',
+    tidiness: '0.0',
+    courtesy: '0.0',
+  });
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        if (!artisanUniqueId) return;
+
         const sanitizedId = artisanUniqueId.trim();
         const response = await axios.get(
           `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${sanitizedId}/`
         );
-        setReviews(response.data);
+        const data = response.data;
+
+        setReviews(data);
 
         // Calculate average rating
-        const totalRatings = response.data.reduce((sum, review) => sum + review.rating, 0);
-        const avgRating = response.data.length > 0 ? totalRatings / response.data.length : 0;
-        setAverageRating(avgRating.toFixed(1)); // Round to 1 decimal place
+        const totalRatings = data.reduce((sum, review) => sum + (review.rating || 0), 0);
+        const avgRating = data.length > 0 ? (totalRatings / data.length).toFixed(1) : '0.0';
+        setAverageRating(avgRating);
 
-        // Count reviews by star rating
+        // Count reviews by star rating and calculate sub-ratings
         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-        response.data.forEach((review) => {
-          counts[review.rating]++;
+        let reliabilitySum = 0,
+          workmanshipSum = 0,
+          tidinessSum = 0,
+          courtesySum = 0;
+
+        data.forEach((review) => {
+          const validRating = Math.min(Math.max(review.rating || 0, 1), 5);
+          counts[validRating]++;
+          reliabilitySum += review.reliability_rating || 0;
+          workmanshipSum += review.workmanship_rating || 0;
+          tidinessSum += review.tidiness_rating || 0;
+          courtesySum += review.courtesy_rating || 0;
         });
+
         setRatingCounts(counts);
+
+        const numReviews = data.length;
+        setSubRatings({
+          reliability: numReviews > 0 ? (reliabilitySum / numReviews).toFixed(1) : '0.0',
+          workmanship: numReviews > 0 ? (workmanshipSum / numReviews).toFixed(1) : '0.0',
+          tidiness: numReviews > 0 ? (tidinessSum / numReviews).toFixed(1) : '0.0',
+          courtesy: numReviews > 0 ? (courtesySum / numReviews).toFixed(1) : '0.0',
+        });
       } catch (err) {
         console.error('Error fetching reviews:', err);
         setError('Failed to load reviews. Please try again later.');
       }
     };
 
-    if (artisanUniqueId) {
-      fetchReviews();
-    }
+    fetchReviews();
   }, [artisanUniqueId]);
 
-
-
   const renderStars = (rating) => {
+    const roundedRating = Math.round(rating);
     return Array.from({ length: 5 }, (_, index) => (
-      <Star key={index} style={{ color: index < rating ? '#ffc107' : '#e4e5e9' }} />
+      <Star key={index} style={{ color: index < roundedRating ? '#ffc107' : '#e4e5e9' }} />
     ));
   };
 
   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
 
   return (
-   <div className='comment-sec'>
-    <div className='rating-secc'>
-    <div className='rating-secc-box'>
-    <p><Star />Artisan Rating1111111111111</p>
-
-
-    <div className="cart-pro-rating-sec">
-
-
-            <div className="t-cart-pro-rating">
-                <h2>
-                  {averageRating} <span>out of 5</span>
-                </h2>
-
-                <h5>
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                
-                </h5>
-                <h6>{reviews.length} Reviews</h6>
-                
+    <div className='comment-sec'>
+      <div className='rating-secc'>
+        <div className='rating-secc-box'>
+          <p>
+            <Star /> Artisan Rating
+          </p>
+          <div className='cart-pro-rating-sec'>
+            <div className='t-cart-pro-rating'>
+              <h2>
+                {averageRating} <span>out of 10</span>
+              </h2>
+              <h5>{renderStars(averageRating)}</h5>
+              <h6>{totalReviews} Reviews</h6>
             </div>
-            {/* <div className="s-cart-pro-rating">
-                <div className="rating-barSec Onprogress">
-                    <span>5 Star</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-80"></div>
-                    </div>
-                    <span>45</span>
-                </div>
-                <div className="rating-barSec Onprogress">
-                    <span>4 Star</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-30"></div>
-                    </div>
-                    <span>13</span>
-                </div>
-                <div className="rating-barSec Onprogress">
-                    <span>3 Star</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-10"></div>
-                    </div>
-                    <span>13</span>
-                </div>
-                <div className="rating-barSec">
-                    <span>2 Star</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-0"></div>
-                    </div>
-                    <span>0</span>
-                </div>
-                <div className="rating-barSec">
-                    <span>1 Star</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-0"></div>
-                    </div>
-                    <span>0</span>
-                </div>
-            </div> */}
 
-            <div className="s-cart-pro-rating">
+            <div className='s-cart-pro-rating'>
               {Object.keys(ratingCounts)
                 .reverse()
                 .map((star) => {
                   const count = ratingCounts[star];
                   const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
                   return (
-                    <div key={star} className="rating-barSec Onprogress">
+                    <div key={star} className='rating-barSec Onprogress'>
                       <span>{star} Star</span>
-                      <div className="progress">
-                        <div
-                          className="progress-main"
-                          style={{ width: `${percentage}%` }}
-                        ></div>
+                      <div className='progress'>
+                        <div className='progress-main' style={{ width: `${percentage}%` }}></div>
                       </div>
                       <span>{count}</span>
                     </div>
                   );
                 })}
 
-          <div className="rating-barSec Onprogress">
-                    <span>Work Manship</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-80"></div>
-                    </div>
-                    <span>9.8</span>
+              {Object.entries(subRatings).map(([key, value]) => (
+                <div key={key} className='rating-barSec Onprogress'>
+                  <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                  <div className='progress'>
+                    <div className='progress-main' style={{ width: `${value * 10}%` }}></div>
+                  </div>
+                  <span>{value}</span>
                 </div>
+              ))}
 
-                <div className="rating-barSec Onprogress">
-                    <span>Tidiness</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-80"></div>
-                    </div>
-                    <span>9.8</span>
-                </div>
-
-
-                <div className="rating-barSec Onprogress">
-                    <span>Reliability</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-80"></div>
-                    </div>
-                    <span>9.8</span>
-                </div>
-
-
-                <div className="rating-barSec Onprogress">
-                    <span>Courtesy</span>
-                    <div className="progress">
-                        <div className="progress-main progress-main-80"></div>
-                    </div>
-                    <span>9.8</span>
-                </div>
-
-                <div className="Gland-Btns">
-                <Link to={`/leave-review?artisanUniqueID=${artisanUniqueID}`}>
-                    <Star /> Leave a Review
-                  </Link>
-                  
-                  <Link to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueID}&service=${artisanUniqueID}`} className='Chhah-btns'>
-                    <MessageIcon /> Chat with Artisan
-                  </Link>
-                 
-                </div>
-
-
+              <div className='Gland-Btns'>
+                <Link to={`/leave-review?artisanUniqueID=${artisanUniqueId}`}>
+                  <Star /> Leave a Review
+                </Link>
+                <Link
+                  to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueId}&service=${artisanUniqueId}`}
+                  className='Chhah-btns'
+                >
+                  <MessageIcon /> Chat with Artisan
+                </Link>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    </div>
-    <div>
-    <div className="comments-sec">
-      
-      <PortfolioSlider artisanUniqueID = {artisanUniqueID}/>
-      <div className="comments-sec-head">
-        <h3>Customer reviews</h3>
       </div>
-      {/* <div className="comments-sec-main">
-        <div className="comments-sec-box">
-          <div className="s-comment">
-            <div className="s-comment-1">
-              <div className="s-comment-1-flex">
-                <div className="s-comment-10">
-                  <span>o</span>
-                </div>
-                <div className="s-comment-11">
-                  <span>Olamide</span>
-                  <p>September 10, 2021</p>
-                </div>
-              </div>
-            </div>
-            <div className="s-comment-2">
-              <span>
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              </span>
-              <p>Awesome</p>
-            </div>
+
+      <div>
+        <div className='comments-sec'>
+          <PortfolioSlider artisanUniqueID={artisanUniqueId} />
+          <div className='comments-sec-head'>
+            <h3>Customer reviews</h3>
           </div>
-        </div>
-
-        <div className="comments-sec-box">
-          <div className="s-comment">
-            <div className="s-comment-1">
-              <div className="s-comment-1-flex">
-                <div className="s-comment-10">
-                  <span>p</span>
-                </div>
-                <div className="s-comment-11">
-                  <span>Peter</span>
-                  <p>December 1, 2021</p>
-                </div>
-              </div>
-            </div>
-            <div className="s-comment-2">
-              <span>
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              </span>
-              <p>as described</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="comments-sec-box">
-          <div className="s-comment">
-            <div className="s-comment-1">
-              <div className="s-comment-1-flex">
-                <div className="s-comment-10">
-                  <span>e</span>
-                </div>
-                <div className="s-comment-11">
-                  <span>Evelyn</span>
-                  <p>October 11, 2021</p>
-                </div>
-              </div>
-            </div>
-            <div className="s-comment-2">
-              <span>
-              <Star />
-              <Star />
-              <Star />
-              </span>
-              <p>I love the know Maggi chicken</p>
-            </div>
-          </div>
-        </div>
-
-
-        <div className="comments-sec-box">
-          <div className="s-comment">
-            <div className="s-comment-1">
-              <div className="s-comment-1-flex">
-                <div className="s-comment-10">
-                  <span>m</span>
-                </div>
-                <div className="s-comment-11">
-                  <span>Maryam</span>
-                  <p>December 15, 2022</p>
-                </div>
-              </div>
-            </div>
-            <div className="s-comment-2">
-              <span>
-              <Star />
-              </span>
-              <p>Always giving less for more, thank you Unilever</p>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-
-    <div className="comments-sec-main">
-          {error && <p className="error">{error}</p>}
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <div key={review.id} className="comments-sec-box">
-                <div className="s-comment">
-                  <div className="s-comment-1">
-                    <div className="s-comment-1-flex">
-                      <div className="s-comment-10">
-                        <span>{review.reviewer_name_display.charAt(0).toLowerCase()}</span>
-                      </div>
-                      <div className="s-comment-11">
-                        <span>{review.reviewer_name_display}</span>
-                        <p>{new Date(review.created_at).toLocaleDateString()}</p>
+          <div className='comments-sec-main'>
+            {error && <p className='error'>{error}</p>}
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <div key={review.id} className='comments-sec-box'>
+                  <div className='s-comment'>
+                    <div className='s-comment-1'>
+                      <div className='s-comment-1-flex'>
+                        <div className='s-comment-10'>
+                          <span>{review.reviewer_name_display.charAt(0).toUpperCase()}</span>
+                        </div>
+                        <div className='s-comment-11'>
+                          <span>{review.reviewer_name_display}</span>
+                          <p>{new Date(review.created_at).toLocaleDateString()}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="s-comment-2">
-                    <span>{renderStars(review.rating)}</span>
-                    <p>{review.review_text}</p>
+                    <div className='s-comment-2'>
+                      <span>{renderStars(review.rating)}</span>
+                      <p>{review.review_text}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No reviews available.</p>
-          )}
+              ))
+            ) : (
+              <p>No reviews available.</p>
+            )}
+          </div>
         </div>
+      </div>
     </div>
-
-    </div>
-   </div>
   );
 };
 
