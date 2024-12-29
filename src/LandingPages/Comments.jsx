@@ -64,7 +64,7 @@ const Comments = ({ artisanUniqueId }) => {
    <div className='comment-sec'>
     <div className='rating-secc'>
     <div className='rating-secc-box'>
-    <p><Star />Artisan Rating</p>
+    <p><Star />Artisan Rating1111111111111</p>
 
 
     <div className="cart-pro-rating-sec">
@@ -179,7 +179,7 @@ const Comments = ({ artisanUniqueId }) => {
                 </div>
 
                 <div className="Gland-Btns">
-                <Link to="/leave-review">
+                <Link to={`/leave-review?artisanUniqueID=${artisanUniqueID}`}>
                     <Star /> Leave a Review
                   </Link>
                   
