@@ -541,8 +541,8 @@ function Home() {
   <div className='hgahgs-Card'>
     <img src={HghImg3}></img>
     <div className='hgahgs-Card-Dlt'>
-    <h3>Customers rely on Simservicehub to find skilled, verified trades person.</h3>
-    <p>Sign up and grow your Business Today.</p>
+    <h3>Are You an Artisan? Join SimserviceHub Today!</h3>
+    <p>Customers rely on SimserviceHub to find skilled, verified artisan. Sign up and grow your business today!	</p>
     <Link to="/artisan-overview" >Artisan Sign-Up</Link>
   </div>
   </div>

@@ -32,6 +32,7 @@ import HomeownersTerms from './LandingPages/HomeownersTerms';
 import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 import CookiesPage from './LandingPages/CookiesPage';
 import CookieConsent from './LandingPages/CookieConsent';
+import FAQPage from './LandingPages/FAQPage';
 // import ContactUs from './LandingPages/ContactUs';
 // import Careers from './LandingPages/Careers';
 // import Sitemap from './LandingPages/Sitemap';
@@ -72,6 +73,7 @@ function App() {
           <Route path="/terms-of-use-homeowners" element={<HomeownersTerms/>} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/faq" element={<FAQPage />} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />

@@ -12,7 +12,7 @@ const Footer = () => {
           <li><Link to="/privacy-policy">Privacy Policy</Link></li>
           <li><Link to="/cookies">Cookies</Link></li>
           <li><Link to="/contact-us">Contact Us</Link></li>
-          <li><Link to="/sitemap">Sitemap</Link></li>
+          <li><Link to="/faq">FAQs</Link></li>
         </ul>
         <div className="footer-social">
           <a href="#" target="_blank" rel="noopener noreferrer">

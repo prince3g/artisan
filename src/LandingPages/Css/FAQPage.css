@@ -1,0 +1,220 @@
+/* FaqPage-SS */
+
+.FaqPage-SS{
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 600px;
+}
+
+.FaqPage-SS .AA-page-header{
+    padding: 40px 0px;
+    text-align: center;
+}
+
+
+.gsggs-Sarcg{
+    position: relative;
+    width: 600px;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+}
+
+.gsggs-Sarcg input{
+    position: relative;
+    width: 100%;
+    height: 45px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    color: #000 !important;
+    background-color: #fff;
+}
+
+.gsggs-Sarcg input:focus{
+    border:2px solid #96a133;
+}
+.gsggs-Sarcg button{
+    position: relative;
+    width: auto;
+    height: 45px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    color: #fff!important;
+    background-color: #B1BD3B;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    grid-gap: 7px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.gsggs-Sarcg button:hover{
+    background-color: #96a133;
+}
+
+
+/* Galnd-SeCs */
+
+.Galnd-SeCs{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+}
+
+.Galnd-Top{
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+}
+
+.Galnd-Box{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: #F1F1F1;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    border:2px solid transparent;
+}
+
+.Galnd-Box:hover{
+    background-color: #e4e4e4;
+}
+
+.active-Galnd-Box{
+    border-color: #B1BD3B;
+    background-color: transparent !important;
+}
+
+.Galnd-Box span{
+    position: relative;
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #B1BD3B;
+    background-color: rgba(0,0,0,0.06);
+}
+.active-Galnd-Box span{
+    background-color:#B1BD3B !important;
+    color: #fff;
+}
+.Galnd-Box span svg{
+    font-size: 22px;
+}
+
+.Galnd-Box p{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.OOua-secla{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 40px;
+}
+
+.OOua-secla a{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+    padding: 20px;
+    border:1px solid #c5c5c5;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.OOua-secla a svg{
+    font-size: 18px;
+}
+
+.OOua-secla a:hover{
+    background-color: #F1F1F1;
+}
+
+
+/* Kank-Sec */
+
+.Kank-Sec{
+    position: relative;
+    margin-top: 40px;
+}
+
+.Kank-Sec h4{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.Kank-Sec ul{
+    position: relative;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 30px;
+    grid-template-rows: auto;
+}
+
+.Kank-Sec ul li{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: #F1F1F1;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.Kank-Sec ul li:hover{
+    background-color: #e4e4e4;
+}
+
+.Kank-Sec ul li span{
+    position: relative;
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border:2px solid #B1BD3B;
+    margin-bottom: 20px;
+}
+
+.Kank-Sec ul li span svg{
+    color: #B1BD3B;
+    font-size: 22px;
+}
+
+.Kank-Sec ul li p{
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    grid-gap: 5px;
+}
+
+.Kank-Sec ul li p svg{
+    font-size: 18px;
+}
