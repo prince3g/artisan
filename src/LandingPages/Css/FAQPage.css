@@ -22,7 +22,11 @@
     gap: 10px;
     grid-gap: 10px;
 }
-
+@media screen and (max-width:800px){
+    .gsggs-Sarcg{
+        width: 100% !important;
+    }
+}
 .gsggs-Sarcg input{
     position: relative;
     width: 100%;
@@ -56,7 +60,11 @@
     background-color: #96a133;
 }
 
-
+@media screen and (max-width:500px){
+    .gsggs-Sarcg button span{
+        display: none !important;
+    }
+}
 /* Galnd-SeCs */
 
 .Galnd-SeCs{
@@ -72,6 +80,23 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 30px;
+}
+@media screen and (max-width:500px){
+    .Galnd-SeCs{
+        margin-top: 30px !important;
+    }
+    .Galnd-Top{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        grid-gap: 20px !important;
+    }
+    .Galnd-Box span{
+        display: none !important;
+    }
+    .Galnd-Box{
+        padding:10px 30px !important;
+    }
 }
 
 .Galnd-Box{
@@ -173,6 +198,17 @@
     grid-gap: 30px;
     grid-template-rows: auto;
 }
+@media screen and (max-width:500px){
+    .Kank-Sec ul{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        grid-gap: 20px !important;
+    }
+    .Kank-Sec ul li p{
+        justify-content: space-between !important;
+    }
+}
 
 .Kank-Sec ul li{
     position: relative;
@@ -218,3 +254,75 @@
 .Kank-Sec ul li p svg{
     font-size: 18px;
 }
+
+
+
+
+
+
+
+
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .faq-question {
+    background-color: #f1f1f1;
+    padding: 10px 15px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    grid-gap: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .faq-question:hover {
+    background-color: #e0e0e0;
+  }
+
+  .faq-question svg{
+    font-size: 20px;
+  }
+  
+  .faq-answer {
+    background-color: #fff;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #505050;
+  }
+  
+
+  .back-button{
+    position: relative;
+    margin-bottom: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+    font-size: 15px;
+    outline: none;
+    padding: 5px;
+    border:none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: #B1BD3B;
+  }
+
+  .back-button:hover{
+    color: #96a133;
+  }
+
+  .back-button svg{
+    font-size: 15px;
+  }

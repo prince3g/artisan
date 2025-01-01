@@ -33,9 +33,8 @@ import PrivacyPolicy from './LandingPages/PrivacyPolicy';
 import CookiesPage from './LandingPages/CookiesPage';
 import CookieConsent from './LandingPages/CookieConsent';
 import FAQPage from './LandingPages/FAQPage';
+import FAQDetailsPage from './LandingPages/FAQDetailsPage';
 // import ContactUs from './LandingPages/ContactUs';
-// import Careers from './LandingPages/Careers';
-// import Sitemap from './LandingPages/Sitemap';
 import Footer from './LandingPages/Footer';
 
 function App() {
@@ -74,6 +73,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<CookiesPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/faq-details" element={<FAQDetailsPage />} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />
