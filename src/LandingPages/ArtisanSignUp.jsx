@@ -463,7 +463,6 @@ const ArtisanSignUp = () => {
             </div>
 
             <div className="Gland-Cnt-Btn">
-            <div className="Gland-Cnt-Btn">
             <button
                   type="submit"
                   className="post-job-btn"
@@ -478,7 +477,6 @@ const ArtisanSignUp = () => {
                 </button>
             </div>
 
-              </div>
 
                    <div className="ghha-foot">
                      <p>We will contact you by phone, SMS or email to give you more information about how our products and services can help your business. 

@@ -34,6 +34,9 @@ import CookiesPage from './LandingPages/CookiesPage';
 import CookieConsent from './LandingPages/CookieConsent';
 import FAQPage from './LandingPages/FAQPage';
 import FAQDetailsPage from './LandingPages/FAQDetailsPage';
+import CostumerLogin1 from './LandingPages/CostumerLogin1';
+import CostumerLogin2 from './LandingPages/CostumerLogin2';
+import CostumerLogin3 from './LandingPages/CostumerLogin3';
 // import ContactUs from './LandingPages/ContactUs';
 import Footer from './LandingPages/Footer';
 
@@ -74,6 +77,9 @@ function App() {
           <Route path="/cookies" element={<CookiesPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/faq-details" element={<FAQDetailsPage />} />
+          <Route path="/customer-login" element={<CostumerLogin1 />} />
+          <Route path="/verify-email" element={<CostumerLogin2 />} />
+          <Route path="/complete-profile" element={<CostumerLogin3 />} />
 
           {/* 
           <Route path="/terms-of-use" element={<TermsOfUse />} />

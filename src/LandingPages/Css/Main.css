@@ -551,3 +551,195 @@
     cursor: pointer;
   }
   
+
+
+
+
+
+  /* orl-Line */
+
+  .orl-Line{
+    position: relative;
+    width: 100%;
+    height: 1px;
+    margin-top: 30px;
+    border-top:1px solid #cccbcb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orl-Line span{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #F8F8F8;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .fffa-btns{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    grid-gap: 20px;
+  }
+
+  @media screen and (max-width:700px){
+    .fffa-btns{
+      display:flex !important;
+      flex-direction: column !important;
+      gap: 10px !important;
+      grid-gap: 10px !important;
+    }  
+  }
+
+  .fffa-btns button{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    grid-gap: 8px;
+    padding: 0px 20px;
+    height: 50px;
+    width: 100%;
+    background-color: #F1F1F1;
+    border: 1px solid #cccbcb;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .fffa-btns button:hover{
+    background-color: transparent;
+  }
+
+  .fffa-btns button img{
+    width:23px;
+  }
+
+  @media screen and (max-width:250px){
+    .fffa-btns button{
+      font-size: 12px !important;
+    }
+    .fffa-btns button img{
+      width:20px !important;
+    }
+  }
+
+
+  .Gland-Quest-data.gghaja-flex{
+    width: 100% !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    grid-gap: 10px !important;
+    margin-top: 0px !important;
+  }
+
+  .gghaja-flex input{
+    width: 100% !important;
+    margin-top: 0px !important;
+  }
+  @media screen and (max-width:250px){
+    .gghaja-flex input{
+      height: 40px !important;
+    }
+  }
+  .gghaja-flex input[type="number"] {
+  -moz-appearance: textfield; 
+  -webkit-appearance: none; 
+  appearance: none; 
+}
+
+  .gghaja-flex input[type="number"]::-webkit-outer-spin-button,
+  .gghaja-flex input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none; 
+}
+
+
+.hga-body{
+  margin-top: 20px !important;
+}
+
+
+.Gradnded-Box-header.uupoa p a,
+.ghha-foot p button{
+  font-weight: 600;
+  background-color: transparent;
+  outline: none !important;
+  border:none !important;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
+  color: #B1BD3B;
+}
+
+.Gradnded-Box-header.uupoa p a,
+.ghha-foot p button:hover{
+  color: #96a131;
+}
+
+.hhoa-P{
+  color: #505050 !important;
+  font-size: 14px !important;
+}
+
+.jjhs-Ull li{
+  padding: 0px !important;
+  border-radius: 0px !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  grid-gap: 10px !important;
+}
+
+.jjhs-Ull li::before{
+  display: none !important;
+}
+
+.jjhs-Ull li button{
+  position: relative;
+  width: 40px;
+  height: 25px;
+  background-color: #d0cfcf;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.jjhs-Ull li button::before{
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  left: 3.5px;
+  transition: all 0.3s ease-in-out;
+}
+.jjhs-Ull li button.active-OOBtnPush{
+  background-color: #B1BD3B;
+}
+.jjhs-Ull li button.active-OOBtnPush::before{
+  margin-left: 15.5px;
+}
