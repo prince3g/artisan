@@ -80,7 +80,7 @@ const ArtisanProfile = () => {
           artisan: sanitizedId, // Hardcoded artisan ID
           //reviewer_name: "b010a064-4ec1-47a4-b79a-9160be7e4083", // Hardcoded artisan ID
           //reviewer_name: "5c2aefcf-57f1-4582-84b7-54431c36c776", // Hardcoded artisan ID
-          reviewer_name: "5e2fa660-58a2-4b5d-8e59-70f3a1b704e2", // Hardcoded artisan ID
+          reviewer_name: "4711b4e5-8f18-4639-a9b5-496b2cdb8a2c", // Hardcoded artisan ID
           artisan_name,
           rating,
           review_text: review, // Match review variable
