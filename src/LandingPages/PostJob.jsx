@@ -306,7 +306,7 @@ const PostJob = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Job posted successfully:', result);
+        //console.log('Job posted successfully:', result);
         alert('Your job has been posted successfully!');
         navigate('/success');
       } else {
