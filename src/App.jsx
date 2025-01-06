@@ -40,6 +40,11 @@ import CostumerLogin3 from './LandingPages/CostumerLogin3';
 // import ContactUs from './LandingPages/ContactUs';
 import Footer from './LandingPages/Footer';
 
+
+import Userdashbaord from './Userdashboard/Userdashbaord';
+
+
+
 function App() {
   return (
     <div>
@@ -80,14 +85,9 @@ function App() {
           <Route path="/customer-login" element={<CostumerLogin1 />} />
           <Route path="/verify-email" element={<CostumerLogin2 />} />
           <Route path="/complete-profile" element={<CostumerLogin3 />} />
+          <Route path="/user-dashboard/*" element={<Userdashbaord />} />
 
-          {/* 
-          <Route path="/terms-of-use" element={<TermsOfUse />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/sitemap" element={<Sitemap />} /> */}
+
         </Routes>
       </main>
 
