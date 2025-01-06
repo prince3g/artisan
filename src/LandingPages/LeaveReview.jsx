@@ -37,7 +37,7 @@ const LeaveReview = () => {
   const [reviewData, setReviewData] = useState({
     service_category_id: '',
     artisan: artisan_unique_id.trim(),
-    customer_id: "c5037422-0169-4224-a216-b6d98eee3d89",
+    customer_id: "4711b4e5-8f18-4639-a9b5-496b2cdb8a2c",
     reliability_rating: null,
     workmanship_rating: null,
     tidiness_rating: null,
