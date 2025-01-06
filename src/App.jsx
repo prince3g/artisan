@@ -43,6 +43,9 @@ import Footer from './LandingPages/Footer';
 
 import Userdashbaord from './Userdashboard/Userdashbaord';
 
+import ArtisanDashboard from './ArtisanDashboard/ArtisanDashboard';
+
+
 
 
 function App() {
@@ -86,6 +89,7 @@ function App() {
           <Route path="/verify-email" element={<CostumerLogin2 />} />
           <Route path="/complete-profile" element={<CostumerLogin3 />} />
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
+          <Route path="/artisan-dashboard/*" element={<ArtisanDashboard />} />
 
 
         </Routes>

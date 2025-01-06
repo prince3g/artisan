@@ -1,0 +1,106 @@
+/* ArtisanDashboard-Page */
+
+.ArtisanDashboard-Page{
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 700px;
+}
+
+.Artisan-TopNav{
+    position: sticky;
+    top: 58px;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 60px;
+    background-color: #F8F8F8;
+    display: flex;
+    align-items: center;
+    border-bottom:1px solid#dfdede;
+}
+.Artisan-TopNav-Main{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    grid-gap: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.Artisan-TopNav-Main-1{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    grid-gap: 15px;
+}
+
+.Artisan-TopNav-Main-1 img{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border:2px solid #fff;
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+    -moz-box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+}
+
+.Artisan-TopNav-Main-1 h3{
+    font-size: 14px;
+    font-weight: 600;
+}
+.Artisan-TopNav-Main-1 h3 a{
+    font-size: 10px;
+    font-weight: 400;
+    background-color: #F1F1F1;
+    border:1px solid #dfdede;
+    padding: 2px 7px;
+    display: inline-flex;
+    border-radius: 3px;
+    color: #505050;
+    transition: all 0.3s ease-in-out;
+}
+.Artisan-TopNav-Main-1 h3 a:hover{
+    text-decoration: underline;
+}
+
+.Artisan-TopNav-Main-2{
+    position: relative;
+}
+
+.Artisan-TopNav-Main-2 ul{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.Artisan-TopNav-Main-2 ul li a{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    grid-gap: 5px;
+    font-size: 13px;
+    border-right: 1px solid #dfdede;
+    padding: 0px 10px;
+    color: #505050;
+    transition: all 0.3s ease-in-out;
+}
+
+.Artisan-TopNav-Main-2 ul li a svg{
+    font-size: 14px;
+}
+
+.Artisan-TopNav-Main-2 ul li:last-child a{
+    border-right: none;
+}
+
+.Artisan-TopNav-Main-2 ul li a:hover{
+    text-decoration: underline;
+}
