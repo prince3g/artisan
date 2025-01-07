@@ -4,7 +4,6 @@
     position: relative;
     width: 100%;
     height: auto;
-    min-height: 700px;
 }
 
 .Artisan-TopNav{
@@ -103,4 +102,366 @@
 
 .Artisan-TopNav-Main-2 ul li a:hover{
     text-decoration: underline;
+}
+
+
+/* Artisan_Dashbaord_Page */
+
+
+.Artisan_Dashbaord_Page{
+    position: relative;
+    width: 100%;
+    height: auto;
+    border:1px solid#dfdede;
+    margin-bottom: -70px;
+}
+
+.Artisan_Dashbaord_Page_Grid{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 30px;
+    gap: 30px;
+}
+
+.Artisan_Dashbaord_Page_Left{
+    position: relative;
+    z-index: 999;
+    width: 300px;
+    height:auto;
+    min-height: 600px;
+}
+
+.AA_Dash_Left_Box{
+    position: inherit;
+    z-index: inherit;
+    width: inherit;
+    height: inherit;
+    min-height: inherit;
+    overflow-y: auto;
+    background-color: #F8F8F8;
+    border:1px solid#dfdede;
+    border-top: none;
+    border-bottom: none;
+}
+@media screen and (min-width:1200px){
+
+    .AA_Dash_Left_Box::-webkit-scrollbar {
+        width: 0px; 
+      }
+    
+      .AA_Dash_Left_Box:hover::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      .AA_Dash_Left_Box::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1); 
+      }
+      
+      .AA_Dash_Left_Box::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.3); 
+      }
+      
+      .AA_Dash_Left_Box::-webkit-scrollbar-thumb:hover {
+        background: rgba(0,0,0,0.4); 
+      }
+      
+    
+    }
+
+/* recent_trades_sec */
+
+.recent_trades_sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.AA_Dash_Left_Top{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding:10px 20px;
+    border-bottom:1px solid #dfdede;
+}
+
+.AA_Dash_Left_Top h3{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.AA_Dash_Left_Top h3 span{
+    font-size: 10px;
+    font-weight: normal;
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 50%;
+    border:1px solid#dfdede;
+}
+
+/* Trade_Secs */
+.Trade_Secs{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.Trade_Box{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding:15px 20px;
+    border-bottom:1px solid #dfdede;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.Trade_Box:hover{
+    background-color: #F1F1F1;
+}
+.Trade_Box h4{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Trade_Box h4 img,
+.Trade_Box h4 span{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: #B1BD3B;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 5px;
+    object-fit: cover;
+    object-position: center;
+}
+.Trade_Box h3{
+    font-size: 13px;
+    font-weight: 500;
+}
+.Trade_Box h3 span {
+    font-size: 10px;
+    font-weight: 400;
+    background-color: #F1F1F1;
+    border: 1px solid #dfdede;
+    padding: 2px 7px;
+    display: inline-flex
+;
+    border-radius: 3px;
+    color: #505050;
+    transition: all 0.3s ease-in-out;
+}
+.Trade_Box ul{
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    grid-gap: 5px;
+}
+
+.Trade_Box ul li{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    grid-gap: 3px;
+    font-size: 9px;
+    background-color: #f9e8d6;
+    padding:2px 8px;
+    border-radius: 5px;
+}
+.Trade_Box ul li svg{
+    font-size: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Artisan_Dashbaord_Page_Right{
+    position: sticky;
+    top: 118px;
+    width: 100%;
+    height:550px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    gap: 20px;
+    padding: 20px 0px;
+}
+
+.Client_Dlts{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.Top_DltIm{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    grid-gap: 10px;
+}
+.Top_DltIm_1 img,
+.Top_DltIm_1 span{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 80px;
+    height: 100%;
+    background-color: #394c13;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 40px;
+    font-weight: 500;
+    margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.Top_DltIm_1 span::before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    bottom: -5px;
+    right: -5px;
+    border:1px solid #dfdede;
+    border-radius: inherit;
+}
+
+.Top_DltIm_2{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+.Top_DltIm_2 h3{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.Top_DltIm_2 p{
+    font-size: 13px;
+    margin-top: 5px;
+    color: #505050;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+.Top_DltIm_2 p span{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 35px;
+    font-weight: 500;
+    margin-right: 5px;
+    border:1px solid #dfdede;
+}
+.Top_DltIm_2 p span svg{
+    font-size: 12px;
+    color: #000;
+}
+.Top_DltIm_2 p b{
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+}
+
+.Top_DltIm_Btns{
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+}
+
+.Top_DltIm_Btns button{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    grid-gap: 5px;
+    padding: 8px 13px;
+    border-radius: 5px;
+    border:1px solid #cccbcb;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+}
+
+.Top_DltIm_Btns button svg{
+    font-size: 15px;
+}
+
+.Top_DltIm_Btns button.compley-bbTann{
+    background-color: #B1BD3B;
+    color: #fff;
+    border-color: #B1BD3B;
+    padding: 8px 18px;
+}
+
+.Top_DltIm_Btns button.remove-Btnnna{
+    border-color: #e22222 !important;
+    color: #e22222 !important;
 }

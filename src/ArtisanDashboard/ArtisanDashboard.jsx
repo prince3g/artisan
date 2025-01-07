@@ -6,6 +6,8 @@ import { Link, useLocation } from "react-router-dom";
 
 import ArtisanTopNav from './ArtisanTopNav';
 
+import ArtisanHomePage from './ArtisanHomePage';
+
 
 
 
@@ -26,12 +28,12 @@ const ArtisanDashboard = () => {
             <ArtisanTopNav />
 
 
-            {/* <Routes>
-                <Route path="/" element={<UserHomePage />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
+            <Routes>
+                <Route path="/" element={<ArtisanHomePage />} />
+                {/* <Route path="/edit-profile" element={<EditProfile />} />
                 <Route path="/jobs" element={<PostedJobs />} />
-                <Route path="/job-artisans" element={<JobArtisans />} />
-             </Routes> */}
+                <Route path="/job-artisans" element={<JobArtisans />} /> */}
+             </Routes>
 
 
    </div>
