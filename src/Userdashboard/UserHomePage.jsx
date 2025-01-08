@@ -17,7 +17,14 @@ import MyArtisan from './MyArtisan';
 
 
 
+
+
 const UserHomePage = () => {
+
+  const user_last_name = localStorage.getItem('user_last_name');
+  const user_first_name = localStorage.getItem('user_first_name');
+  const user_phone = localStorage.getItem('user_phone');
+
   return (
    <div className="ooUserdashbaord-Page">
      <div className="navigating-ttarvs">
@@ -26,7 +33,7 @@ const UserHomePage = () => {
                         <Link to="/">Simservicehub</Link> <ChevronRightIcon />
                         <Link to="/user-dashboard/"> Customer dashboardd</Link> <ChevronRightIcon />
                         <Link to="/user-dashboard/">
-                        Ndubuisi Prince Godson </Link>
+                        {user_last_name}   {user_first_name} </Link>
                     </p>
                 </div>
             </div>
@@ -35,7 +42,7 @@ const UserHomePage = () => {
         <div className="Gradnded-main">
           <div className="Gradnded-Box">
             <div className="Gradnded-Box-header">
-              <h2 className="big-text">Welcome Prince!</h2>
+              <h2 className="big-text">Welcome  {user_first_name} !</h2>
             </div>
 
             <div className="Habgb-sec">
@@ -47,9 +54,9 @@ const UserHomePage = () => {
               </div>
               <div className="Habgb-Top-11">
                 <div>
-                <h3>Prince Godson</h3>
+                <h3> {user_first_name}   {user_last_name}</h3>
                 <p>
-                    <PhoneIcon /> 09037494084
+                    <PhoneIcon />  {user_phone}
                 </p>
               </div>
               </div>

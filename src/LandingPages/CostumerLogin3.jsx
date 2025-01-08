@@ -18,7 +18,7 @@ const CostumerLogin3 = () => {
         <div className="site-container">
           <p>
             <Link to="/">Simservicehub</Link> <ChevronRightIcon />{" "}
-            <Link to="/customer-login"> Customer Sign up or create account</Link>{" "}
+            <Link to="/customer-login"> Customer Sign up or create account CostumerLogin3</Link>{" "}
             <ChevronRightIcon />
             <Link to="/complete-profile"> Complete profile</Link>
           </p>
