@@ -152,7 +152,7 @@ const CostumerLogin2 = () => {
         // Redirect or take the next step after successful validation
         // Example: Navigate to dashboard
         
-        console.log("Token validated successfully", response.data);
+        //console.log("Token validated successfully", response.data);
 
         localStorage.setItem('user_id', response.data.userId);
 
@@ -163,6 +163,8 @@ const CostumerLogin2 = () => {
 
         localStorage.setItem('user_first_name', response.data.first_name);
         localStorage.setItem('user_last_name', response.data.last_name);
+
+        localStorage.setItem('Address', response.data.address);
 
         // localStorage.setItem('user_user_type', response.data.user_type);
 
