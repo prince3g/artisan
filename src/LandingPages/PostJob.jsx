@@ -223,6 +223,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import React, { useState, useEffect } from 'react';
 
 const PostJob = () => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
@@ -288,10 +289,14 @@ const PostJob = () => {
 
     const jobData = {
       service_details: selectedService.unique_id,
+
+    //   service_details: {
+    //     "unique_id": selectedService.unique_id,
+    // },
       category: selectedService.name,
       title: selectedService.name,
       location: "N0 10 station Road Ph, R/s",
-      customer: "4711b4e5-8f18-4639-a9b5-496b2cdb8a2c",
+      customer: localStorage.getItem('unique_user_id'),
       budget: 50.00,
       type: activeIndex === 0 ? 'Simple' : 'Complex',
       description: textareaContent,
@@ -307,8 +312,8 @@ const PostJob = () => {
       if (response.ok) {
         const result = await response.json();
         //console.log('Job posted successfully:', result);
-        alert('Your job has been posted successfully!');
-        navigate('/success');
+        // alert('Your job has been posted successfully!');
+        navigate('/user-dashboard/jobs');
       } else {
         console.error('Failed to post job:', response.statusText);
         alert('Failed to post the job. Please try again later.');

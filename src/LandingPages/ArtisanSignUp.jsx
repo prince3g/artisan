@@ -91,7 +91,7 @@ const ArtisanSignUp = () => {
   
   const handleSuggestionClick = (service, unique_id) => {
     setSelectedTrade({
-      name: service.name,
+      name: service,
       unique_id: unique_id, // Save the unique_id of the selected trade
     });
     setQuery(service.name); // Populate the input with the selected trade name
@@ -107,6 +107,14 @@ const ArtisanSignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+      // Check if the password is at least 8 characters long
+  if (formData.password.length < 8) {
+    setError("Password must be at least 8 characters long.");
+    setLoading(false);
+    return;
+  }
+
 
     if (formData.password !== formData.confirmPassword) {
         setError("Passwords do not match.");
@@ -188,97 +196,6 @@ const ArtisanSignUp = () => {
     }
 };
 
-  
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  
-  //   setLoading(true);
-  
-  //   if (formData.password !== formData.confirmPassword) {
-  //     setError("Passwords do not match.");
-  //     setLoading(false); // Stop loading if there is an error
-  //     return;
-  //   }
-  
-  //   // First request payload (without skills)
-  //   const requestPayload = {
-  //     first_name: formData.first_name,
-  //     last_name: formData.last_name,
-  //     password: formData.password,
-  //     email: formData.businessEmail,
-  //     user_type: "artisan",
-  //     phone: formData.businessPhone,
-  //     mobile_number: formData.mobile_number,
-  //     about_artisan: formData.about_artisan,
-  //   };
-  
-  //   try {
-  //     const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(requestPayload),
-  //     });
-  
-  //     if (!response1.ok) {
-  //       const errorData = await response1.json();
-  //       console.error("Error during first request:", errorData);
-  //       setError("An error occurred during the registration. Please try again.");
-  //       setLoading(false);
-  //       return;
-  //     }
-  
-  //     const response1Data = await response1.json();
-  //     console.log("First request successful:", response1Data);
-  
-  //     if (!selectedTrade || !selectedTrade.unique_id) {
-  //       setError("Please select a valid trade.");
-  //       setLoading(false);
-  //       return;
-  //     }
-  
-  //     // Second request payload (with skills)
-  //     const artisanProfilePayload = {
-  //       service_details_id: unique_id,
-  //       businessName: formData.businessName,
-  //       businessLocation: formData.businessLocation,
-  //       lookingFor: formData.lookingFor,
-  //       businessType: formData.businessType,
-  //       employeeCount: formData.employeeCount,
-  //       skills: formData.skills.map((skill) => String(skill)),  // Ensure skills are strings
-  //       experience: formData.experience || 0,
-  //       location: formData.businessLocation,
-  //       user_id: response1Data.unique_id,
-  //     };
-      
-      
-  
-  //     const response2 = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(artisanProfilePayload),
-  //     });
-  
-  //     if (response2.ok) {
-  //       const result = await response2.json();
-  //       console.log("Second request successful:", result);
-  //       navigate("/success-page");
-  //     } else {
-  //       const errorData = await response2.json();
-  //       console.error("Error during second request:", errorData);
-  //       setError("An error occurred during registration. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     setError("An unexpected error occurred. Please try again later.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  
 
   const handleInputClick = () => {
     if (!query || !query.trim()) {
@@ -523,7 +440,7 @@ const ArtisanSignUp = () => {
                     <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
                     <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
                     
-                    <input  type="password" name="password" placeholder="Password" value={formData.password} onChange={handleInputChange}/>
+                    <input  type="password" name="password" placeholder="Password should be at 8 characters" value={formData.password} onChange={handleInputChange}/>
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
                       {error && <div className="error-message">{error}
                         
