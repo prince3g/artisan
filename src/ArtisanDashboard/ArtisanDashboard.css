@@ -16,7 +16,14 @@
     background-color: #F8F8F8;
     display: flex;
     align-items: center;
+    border-top:1px solid#dfdede;
     border-bottom:1px solid#dfdede;
+    margin-top: 15px;
+}
+@media screen and (max-width: 1200px) {
+    .Artisan-TopNav{
+        top: 50px !important;
+    }
 }
 .Artisan-TopNav-Main{
     position: relative;
@@ -28,7 +35,16 @@
     width: 100%;
     height: auto;
 }
-
+@media screen and (max-width: 1000px) {
+    .Artisan-TopNav{
+        height: auto !important;
+        padding: 20px 0px !important;
+    }
+    .Artisan-TopNav-Main{
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+}
 .Artisan-TopNav-Main-1{
     position: relative;
     display: inline-flex;
@@ -90,8 +106,17 @@
     padding: 0px 10px;
     color: #505050;
     transition: all 0.3s ease-in-out;
+    white-space: nowrap;
 }
-
+@media screen and (max-width: 400px) {
+    .Artisan-TopNav-Main-2{
+        width: 100% !important;
+    }
+    .Artisan-TopNav-Main-2 ul{
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+}
 .Artisan-TopNav-Main-2 ul li a svg{
     font-size: 14px;
 }
@@ -125,7 +150,24 @@
     grid-gap: 30px;
     gap: 30px;
 }
-
+@media screen and (max-width: 1000px) {
+    .Artisan_Dashbaord_Page_Grid{
+        display: block !important;
+    }
+    .Artisan_Dashbaord_Page_Left{
+        width: 100% !important;
+    }
+    .AA_Dash_Left_Box{
+        border:none !important;
+    }
+    .Trade_Box{
+        border:1px solid#dfdede !important;
+        margin-top: 15px !important;
+    }
+    .AA_Dash_Left_Top{
+        border:none !important;
+    }
+}
 .Artisan_Dashbaord_Page_Left{
     position: relative;
     z-index: 999;
@@ -284,6 +326,8 @@
     align-items: center;
     gap: 5px;
     grid-gap: 5px;
+    width: 100% !important;
+    overflow-x: auto !important;
 }
 
 .Trade_Box ul li{
@@ -296,6 +340,7 @@
     background-color: #f9e8d6;
     padding:2px 8px;
     border-radius: 5px;
+    white-space: nowrap;
 }
 .Trade_Box ul li svg{
     font-size: 10px;
@@ -329,17 +374,17 @@
     position: sticky;
     top: 118px;
     width: 100%;
-    height:550px;
+    height:530px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    gap: 20px;
+    grid-template-columns: auto 1fr;
+    grid-gap: 30px;
+    gap: 30px;
     padding: 20px 0px;
 }
 
 .Client_Dlts{
     position: relative;
-    width: 100%;
+    width: 250px;
     height: 100%;
 }
 
@@ -465,3 +510,122 @@
     border-color: #e22222 !important;
     color: #e22222 !important;
 }
+
+
+
+
+
+
+
+
+
+
+/* Client_Chat_Sec */
+
+.Client_Chat_Sec{
+    position: relative;
+    width: 100%;
+    height:100%;
+    overflow: hidden;
+}
+
+
+.hahggs-TIa{
+    top: 40% !important;
+}
+
+
+.Client_Chat_Sec .Chattt-Topp-3,
+.jjhs-close{
+    display: none !important;
+}
+.Chattt-sec{
+    display: flex !important;
+}
+.Client_Chat_Sec .Chattt-Topp-2 button div{
+    white-space: nowrap !important;
+}
+@media screen and (max-width:1000px){
+    .Artisan_Dashbaord_Page_Right{
+        position: fixed !important;
+        z-index: 3000 !important;
+        top: 0px;
+        left: 0;
+        background-color: #fff;
+        width: 100%;
+        height: 100% !important;
+        padding: 30px !important;
+        display: none !important;
+        overflow-y: auto !important;
+    }
+    .Artisan_Dashbaord_Page_Right.Show_Clit_Dlt{
+        display: block !important;
+    }
+    .Client_Dlts{
+        width: 100% !important;
+    }
+    .Top_DltIm{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    
+.Top_DltIm_1 img, .Top_DltIm_1 span{
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+    margin-bottom: 20px !important;
+    margin-top: 20px !important;
+}
+.Top_DltIm_2 p{
+    text-align: center !important;
+    display:inline-flex !important;
+    margin: 7px !important;
+}
+.Top_DltIm_Btns{
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.jjhs-close{
+    display: inline-flex !important;
+    position: absolute !important;
+    top: -10px !important;
+    right: -10px !important;
+}
+
+
+.Client_Chat_Sec{
+    position: fixed !important;
+    z-index: 3000 !important;
+    top: 0px;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 100% !important;
+    padding: 30px !important;
+    display: block !important;
+    overflow-y: auto !important;
+    display: none !important;
+}
+
+.Show_Client_Chat_Sec .Client_Chat_Sec{
+    display: block !important;
+}
+.Client_Chat_Sec .Chattt-sec{
+    margin-top: 0px !important;
+    top:0px !important;
+}
+
+.Client_Chat_Sec .Chattt-Topp-3{
+    z-index: 2000 !important;
+    position: absolute !important;
+    display: flex !important;
+}
+
+
+}
+

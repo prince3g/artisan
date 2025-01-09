@@ -16,7 +16,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 const ArtisanTopNav = () => {
   return (
   <div className="Artisan-TopNav">
-    <div className="site-container">
+    <div className="large-container">
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
         <img src={UserPlaceholder}></img>
@@ -25,10 +25,8 @@ const ArtisanTopNav = () => {
     <div className="Artisan-TopNav-Main-2">
         <ul>
            <li><a href="#"><DashboardIcon /> Dashboard</a></li>
-           <li><a href="#"><PersonIcon /> Customers</a></li>
             <li><a href="#"><WorkIcon /> Jobs</a></li>
-            <li><a href="#"> <SettingsIcon /> Settings</a></li>
-            <li><a href="#"><NotificationsIcon /> Notifications</a></li>
+            <li><a href="#"> <SettingsIcon /> Profile Settings</a></li>
         </ul>
     </div>
     </div>

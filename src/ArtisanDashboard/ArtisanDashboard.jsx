@@ -15,7 +15,7 @@ const ArtisanDashboard = () => {
   return (
    <div className="ArtisanDashboard-Page">
       <div className="navigating-ttarvs">
-                <div className="site-container">
+                <div className="large-container">
                     <p>
                         <Link to="/">Simservicehub</Link> <ChevronRightIcon />
                         <Link to="/artisan-dashboard/"> Artisan dashboardd</Link> <ChevronRightIcon />
