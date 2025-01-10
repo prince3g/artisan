@@ -14,13 +14,18 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 
 
 const ArtisanTopNav = () => {
+
+  const last_name = localStorage.getItem('user_last_name');
+  const first_name = localStorage.getItem('user_first_name');
+
+
   return (
   <div className="Artisan-TopNav">
     <div className="large-container">
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
         <img src={UserPlaceholder}></img>
-        <h3>Ndubuisi Prince Godson <a href="#">SimserviceHub Artisan</a></h3>
+        <h3>{last_name} {first_name} <a href="#">SimserviceHub Artisan</a></h3>
     </div>
     <div className="Artisan-TopNav-Main-2">
         <ul>

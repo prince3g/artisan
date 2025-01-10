@@ -12,6 +12,12 @@ import ArtisanHomePage from './ArtisanHomePage';
 
 
 const ArtisanDashboard = () => {
+
+
+    const last_name = localStorage.getItem('user_last_name');
+    const first_name = localStorage.getItem('user_first_name');
+
+
   return (
    <div className="ArtisanDashboard-Page">
       <div className="navigating-ttarvs">
@@ -20,7 +26,7 @@ const ArtisanDashboard = () => {
                         <Link to="/">Simservicehub</Link> <ChevronRightIcon />
                         <Link to="/artisan-dashboard/"> Artisan dashboardd</Link> <ChevronRightIcon />
                         <Link to="/artisan-dashboard/">
-                        Ndubuisi Prince Godson </Link>
+                        {last_name} {first_name} </Link>
                     </p>
                 </div>
             </div>
