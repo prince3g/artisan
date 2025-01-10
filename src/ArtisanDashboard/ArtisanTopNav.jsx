@@ -18,6 +18,19 @@ const ArtisanTopNav = () => {
   const last_name = localStorage.getItem('user_last_name');
   const first_name = localStorage.getItem('user_first_name');
 
+  const user_id= localStorage.getItem('user_id');
+  const Address= localStorage.getItem('Address');
+  const user_unique_user_id = localStorage.getItem('unique_user_id');
+  const user_phone = localStorage.getItem('user_phone');
+
+  const userData = {
+    user_id,
+    Address,
+    first_name, 
+    last_name,
+    user_unique_user_id,
+    user_phone
+  };
 
   return (
   <div className="Artisan-TopNav">
@@ -31,7 +44,7 @@ const ArtisanTopNav = () => {
         <ul>
            <li><Link to='/artisan-dashboard/'><DashboardIcon /> Dashboard</Link></li>
             <li><Link to='/artisan-dashboard/jobs'><WorkIcon /> Jobs</Link></li>
-            <li><Link to='/artisan-dashboard/profile-settings'> <SettingsIcon /> Profile Settings</Link></li>
+            <li> <Link to="/artisan-dashboard/profile-settings" state={userData}> <SettingsIcon /> Profile Settings</Link></li>
         </ul>
     </div>
     </div>
