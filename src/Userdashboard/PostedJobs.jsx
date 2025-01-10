@@ -99,14 +99,14 @@
 //              </div>
 
 
-//              <div className='GLnad-btns'>
+//              <div className='GLnad-btns ggfa-btns'>
 //                <div className='GLnad-btns-1'>
 //                 <span>Simple Job</span>
 //                 <span><BusinessCenterIcon /> 23k Applications</span>
 //                  </div>
 //                  <div className='GLnad-btns-2'>
 //                  <Link to="/user-dashboard/job-artisans">View Artisans</Link>
-//                  <button className="rwmovooo-btn"><DeleteIcon />Remove Job</button>
+//                  <button className="rwmovooo-btn"><DeleteIcon /><span> Remove Job</span></button>
 
 //                  </div>
 //                </div>
@@ -231,7 +231,7 @@ const PostedJobs = () => {
                             </div>
                           </div>
 
-                          <div className='GLnad-btns'>
+                          <div className='GLnad-btns ggfa-btns'>
                             <div className='GLnad-btns-1'>
                               <span>{job.title}</span>
                               <span><BusinessCenterIcon /> 23 Applications</span>
@@ -243,7 +243,7 @@ const PostedJobs = () => {
                                 className="rwmovooo-btn" 
                                 onClick={() => handleRemoveJob(job.id)} 
                               >
-                                <DeleteIcon />Remove Job
+                                <DeleteIcon /><span> Remove Job</span>
                               </button>
                             </div>
                           </div>

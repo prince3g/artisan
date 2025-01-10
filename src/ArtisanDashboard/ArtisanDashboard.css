@@ -624,3 +624,100 @@
 
 }
 
+
+
+
+
+
+
+
+
+
+
+/* ahhgs-sec */
+
+.ahhgs-sec{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #dfdede;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    grid-gap: 10px;
+}
+
+.ahhgs-sec h3{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.ahhgs-sec h3 img{
+    position: relative;
+    width: 27px;
+    height: 27px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+
+}
+
+.ahhgs-sec p{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    grid-gap: 5px;
+    color: #505050;
+    font-size: 13px;
+}
+.ahhgs-sec p svg{
+    font-size: 13px;
+}
+
+
+
+.kklauis-seds{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 20px 0px;
+}
+
+.kklauis-seds h3{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px 0px;
+}
+
+.kklauis-seds p{
+    font-size: 14px;
+    color: #505050;
+}
+
+.apply-brnsns{
+    background-color: #B1BD3B !important;
+    border-color: #B1BD3B !important;
+    color: #fff !important;
+}
+
+@media screen and (max-width:600px){
+    .ggfa-btns{
+        flex-direction: column !important;
+        gap: 10px;
+        grid-gap: 10px;
+    }
+}
+
+@media screen and (max-width:300px){
+    .ggfa-btns button span{
+       display: none !important;
+    }
+}
