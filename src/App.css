@@ -676,3 +676,156 @@
   position: relative;
   margin-bottom: 30px;
 }
+
+
+
+
+/* Arrri-Pahgs */
+
+.Arrri-Pahgs{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 50px;
+  margin-bottom: -20px;
+}
+
+.Arrri-Pahgs-main{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 600px;
+  background-color: #F1F1F1;
+}
+
+@media screen and (max-width:1000px){
+  .Arrri-Pahgs-main{
+    grid-template-columns: 1fr 0.5fr !important;
+  }
+}
+@media screen and (max-width:600px){
+  .Arrri-Pahgs-main{
+    display: block !important;
+    height: auto !important;
+    background-color: transparent !important;
+  }
+  .Arrri-Pahgs-2{
+    display: none !important;
+  }
+  .Arrri-Pahgs-1{
+    padding:50px 0px !important;
+  }
+}
+
+.Arrri-Pahgs-2{
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.Arrri-Pahgs-2 img{
+  max-width: 100%;
+  max-height: 500px;
+}
+
+
+.Arrri-Pahgs-1{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 80px;
+}
+
+.jja-Info{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+  grid-gap: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border:1px solid #B1BD3B;
+  border-radius: 10px;
+}
+
+.jja-Info-1 svg{
+  color: #B1BD3B;
+}
+
+.jja-Info-2{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.jja-Info-2 h3{
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.jja-Info-2 p{
+  font-size: 14px;
+  color: #4B4B4B;
+}
+
+.hha-btn{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.hha-btn a{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #B1BD3B;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.hha-btn a:hover{
+  background-color: #96a133;
+}
+@media screen and (max-width:500px){
+  .hha-Info a,
+  .hha-btn a{
+    font-size: 15px !important;
+  }
+}
+
+.hha-Info{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
+  text-align: center;
+}
+.hha-Info p{
+  font-size: 14px;
+  color: #4B4B4B;
+  margin-bottom: 20px;
+}
+
+.hha-Info a{
+  font-weight: 500;
+  font-size: 16px;
+}
+.hha-Info a:hover{
+  text-decoration: underline;
+}

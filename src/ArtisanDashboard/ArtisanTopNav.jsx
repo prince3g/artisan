@@ -20,13 +20,13 @@ const ArtisanTopNav = () => {
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
         <img src={UserPlaceholder}></img>
-        <h3>Ndubuisi Prince Godson <a href="#">SimserviceHub Artisan</a></h3>
+        <h3>Ndubuisi Prince Godson <Link to='/artisan-dashboard/'>SimserviceHub Artisan</Link></h3>
     </div>
     <div className="Artisan-TopNav-Main-2">
         <ul>
-           <li><a href="#"><DashboardIcon /> Dashboard</a></li>
-            <li><a href="#"><WorkIcon /> Jobs</a></li>
-            <li><a href="#"> <SettingsIcon /> Profile Settings</a></li>
+           <li><Link to='/artisan-dashboard/'><DashboardIcon /> Dashboard</Link></li>
+            <li><Link to='/artisan-dashboard/jobs'><WorkIcon /> Jobs</Link></li>
+            <li><Link to='/artisan-dashboard/profile-settings'> <SettingsIcon /> Profile Settings</Link></li>
         </ul>
     </div>
     </div>

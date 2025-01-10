@@ -98,49 +98,62 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import googleIcon from './Img/google-icon.png';
 import appleIcon from './Img/apple-icon.png';
 import { Link } from "react-router-dom";
-import axios from "axios";  // Import axios for making HTTP requests
+import axios from "axios";
 
 const CostumerLogin1 = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [inputType, setInputType] = useState("email"); // State to track input type
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);  // State to handle loading
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Regular expression to check for email with "@" and ".com"
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-        if (!email) {
-            setError("Please enter your email.");
-        } else if (!emailRegex.test(email)) {
-            setError("Please enter a valid email with '@' and '.com'.");
-        } else {
-            setError(""); // Clear any existing errors
-            setLoading(true);  // Set loading to true
-
-            try {
-                // Make the API call to send the token
-                const response = await axios.post(`${djangoHostname}/api/accounts/auth/api/send-login-token/`, { email });
-
-                if (response.status === 200) {
-                    navigate("/verify-email", { state: { email } }); // Navigate to verify email page
-                }
-            } catch (error) {
-                // Display the error message from the response
-                if (error.response && error.response.data && error.response.data.error) {
-                    setError(error.response.data.error);
-                } else {
-                    setError("Failed to send token. Please try again later.");
-                }
-            } finally {
-                setLoading(false);  // Set loading to false
+        // Validation based on selected input type
+        if (inputType === "email") {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!email) {
+                setError("Please enter your email.");
+                return;
+            } else if (!emailRegex.test(email)) {
+                setError("Please enter a valid email with '@' and '.com'.");
+                return;
+            }
+        } else if (inputType === "phone") {
+            const phoneRegex = /^[0-9]{10,15}$/; // Allow only numeric input with length 10-15
+            if (!phone) {
+                setError("Please enter your phone number.");
+                return;
+            } else if (!phoneRegex.test(phone)) {
+                setError("Please enter a valid phone number.");
+                return;
             }
         }
-    };
 
+        setError(""); // Clear any existing errors
+        setLoading(true);
+
+        try {
+            // Make the API call to send the token
+            const data = inputType === "email" ? { email } : { phone };
+            const response = await axios.post(`${djangoHostname}/api/accounts/auth/api/send-login-token/`, data);
+
+            if (response.status === 200) {
+                navigate("/verify-email", { state: { email, phone } });
+            }
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.error) {
+                setError(error.response.data.error);
+            } else {
+                setError("Failed to send token. Please try again later.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="Gradnded-page">
@@ -166,27 +179,52 @@ const CostumerLogin1 = () => {
                         <div className="Gradnded-Box-Body">
                             <div className="Gland-Quest">
                                 <div className="Gland-Quest-data">
-                                    <label>Email</label>
-                                    <input
-                                        type="email"
-                                        placeholder="Type your email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)} // Set the email state
-                                    />
-                                    {error && <p className="error-message">{error}</p>} {/* Display error message */}
+                                    <label>Select where to receive Auth code</label>
+                                    <select 
+                                        value={inputType} 
+                                        onChange={(e) => setInputType(e.target.value)}
+                                    >
+                                        <option value="email">Email</option>
+                                        <option value="phone">Phone number</option>
+                                    </select>
                                 </div>
+
+                                {/* Conditional rendering for email or phone input */}
+                                {inputType === "email" ? (
+                                    <div className="Gland-Quest-data">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            placeholder="Type your email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className="Gland-Quest-data">
+                                        <label>Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            placeholder="Type your phone number"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                        />
+                                    </div>
+                                )}
+                                {error && <p className="error-message">{error}</p>}
+
                                 <div className="Gland-Cnt-Btn">
                                     <button 
                                         type="submit" 
                                         className="post-job-btn" 
                                         onClick={handleSubmit} 
-                                        disabled={loading} // Disable button when loading
+                                        disabled={loading}
                                     >
                                         {loading ? 'Sending...' : 'Continue'}
                                     </button>
                                 </div>
 
-                                <div className="orl-Line">
+                                {/* <div className="orl-Line">
                                     <span>Or</span>
                                 </div>
 
@@ -197,7 +235,7 @@ const CostumerLogin1 = () => {
                                     <button>
                                         <img src={appleIcon} alt="Apple" /> Sign in with Apple
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
