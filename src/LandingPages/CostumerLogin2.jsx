@@ -139,40 +139,83 @@ const CostumerLogin2 = () => {
   }, [inputs]);
 
   // Make the API call to validate the token
+  // const validateToken = async () => {
+  //   const token = inputs.join(""); // Combine all input fields to form the full token
+
+  //   try {
+  //     const response = await axios.post(`${import.meta.env.VITE_DJANGO_HOSTNAME}/api/accounts/auth/api/verify-login-token/`, {
+  //       email,
+  //       token,
+  //     });
+
+  //     if (response.status === 200) {
+  //       // Redirect or take the next step after successful validation
+  //       // Example: Navigate to dashboard
+        
+  //       //console.log("Token validated successfully", response.data);
+
+  //       localStorage.setItem('user_id', response.data.userId);
+
+  //       localStorage.setItem('user_email', response.data.email);
+  //       localStorage.setItem('user_phone', response.data.phone);
+
+  //       localStorage.setItem('unique_user_id', response.data.userUnique_id);
+
+  //       localStorage.setItem('user_first_name', response.data.first_name);
+  //       localStorage.setItem('user_last_name', response.data.last_name);
+
+  //       localStorage.setItem('Address', response.data.address);
+
+  //       // localStorage.setItem('user_user_type', response.data.user_type);
+
+  //       localStorage.setItem('access_token', response.data.access);
+
+  //       localStorage.setItem('date_joined', response.data.date_joined);
+
+
+
+  //       navigate("/user-dashboard"); // Navigate to verify email page
+  //     }
+  //   } catch (error) {
+  //     if (error.response && error.response.data && error.response.data.error) {
+  //       alert(error.response.data.error); // Show error message if token is invalid
+  //     } else {
+  //       alert("Failed to verify token. Please try again later.");
+  //     }
+  //   }
+  // };
+
   const validateToken = async () => {
     const token = inputs.join(""); // Combine all input fields to form the full token
-
+  
     try {
       const response = await axios.post(`${import.meta.env.VITE_DJANGO_HOSTNAME}/api/accounts/auth/api/verify-login-token/`, {
         email,
         token,
       });
-
+  
       if (response.status === 200) {
-        // Redirect or take the next step after successful validation
-        // Example: Navigate to dashboard
-        
-        //console.log("Token validated successfully", response.data);
-
+        // Save user data to localStorage
         localStorage.setItem('user_id', response.data.userId);
-
         localStorage.setItem('user_email', response.data.email);
         localStorage.setItem('user_phone', response.data.phone);
-
         localStorage.setItem('unique_user_id', response.data.userUnique_id);
-
         localStorage.setItem('user_first_name', response.data.first_name);
         localStorage.setItem('user_last_name', response.data.last_name);
-
         localStorage.setItem('Address', response.data.address);
-
-        // localStorage.setItem('user_user_type', response.data.user_type);
-
         localStorage.setItem('access_token', response.data.access);
-
         localStorage.setItem('date_joined', response.data.date_joined);
-
-        navigate("/user-dashboard"); // Navigate to verify email page
+  
+        // Route based on user type
+        if (response.data.user_type === 'artisan') {
+          navigate("/artisan-dashboard");
+        } else if (response.data.user_type === 'customer') {
+          navigate("/user-dashboard");
+        } else if (response.data.user_type === 'super_admin') {
+          navigate("/admin-dashboard");
+        } else {
+          alert("Unknown user type");
+        }
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
@@ -182,6 +225,7 @@ const CostumerLogin2 = () => {
       }
     }
   };
+  
 
   // Reset the timer when "Resend" is clicked
   const handleResend = () => {
