@@ -187,7 +187,7 @@ const ArtisanSignUp = () => {
         } else {
             const result = await response2.json();
             console.log("Second request successful:", result);
-            navigate("/success-page");
+            navigate("/artisan-login");
         }
     } catch (error) {
         setError(error.message || "An unexpected error occurred. Please try again later.");
@@ -448,8 +448,8 @@ const ArtisanSignUp = () => {
                     </div>}
 
                     <input type="email" name="businessEmail" placeholder="Your business email" value={formData.businessEmail} onChange={handleInputChange} />
-                    <input type="tel"  name="businessPhone" placeholder="Your business phone" value={formData.businessPhone} onChange={handleInputChange} />
-                    <input type="tel" name="mobile_number" placeholder="Your mobile phone - optional" value={formData.mobile_number} onChange={handleInputChange}/>
+                    <input type="tel"  name="businessPhone" placeholder="Please enter business phone with country Code (+23491234567678)" value={formData.businessPhone} onChange={handleInputChange} />
+                    <input type="tel" name="mobile_number" placeholder="Please enter mobile  with country Code (+23491234567678)" value={formData.mobile_number} onChange={handleInputChange}/>
 					
 					          <textarea
                       id="about_artisan" className="description-textarea" name="about_artisan"

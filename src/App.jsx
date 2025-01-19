@@ -24,7 +24,9 @@ import ArtisanOverview from './LandingPages/ArtisanOverview';
 import BusinessTips from './LandingPages/BusinessTips';
 import VettingProcess from './LandingPages/VettingProcess';
 import HowWorkComesYourWay from './LandingPages/HowWorkComesYourWay';
+
 import ArtisanChattingPage from './LandingPages/ArtisanChattingPage';
+
 import ArtisanSignUp from './LandingPages/ArtisanSignUp';
 import TermsPage from './LandingPages/TermsPage';
 import TradespersonTerms from './LandingPages/TradespersonTerms';

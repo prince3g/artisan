@@ -1,410 +1,546 @@
-import React, { useState } from 'react';
-import './Css/Home.css';
-
-import { Link } from 'react-router-dom';
-
-import HeroBanner from './Img/hero-banner.png';
-import SearchIcon from './Img/search-icon.svg';
-
-
-import ServiceSlider from "../assets/ServiceSlider";
-
-import { CheckCircle, Verified, People, Close, ArrowForward } from '@mui/icons-material';
-
-
-import StepImg1 from './Img/StepImg/1.png';
-import StepImg2 from './Img/StepImg/2.png';
-import StepImg3 from './Img/StepImg/3.png';
-
-import HghImg1 from './Img/hghImgs/1.png';
-import HghImg2 from './Img/hghImgs/2.png';
-import HghImg3 from './Img/hghImgs/3.png';
-
-import LocationList from '../assets/LocationList';
-
-import WhyBanner from './Img/why-Banner.png';
-
-import PageServices from '../data/PageServices';
-
-import locations from '../data/Locations';
-
+import React, { useState, useEffect } from 'react';
+import './Css/Main.css';
+import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
+import PageServices from '../data/PageServices'; // Assuming this contains your trade data
+import { Link } from 'react-router-dom';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+const LeaveReview = () => {
+
+  const [artisanProfiles, setArtisanProfiles] = useState([]);
+  const [selectedArtisan, setSelectedArtisan] = useState(null);
 
 
-function Home() {
-  const navigate = useNavigate(); // Use React Router's useNavigate for navigation
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-  const [currentSearch, setCurrentSearch] = useState('trade'); // Default search type
-  const [showDropdown, setShowDropdown] = useState(false); // Toggle for dropdown
-  const [inputValue, setInputValue] = useState(''); // Stores the input value
-  const [showPopup, setShowPopup] = useState(false); // Controls popup visibility
-  const [popupContent, setPopupContent] = useState(null); // Stores popup content (trade/location details)
-  const [selectedTrade, setSelectedTrade] = useState(null); // Tracks the selected trade for location
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const artisan_unique_id = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
 
-  const handleSearchTypeChange = (type) => {
-    setCurrentSearch((prevType) => (prevType === type ? 'trade' : type));
-    setShowDropdown(false); // Reset dropdown when changing search type
-    setInputValue(''); // Clear the input field when changing search type
-  };
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [error, setError] = useState('');
 
-  const handleDropdownClick = (item) => {
-    setInputValue(item); // Set the selected item as the input value
-    setShowDropdown(false); // Hide the dropdown
-  };
+  const [reliabilityYesNo, setReliabilityYesNo] = useState('');
+  const [activeReliabilityButton, setActiveReliabilityButton] = useState(null);
+  const [isCheckedReliability, setIsCheckedReliability] = useState(false);
+  const [activeWorkmanshipButton, setActiveWorkmanshipButton] = useState(null);
+  const [isCheckedWorkmanship, setIsCheckedWorkmanship] = useState(false);
+  const [activeTidinessButton, setActiveTidinessButton] = useState(null);
+  const [isCheckedTidiness, setIsCheckedTidiness] = useState(false);
+  const [activeCourtesyButton, setActiveCourtesyButton] = useState(null);
+  const [isCheckedCourtesy, setIsCheckedCourtesy] = useState(false);
 
-  const handleSearch = () => {
-    if (currentSearch === 'trade') {
-      const trade = PageServices.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());
-      if (trade) {
-        setPopupContent({
-          title: `What do you need a ${trade.name} for?`,
-          list: trade.services,
-        });
-        setShowPopup(true);
-      } else {
-        setPopupContent({ title: 'Trade not available', list: [] });
-        setShowPopup(true);
-      }
-    } else if (currentSearch === 'location') {
-      if (locations.includes(inputValue)) {
-        setPopupContent({
-          title: `What trade are you looking for in ${inputValue}?`,
-          list: PageServices.map((trade) => trade.name),
-        });
-        setShowPopup(true);
-        setSelectedTrade(null); // Reset trade selection
-      } else {
-        setPopupContent({ title: 'Location not recognized', list: [] });
-        setShowPopup(true);
-      }
-    } else if (currentSearch === 'name') {
-      const foundTrade = PageServices.filter((trade) =>
-        trade.name.toLowerCase().includes(inputValue.toLowerCase())
-      );
   
-    }
+  const [selectedTrade, setSelectedTrade] = useState('');
+  const [selectedTradeId, setSelectedTradeId] = useState(null);
+  const [serviceCategories, setServiceCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  
+
+  const [reviewData, setReviewData] = useState({
+    service_category_id: '',
+    artisan: artisan_unique_id.trim(),
+    customer_id: "4711b4e5-8f18-4639-a9b5-496b2cdb8a2c",
+    reliability_rating: null,
+    workmanship_rating: null,
+    tidiness_rating: null,
+    courtesy_rating: null,
+    overall_rating: null,
+    review_title: '',
+    comment: '',
+    service_required: '',
+    date_of_experience: '',
+    value_of_work: null,
+    contact_name: '',
+    contact_email: '',
+    mobile_number: '',
+  });
+
+
+  
+
+  useEffect(() => {
+    const fetchArtisanProfiles = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+        const data = await response.json();
+        setArtisanProfiles(data);
+      } catch (error) {
+        setError('Error fetching artisan profiles. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArtisanProfiles();
+  }, [djangoHostname]);
+
+  // Handle input change for review fields
+  const handleInputChangeReview = (field, value) => {
+    setReviewData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleTradeSelection = (tradeName) => {
-    const trade = PageServices.find((t) => t.name === tradeName);
-    if (trade) {
-      setSelectedTrade(trade);
-      setPopupContent({
-        title: `What do you need a ${trade.name} for?`,
-        list: trade.services,
+
+  const handleRatingChange = (field, value) => {
+    if (!isCheckedReliability && !isCheckedWorkmanship && !isCheckedTidiness && !isCheckedCourtesy) {
+      setReviewData((prev) => ({
+        ...prev,
+        [`${field}_rating`]: value,  // Dynamically update the rating field
+      }));
+    }
+  };
+  
+
+  const handleRatingWorkmanshipChange = (value) => {
+    setActiveWorkmanshipButton(value);
+    handleRatingChange('workmanship', value);
+  };
+
+  const handleRatingTidinessChange = (value) => {
+    setActiveTidinessButton(value);
+    handleRatingChange('tidiness', value);
+  };
+
+  const handleRatingCourtesyChange = (value) => {
+    setActiveCourtesyButton(value);
+    handleRatingChange('courtesy', value);
+  };
+
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+  
+    const error = validateReviewData();
+    if (error) {
+      console.log(error);
+      alert(error);
+      return;
+    }
+  
+    // Ensure that if a rating is set to null due to 'Not applicable' checkbox, it's handled properly
+    const reviewPayload = {
+      service_category: reviewData.service_category_id,
+      artisan: reviewData.artisan,
+      reviewer_name: reviewData.customer_id,
+      // customer_id: reviewData.customer_id,
+      rating: reviewData.reliability_rating || null,
+      reliability_rating: reviewData.reliability_rating || null,
+      workmanship_rating: reviewData.workmanship_rating || null,
+      tidiness_rating: reviewData.tidiness_rating || null,
+      date_of_experience: reviewData.date_of_experience || null,
+      courtesy_rating: reviewData.courtesy_rating || null,
+      review_title: reviewData.review_title,
+      review_text: reviewData.comment,
+      value_of_work: reviewData.value_of_work,
+      contact_name: reviewData.contact_name,
+      contact_email: reviewData.contact_email,
+      mobile_number: reviewData.mobile_number,
+    };
+  
+    // Make the POST request
+    const url = `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`;
+    //const url = `${djangoHostname}/api/tradeReviews/auth/api/trade-reviews/`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewPayload),
       });
+  
+      if (response.ok) {
+        alert('Review submitted successfully!');
+        navigate('/thank-you');
+      } else {
+        const errorData = await response.json();
+        console.error('Error:', errorData);
+        alert('Failed to submit the review. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('An error occurred while submitting the review.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  const validateReviewData = () => {
+    if (!reviewData.service_category_id) return "Please select a trade.";
+    if (!reviewData.reliability_rating) return "Please rate reliability.";
+    if (!reviewData.workmanship_rating) return "Please rate workmanship.";
+    if (!reviewData.tidiness_rating) return "Please rate tidiness.";
+    if (!reviewData.courtesy_rating) return "Please rate courtesy.";
+    if (!reviewData.review_title) return "Please provide a review title.";
+    if (!reviewData.comment) return "Please provide your review.";
+    if (!reviewData.contact_name) return "Please provide your contact name.";
+    if (!reviewData.contact_email) return "Please provide your contact email.";
+    if (!reviewData.mobile_number) return "Please provide your mobile number.";
+
+    console.log("reviewData")
+    console.log(reviewData)
+    console.log("reviewData")
+    return null;
+  };
+  
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+    if (e.target.value) {
+      debounceFetchArtisans(e.target.value);
+    } else {
+      setArtisanProfiles([]);
     }
   };
 
-  const handleServiceSelection = (service) => {
-    if (selectedTrade) {
-      navigate(
-        `/search-results?trade=${selectedTrade.name}&service=${service}&services=${encodeURIComponent(
-          JSON.stringify(selectedTrade.services)
-        )}`
-      );
+ 
+  const debounceFetchArtisans = debounce(async (query) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?search=${query}`);
+      const data = await response.json();
+      setArtisanProfiles(data);
+    } catch (error) {
+      setError('Error fetching artisan profiles.');
+    } finally {
+      setLoading(false);
+    }
+  }, 500);
+
+  const handleArtisanSelect = (artisan) => {
+    setSelectedArtisan(artisan);
+    setQuery(artisan.user.first_name + ' ' + artisan.user.last_name);
+  };
+
+
+  const handleSuggestionClick = (service) => {
+    setSelectedTrade(service.name);
+    setSelectedTradeId(service.unique_id);
+    setReviewData((prev) => ({ ...prev, service_category_id: service.unique_id }));
+    setSuggestions([]);
+};
+
+
+  const handleCheckboxChangeReliability = () => {
+    setIsCheckedReliability(!isCheckedReliability);
+    if (!isCheckedReliability) {
+      setActiveReliabilityButton(null);  // Reset rating
+      setReviewData((prev) => ({
+        ...prev,
+        reliability_rating: null,  // Set rating to null
+      }));
     }
   };
-  const handleClosePopup = () => {
-    setInputValue(''); // Clear the input
-    setShowDropdown(false); // Close the dropdown
-    setShowPopup(false); // Hide the popup
+  
+
+  const handleCheckboxChangeWorkmanship = () => {
+    setIsCheckedWorkmanship(!isCheckedWorkmanship);
+    if (!isCheckedWorkmanship) {
+      setActiveWorkmanshipButton(null);  // Reset rating
+      setReviewData((prev) => ({
+        ...prev,
+        workmanship_rating: null,  // Reset the rating value
+      }));
+    }
   };
+  
+  const handleCheckboxChangeTidiness = () => {
+    setIsCheckedTidiness(!isCheckedTidiness);
+    if (!isCheckedTidiness) {
+      setActiveTidinessButton(null);
+      setReviewData((prev) => ({
+        ...prev,
+        tidiness_rating: null,  // Reset the rating value
+      }));
+    }
+  };
+  
+  const handleCheckboxChangeCourtesy = () => {
+    setIsCheckedCourtesy(!isCheckedCourtesy);
+    if (!isCheckedCourtesy) {
+      setActiveCourtesyButton(null);
+      setReviewData((prev) => ({
+        ...prev,
+        courtesy_rating: null,  // Reset the rating value
+      }));
+    }
+  };
+  
+
+  const handleReliabilityChange = (value) => {
+    setReliabilityYesNo(value);
+    setReviewData((prevData) => ({
+      ...prevData,
+      reliability_answer: value,  // add this to review data
+    }));
+  };
+  
 
   return (
-    <div className="Home-page">
-      <div className="hero-sec">
+    <div className="Gradnded-page">
+      <div className="navigating-ttarvs">
         <div className="site-container">
-          <div className="hero-cont">
-            <div className="hero-dlts">
-              <div className="hero-dlts-main">
-                <h6>SimserviceHub Trusted Tradesperson </h6>
-                <h2 className="big-text">
-                  Discover Vetted <span>Tradesperson</span> for Every Home Project
-                </h2>
-                <p>Your trusted platform for connecting with experienced, reliable Tradespersons.</p>
+          <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/leave-review"> Leave a Review</Link> </p>
+        </div>
+      </div>
+      <div className="site-container">
+        <div className="Gradnded-main">
+          <div className="Gradnded-Box">
+            <div className="Gradnded-Box-header">
+              <h2 className="big-text">Leave a Review</h2>
+            </div>
+            <div className="Gradnded-Box-Body">
+              <div className="Gland-Quest">
+                                
+                <div className="Gland-Quest-data">
+                <label htmlFor="artisanSelect">Which artisan would you like to review?</label>
+                <input
+                  type="text"
+                  placeholder="Start typing the name of the artisan..."
+                  value={query}
+                  onChange={handleInputChange}
+                  disabled={loading}
+                />
 
-                <div className="Search-Sec">
-                  <div className="top-Search">
-                    {currentSearch === 'trade' && (
-                      <div className="Seach-OO1">
-                        <label htmlFor="trade-input">Search for a Specific Trade</label>
-                        <input
-                          type="text"
-                          placeholder="Trade Type (e.g., Plumber, Electrician)"
-                          autoComplete="off"
-                          id="trade-input"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          onFocus={() => setShowDropdown(true)}
-                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                        />
-                        {showDropdown && inputValue && (
-                          <div className="dropdown">
-                            {PageServices
-                              .filter((search) => search.name.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                              .map((search, index) => (
-                                <div
-                                  key={index}
-                                  className="dropdown-item"
-                                  onClick={() => handleDropdownClick(search.name)}
-                                >
-                                  {search.name}
-                                </div>
-                              ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {currentSearch === 'location' && (
-                      <div className="Seach-OO1">
-                        <label htmlFor="location-input">Search by Location</label>
-                        <input
-                          type="text"
-                          placeholder="Enter Location (e.g., Lagos)"
-                          autoComplete="off"
-                          id="location-input"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          onFocus={() => setShowDropdown(true)}
-                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                        />
-                        {showDropdown && inputValue && (
-                          <div className="dropdown">
-                            {locations
-                              .filter((state) => state.toLowerCase().includes(inputValue.toLowerCase())) // Filter suggestions
-                              .map((state, index) => (
-                                <div
-                                  key={index}
-                                  className="dropdown-item"
-                                  onClick={() => handleDropdownClick(state)}
-                                >
-                                  {state}
-                                </div>
-                              ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {currentSearch === 'name' && (
-                      <div className="Seach-OO1">
-                        <label htmlFor="name-input">Search by Name</label>
-                        <input
-                          type="text"
-                          placeholder="Enter Trade Name (e.g., Electrician)"
-                          autoComplete="off"
-                          id="name-input"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          onFocus={() => setShowDropdown(true)}
-                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                        />
-                      </div>
-                    )}
-                    <button className="search-btn" onClick={handleSearch}>
-                      <img src={SearchIcon} alt="Search Icon" />
-                      Search
-                    </button>
+                {loading && <div className="loading-spinner">Loading...</div>}
+                      {!loading && artisanProfiles.length > 0 && (
+                        <ul className="suggestions-list">
+                          {artisanProfiles.map((artisan) => (
+                            <li key={artisan.id} onClick={() => handleArtisanSelect(artisan)}>
+                              {artisan.user.first_name} {artisan.user.last_name}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    {error && <div className="error-message">{error}</div>}
                   </div>
-                  <div className="Sub-Search">
-                    <button onClick={() => handleSearchTypeChange('location')}>
-                      {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
-                    </button>
-                    <span>or</span>
-                    <button onClick={() => handleSearchTypeChange('name')}>
-                      {currentSearch === 'name' ? 'Search for a Specific Trade' : 'Search by Name'}
-                    </button>
-                  </div>
+
+                  {selectedArtisan && (
+                <div className="artisan-details">
+                  <h3>Selected Artisan: {selectedArtisan.user.first_name} {selectedArtisan.user.last_name}</h3>
+                  <p>{selectedArtisan.service_details.simpleDescription}</p>
+                  <p>{selectedArtisan.location}</p>
                 </div>
+              )}
+
+                {selectedArtisan  && (
+                  <div className="glahs-sec">
+                    <div className="Gland-Quest-data">
+                      <label htmlFor="serviceSelect">Was any work carried out?</label>
+                      <div className="Opticas">
+                        <button
+                          className={reliabilityYesNo === 'yes' ? 'active-dect-btn' : ''}
+                          onClick={() => handleReliabilityChange('yes')}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          className={reliabilityYesNo === 'no' ? 'active-dect-btn' : ''}
+                          onClick={() => handleReliabilityChange('no')}
+                        >
+                          No
+                        </button>
+
+
+                      </div>
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                      <label htmlFor="serviceSelect">How would you rate the experience?</label>
+                      <div className="omac-p">
+                        <h6>(1 = Terrible, 10 = Excellent)</h6>
+                        <h4>Reliability & timekeeping</h4>
+                        <div className="omac-p-btns">
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <button
+                              key={i + 1}
+                              className={activeReliabilityButton === i + 1 && !isCheckedReliability ? 'active-dect-btn' : ''}
+                              onClick={() => {
+                                if (!isCheckedReliability) {
+                                  setActiveReliabilityButton(i + 1);
+                                  handleRatingChange('reliability', i + 1);  // Update reviewData
+                                }
+                              }}
+                            >
+                              {i + 1}
+                            </button>
+
+
+                          ))}
+                        </div>
+                        <div className="not-applicable-section">
+                          <label className="styled-checkbox-label">
+                            <input
+                              type="checkbox"
+                              className="styled-checkbox"
+                              checked={isCheckedReliability}
+                              onChange={handleCheckboxChangeReliability}
+                            />
+                            <h5>Not applicable</h5>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="omac-p">
+                        <h4>Quality of workmanship</h4>
+                        <div className="omac-p-btns">
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <button
+                              key={i + 1}
+                              className={activeWorkmanshipButton === i + 1 && !isCheckedWorkmanship ? 'active-dect-btn' : ''}
+                              onClick={() => handleRatingWorkmanshipChange(i + 1)} // Set the rating
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="omac-p">
+                        <h4>Tidiness</h4>
+                        <div className="omac-p-btns">
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <button
+                              key={i + 1}
+                              className={activeTidinessButton === i + 1 && !isCheckedTidiness ? 'active-dect-btn' : ''}
+                              onClick={() => handleRatingTidinessChange(i + 1)} // Set the rating
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="omac-p">
+                        <h4>Courtesy</h4>
+                        <div className="omac-p-btns">
+                          {Array.from({ length: 10 }, (_, i) => (
+                            <button
+                              key={i + 1}
+                              className={activeCourtesyButton === i + 1 && !isCheckedCourtesy ? 'active-dect-btn' : ''}
+                              onClick={() => handleRatingCourtesyChange(i + 1)} // Set the rating
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                        <label>Your brief description</label>
+                        <h6>(This will be used as your review title)</h6>
+                        <input
+                          type="text"
+                          placeholder="E.g. Bathroom fitting..."
+                          value={reviewData.review_title} // Bind state
+                          onChange={(e) => handleInputChangeReview('review_title', e.target.value)} // Update state
+                        />
+
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                        <label>Your review</label>
+                      <textarea
+                        type="text"
+                        placeholder="In your words, tell us about your experience.."
+                        value={reviewData.comment} // Bind the state here
+                        onChange={(e) => handleInputChangeReview('comment', e.target.value)} // Update the state on change
+                    ></textarea>
+
+                    </div>
+
+
+
+                    <div className="Gland-Quest-data">
+                        <label>What services did you require?</label>
+                        <input
+                            type="text"
+                            placeholder="E.g. Bathroom fitting..."
+                            value={reviewData.service_required} // Bind state
+                            onChange={(e) => handleInputChangeReview('service_required', e.target.value)} // Update state
+                            
+
+                        />
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                        <label>Date of experience</label>
+                        <input
+                            type="date"
+                            placeholder="E.g. Bathroom fitting..."
+                            value={reviewData.date_of_experience} // Bind state
+                            onChange={(e) => handleInputChangeReview('date_of_experience', e.target.value)} // Update state
+                        />
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                        <label>What was the value of work completed? (Optional)</label>
+                        <h6>In naira (₦)</h6>
+                        <input
+                            type="number"
+                            placeholder="Enter the value in naira (₦)"
+                            value={reviewData.value_of_work} // Bind state
+                            onChange={(e) => handleInputChangeReview('value_of_work', e.target.value)} // Update state
+                        />
+                    </div>
+
+
+                    <div className="Gland-Quest-data">
+                        <label>Your contact details</label>
+                        <input
+                            type="text"
+                            placeholder="Full name"
+                            value={reviewData.contact_name} // Bind state
+                            onChange={(e) => handleInputChangeReview('contact_name', e.target.value)} // Update state
+                        />
+                         <input
+                            type="text"
+                            placeholder="Email address"
+                            value={reviewData.contact_email} // Bind state
+                            onChange={(e) => handleInputChangeReview('contact_email', e.target.value)} // Update state
+                        />
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                        <label>Your mobile number</label>
+                        <h6>We'll send you an SMS to very your review.</h6>
+                        <input
+                            type="number"
+                            placeholder="Mobile phone number"
+                            value={reviewData.mobile_number} // Bind state
+                            onChange={(e) => handleInputChangeReview('mobile_number', e.target.value)} // Update state
+                        />
+                        
+                    </div>
+
+
+                  </div>
+                )}
               </div>
             </div>
-            <div className="hero-banner">
-              <img src={HeroBanner} alt="Hero Banner" />
+
+            <div className="Gland-Cnt-Btn">
+              <button type="button" className="back-btn" onClick={() => navigate(-1)}>
+                Back
+              </button>
+              <button
+                  type="submit"  className="post-job-btn" onClick={handleSubmit}  disabled={isSubmitting} >
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      {showPopup && (
-        <div className="Services-PopUp-Sec">
-          <div className="Services-PopUp-Box">
-            <div className="Services-PopUp-Box-Header">
-              <h3>{popupContent.title}</h3>
-              <button className="Close-Service-PopUp" onClick={handleClosePopup}>
-                <Close />
-              </button>
-            </div>
-            <div className="Services-PopUp-Box-Main">
-            <ul>
-                {popupContent.list.map((service, index) => (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      if (currentSearch === 'location' && selectedTrade) {
-                        handleServiceSelection(service); // Navigate to search-results page
-                      } else if (currentSearch === 'trade') {
-                        // Logic for 'trade' search
-                        const trade = PageServices.find(
-                          (t) => t.name.toLowerCase() === inputValue.toLowerCase()
-                        );
-                        if (trade) {
-                          // Setting popup content for services based on the selected trade
-                          setPopupContent({
-                            title: `What do you need a ${trade.name} for?`,
-                            list: trade.services,
-                          });
-                          setShowPopup(true); // Show the popup
-
-                          // Navigate to the page for the selected trade
-
-
-                          navigate(
-                            `/search-results?trade=${trade.name}&service=${service}&services=${encodeURIComponent(
-                              JSON.stringify(trade.services)
-                            )}`
-                          );
-
-                        } else {
-                          setPopupContent({ title: 'Trade not available', list: [] });
-                          setShowPopup(true); // Show popup with message for unavailable trade
-                        }
-                      } else {
-                        handleTradeSelection(service); // Continue trade selection
-                      }
-                    }}
-                  >
-                    <span>{service} <ArrowForward /></span> {/* Non-clickable text */}
-                    
-                  </li>
-                ))}
-              </ul>
-
-            </div>
-          </div>
-        </div>
-      )}
-
-
-<div className='service-sec'>
-  <div className='site-container'>
-    <div className='service-header'>
-      <h2 className='mid-text'>Browse Our Top Service Categories </h2>
-    </div>
-
-    <ServiceSlider />
-  </div>
-</div>
-
-<div className='Oggg-sec'>
-  <div className='site-container'>
-  <div className='Oggg-Grid'>
-  <div className='Oggg-Part1'>
-    <div className='Oggg-header'>
-  <h2 className='big-text'>Why Choose SimserviceHub’s <span>Tradesperson</span> Network?</h2>
-  </div>
-  <div className='Oggg-Card'>
-    <h3><CheckCircle /> Guaranteed Work Quality</h3>
-    <p>SimserviceHub offers quality assurance for all tradesperson projects. T & Cs apply</p>
-  </div>
-  <div className='Oggg-Card'>
-    <h3><Verified /> Rigorous Screening Process </h3>
-    <p>All tradesperson undergo a thorough verification process, including background and skill checks.</p>
-  </div>
-  <div className='Oggg-Card'>
-    <h3><People /> Trusted by Thousands </h3>
-    <p>With over 2 million reviews from satisfied clients, we maintain transparency and trust.</p>
-  </div>
-  </div>
-  <div className='Oggg-Part2'>
-    <img src={WhyBanner}></img>
-  </div>
- 
-  </div>
-  </div>
-</div>
-
-
-<div className='Cosii-mam'>
-  <div className='site-container'>
-  <div className='Cosii-mam-header'>
-    <h2 className='mid-text'>How to Hire the Right Tradesperson with SimserviceHub</h2>
-  </div>
-  <div className='Cosii-mam-Grid'>
-  <div className='Cosii-mam-Card'>
-    <img src={StepImg1}></img>
-    <h3>01</h3>
-    <div className='Cosii-mam-Card-txt'>
-    <p>Post Your Job for Free</p>
-    <span>Share your job details on SimserviceHub at no cost. Describe the work you need done and add any specifics or photos to help tradespeople understand your needs.</span>
-  </div>
-  </div>
-
-  <div className='Cosii-mam-Card'>
-    <img src={StepImg2}></img>
-    <h3>02</h3>
-    <div className='Cosii-mam-Card-txt'>
-    <p>Receive Responses from Tradespeople</p>
-    <span>Once your job is posted, qualified tradespeople and professionals will be notified and can express their interest. You’ll start receiving responses in no time.</span>
-  </div>
-  </div>
-
-  <div className='Cosii-mam-Card'>
-    <img src={StepImg3}></img>
-    <h3>03</h3>
-    <div className='Cosii-mam-Card-txt'>
-    <p>Review Profiles and Make Your Choice </p>
-    <span>Browse profiles of interested tradespeople. You can check their work history, reviews, and qualifications to find the perfect match for your project. When you’re ready, select the best person for the job. </span>
-  </div>
-  </div>
-
-  </div>
-  <div className='Cosii-mam-foot'><a href='#'>How SimserviceHub Works</a></div>
-  </div>
-</div>
-
-
-<div className='site-container'>
-  <div className='hgahgs-sec'>
-  <div className='hgahgs-Card'>
-    <img src={HghImg1}></img>
-    <div className='hgahgs-Card-Dlt'>
-    <h3>How Was Your Experience? Leave a Review</h3>
-    <p>Help us build a trustworthy community by sharing your experience with our tradespeople. Your feedback is invaluable.  </p>
-    <a href='#'>Leave a Review</a>
-  </div>
-  </div>
-
-  <div className='hgahgs-Card'>
-    <img src={HghImg2}></img>
-    <div className='hgahgs-Card-Dlt'>
-    <h3>Request a Quote</h3>
-    <p>Tell us your requirements, and we’ll connect you with up to three verified tradesperson.  </p>
-    <a href='#'>Request a Quote</a>
-  </div>
-  </div>
-
-
-  <div className='hgahgs-Card'>
-    <img src={HghImg3}></img>
-    <div className='hgahgs-Card-Dlt'>
-    <h3>Are You a Tradesperson? Join SimserviceHub Today!</h3>
-    <p>Over 100,000 homeowners rely on SimserviceHub to find skilled, verified tradesperson. Sign up and grow your business today!   </p>
-    <a href='#'>Tradesperson Sign-Up</a>
-  </div>
-  </div>
-
-
-  </div>
-</div>
-
-  <LocationList />
-
-
-
-
-
     </div>
   );
-}
+};
 
-export default Home;
+export default LeaveReview;
