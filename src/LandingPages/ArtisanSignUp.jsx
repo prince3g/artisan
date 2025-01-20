@@ -492,5 +492,6 @@ const ArtisanSignUp = () => {
   );
 };
 
+
 export default ArtisanSignUp;
 
