@@ -36,6 +36,7 @@ const ArtisanSignUp = () => {
     businessEmail: "",
     businessPhone: "",
     mobile_number: "",
+    service_cost: "",
     skills: [], 
     about_artisan: "", 
   });
@@ -165,6 +166,7 @@ const ArtisanSignUp = () => {
             businessLocation: formData.businessLocation,
             lookingFor: formData.lookingFor,
             businessType: formData.businessType,
+            service_cost: formData.service_cost,
             employeeCount: formData.employeeCount,
             skills: formData.skills.map((skill) => String(skill)),
             experience: formData.experience || 0,
@@ -187,7 +189,7 @@ const ArtisanSignUp = () => {
         } else {
             const result = await response2.json();
             console.log("Second request successful:", result);
-            navigate("/artisan-login");
+            navigate("/login");
         }
     } catch (error) {
         setError(error.message || "An unexpected error occurred. Please try again later.");
@@ -435,12 +437,16 @@ const ArtisanSignUp = () => {
                   </div>
 
                   <div className="Gland-Quest-data">
-                                        <label>Cost of services/skills (Optional)</label>
-                                        <input
-                                            type="Number"
-                                            placeholder="Enter ammount"
-                                        />
-                                    </div>
+                      <label>Cost of services/skills (Optional)</label>
+                      <input
+                          type="Number"
+                          placeholder="Enter Amount"
+
+                          name="service_cost"
+                          value={formData.service_cost}
+                          onChange={handleInputChange}
+                      />
+                  </div>
             
             
                   <div className="Gland-Quest-data">
