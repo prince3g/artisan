@@ -41,7 +41,7 @@ import CostumerLogin2 from './LandingPages/CostumerLogin2';
 import CostumerLogin3 from './LandingPages/CostumerLogin3';
 import CostumerLogin4 from './LandingPages/CostumerLogin4';
 import ArtisanLogin from './LandingPages/ArtisanLogin';
-// import ContactUs from './LandingPages/ContactUs';
+import ContactUs from './LandingPages/ContactUs';
 import Footer from './LandingPages/Footer';
 
 
@@ -88,13 +88,13 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<CookiesPage />} />
           <Route path="/faq" element={<FAQPage />} />
-          <Route path="/faq-details" element={<FAQDetailsPage />} />ArtisanLogin
+          <Route path="/faq-details" element={<FAQDetailsPage />} />
           <Route path="/login" element={<CostumerLogin1 />} />
           <Route path="/verify-email" element={<CostumerLogin2 />} />
           <Route path="/complete-profile" element={<CostumerLogin3 />} />
           <Route path="/artisan-login" element={<ArtisanLogin />} />
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
-
+          <Route path="/contact-us" element={<ContactUs />} />
 
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
