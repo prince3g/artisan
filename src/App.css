@@ -852,3 +852,283 @@
   cursor: pointer;
   color: #505050;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Contact_Pappa{
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+@media screen and (max-width:800px){
+.Contact_Pappa{
+  display: block !important;
+}
+.conatct-banner{
+  min-height: 200px !important;
+  padding: 50px 0px !important;
+}
+.contact-Dlts{
+  padding: 50px 0px !important;
+}
+}
+.conatct-banner{
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  padding: 100px 0px;
+  background-color: #000;
+  background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url(./components//Img/contactBg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+
+.contact-Dlts{
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding:40px 30px;
+}
+
+.contact-Dlts-header{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.contact-Dlts-header p{
+  color: #4E4E4E !important;
+  display: block;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+.Contact_SeccO_1{
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.Contact_SeccO_1 ul{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 50px !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+  grid-template-rows: auto;
+}
+@media screen and (max-width:500px){
+  .Contact_SeccO_1 ul{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+}
+.Contact_SeccO_1 ul li{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 30px;
+}
+
+@media screen and (max-width:350px){
+  .Contact_SeccO_1 ul li{
+      display: flex !important;
+      flex-direction: column !important;
+      grid: 20px !important;
+      grid-gap: 20px !important;
+  }
+}
+
+.Contact_SeccO_1 ul li span{
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  border:1px solid #DEDEE8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.Contact_SeccO_1 ul li span img{
+  max-width: 100%;
+}
+
+.Contact_SeccO_1 ul li .DDl_Div{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.Contact_SeccO_1 ul li .DDl_Div h3{
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px !important;
+}
+
+.Contact_SeccO_1 ul li .DDl_Div p{
+  font-size: 14px;
+  color:#343434;
+}
+
+.Contact_SeccO_1 ul li .DDl_Div h4{
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 5px !important;
+}
+.Contact_SeccO_1 ul li .DDl_Div h4 a{
+  white-space: nowrap;
+  color: #B1BD3B;
+}
+.Contact_SeccO_1 ul li .DDl_Div h4 a:hover{
+  text-decoration: underline;
+}
+
+
+
+.message_Sec{
+position: relative;
+width: 100%;
+height: auto;
+margin-top: 40px;
+}
+
+.message_Sec h2{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+
+.message-form{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
+  display: block;
+}
+
+.message-form-input{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: block;
+}
+.message-form-input textarea,
+.message-form-input select,
+.message-form-input input{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  padding: 0px 15px;
+  background-color: transparent;
+  border:1px solid #cccbcb;
+  font-size: 15px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.message-form-input textarea::placeholder,
+.message-form-input::placeholder{
+  color: #4E4E4E;
+}
+
+.message-form-input textarea:focus,
+.message-form-input select:focus,
+.message-form-input input:focus{
+ border-width: 2px;
+ border-color: #96a133 !important;
+}
+
+.message-form-input textarea{
+height: 200px;
+padding: 15px !important;
+resize: none;
+}
+
+.message-form-input select option{
+  color: #000 !important;
+}
+
+
+
+.message-form-input button{
+  position: relative;
+  width: 250px;
+  border-radius: 5px;
+  height: 50px;
+  padding: 0px 15px;
+  background-color: #B1BD3B;
+  border:1px solid #B1BD3B;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.message-form-input button:hover{
+  background-color: transparent;
+  color: #96a133;
+  border:1px solid #96a133;
+}
+@media screen and (max-width:500px){
+.message-form-input button{
+  width: 100% !important;
+}
+}
+
+.message-DFlex{
+display: flex;
+align-items: center;
+gap: 20px;
+grid-gap: 20px;
+}
+@media screen and (max-width:600px){
+.message-DFlex{
+  display: block !important;
+}
+}
+

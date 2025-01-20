@@ -310,7 +310,7 @@ const RequestQuote = () => {
       </div>
       <div className="site-container">
         <div className="Gradnded-main">
-          <div className="Gradnded-Box">
+          <form className="Gradnded-Box">
             <div className="Gradnded-Box-header">
               <h2 className="big-text">Request a quote</h2>
               <p>Give us the details of your job and we'll send it to specialist trades for you.</p>
@@ -424,7 +424,7 @@ const RequestQuote = () => {
               </button>
             </div>
 
-          </div>
+          </form>
         </div>
       </div>
     </div>
