@@ -829,3 +829,26 @@
 .hha-Info a:hover{
   text-decoration: underline;
 }
+
+
+.Rememevbe{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  grid-gap: 5px;
+  margin-top: 10px;
+}
+
+.Rememevbe label{
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #505050;
+}

@@ -86,8 +86,8 @@ function SiteNav() {
               <li><Link to="/artisan-overview" onClick={handleNavLinkClick}>Artisan Sign-Up</Link></li>
             </ul>
             <ul className="Ul-Last">
-              <li><Link to="/login" className="home-login" onClick={handleNavLinkClick}>Customer login</Link></li>
-              <li><Link to="/artisan-login" className="trade-login" onClick={handleNavLinkClick}>Artisan login</Link></li>
+              <li><Link to="/customer-signup" className="home-login" onClick={handleNavLinkClick}>Customer Signup</Link></li>
+              <li><Link to="/login" className="trade-login" onClick={handleNavLinkClick}>Login</Link></li>
             </ul>
           </div>
           <div

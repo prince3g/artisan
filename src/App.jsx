@@ -39,6 +39,7 @@ import FAQDetailsPage from './LandingPages/FAQDetailsPage';
 import CostumerLogin1 from './LandingPages/CostumerLogin1';
 import CostumerLogin2 from './LandingPages/CostumerLogin2';
 import CostumerLogin3 from './LandingPages/CostumerLogin3';
+import CostumerLogin4 from './LandingPages/CostumerLogin4';
 import ArtisanLogin from './LandingPages/ArtisanLogin';
 // import ContactUs from './LandingPages/ContactUs';
 import Footer from './LandingPages/Footer';
@@ -92,6 +93,7 @@ function App() {
           <Route path="/verify-email" element={<CostumerLogin2 />} />
           <Route path="/complete-profile" element={<CostumerLogin3 />} />
           <Route path="/artisan-login" element={<ArtisanLogin />} />
+          <Route path="/customer-signup" element={<CostumerLogin4 />} />
 
 
 
