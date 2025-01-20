@@ -139,9 +139,9 @@ const ArtisanOverview = () => {
        </div>
 
 
-    <div className='Start_Vid'>
+    {/* <div className='Start_Vid'>
       <img src={StatVid}></img>
-    </div>
+    </div> */}
 
 
     <div className='auuys8-sec'>
@@ -213,7 +213,7 @@ const ArtisanOverview = () => {
         </div>
       </div>
       <div className='Call_Cnt_Bottom'>
-        <Link to="">View our prices</Link>
+        <a href="tel:+442038905470" to="">Call now</a>
       </div>
     </div>
 

@@ -360,7 +360,7 @@ const CostumerLogin1 = () => {
                 <div className="site-container">
                     <p>
                         <Link to="/">Simservicehub</Link> <ChevronRightIcon />
-                        <Link to="/customer-login"> Customer Sign up or create account </Link>
+                        <Link to="/login"> Login </Link>
                     </p>
                 </div>
             </div>
@@ -410,6 +410,11 @@ const CostumerLogin1 = () => {
                                     </div>
                                 )}
                                 {error && <p className="error-message">{error}</p>}
+
+                                <div className="Rememevbe">
+                                    <input type="checkbox" id="remember_me" />
+                                    <label for="remember_me">Remember me</label>
+                                </div>
 
                                 <div className="Gland-Cnt-Btn">
                                     <button 
