@@ -1132,3 +1132,24 @@ grid-gap: 20px;
 }
 }
 
+
+
+
+
+.password-input-container {
+  position: relative;
+}
+
+.visibility-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="password"] {
+  padding-right: 40px; /* Adjust based on button size */
+}

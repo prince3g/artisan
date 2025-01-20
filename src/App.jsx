@@ -92,7 +92,7 @@ function App() {
           <Route path="/login" element={<CostumerLogin1 />} />
           <Route path="/verify-email" element={<CostumerLogin2 />} />
           <Route path="/complete-profile" element={<CostumerLogin3 />} />
-          <Route path="/artisan-login" element={<ArtisanLogin />} />
+          <Route path="/login" element={<ArtisanLogin />} />
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
           <Route path="/contact-us" element={<ContactUs />} />
 

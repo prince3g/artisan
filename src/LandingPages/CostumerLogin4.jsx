@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const CostumerLogin4 = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -12,6 +14,9 @@ const CostumerLogin4 = () => {
     const [lastName, setLastName] = useState("");
     const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
+    const [passwordVisible, setPasswordVisible] = useState(false);  // State for password visibility
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // State for confirm password visibility
+    const [loading, setLoading] = useState(false); // State for loading status
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -19,26 +24,38 @@ const CostumerLogin4 = () => {
 
         // Regular expression to check for a valid email (allowing custom domains)
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // Regular expression to check for a valid phone number with country code
+        const phoneRegex = /^\+[1-9]\d{1,14}$/;
 
         if (!email) {
             setError("Please enter your email.");
         } else if (!emailRegex.test(email)) {
             setError("Please enter a valid email.");
+        } else if (!phoneRegex.test(phone)) {
+            setError("Please enter a valid phone number with country code.");
         } else if (password !== confirmPassword) {
             setError("Passwords do not match.");
         } else {
             setError(""); // Clear any existing errors
+            setLoading(true); // Start loading
 
             const userData = {
                 email,
                 password,
                 first_name: firstName,
                 last_name: lastName,
-                phone
+                phone,
+                mobile_number:phone,
+                user_type:"customer"
             };
 
             try {
-                const response = await fetch(`4{djangoHostname}/api/accounts/auth/api/users/`, {
+
+                // console.log("userData")
+                // console.log(userData)
+                // console.log("userData")
+
+                const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -46,15 +63,30 @@ const CostumerLogin4 = () => {
                     body: JSON.stringify(userData)
                 });
 
+                setLoading(false); // Stop loading after the request
+
                 if (response.ok) {
                     const result = await response.json();
                     console.log('User created successfully:', result);
-                    navigate("/artisan-login", { state: { email } }); // Pass email in state
+                    navigate("/login", { state: { email } }); // Pass email in state
                 } else {
                     const errorData = await response.json();
-                    setError(errorData.message || 'Something went wrong');
+                    // Extracting error details and displaying them
+                    const errorMessages = [];
+                    if (errorData.email) {
+                        errorMessages.push(errorData.email[0]);
+                    }
+                    if (errorData.phone) {
+                        errorMessages.push(errorData.phone[0]);
+                    }
+                    if (errorData.mobile_number) {
+                        errorMessages.push(errorData.mobile_number[0]);
+                    }
+
+                    setError(errorMessages.length > 0 ? errorMessages.join(" ") : 'Something went wrong');
                 }
             } catch (error) {
+                setLoading(false); // Stop loading if there is an error
                 console.error('Error:', error);
                 setError('An error occurred. Please try again.');
             }
@@ -118,7 +150,7 @@ const CostumerLogin4 = () => {
                                         <label>Phone Number</label>
                                         <input
                                             type="tel"
-                                            placeholder="Type your phone number"
+                                            placeholder="Type your phone number (e.g., +1234567890)"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
                                         />
@@ -126,27 +158,45 @@ const CostumerLogin4 = () => {
 
                                     <div className="Gland-Quest-data">
                                         <label>Password</label>
-                                        <input
-                                            type="password"
-                                            placeholder="Type your password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                        />
+                                        <div className="password-input-container">
+                                            <input
+                                                type={passwordVisible ? "text" : "password"}
+                                                placeholder="Type your password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="visibility-toggle"
+                                                onClick={() => setPasswordVisible(!passwordVisible)}
+                                            >
+                                                {passwordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div className="Gland-Quest-data">
                                         <label>Confirm Password</label>
-                                        <input
-                                            type="password"
-                                            placeholder="Confirm password"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                        />
+                                        <div className="password-input-container">
+                                            <input
+                                                type={confirmPasswordVisible ? "text" : "password"}
+                                                placeholder="Confirm password"
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="visibility-toggle"
+                                                onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+                                            >
+                                                {confirmPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div className="Gland-Cnt-Btn">
                                         <button type="submit" className="post-job-btn">
-                                            Continue
+                                            {loading ? "Submitting..." : "Continue"}
                                         </button>
                                     </div>
 
