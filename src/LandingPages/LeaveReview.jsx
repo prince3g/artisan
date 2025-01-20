@@ -44,7 +44,7 @@ const LeaveReview = () => {
   const [reviewData, setReviewData] = useState({
     service_category_id: '',
     artisan: artisan_unique_id.trim(),
-    customer_id: "b6841ed0-0569-488c-98fd-1a27c62f9bca",
+    customer_id:  localStorage.getItem('unique_user_id'),
     reliability_rating: null,
     workmanship_rating: null,
     tidiness_rating: null,
@@ -204,6 +204,7 @@ const LeaveReview = () => {
     if (!reviewData.contact_name) return "Please provide your contact name.";
     if (!reviewData.contact_email) return "Please provide your contact email.";
     if (!reviewData.mobile_number) return "Please provide your mobile number.";
+    if (!reviewData.customer_id) return "Please login to continue.";
 
     // console.log("reviewData")
     // console.log(reviewData)
