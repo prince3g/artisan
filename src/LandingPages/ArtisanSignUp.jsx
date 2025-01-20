@@ -433,6 +433,14 @@ const ArtisanSignUp = () => {
                       ))}
                     </div>
                   </div>
+
+                  <div className="Gland-Quest-data">
+                                        <label>Cost of services/skills (Optional)</label>
+                                        <input
+                                            type="Number"
+                                            placeholder="Enter ammount"
+                                        />
+                                    </div>
             
             
                   <div className="Gland-Quest-data">
