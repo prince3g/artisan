@@ -225,6 +225,7 @@ import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const RequestQuote = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [jobDescription, setJobDescription] = useState('');
   const [wordCount, setWordCount] = useState(0);
   const [query, setQuery] = useState('');
@@ -239,7 +240,7 @@ const RequestQuote = () => {
 
   // Fetch services on component mount
   useEffect(() => {
-    axios.get('http://127.0.0.1:9090/api/jobs/auth/service-categories/')
+    axios.get(`${djangoHostname}/api/jobs/auth/service-categories/`)
       .then(response => {
         setServices(response.data);
       })

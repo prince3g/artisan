@@ -1,32 +1,63 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import googleIcon from './Img/google-icon.png';
-import appleIcon from './Img/apple-icon.png';
 import { Link } from "react-router-dom";
 
 const CostumerLogin4 = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-
-
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-        // Regular expression to check for email with "@" and ".com"
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        // Regular expression to check for a valid email (allowing custom domains)
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (!email) {
             setError("Please enter your email.");
         } else if (!emailRegex.test(email)) {
-            setError("Please enter a valid email with '@' and '.com'.");
+            setError("Please enter a valid email.");
+        } else if (password !== confirmPassword) {
+            setError("Passwords do not match.");
         } else {
             setError(""); // Clear any existing errors
-            navigate("/verify-email", { state: { email } }); // Pass email in state
+
+            const userData = {
+                email,
+                password,
+                first_name: firstName,
+                last_name: lastName,
+                phone
+            };
+
+            try {
+                const response = await fetch(`4{djangoHostname}/api/accounts/auth/api/users/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('User created successfully:', result);
+                    navigate("/artisan-login", { state: { email } }); // Pass email in state
+                } else {
+                    const errorData = await response.json();
+                    setError(errorData.message || 'Something went wrong');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setError('An error occurred. Please try again.');
+            }
         }
     };
 
@@ -52,55 +83,76 @@ const CostumerLogin4 = () => {
                         </div>
 
                         <div className="Gradnded-Box-Body">
-                            <div className="Gland-Quest">
-                                <div className="Gland-Quest-data">
-                                    <label>Full Name</label>
-                                    <input
-                                        type="type"
-                                        placeholder="Type your full name"
-                                    />
+                            <form onSubmit={handleSubmit}>
+                                <div className="Gland-Quest">
+                                    <div className="Gland-Quest-data">
+                                        <label>Last Name</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Type your last name"
+                                            value={lastName}
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="Gland-Quest-data">
+                                        <label>First Name</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Type your first name"
+                                            value={firstName}
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="Gland-Quest-data">
+                                        <label>Email</label>
+                                        <input
+                                            type="email"
+                                            placeholder="Type your email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="Gland-Quest-data">
+                                        <label>Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            placeholder="Type your phone number"
+                                            value={phone}
+                                            onChange={(e) => setPhone(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="Gland-Quest-data">
+                                        <label>Password</label>
+                                        <input
+                                            type="password"
+                                            placeholder="Type your password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="Gland-Quest-data">
+                                        <label>Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            placeholder="Confirm password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                        />
+                                    </div>
+
+                                    <div className="Gland-Cnt-Btn">
+                                        <button type="submit" className="post-job-btn">
+                                            Continue
+                                        </button>
+                                    </div>
+
+                                    {error && <p className="error-message">{error}</p>}
                                 </div>
-
-                                <div className="Gland-Quest-data">
-                                    <label>Email</label>
-                                    <input
-                                        type="email"
-                                        placeholder="Type your email"
-                                    />
-                                </div>
-
-                                <div className="Gland-Quest-data">
-                                    <label>Phone Number</label>
-                                    <input
-                                        type="number"
-                                        placeholder="Type your phone number"
-                                    />
-                                </div>
-
-                                <div className="Gland-Quest-data">
-                                    <label>Password</label>
-                                    <input
-                                        type="password"
-                                        placeholder="Type your password"
-                                    />
-                                </div>
-
-                                <div className="Gland-Quest-data">
-                                    <label>Confrim Password</label>
-                                    <input
-                                        type="password"
-                                        placeholder="Confirm password"
-                                    />
-                                </div>
-
-
-                                <div className="Gland-Cnt-Btn">
-                                    <button type="submit" className="post-job-btn" onClick={handleSubmit}>
-                                        Continue
-                                    </button>
-                                </div>
-
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
