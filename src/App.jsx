@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -50,9 +50,13 @@ import Userdashbaord from './Userdashboard/Userdashbaord';
 import ArtisanDashboard from './ArtisanDashboard/ArtisanDashboard';
 
 
+import AdminDashboard from './AdminDashboard/AdminDashboard';
+
+
 
 
 function App() {
+  const isAdminDashboardPage = location.pathname.startsWith('/admin');
   return (
     <div>
     <Router>
@@ -60,7 +64,8 @@ function App() {
 
     <ScrollToTop />
 
-      <SiteNav />
+
+      {!isAdminDashboardPage && <SiteNav />}
 
       <main>
         <Routes>
@@ -99,12 +104,13 @@ function App() {
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
           <Route path="/artisan-dashboard/*" element={<ArtisanDashboard />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
 
 
         </Routes>
       </main>
 
-      <Footer />
+      {!isAdminDashboardPage && <Footer />}
     </Router>
 
     </div>
