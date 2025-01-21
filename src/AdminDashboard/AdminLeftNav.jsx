@@ -7,7 +7,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import WorkIcon from '@mui/icons-material/Work';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -45,11 +45,11 @@ const AdminLeftNav = () => {
         </li>
         <li>
           <Link
-            to="/admin/registered-users"
-            className={location.pathname === "/admin/registered-users" ? "Active_Admin_Nav_Icon" : ""}
+            to="/admin/registered-customers"
+            className={location.pathname === "/admin/registered-customers" ? "Active_Admin_Nav_Icon" : ""}
             onClick={ClosetoggleNav}
           >
-            <PeopleIcon /> Registered Users
+            <PeopleIcon /> Customers
           </Link>
         </li>
         <li>
@@ -81,11 +81,11 @@ const AdminLeftNav = () => {
         </li>
         <li>
           <Link
-            to="/admin/reports"
-            className={location.pathname === "/admin/reports" ? "Active_Admin_Nav_Icon" : ""}
+            to="/admin/notification"
+            className={location.pathname === "/admin/notification" ? "Active_Admin_Nav_Icon" : ""}
             onClick={ClosetoggleNav}
           >
-            <AssessmentIcon /> Reports
+            <NotificationsIcon /> Notification
           </Link>
         </li>
         <li>
