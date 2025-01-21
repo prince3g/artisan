@@ -57,6 +57,7 @@ const CostumerLogin2 = () => {
         localStorage.setItem('user_last_name', response.data.last_name);
         localStorage.setItem('Address', response.data.address);
         localStorage.setItem('access_token', response.data.access);
+        localStorage.setItem('refresh_token', response.data.refresh);
         localStorage.setItem('date_joined', response.data.date_joined);
 
         // Route based on user type
