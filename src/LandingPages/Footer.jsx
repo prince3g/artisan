@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, YouTube, LinkedIn } from '@mui/icons-material';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear(); // Get the current year
   return (
     <footer className="footer">
       <div className="site-container">
@@ -29,7 +30,7 @@ const Footer = () => {
           </a>
         </div>
         <p className="footer-copyright">
-          © SimserviceHub - All rights reserved
+          © {currentYear} SimserviceHub - All rights reserved
         </p>
       </div>
     </footer>
