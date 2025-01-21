@@ -35,23 +35,38 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
       const endpoint = messageId 
         ? `/api/messaging/auth/api/${messageId}/1/reply/` 
         : `/api/messaging/auth/api/messages/send_message/`;
-
+  
       const payload = messageId 
-        ? { content: message }
+        // ? { content: message }
+        ? { receiver: receiverId, sender: senderId, content: message }
         : { receiver: receiverId, sender: senderId, content: message };
-
+  
       try {
+
+        console.log("payload")
+        console.log(payload)
+        console.log("payload")
+        
         const response = await api.post(endpoint, payload);
 
+
+  
         if (response.status === 201) {
           onNewMessage(message);
-
           setMessage('');
-          
           resetTextAreaHeight();
         }
       } catch (error) {
         console.error('Error sending message:', error);
+  
+        if (error.response) {
+          // Check if the error response has a specific message
+          const errorMessage = error.response.data.error || 'An unexpected error occurred';
+          alert(errorMessage); // Display error message to the user
+        } else {
+          alert('Network error. Please try again later.');
+        }
+  
         if (error.response && error.response.status === 401) {
           console.error('Unauthorized. Redirecting to login.');
           window.location.href = '/login';
@@ -61,6 +76,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
       }
     }
   };
+  
 
   const handleInputChange = (e) => {
     setMessage(e.target.value);
