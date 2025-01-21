@@ -47,10 +47,12 @@ const ArtisanChattingPage = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  const senderID = localStorage.getItem('unique_user_id');
+
   const fetchMessages = async () => {
     try {
       const authToken = 'your-auth-token-here'; // Replace with your actual token
-      const response = await fetch(`${djangoHostname}/api/messaging/auth/api/messages/conversation/?sender=7a728255-3f12-4967-b7ba-46d1a7eb54bd&receiver=${artisanUniqueID}`, {
+      const response = await fetch(`${djangoHostname}/api/messaging/auth/api/messages/conversation/?sender=${senderID}&receiver=${artisanUniqueID}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -424,8 +426,9 @@ const ArtisanChattingPage = () => {
       </div>
     </div>
     <div className="Chattt-Foot">
-      <ChatInput onNewMessage={handleNewMessage} />
+      <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueID}  senderId={senderID}/>
     </div>
+
   </div>
 </div>
 
