@@ -26,6 +26,9 @@ const PostedJobs = () => {
         }
         const data = await response.json();
         setJobs(data);
+        console.log("data")
+        console.log(data)
+        console.log("data")
       } catch (error) {
         setError(error.message);
       }
