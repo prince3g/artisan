@@ -16,12 +16,12 @@ const AdminHomePage = () => {
         </div>
         <ul>
           <li>
-            <Link to="/pending-r">
+            <Link to="/admin/registered-customers">
               <PeopleIcon /> Customers
             </Link>
           </li>
           <li>
-            <Link to="/withdrawal">
+            <Link to="/admin/artisans">
               <BuildIcon /> SimserviceHub Artisans
             </Link>
           </li>

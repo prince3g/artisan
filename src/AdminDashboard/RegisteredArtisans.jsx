@@ -7,7 +7,7 @@ import PlacHolderImg2 from './Img/hu/hu2.jpg';
 
 
 const RegisteredArtisans = () => {
-  const transactions = [
+  const tabledatas = [
     {
       vendorImage: PlacHolderImg1,
       vendorName: "Prince Godson",
@@ -41,22 +41,22 @@ const RegisteredArtisans = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, index) => (
+            {tabledatas.map((tabledata, index) => (
               <tr key={index}>
                 <td className="slt-td">
                   <div className="td-grid">
                     <div className="td-grid-img">
-                      <img src={transaction.vendorImage} alt={transaction.vendorName} />
+                      <img src={tabledata.vendorImage} alt={tabledata.vendorName} />
                     </div>
                     <div className="td-grid-txt">
-                      <p>{transaction.vendorName}</p>
+                      <p>{tabledata.vendorName}</p>
                     </div>
                   </div>
                 </td>
-                <td>{transaction.email}</td>
-                <td>{transaction.phoneNumber}</td>
-                <td><span>{transaction.location}</span></td>
-                <td>{transaction.registrationDate}</td>
+                <td>{tabledata.email}</td>
+                <td>{tabledata.phoneNumber}</td>
+                <td><span>{tabledata.location}</span></td>
+                <td>{tabledata.registrationDate}</td>
                 <td>
                   <div className="action-btn">
                   <a href="/artisan-profile" className="accept-Btn">Profile</a>

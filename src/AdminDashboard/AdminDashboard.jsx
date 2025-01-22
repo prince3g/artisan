@@ -13,7 +13,19 @@ import AdminFooter from './AdminFooter';
 
 import ArtisansPage from './ArtisansPage';
 
-import UsersPage from './UsersPage';
+import CustomersPage from './CustomersPage';
+
+import CompletedTrades from './CompletedTrades';
+
+import AdminNotification from './AdminNotification';
+
+import ProfileSettings from './ProfileSettings';
+
+import PostedJobs from './PostedJobs';
+
+import JobDescription from './JobDescription';
+
+import QuotesPage from './QuotesPage';
 
 const AdminDashboard = () => {
   const [showNavBar, setShowNavBar] = useState(false);
@@ -51,7 +63,13 @@ const AdminDashboard = () => {
             <Routes>
               <Route path="/" element={<AdminHomePage />} />
               <Route path="/artisans" element={<ArtisansPage />} />
-              <Route path="/registered-customers" element={<UsersPage />} />
+              <Route path="/registered-customers" element={<CustomersPage />} />
+              <Route path="/completed-trades" element={<CompletedTrades />} />
+              <Route path="/notification" element={<AdminNotification />} />
+              <Route path="/profile-settings" element={<ProfileSettings />} />
+              <Route path="/posted-jobs" element={<PostedJobs />} />
+              <Route path="/job-description" element={<JobDescription />} />
+              <Route path="/view-quotes" element={<QuotesPage />} />
             </Routes>
 
             <AdminFooter />

@@ -7,7 +7,7 @@ import PlacHolderImg2 from './Img/hu/hu2.jpg';
 
 
 const RegisteredUsers = () => {
-  const transactions = [
+  const tabledatas = [
     {
       vendorName: "Prince Godson",
       email: "prince@example.com",
@@ -43,20 +43,20 @@ const RegisteredUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, index) => (
+            {tabledatas.map((tabledata, index) => (
               <tr key={index}>
                 <td className="slt-td">
                   <div className="td-grid">
                     <div className="td-grid-txt">
-                      <p>{transaction.vendorName}</p>
+                      <p>{tabledata.vendorName}</p>
                     </div>
                   </div>
                 </td>
-                <td>{transaction.email}</td>
-                <td>{transaction.phoneNumber}</td>
-                <td><span>{transaction.location}</span></td>
-                <td>{transaction.registrationDate}</td>
-                <td>{transaction.trades}</td>
+                <td>{tabledata.email}</td>
+                <td>{tabledata.phoneNumber}</td>
+                <td><span>{tabledata.location}</span></td>
+                <td>{tabledata.registrationDate}</td>
+                <td>{tabledata.trades}</td>
                 <td>
                   <div className="action-btn">
                     <span className="Remove-Btn">Remove</span>
