@@ -11,6 +11,10 @@ import AdminHomePage from './AdminHomePage';
 
 import AdminFooter from './AdminFooter';
 
+import ArtisansPage from './ArtisansPage';
+
+import UsersPage from './UsersPage';
+
 const AdminDashboard = () => {
   const [showNavBar, setShowNavBar] = useState(false);
 
@@ -46,7 +50,8 @@ const AdminDashboard = () => {
           <div className="Admin_Main_Right">
             <Routes>
               <Route path="/" element={<AdminHomePage />} />
-              {/* Other routes */}
+              <Route path="/artisans" element={<ArtisansPage />} />
+              <Route path="/registered-customers" element={<UsersPage />} />
             </Routes>
 
             <AdminFooter />

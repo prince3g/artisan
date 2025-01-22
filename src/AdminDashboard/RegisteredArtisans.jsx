@@ -6,15 +6,15 @@ import PlacHolderImg2 from './Img/hu/hu2.jpg';
 
 
 
-const RegisteredUsers = () => {
+const RegisteredArtisans = () => {
   const transactions = [
     {
+      vendorImage: PlacHolderImg1,
       vendorName: "Prince Godson",
       email: "prince@example.com",
       phoneNumber: "123-456-7890",
       location: "Umuahia",
       registrationDate: "12/12/2022",
-      trades: "20",
     },
     {
       vendorImage: PlacHolderImg2,
@@ -23,7 +23,6 @@ const RegisteredUsers = () => {
       phoneNumber: "123-456-7890",
       location: "Umuahia",
       registrationDate: "12/12/2022",
-      trades: "100",
     },
   ];
 
@@ -38,7 +37,6 @@ const RegisteredUsers = () => {
               <th>Phone number</th>
               <th>Location</th>
               <th>Registration Date</th>
-              <th>Trades</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -47,6 +45,9 @@ const RegisteredUsers = () => {
               <tr key={index}>
                 <td className="slt-td">
                   <div className="td-grid">
+                    <div className="td-grid-img">
+                      <img src={transaction.vendorImage} alt={transaction.vendorName} />
+                    </div>
                     <div className="td-grid-txt">
                       <p>{transaction.vendorName}</p>
                     </div>
@@ -56,9 +57,10 @@ const RegisteredUsers = () => {
                 <td>{transaction.phoneNumber}</td>
                 <td><span>{transaction.location}</span></td>
                 <td>{transaction.registrationDate}</td>
-                <td>{transaction.trades}</td>
                 <td>
                   <div className="action-btn">
+                  <a href="/artisan-profile" className="accept-Btn">Profile</a>
+                    <span className="suspend-Btn">Suspend</span>
                     <span className="Remove-Btn">Remove</span>
                   </div>
                 </td>
@@ -71,4 +73,4 @@ const RegisteredUsers = () => {
   );
 };
 
-export default RegisteredUsers;
+export default RegisteredArtisans;

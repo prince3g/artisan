@@ -748,21 +748,43 @@
     -webkit-box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
     -moz-box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
     box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
-	margin-top: 20px;
+	margin-top: 10px;
 }
 .tran-card-header{
 	position: relative;
 	width: 100%;
 	height: auto;
-	margin-bottom: 10px;
+	margin-top: 30px;
+  background: #ffffff;
+  border-radius: 0.625rem;
+  -webkit-box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
+  -moz-box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
+  box-shadow: 6px 11px 41px -28px rgba(0,0,0,0.4);
+  padding:10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  grid-gap: 20px;
 }
 .tran-card-header h2{
-	font-size: 20px;
+	font-size: 15px;
 	font-weight: 600;
-	color:#464a53;
+	color:#505050;
 }
 .tran-card-header p{
 	font-size: 14px;
+  color: #505050;
+}
+.tran-card-header a{
+  font-size: 13px;
+  font-weight: 500;
+  color: #B1BD3B;
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
+}
+.tran-card-header a:hover{
+  color: #8f9a31;
 }
 .tran-card-tableSec{
 	width: 100%;
@@ -1035,4 +1057,33 @@ td .rejected-ammount,
 .Admin_Footer p{
   font-size: 13px !important;
   color: #505050 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Gen_Admin_BBD */
+
+.Gen_Admin_BBD{
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 600px;
+  padding-top: 20px;
+}
+
+
+.Gen_Admin_Header{
+  margin-bottom: 30px !important;
 }
