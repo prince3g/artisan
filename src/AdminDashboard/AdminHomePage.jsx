@@ -70,6 +70,7 @@ const AdminHomePage = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanCount, setArtisanCount] = useState(0); // State to store artisan count
     const [jobCount, setJobCount] = useState(0); // State to store job count
+    const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
 
     // Fetch artisan count
@@ -110,6 +111,30 @@ const AdminHomePage = () => {
         fetchJobs();
     }, []); // Empty dependency array ensures this runs only once
 
+
+      useEffect(() => {
+        const fetchUsers = async () => {
+          try {
+            const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`);
+            if (!response.ok) {
+              throw new Error("Failed to fetch users.");
+            }
+            const data = await response.json();
+            // Filter users to include only customers
+            const customers = data.results.filter((user) => user.user_type === "customer");
+            setUsers(customers);
+    
+          } catch (error) {
+            setError(error.message);
+          }
+        };
+    
+        fetchUsers();
+      }, []);
+
+
+
+
     return (
         <div className="AdminHomePage">
             <div className="top-sec">
@@ -141,7 +166,7 @@ const AdminHomePage = () => {
                     </li>
                     <li>
                         <h3>Registered Customers</h3>
-                        <h2>100 <span>Users</span></h2>
+                        <h2>{users.length} <span>Users</span></h2>
                     </li>
                     <li>
                         <h3>Completed Trades</h3>

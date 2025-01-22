@@ -93,6 +93,7 @@ const RegisteredUsers = () => {
         // Filter users to include only customers
         const customers = data.results.filter((user) => user.user_type === "customer");
         setUsers(customers);
+
       } catch (error) {
         setError(error.message);
       }
