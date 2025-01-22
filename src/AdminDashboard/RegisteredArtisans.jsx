@@ -6,8 +6,8 @@ import PlacHolderImg2 from './Img/hu/hu2.jpg';
 
 
 
-const RegisteredUsers = () => {
-  const transactions = [
+const RegisteredArtisans = () => {
+  const tabledatas = [
     {
       vendorImage: PlacHolderImg1,
       vendorName: "Prince Godson",
@@ -28,9 +28,6 @@ const RegisteredUsers = () => {
 
   return (
     <div className="tran-card">
-      <div className="tran-card-header">
-        <h2>SimserviceHub Artisan</h2>
-      </div>
       <div className="tran-card-tableSec">
         <table className="table">
           <thead>
@@ -44,22 +41,22 @@ const RegisteredUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction, index) => (
+            {tabledatas.map((tabledata, index) => (
               <tr key={index}>
                 <td className="slt-td">
-                  <a href="#" className="td-grid">
+                  <div className="td-grid">
                     <div className="td-grid-img">
-                      <img src={transaction.vendorImage} alt={transaction.vendorName} />
+                      <img src={tabledata.vendorImage} alt={tabledata.vendorName} />
                     </div>
                     <div className="td-grid-txt">
-                      <p>{transaction.vendorName}</p>
+                      <p>{tabledata.vendorName}</p>
                     </div>
-                  </a>
+                  </div>
                 </td>
-                <td>{transaction.email}</td>
-                <td>{transaction.phoneNumber}</td>
-                <td><span>{transaction.location}</span></td>
-                <td>{transaction.registrationDate}</td>
+                <td>{tabledata.email}</td>
+                <td>{tabledata.phoneNumber}</td>
+                <td><span>{tabledata.location}</span></td>
+                <td>{tabledata.registrationDate}</td>
                 <td>
                   <div className="action-btn">
                   <a href="/artisan-profile" className="accept-Btn">Profile</a>
@@ -72,11 +69,8 @@ const RegisteredUsers = () => {
           </tbody>
         </table>
       </div>
-      <div className="more-sec">
-        <a href="/pending-r.html">View more</a>
-      </div>
     </div>
   );
 };
 
-export default RegisteredUsers;
+export default RegisteredArtisans;

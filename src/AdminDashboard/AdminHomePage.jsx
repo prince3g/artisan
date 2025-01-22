@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import BuildIcon from '@mui/icons-material/Build';
 import PeopleIcon from '@mui/icons-material/People';
 
-import RegisteredUsers from './RegisteredUsers';
+import RegisteredArtisans from './RegisteredArtisans';
 
 const AdminHomePage = () => {
   return (
@@ -16,12 +16,12 @@ const AdminHomePage = () => {
         </div>
         <ul>
           <li>
-            <Link to="/pending-r">
+            <Link to="/admin/registered-customers">
               <PeopleIcon /> Customers
             </Link>
           </li>
           <li>
-            <Link to="/withdrawal">
+            <Link to="/admin/artisans">
               <BuildIcon /> SimserviceHub Artisans
             </Link>
           </li>
@@ -49,7 +49,11 @@ const AdminHomePage = () => {
         </ul>
       </div>
 
-      <RegisteredUsers />
+      <div className="tran-card-header">
+        <h2>SimserviceHub Artisan</h2>
+        <a href="/pending-r.html">View more</a>
+      </div>
+      <RegisteredArtisans />
     </div>
   );
 };
