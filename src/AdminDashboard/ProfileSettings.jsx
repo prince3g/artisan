@@ -71,8 +71,9 @@ const ProfileSettings = () => {
         }
       );
 
-      console.log("Profile updated successfully:", response.data);
+      //console.log("Profile updated successfully:", response.data);
       alert("Profile updated successfully!");
+      window.location.reload();
 
       // Update localStorage with the latest data
       localStorage.setItem("user_first_name", formData.firstName);

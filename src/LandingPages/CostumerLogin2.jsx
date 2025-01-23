@@ -20,9 +20,20 @@ const CostumerLogin2 = () => {
   const [isResendVisible, setResendVisible] = useState(false);
 
   // Handle input changes
+  // const handleInputChange = (index, event) => {
+  //   const value = event.target.value;
+
+  //   // Allow only numeric input
+  //   if (/^\d*$/.test(value)) {
+  //     const newInputs = [...inputs];
+  //     newInputs[index] = value;
+  //     setInputs(newInputs);
+  //   }
+  // };
+
   const handleInputChange = (index, event) => {
     const value = event.target.value;
-
+  
     // Allow only numeric input
     if (/^\d*$/.test(value)) {
       const newInputs = [...inputs];
@@ -30,6 +41,17 @@ const CostumerLogin2 = () => {
       setInputs(newInputs);
     }
   };
+  
+  const handlePaste = (event) => {
+    const pasteData = event.clipboardData.getData("text");
+  
+    // Ensure only numeric data and check if length matches the number of inputs
+    if (/^\d+$/.test(pasteData) && pasteData.length === inputs.length) {
+      const newInputs = pasteData.split("").slice(0, inputs.length);
+      setInputs(newInputs);
+    }
+  };
+  
 
   // Trigger validation when all 5 fields are filled
   useEffect(() => {
@@ -70,7 +92,7 @@ const CostumerLogin2 = () => {
         } else if (response.data.user_type === 'customer') {
           navigate("/user-dashboard");
         } else if (response.data.user_type === 'super_admin') {
-          navigate("/admin-dashboard");
+          navigate("/admin");
         } else {
           alert("Unknown user type");
         }
@@ -146,6 +168,7 @@ const CostumerLogin2 = () => {
                       type="text"
                       value={input}
                       onInput={(e) => handleInputChange(index, e)}
+                      onPaste={handlePaste} // Handle pasting the full token
                       maxLength={1} // Limit to 1 digit per input
                     />
                   ))}
