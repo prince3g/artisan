@@ -74,6 +74,7 @@ const CostumerLogin2 = () => {
         localStorage.setItem('user_id', response.data.userId);
         localStorage.setItem('user_email', response.data.email);
         localStorage.setItem('user_phone', response.data.phone);
+        localStorage.setItem('user_type', response.data.user_type);
         localStorage.setItem('unique_user_id', response.data.unique_user_id);
         localStorage.setItem('user_first_name', response.data.first_name);
         localStorage.setItem('user_last_name', response.data.last_name);
