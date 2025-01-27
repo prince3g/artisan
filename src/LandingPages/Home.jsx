@@ -410,7 +410,7 @@ function Home() {
 
 
                           navigate(
-                            `/search-results?trade=${trade.name}&service=${service}&service_details_id=${trade.unique_id}&services=${encodeURIComponent(
+                            `/post-code?trade=${trade.name}&service=${service}&service_details_id=${trade.unique_id}&services=${encodeURIComponent(
                               JSON.stringify(trade.services)
                             )}`
                           );

@@ -42,7 +42,9 @@ import CostumerLogin3 from './LandingPages/CostumerLogin3';
 import CostumerLogin4 from './LandingPages/CostumerLogin4';
 import ArtisanLogin from './LandingPages/ArtisanLogin';
 import ContactUs from './LandingPages/ContactUs';
-import Footer from './LandingPages/Footer';
+import Footer from './LandingPages/Footer';PostCode
+
+import PostCode from './LandingPages/PostCode';
 
 
 import Userdashbaord from './Userdashboard/Userdashbaord';
@@ -100,6 +102,7 @@ function App() {
           <Route path="/login" element={<ArtisanLogin />} />
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/post-code" element={<PostCode />} />
 
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
