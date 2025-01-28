@@ -454,7 +454,8 @@ const ArtisanSignUp = () => {
                     <label htmlFor="serviceSelect">Final details</label>
                     <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
                     <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
-                    
+                    <input type="text"  name="" placeholder="Post code" />
+
                     <input  type="password" name="password" placeholder="Password should be at least 8 characters long" value={formData.password} onChange={handleInputChange}/>
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
                       {error && <div className="error-message">{error}

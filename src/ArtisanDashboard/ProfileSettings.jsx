@@ -105,6 +105,8 @@ const ProfileSettings = () => {
                   />
                 </div>
 
+                <input type="text"  name="" placeholder="Post code" />
+
                 <div className="Gland-Quest-data all-prolFilw">
                   <label>Upload Profile Photo (Optional)</label>
                   <input
