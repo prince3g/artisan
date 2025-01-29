@@ -390,7 +390,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MyLocation from '@mui/icons-material/MyLocation';
 import Handyman from '@mui/icons-material/Handyman';
 import CallIcon from '@mui/icons-material/Call';
@@ -403,6 +403,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ChatWithClient from './ChatWithClient';
 
 const ArtisanHomePage = () => {
+
+    useEffect(() => {
+        if (!sessionStorage.getItem("hasReloaded")) {
+          sessionStorage.setItem("hasReloaded", "true");
+          window.location.reload();
+        }
+      }, []);
+      
     const tradesData = [
         { name: 'Felix John', initial: 'O', service: 'Electrical Repairs', status: 'Pending', date: '05 May 2024', chats: 200, rating: 0 },
         { name: 'Felix John', initial: 'F', service: 'Electrical Repairs', status: 'Pending', date: '05 Feb 2024', chats: 200, rating: 0 },
