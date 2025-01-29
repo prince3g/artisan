@@ -86,7 +86,7 @@ const PrivacyPolicy = () => {
             Data Security and Updates
           </Typography>
           <Typography variant="body2" gutterBottom>
-            SimserviceHub takes data security seriously and ensures compliance with Nigerian data protection laws. We may update this Privacy Notice periodically to reflect changes in our services or legal requirements. Continued use of the platform signifies your acceptance of these updates.
+            SimserviceHub takes data security seriously and ensures compliance with African data protection laws. We may update this Privacy Notice periodically to reflect changes in our services or legal requirements. Continued use of the platform signifies your acceptance of these updates.
           </Typography>
           <Typography variant="body2">
             For any questions or concerns, please refer to the Contact Us section on our platform.
@@ -126,7 +126,7 @@ const PrivacyPolicy = () => {
         content: (
           <div>
             <Typography variant="body2" gutterBottom>
-              At SimserviceHub, we may utilize Artificial Intelligence (AI) technologies to enhance the services offered through our webapp and improve the overall user experience for Nigerian tradespeople. This use may include:
+              At SimserviceHub, we may utilize Artificial Intelligence (AI) technologies to enhance the services offered through our webapp and improve the overall user experience for African tradespeople. This use may include:
             </Typography>
             <ul>
               <li>
@@ -154,7 +154,7 @@ const PrivacyPolicy = () => {
         content: (
           <div>
             <Typography variant="body2" gutterBottom>
-              At SimserviceHub, we share your data with third parties in a manner that complies with Nigeria's Data Protection Regulation (NDPR) and other applicable laws. The following outlines our data-sharing practices:
+              At SimserviceHub, we share your data with third parties in a manner that complies with Africa's Data Protection Regulation (NDPR) and other applicable laws. The following outlines our data-sharing practices:
             </Typography>
             <Typography variant="body2" gutterBottom>
               <strong>Purposes for Data Sharing:</strong>
@@ -187,7 +187,7 @@ const PrivacyPolicy = () => {
             </Typography>
             <ul>
               <li>Encryption technologies where applicable.</li>
-              <li>Agreements that require third-party partners to comply with Nigeria's Data Protection Regulation and international standards.</li>
+              <li>Agreements that require third-party partners to comply with Africa's Data Protection Regulation and international standards.</li>
               <li>Limiting data sharing to only what is necessary for the stated purposes.</li>
             </ul>
             <Typography variant="body2">

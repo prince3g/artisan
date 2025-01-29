@@ -144,7 +144,7 @@ const CostumerLogin2 = () => {
         <div className="site-container">
           <p>
             <Link to="/">Simservicehub</Link> <ChevronRightIcon />
-            <Link to="/customer-login"> Customer Sign up or create account CostumerLogin2</Link> <ChevronRightIcon />
+            <Link to="/customer-login"> Customer Sign up or create account </Link> <ChevronRightIcon />
             <Link to="/verify-email"> Verify {inputType === "email" ? "Email" : "Phone"}</Link>
           </p>
         </div>

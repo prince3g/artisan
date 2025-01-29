@@ -15,7 +15,7 @@ const Benefit = () => {
 
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/benefits">How This Platform Benefits Nigerian Customers</Link> </p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/benefits">How This Platform Benefits African Customers</Link> </p>
           </div>
           </div>
 
@@ -26,17 +26,17 @@ const Benefit = () => {
         <div className='IIai-1-Box'>
         <Link to="/advice-nigeria" className="IIai-1-Box-Card">
         <img src={AdviceIcon} alt="Advice Icon" />
-        <p>Essential Advice for Nigerian Customers</p>
+        <p>Essential Advice for African Customers</p>
       </Link>
       <Link to="/benefits" className="IIai-1-Box-Card active-IIai-1-Box-Card">
         <img src={Authenticity} alt="Authenticity Icon" />
-        <p>How This Platform Benefits Nigerian Customers</p>
+        <p>How This Platform Benefits African Customers</p>
       </Link>
         </div>
         </div>
         <div className='IIai-2'>
             <div className='Ooo-header'>
-                <h3 className='mid-text'>How This Platform Benefits Nigerian Customers </h3>
+                <h3 className='mid-text'>How This Platform Benefits African Customers </h3>
                 <p>With so many Artisan and service providers to choose from, it’s essential to find professionals who understand the local needs and deliver consistently high-quality work. Here’s how our platform ensures you get the best service for your home:</p>
             </div>
 

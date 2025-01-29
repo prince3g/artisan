@@ -15,7 +15,7 @@ const TermsPage = () => {
         <h2>1. Introduction</h2>
         <p>
           Welcome to SimserviceHub! Our mission is to connect our customers with
-          verified and trusted tradespeople across Nigeria. By using our
+          verified and trusted tradespeople across Africa. By using our
           platform, customers can search for, find, and contact tradespeople in
           their local area, while tradespeople can showcase and offer their
           professional services to customers.
@@ -40,7 +40,7 @@ const TermsPage = () => {
           1.1.3 SimserviceHub operates the platform to introduce customers and
           tradespeople, acting as an intermediary that matches customers with
           tradespeople for home improvement, repair, and related services
-          across Nigeria. Our responsibility is strictly limited to our role as
+          across Africa. Our responsibility is strictly limited to our role as
           operator of the platform. We are not responsible for the quality,
           standards, delivery, or any other aspect of the services rendered by
           any Artisan, nor for any agreement entered between a customer
@@ -139,7 +139,7 @@ const TermsPage = () => {
           <section>
             <h4>2.2.1 Geographic Availability</h4>
             <p>
-              The platform is intended for use by individuals within Nigeria. While access may be possible from outside Nigeria, the platform is specifically designed for Nigerian tradespeople and customers.
+              The platform is intended for use by individuals within Africa. While access may be possible from outside Africa, the platform is specifically designed for African tradespeople and customers.
             </p>
           </section>
           <section>
@@ -300,7 +300,7 @@ const TermsPage = () => {
         <h3>3.2.2 Content Responsibility</h3>
         <p>
           You are solely responsible for Your Content. It must be accurate, true, up to date, genuine, and not misleading.
-          All submissions must comply with these Terms and applicable laws in Nigeria and any other jurisdiction from
+          All submissions must comply with these Terms and applicable laws in Africa and any other jurisdiction from
           which the content is posted or accessed.
         </p>
 
@@ -529,7 +529,7 @@ const TermsPage = () => {
 
           <p>
             4.3.2 Tradespeople consent to the collection of information related to their usage of the platform, which may
-            be disclosed to regulatory authorities as required by Nigerian law or for compliance purposes.
+            be disclosed to regulatory authorities as required by African law or for compliance purposes.
           </p>
 
           <p>
@@ -650,7 +650,7 @@ const TermsPage = () => {
             <strong>6.1.4</strong> Tradespeople retain ownership of all their uploaded content, including intellectual property rights. By uploading content to the platform, you warrant that you are the owner or licensor of the content and have all necessary rights to do so without infringing on third-party rights. By doing so, you grant Simul Management Solution (and authorized third parties) a global, perpetual, non-exclusive, royalty-free, and transferable license to use, reproduce, distribute, create derivative works of, display, and perform your content across various media (including for platform operations, improvements, and promotion) without additional payment to you.
           </p>
           <p>
-            <strong>6.1.5</strong> To the extent permitted by Nigerian law, you waive any moral rights associated with your content and agree not to assert intellectual property claims against Simul Management Solutions, its sublicensees, or assignees.
+            <strong>6.1.5</strong> To the extent permitted by African law, you waive any moral rights associated with your content and agree not to assert intellectual property claims against Simul Management Solutions, its sublicensees, or assignees.
           </p>
           <p>
             <strong>6.1.6</strong> Unauthorized use of any intellectual property owned by Simul Management Solutions outside the permissions provided by these Terms may result in account suspension or termination. The company reserves the right to pursue legal action as deemed appropriate.
@@ -730,10 +730,10 @@ const TermsPage = () => {
         <article id="exclusions">
           <h3>7.4 Exclusions</h3>
           <p>
-            <strong>7.4.1</strong> Customers using SimserviceHub have certain legal rights under Nigerian consumer protection laws. Nothing in these Terms affects these rights.
+            <strong>7.4.1</strong> Customers using SimserviceHub have certain legal rights under African consumer protection laws. Nothing in these Terms affects these rights.
           </p>
           <p>
-            <strong>7.4.2</strong> We do not exclude liability for death or personal injury caused by negligence, fraud, fraudulent misrepresentation, or any other liability where exclusion would be unlawful under Nigerian law.
+            <strong>7.4.2</strong> We do not exclude liability for death or personal injury caused by negligence, fraud, fraudulent misrepresentation, or any other liability where exclusion would be unlawful under African law.
           </p>
         </article>
       </section>
@@ -771,7 +771,7 @@ const TermsPage = () => {
                 <article id="notice">
                     <h3>9.1 Notice</h3>
                     <ol>
-                        <li>We may amend these Terms from time to time to reflect changes within the platform, including but not limited to, our technology, licensing arrangements, payment policies, best practices, relevant Nigerian laws, and/or regulatory requirements.</li>
+                        <li>We may amend these Terms from time to time to reflect changes within the platform, including but not limited to, our technology, licensing arrangements, payment policies, best practices, relevant African laws, and/or regulatory requirements.</li>
                         <li>We will provide notice to you if we are making any material changes to these Terms (for example, any changes that significantly impact the way that you receive the services via the platform), unless such material changes are urgently required to meet a legal or regulatory requirement or for security reasons.</li>
                         <li>We may also update the platform from time to time and may change the content and functionality at any time where we deem it necessary to do so, without providing notice to you (for example: to reflect changes to our services, business needs, or the needs of platform users).</li>
                     </ol>
@@ -802,7 +802,7 @@ const TermsPage = () => {
 
                 <article id="jurisdiction">
                     <h3>9.9 Jurisdiction</h3>
-                    <p>These Terms and any dispute or claim arising out of, or in connection with, it, its subject matter, or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of Nigeria.</p>
+                    <p>These Terms and any dispute or claim arising out of, or in connection with, it, its subject matter, or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of Africa.</p>
                 </article>
 
                 <article id="disputes">

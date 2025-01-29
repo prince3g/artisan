@@ -39,7 +39,7 @@ const AboutUs = () => {
             <div className='Ooo-header'>
                 <h3 className='mid-text'>Our Commitment to Quality</h3>
 
-                <p>At SimserviceHub, we know that trust and quality matter when it comes to finding skilled tradespeople for your home or business. Rogue trades are a global issue, impacting millions, and we are dedicated to setting a new standard for excellence across Nigeria.</p>
+                <p>At SimserviceHub, we know that trust and quality matter when it comes to finding skilled tradespeople for your home or business. Rogue trades are a global issue, impacting millions, and we are dedicated to setting a new standard for excellence across Africa.</p>
            
             </div>
 
@@ -63,7 +63,7 @@ const AboutUs = () => {
 
                 <h4>Who is SimserviceHub?</h4>
 
-                <p>SimserviceHub is Nigeria's trusted platform for connecting Customers and businesses with skilled tradespeople. Our goal is to set new standards for quality and reliability in home and business improvements across all 36 states.</p>
+                <p>SimserviceHub is Africa's trusted platform for connecting Customers and businesses with skilled tradespeople. Our goal is to set new standards for quality and reliability in home and business improvements across all 36 states.</p>
 
                 <p>Since our inception, we have been dedicated to building a marketplace where Customers find reliable tradespeople for every project, and tradespeople get the tools and support they need to grow their business. We are proud to serve as a bridge between skilled professionals and clients, ensuring every job meets high standards of trust and quality.</p>
 

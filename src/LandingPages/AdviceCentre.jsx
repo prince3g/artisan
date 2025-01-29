@@ -48,11 +48,11 @@ const AdviceCentre = () => {
         <div className='IIai-1-Box'>
         <Link to="/advice-nigeria" className="IIai-1-Box-Card">
         <img src={AdviceIcon} alt="Advice Icon" />
-        <p>Essential Advice for Nigerian Customers</p>
+        <p>Essential Advice for African Customers</p>
       </Link>
       <Link to="/benefits" className="IIai-1-Box-Card">
         <img src={Authenticity} alt="Authenticity Icon" />
-        <p>How This Platform Benefits Nigerian Customers</p>
+        <p>How This Platform Benefits African Customers</p>
       </Link>
         </div>
         </div>
