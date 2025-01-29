@@ -144,6 +144,10 @@ function SiteNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
 
+
+  const [isLoggedIn2, setIsLoggedIn2] = useState(false);
+  const [userType2, setUserType2] = useState("");
+
   useEffect(() => {
     // Check login status and user type
     const token = localStorage.getItem("access_token");
@@ -216,6 +220,8 @@ function SiteNav() {
     if (userType === "super_admin") return "/admin";
     return "#";
   };
+
+  
 
   return (
     <nav className={`SiteNav ${isNavActive ? "active-NavMbl" : ""}`}>

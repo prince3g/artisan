@@ -54,7 +54,7 @@ const LeaveReview = () => {
     comment: '',
     service_required: '',
     date_of_experience: '',
-    value_of_work: null,
+   //  value_of_work: null,
     contact_name: '',
     contact_email: '',
     mobile_number: '',
@@ -159,7 +159,7 @@ const LeaveReview = () => {
       courtesy_rating: reviewData.courtesy_rating || null,
       review_title: reviewData.review_title,
       review_text: reviewData.comment,
-      value_of_work: reviewData.value_of_work,
+      // value_of_work: reviewData.value_of_work,
       contact_name: reviewData.contact_name,
       contact_email: reviewData.contact_email,
       mobile_number: reviewData.mobile_number,
@@ -487,7 +487,7 @@ const LeaveReview = () => {
                             onChange={(e) => handleInputChangeReview('date_of_experience', e.target.value)} // Update state
                         />
                     </div>
-
+{/* 
                     <div className="Gland-Quest-data">
                         <label>What was the value of work completed? (Optional)</label>
                         <h6>In naira (₦)</h6>
@@ -497,7 +497,7 @@ const LeaveReview = () => {
                             value={reviewData.value_of_work} // Bind state
                             onChange={(e) => handleInputChangeReview('value_of_work', e.target.value)} // Update state
                         />
-                    </div>
+                    </div> */}
 
 
                     <div className="Gland-Quest-data">
@@ -518,7 +518,7 @@ const LeaveReview = () => {
 
                     <div className="Gland-Quest-data">
                         <label>Your mobile number</label>
-                        <h6>We'll send you an SMS to very your review.</h6>
+                        <h6>We'll send you an SMS to verify your review.</h6>
                         <input
                             type="number"
                             placeholder="Mobile phone number"

@@ -73,6 +73,14 @@ const AdminHomePage = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        if (!sessionStorage.getItem("hasReloaded")) {
+          sessionStorage.setItem("hasReloaded", "true");
+          window.location.reload();
+        }
+      }, []);
+      
+
     // Fetch artisan count
     useEffect(() => {
         const fetchArtisans = async () => {

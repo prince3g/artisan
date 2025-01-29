@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import "./Css/Main.css";
 import { useNavigate } from "react-router-dom";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -8,7 +8,83 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 
 const ArtisanSignUp = () => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+  //const GOOGLE_MAPS_API_KEY = "AIzaSyAfZvmALAKh0VbVH5naOOwS9IMeDPfQ4Uw"; // Replace with your actual API Key
+
+  const inputRef = useRef(null);
+
+const loadGoogleMapsScript = (callback) => {
+  if (!window.google) {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.onload = callback;
+    document.body.appendChild(script);
+  } else {
+    callback();
+  }
+};
+
+
+// useEffect(() => {
+//   loadGoogleMapsScript(() => {
+//     if (!window.google || !window.google.maps || !inputRef.current) return;
+
+//     const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+//       types: ["geocode"],
+//     });
+
+//     autocomplete.addListener("place_changed", () => {
+//       const place = autocomplete.getPlace();
+//       if (!place || !place.address_components) return;
+
+//       // Extract postcode
+//       const postalCodeComponent = place.address_components.find((component) =>
+//         component.types.includes("postal_code")
+//       );
+
+//       if (postalCodeComponent) {
+//         setFormData((prevState) => ({
+//           ...prevState,
+//           postcode: postalCodeComponent.long_name,
+//         }));
+//       }
+//     });
+//   });
+// }, []);
+
+
+useEffect(() => {
+  loadGoogleMapsScript(() => {
+    console.log(inputRef.current); // Log the ref to see if it is correctly assigned
+    if (!window.google || !window.google.maps || !inputRef.current) return;
+
+    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+      types: ["geocode"],
+    });
+
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place || !place.address_components) return;
+
+      const postalCodeComponent = place.address_components.find((component) =>
+        component.types.includes("postal_code")
+      );
+
+      if (postalCodeComponent) {
+        setFormData((prevState) => ({
+          ...prevState,
+          postcode: postalCodeComponent.long_name,
+        }));
+      }
+    });
+  });
+}, []);
+
 
   const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
@@ -39,6 +115,8 @@ const ArtisanSignUp = () => {
     service_cost: "",
     skills: [], 
     about_artisan: "", 
+
+    postcode: "" // Added postcode field
   });
 
   useEffect(() => {
@@ -59,6 +137,8 @@ const ArtisanSignUp = () => {
 
     fetchServices();
   }, [djangoHostname]);
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -171,6 +251,7 @@ const ArtisanSignUp = () => {
             skills: formData.skills.map((skill) => String(skill)),
             experience: formData.experience || 0,
             location: formData.businessLocation,
+            postcode: formData.postcode,
             user_id: response1Data.unique_id,
         };
 
@@ -454,7 +535,20 @@ const ArtisanSignUp = () => {
                     <label htmlFor="serviceSelect">Final details</label>
                     <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
                     <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
-                    <input type="text"  name="" placeholder="Post code" />
+                   
+                    {/* <input type="text"  name="" placeholder="Post code" /> */}
+
+                            {/* Address Search (Postcode will be extracted from selected address) */}
+                            <input
+                              type="text"
+                              placeholder="Search for your address"
+                              ref={inputRef}
+                            />
+
+
+                    {/* Automatically filled postcode field */}
+                    <input type="text" name="postcode" placeholder="Post code" value={formData.postcode} readOnly />
+
 
                     <input  type="password" name="password" placeholder="Password should be at least 8 characters long" value={formData.password} onChange={handleInputChange}/>
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
