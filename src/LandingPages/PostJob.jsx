@@ -108,7 +108,7 @@ const PostJob = () => {
         navigate('/user-dashboard/jobs');
       } else {
         console.error('Failed to post job:', response.statusText);
-        alert('Failed to post the job. Please try again later.');
+        alert('Failed to post the job. Please login and try again later.');
       }
     } catch (error) {
       console.error('Error while posting the job:', error);
@@ -124,6 +124,7 @@ const PostJob = () => {
 
 
 
+
   return (
     <div className="Gradnded-page">
       <div className='navigating-ttarvs'>
@@ -131,6 +132,7 @@ const PostJob = () => {
           <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-job"> Post a job</Link> </p>
         </div>
       </div>
+
 
       <div className="site-container">
         <div className="Gradnded-main">
@@ -234,5 +236,6 @@ const PostJob = () => {
     </div>
   );
 };
+
 
 export default PostJob;

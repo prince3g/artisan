@@ -66,94 +66,125 @@
 // export default PostCode;
 
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
-import './Css/Main.css';
 
-const libraries = ['places'];
-const googleMapsApiKey = "AIzaSyAfZvmALAKh0VbVH5naOOwS9IMeDPfQ4Uw"; // Replace with your Google API Key
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import "./Css/Main.css";
+
+// const GOOGLE_MAPS_API_KEY = "AIzaSyAfZvmALAKh0VbVH5naOOwS9IMeDPfQ4Uw"; // Replace with your actual API Key
+ const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+const loadGoogleMapsScript = (callback) => {
+  if (!window.google) {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.onload = callback;
+    document.body.appendChild(script);
+  } else {
+    callback();
+  }
+};
 
 const PostCode = () => {
   const navigate = useNavigate();
-  const [postCode, setPostCode] = useState('');
-  const [searchBox, setSearchBox] = useState(null);
+  const location = useLocation();
+  const [postCode, setPostCode] = useState("");
+  const inputRef = useRef(null);
 
-  const onLoad = (ref) => setSearchBox(ref);
+  // Extract trade and service from URL
+  const queryParams = new URLSearchParams(location.search);
+  const trade = queryParams.get("trade") || "";
+  const service = queryParams.get("service") || "";
+  const serviceDetailsId = queryParams.get("service_details_id") || "";
+  const services = queryParams.get("services") || "[]"; // Default to an empty array in string format
 
-  const onPlacesChanged = () => {
-    if (searchBox) {
-      const places = searchBox.getPlaces();
-      if (places.length > 0) {
-        setPostCode(places[0].formatted_address); // Use the formatted address as the postcode
-      }
-    }
-  };
+  useEffect(() => {
+    loadGoogleMapsScript(() => {
+      if (!window.google || !window.google.maps) return;
+
+      const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+        types: ["geocode"],
+      });
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place || !place.address_components) return;
+
+        const postalCodeComponent = place.address_components.find((component) =>
+          component.types.includes("postal_code")
+        );
+
+        if (postalCodeComponent) {
+          setPostCode(postalCodeComponent.long_name);
+        }
+      });
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (!trade || !service) {
+      alert("Trade and service details are missing. Please select valid options.");
+      return;
+    }
+
     if (postCode.trim()) {
-      navigate(`/search-results?postCode=${encodeURIComponent(postCode)}`);
+      navigate(
+        `/search-results?trade=${encodeURIComponent(trade)}&service=${encodeURIComponent(service)}&service_details_id=${encodeURIComponent(serviceDetailsId)}&postCode=${encodeURIComponent(postCode)}&services=${encodeURIComponent(
+          services
+        )}`
+      );
     } else {
-      alert('Please enter a valid post code');
+      alert("Please enter a valid address with a postcode.");
     }
   };
 
   return (
-    <LoadScript googleMapsApiKey={googleMapsApiKey} libraries={libraries}>
-      <div className="Gradnded-page">
-        <div className="navigating-ttarvs">
-          <div className="site-container">
-            <p>
-              <Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-code"> Post Code</Link>
-            </p>
-          </div>
-        </div>
-
+    <div className="Gradnded-page">
+      <div className="navigating-ttarvs">
         <div className="site-container">
-          <div className="Gradnded-main">
-            <div className="Gradnded-Box">
-              <div className="Gradnded-Box-header">
-                <h2 className="big-text">Enter Post Code</h2>
-                <p>Enter your post code to enable you to find Artisans around you!</p>
-              </div>
-              <div className="Gradnded-Box-Body">
-                <form onSubmit={handleSubmit}>
-                  <div className="Gland-Quest-data">
-                    <StandaloneSearchBox onLoad={onLoad} onPlacesChanged={onPlacesChanged}>
-                      <input
-                        type="text"
-                        placeholder="Type post code"
-                        value={postCode}
-                        onChange={(e) => setPostCode(e.target.value)}
-                        style={{
-                          width: '100%',
-                          padding: '10px',
-                          fontSize: '16px',
-                          borderRadius: '5px',
-                          border: '1px solid #ccc'
-                        }}
-                      />
-                    </StandaloneSearchBox>
-                  </div>
+          <p>
+            <Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/post-code"> Post Code</Link>
+          </p>
+        </div>
+      </div>
 
-                  <div className="Gland-Cnt-Btn">
-                    <button type="button" className="back-btn" onClick={() => navigate(-1)}>
-                      Back
-                    </button>
-                    <button type="submit" className="post-job-btn">
-                      Search
-                    </button>
-                  </div>
-                </form>
-              </div>
+      <div className="site-container">
+        <div className="Gradnded-main">
+          <div className="Gradnded-Box">
+            <div className="Gradnded-Box-header">
+              <h2 className="big-text">Enter Address</h2>
+              <p>Select your address to find Artisans near you!</p>
+            </div>
+            <div className="Gradnded-Box-Body">
+              <form onSubmit={handleSubmit}>
+                <div className="Gland-Quest-data">
+                  <input
+                    type="text"
+                    placeholder="Type address"
+                    ref={inputRef}
+                    defaultValue=""
+                  />
+                </div>
+
+                <div className="Gland-Cnt-Btn">
+                  <button type="button" className="back-btn" onClick={() => navigate(-1)}>
+                    Back
+                  </button>
+                  <button type="submit" className="post-job-btn">
+                    Search
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-    </LoadScript>
+    </div>
   );
 };
 

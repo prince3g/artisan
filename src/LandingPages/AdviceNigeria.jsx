@@ -17,7 +17,7 @@ const AdviceNigeria = () => {
 
     <div className='navigating-ttarvs'>
         <div className='site-container'>
-            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/advice-nigeria">Essential Advice for Nigerian Customers</Link> </p>
+            <p><Link to="/">Simservicehub</Link>  <ChevronRightIcon /> <Link to="/advice-centre">Advice Centre</Link> <ChevronRightIcon /> <Link to="/advice-nigeria">Essential Advice for African Customers</Link> </p>
           </div>
           </div>
 
@@ -28,17 +28,17 @@ const AdviceNigeria = () => {
         <div className='IIai-1-Box'>
         <Link to="/advice-nigeria" className="IIai-1-Box-Card active-IIai-1-Box-Card">
         <img src={AdviceIcon} alt="Advice Icon" />
-        <p>Essential Advice for Nigerian Customers</p>
+        <p>Essential Advice for African Customers</p>
       </Link>
       <Link to="/benefits" className="IIai-1-Box-Card">
         <img src={Authenticity} alt="Authenticity Icon" />
-        <p>How This Platform Benefits Nigerian Customers</p>
+        <p>How This Platform Benefits African Customers</p>
       </Link>
         </div>
         </div>
         <div className='IIai-2'>
             <div className='Ooo-header'>
-                <h3 className='mid-text'>Essential Advice for Nigerian Customers</h3>
+                <h3 className='mid-text'>Essential Advice for African Customers</h3>
                 <p>Looking to hire reliable professionals to work on your home? This platform is your one-stop solution, connecting you with trusted tradespeople across Nigeria. Our platform brings together top-quality service providers to make sure your home improvement and repair needs are handled with excellence and care. </p>
                 <p>Settle in with a cup of tea, and explore these tips designed to help you find the right Artisan for every job in your home.</p>
             </div>
