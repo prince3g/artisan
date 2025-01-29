@@ -84,11 +84,14 @@ const CostumerLogin2 = () => {
         localStorage.setItem('date_joined', response.data.date_joined);
 
         // Route based on user type
-        console.log("data")
-        console.log(response.data)
-        console.log("data")
+        // console.log("data")
+        // console.log(response.data)
+        // console.log("data")
+
+        
 
         if (response.data.user_type === 'artisan') {
+          // window.location.reload();
           navigate("/artisan-dashboard");
         } else if (response.data.user_type === 'customer') {
           navigate("/user-dashboard");
