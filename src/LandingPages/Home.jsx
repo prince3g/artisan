@@ -1,45 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './Css/Home.css';
-
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 import HeroBanner from './Img/hero-banner.png';
 import SearchIcon from './Img/search-icon.svg';
-
-
 import ServiceSlider from "../assets/ServiceSlider";
-
 import { CheckCircle, Verified, People, Close, ArrowForward } from '@mui/icons-material';
-
 import StepImg1 from './Img/StepImg/1.png';
 import StepImg2 from './Img/StepImg/2.png';
 import StepImg3 from './Img/StepImg/3.png';
-
 import HghImg1 from './Img/hghImgs/1.png';
 import HghImg2 from './Img/hghImgs/2.png';
 import HghImg3 from './Img/hghImgs/3.png';
-
 import LocationList from '../assets/LocationList';
-
 import WhyBanner from './Img/why-Banner.png';
-
 import PageServices from '../data/PageServices';
-
 import locations from '../data/Locations';
-
-import { useNavigate } from 'react-router-dom';
-
-
 
 function Home() {
   const navigate = useNavigate();
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
   const [services, setServices] = useState([]);
-
   const [profiles, setProfiles] = useState([]);
-
-
   const [currentSearch, setCurrentSearch] = useState('trade');
   const [showDropdown, setShowDropdown] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -48,23 +30,21 @@ function Home() {
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [loading, setLoading] = useState(true);
 
-    // Fetch artisan-profile data from the API
-    useEffect(() => {
-      const fetchProfiles = async () => {
-        try {
-          const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
-          const data = await response.json();
-          setProfiles(Array.isArray(data) ? data : []); // Ensure data is an array
-        } catch (error) {
-          console.error("Error fetching profiles:", error);
-        }
-      };
-    
-      fetchProfiles();
-    }, []);
-    
+  // Fetch artisan-profile data from the API
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+        const data = await response.json();
+        setProfiles(Array.isArray(data) ? data : []); // Ensure data is an array
+      } catch (error) {
+        console.error("Error fetching profiles:", error);
+      }
+    };
 
-  
+    fetchProfiles();
+  }, []);
+
   // Fetch services data from the API
   useEffect(() => {
     const fetchServices = async () => {
@@ -106,87 +86,50 @@ function Home() {
         setPopupContent({ title: 'Trade not available', list: [] });
         setShowPopup(true);
       }
-
     } else if (currentSearch === 'location') {
-        if (locations.includes(inputValue)) {
-          setPopupContent({
-            title: `What trade are you looking for in ${inputValue}?`,
-            list: services.map((trade) => trade.name),
-          });
-          setShowPopup(true);
-         // setSelectedTrade(null); // Reset trade selection
-        } else {
-          setPopupContent({ title: 'Location not recognized', list: [] });
-          setShowPopup(true);
-        }
+      if (locations.includes(inputValue)) {
+        setPopupContent({
+          title: `What trade are you looking for in ${inputValue}?`,
+          list: services.map((trade) => trade.name),
+        });
+        setShowPopup(true);
+      } else {
+        setPopupContent({ title: 'Location not recognized', list: [] });
+        setShowPopup(true);
+      }
     } else if (currentSearch === 'name') {
-      const foundTrade = PageServices.filter((trade) =>
-        trade.name.toLowerCase().includes(inputValue.toLowerCase())
+      const foundProfile = profiles.find(
+        (profile) =>
+          profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+          profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
       );
-  
+
+      if (foundProfile) {
+        // Navigate to the artisan-profile endpoint
+        navigate(
+          `/artisan-profile?service_details=${encodeURIComponent(
+            foundProfile.service_details.name
+          )}&service=${encodeURIComponent(
+            foundProfile.service_details.name
+          )}&artisan_location=${encodeURIComponent(
+            foundProfile.location
+          )}&artisan_phone=${encodeURIComponent(
+            foundProfile.user.phone
+          )}&artisan_unique_id=${encodeURIComponent(
+            foundProfile.user.unique_id
+          )}&artisan_name=${encodeURIComponent(
+            `${foundProfile.user.first_name} ${foundProfile.user.last_name}`
+          )}`
+        );
+      } else {
+        setPopupContent({ title: 'No matching artisan found', list: [] });
+        setShowPopup(true);
+      }
     }
   };
 
-
-
-
-  // const handleSearchN = () => {
-  //   if (currentSearch === 'name' && Array.isArray(profiles)) {
-  //     const filteredProfiles = profiles.filter((profile) =>
-  //       profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
-  //       profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
-  //     );
-      
-  //     if (filteredProfiles.length > 0) {
-  //       setPopupContent({
-  //         title: "Matching Profiles",
-  //         list: filteredProfiles.map((profile) => `${profile.user.first_name} ${profile.user.last_name}`),
-  //       });
-  //     } else {
-  //       setPopupContent({ title: "No profiles found", list: [] });
-  //     }
-  //     setShowPopup(true);
-  //   }
-  // };
-  
-
-  // const handleSearch = () => {
-  //   if (currentSearch === 'trade') {
-  //     const trade = PageServices.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());
-  //     if (trade) {
-  //       setPopupContent({
-  //         title: `What do you need a ${trade.name} for?`,
-  //         list: trade.services,
-  //       });
-  //       setShowPopup(true);
-  //     } else {
-  //       setPopupContent({ title: 'Trade not available', list: [] });
-  //       setShowPopup(true);
-  //     }
-  //   } else if (currentSearch === 'location') {
-  //     if (locations.includes(inputValue)) {
-  //       setPopupContent({
-  //         title: `What trade are you looking for in ${inputValue}?`,
-  //         list: PageServices.map((trade) => trade.name),
-  //       });
-  //       setShowPopup(true);
-  //       setSelectedTrade(null); // Reset trade selection
-  //     } else {
-  //       setPopupContent({ title: 'Location not recognized', list: [] });
-  //       setShowPopup(true);
-  //     }
-  //   } else if (currentSearch === 'name') {
-  //     const foundTrade = PageServices.filter((trade) =>
-  //       trade.name.toLowerCase().includes(inputValue.toLowerCase())
-  //     );
-  
-  //   }
-  // };
-
-
   const handleTradeSelection = (tradeName) => {
-
-    const selectedTrade = services.find((t) => t.name === tradeName); // Use `services`
+    const selectedTrade = services.find((t) => t.name === tradeName);
     if (selectedTrade) {
       setSelectedTrade(selectedTrade);
       setPopupContent({
@@ -199,7 +142,6 @@ function Home() {
       setShowPopup(true);
     }
   };
-  
 
   const handleServiceSelection = (service) => {
     if (selectedTrade) {
@@ -217,61 +159,52 @@ function Home() {
     setShowPopup(false);
   };
 
-
-
   return (
     <div className="Home-page">
-    <div className="hero-sec">
-      <div className="site-container">
-        <div className="hero-cont">
-          <div className="hero-dlts">
-            <div className="hero-dlts-main">
-              <h6>SimserviceHub Trusted Artisan </h6>
-              <h2 className="big-text">
-                Discover Vetted <span>Artisan</span> for Every Home Project
-              </h2>
-
-              <p>Your trusted platform for connecting with experienced, reliable Artisans.</p>
-
-              <div className="Search-Sec">
-                <div className="top-Search">
-                {currentSearch === 'trade' && (
-
-              <div className="Seach-OO1">
-                <label htmlFor="trade-input">Search for a Specific Trade</label>
-                <input
-                  type="text"
-                  placeholder="Trade Type (e.g., Plumber, Electrician)"
-                  autoComplete="off"
-                  id="trade-input"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onFocus={() => setShowDropdown(true)} // Show dropdown on focus
-                  onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Hide dropdown with a delay
-                />
-
-
-              {showDropdown && (
-                <div className="dropdown">
-                  {services
-                    .filter((service) =>
-                      inputValue ? service.name.toLowerCase().includes(inputValue.toLowerCase()) : true
-                    )
-                    .map((service, index) => (
-                      <div
-                        key={index}
-                        className="dropdown-item"
-                        onClick={() => handleDropdownClick(service.name)}
-                      >
-                        {service.name}
+      <div className="hero-sec">
+        <div className="site-container">
+          <div className="hero-cont">
+            <div className="hero-dlts">
+              <div className="hero-dlts-main">
+                <h6>SimserviceHub Trusted Artisan </h6>
+                <h2 className="big-text">
+                  Discover Vetted <span>Artisan</span> for Every Home Project
+                </h2>
+                <p>Your trusted platform for connecting with experienced, reliable Artisans.</p>
+                <div className="Search-Sec">
+                  <div className="top-Search">
+                    {currentSearch === 'trade' && (
+                      <div className="Seach-OO1">
+                        <label htmlFor="trade-input">Search for a Specific Trade</label>
+                        <input
+                          type="text"
+                          placeholder="Trade Type (e.g., Plumber, Electrician)"
+                          autoComplete="off"
+                          id="trade-input"
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          onFocus={() => setShowDropdown(true)}
+                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                        />
+                        {showDropdown && (
+                          <div className="dropdown">
+                            {services
+                              .filter((service) =>
+                                inputValue ? service.name.toLowerCase().includes(inputValue.toLowerCase()) : true
+                              )
+                              .map((service, index) => (
+                                <div
+                                  key={index}
+                                  className="dropdown-item"
+                                  onClick={() => handleDropdownClick(service.name)}
+                                >
+                                  {service.name}
+                                </div>
+                              ))}
+                          </div>
+                        )}
                       </div>
-                    ))}
-                </div>
-              )}
-            </div>
-          )}
-
-
+                    )}
                     {currentSearch === 'location' && (
                       <div className="Seach-OO1">
                         <label htmlFor="location-input">Search by Location</label>
@@ -282,20 +215,20 @@ function Home() {
                           id="location-input"
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
-                          onFocus={() => setShowDropdown(true)} // Show full list on focus
-                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Add delay to allow clicks
+                          onFocus={() => setShowDropdown(true)}
+                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                         />
-                        {showDropdown  && (
+                        {showDropdown && (
                           <div className="dropdown">
                             {locations
-                              .filter((state) => 
-                                !inputValue || state.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
+                              .filter((state) =>
+                                !inputValue || state.toLowerCase().includes(inputValue.toLowerCase())
                               )
                               .map((state, index) => (
                                 <div
                                   key={index}
                                   className="dropdown-item"
-                                  onClick={() => handleDropdownClick(state)} // Select item
+                                  onClick={() => handleDropdownClick(state)}
                                 >
                                   {state}
                                 </div>
@@ -304,71 +237,63 @@ function Home() {
                         )}
                       </div>
                     )}
-
-
-
-
-    {currentSearch === 'name' && (
-      <div className="Seach-OO1">
-        <label htmlFor="name-input">Search by Name</label>
-        <input
-          type="text"
-          placeholder="Enter Trade Name (e.g., Electrician)"
-          autoComplete="off"
-          id="name-input"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onFocus={() => setShowDropdown(true)} // Show full list on focus
-          onBlur={() => setTimeout(() => setShowDropdown(false), 200)} // Add delay to allow clicks
-        />
-                
-            {showDropdown && (
-              <div className="dropdown">
-                {profiles
-                  .filter((profile) => 
-                    !inputValue ||
-                    profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
-                    profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase()) // Filter dynamically
-                  )
-                  .map((profile, index) => (
-                    <div
-                      key={index}
-                      className="dropdown-item"
-                      onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)} // Select item
-                    >
-                      {profile.user.first_name} {profile.user.last_name}
-                    </div>
-                  ))}
+                    {currentSearch === 'name' && (
+                      <div className="Seach-OO1">
+                        <label htmlFor="name-input">Search by Name</label>
+                        <input
+                          type="text"
+                          placeholder="Enter Artisan Name"
+                          autoComplete="off"
+                          id="name-input"
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          onFocus={() => setShowDropdown(true)}
+                          onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                        />
+                        {showDropdown && (
+                          <div className="dropdown">
+                            {profiles
+                              .filter((profile) =>
+                                !inputValue ||
+                                profile.user.first_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                profile.user.last_name.toLowerCase().includes(inputValue.toLowerCase())
+                              )
+                              .map((profile, index) => (
+                                <div
+                                  key={index}
+                                  className="dropdown-item"
+                                  onClick={() => handleDropdownClick(`${profile.user.first_name} ${profile.user.last_name}`)}
+                                >
+                                  {profile.user.first_name} {profile.user.last_name}
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <button className="search-btn" onClick={handleSearch}>
+                      <img src={SearchIcon} alt="Search Icon" />
+                      Search
+                    </button>
+                  </div>
+                  <div className="Sub-Search">
+                    <button onClick={() => handleSearchTypeChange('location')}>
+                      {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
+                    </button>
+                    <span>or</span>
+                    <button onClick={() => handleSearchTypeChange('name')}>
+                      {currentSearch === 'name' ? 'Search for a Specific Trade' : 'Search by Name'}
+                    </button>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
-        )}
-
-                <button className="search-btn" onClick={handleSearch}>
-                  <img src={SearchIcon} alt="Search Icon" />
-                  Search
-                </button>
-              </div>
-
-              <div className="Sub-Search">
-                <button onClick={() => handleSearchTypeChange('location')}>
-                  {currentSearch === 'location' ? 'Search for a Specific Trade' : 'Location Search'}
-                </button>
-                <span>or</span>
-                <button onClick={() => handleSearchTypeChange('name')}>
-                  {currentSearch === 'name' ? 'Search for a Specific Trade' : 'Search by Name'}
-                </button>
-              </div>
+            </div>
+            <div className="hero-banner">
+              <img src={HeroBanner} alt="Hero Banner" />
             </div>
           </div>
         </div>
-        <div className="hero-banner">
-          <img src={HeroBanner} alt="Hero Banner" />
-        </div>
       </div>
-    </div>
-  </div>
-
 
       {showPopup && (
         <div className="Services-PopUp-Sec">
@@ -380,72 +305,48 @@ function Home() {
               </button>
             </div>
             <div className="Services-PopUp-Box-Main">
-            <ul>
+              <ul>
                 {popupContent.list.map((service, index) => (
                   <li
                     key={index}
                     onClick={() => {
                       if (currentSearch === 'location' && selectedTrade) {
-                        handleServiceSelection(service); // Navigate to search-results page
-
+                        handleServiceSelection(service);
                       } else if (currentSearch === 'trade') {
-                        // Logic for 'trade' search
                         const trade = services.find(
                           (t) => t.name.toLowerCase() === inputValue.toLowerCase()
                         );
                         if (trade) {
-                          // Setting popup content for services based on the selected trade
-
-                          // console.log("trade")
-                          // console.log(trade)
-                          // console.log("trade")
-
-                          setPopupContent({
-                            title: `What do you need a ${trade.name} for?`,
-                            list: trade.services,
-                          });
-                          setShowPopup(true); // Show the popup
-
-                          // Navigate to the page for the selected trade
-
-
                           navigate(
                             `/post-code?trade=${trade.name}&service=${service}&service_details_id=${trade.unique_id}&services=${encodeURIComponent(
                               JSON.stringify(trade.services)
                             )}`
                           );
-
                         } else {
                           setPopupContent({ title: 'Trade not available', list: [] });
-                          setShowPopup(true); // Show popup with message for unavailable trade
+                          setShowPopup(true);
                         }
                       } else {
-
-
-                        handleTradeSelection(service); // Continue trade selection
+                        handleTradeSelection(service);
                       }
                     }}
                   >
-                    <span>{service} <ArrowForward /></span> {/* Non-clickable text */}
-                    
+                    <span>{service} <ArrowForward /></span>
                   </li>
                 ))}
               </ul>
-
             </div>
           </div>
         </div>
       )}
 
+      <div className='service-sec'>
+        <div className='site-container'>
+          <div className='service-header'>
+            <h2 className='mid-text'>Browse Our Top Service Categories </h2>
+          </div>
+          <ServiceSlider />
 
-
-    <div className='service-sec'>
-      <div className='site-container'>
-        <div className='service-header'>
-          <h2 className='mid-text'>Browse Our Top Service Categories </h2>
-        </div>
-
-        <ServiceSlider />
       </div>
     </div>
 

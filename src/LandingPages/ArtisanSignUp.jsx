@@ -7,84 +7,98 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { Link } from "react-router-dom";
 
-const ArtisanSignUp = () => {
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-
-  const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-  //const GOOGLE_MAPS_API_KEY = "AIzaSyAfZvmALAKh0VbVH5naOOwS9IMeDPfQ4Uw"; // Replace with your actual API Key
-
-  const inputRef = useRef(null);
-
+// const loadGoogleMapsScript = (callback) => {
+//   if (!window.google) {
+//     const script = document.createElement("script");
+//     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+//     script.async = true;
+//     script.onload = () => {
+//       console.log("Google Maps script loaded successfully!"); // Debugging
+//       callback();
+//     };
+//     script.onerror = () => {
+//       console.error("Failed to load Google Maps script!"); // Debugging
+//     };
+//     document.body.appendChild(script);
+//   } else {
+//     console.log("Google Maps script already loaded!"); // Debugging
+//     callback();
+//   }
+// };
 const loadGoogleMapsScript = (callback) => {
-  if (!window.google) {
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
-    script.async = true;
-    script.onload = callback;
-    document.body.appendChild(script);
-  } else {
+  if (window.google && window.google.maps) {
+    console.log("Google Maps script already loaded!");
     callback();
+    return;
   }
+
+  if (document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`)) {
+    console.log("Google Maps script is already being loaded.");
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+  script.async = true;
+  script.onload = () => {
+    console.log("Google Maps script loaded successfully!");
+    callback();
+  };
+  script.onerror = () => {
+    console.error("Failed to load Google Maps script!");
+  };
+  document.body.appendChild(script);
 };
 
+const ArtisanSignUp = () => {
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const inputRef = useRef(null);
 
-// useEffect(() => {
-//   loadGoogleMapsScript(() => {
-//     if (!window.google || !window.google.maps || !inputRef.current) return;
-
-//     const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
-//       types: ["geocode"],
-//     });
-
-//     autocomplete.addListener("place_changed", () => {
-//       const place = autocomplete.getPlace();
-//       if (!place || !place.address_components) return;
-
-//       // Extract postcode
-//       const postalCodeComponent = place.address_components.find((component) =>
-//         component.types.includes("postal_code")
-//       );
-
-//       if (postalCodeComponent) {
-//         setFormData((prevState) => ({
-//           ...prevState,
-//           postcode: postalCodeComponent.long_name,
-//         }));
-//       }
-//     });
-//   });
-// }, []);
-
-
-useEffect(() => {
-  loadGoogleMapsScript(() => {
-    console.log(inputRef.current); // Log the ref to see if it is correctly assigned
-    if (!window.google || !window.google.maps || !inputRef.current) return;
-
-    const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
-      types: ["geocode"],
-    });
-
-    autocomplete.addListener("place_changed", () => {
-      const place = autocomplete.getPlace();
-      if (!place || !place.address_components) return;
-
-      const postalCodeComponent = place.address_components.find((component) =>
-        component.types.includes("postal_code")
-      );
-
-      if (postalCodeComponent) {
-        setFormData((prevState) => ({
-          ...prevState,
-          postcode: postalCodeComponent.long_name,
-        }));
-      }
-    });
-  });
-}, []);
-
+    useEffect(() => {
+      let isMounted = true;
+    
+      loadGoogleMapsScript(() => {
+        if (!isMounted) return;
+    
+        if (!window.google || !window.google.maps || !inputRef.current) {
+          console.error("Google Maps API or input ref not available.");
+          return;
+        }
+    
+        const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+          types: ["geocode"],
+        });
+    
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          console.log("Selected place:", place);
+          if (!place || !place.address_components) {
+            console.log("No address components found.");
+            return;
+          }
+    
+          const postalCodeComponent = place.address_components.find((component) =>
+            component.types.includes("postal_code")
+          );
+    
+          if (postalCodeComponent) {
+            console.log("Postcode found:", postalCodeComponent.long_name);
+            setFormData((prevState) => ({
+              ...prevState,
+              postcode: postalCodeComponent.long_name,
+            }));
+          } else {
+            console.log("No postcode found in the selected address.");
+          }
+        });
+      });
+    
+      return () => {
+        isMounted = false; // Cleanup on unmount
+      };
+    }, [inputRef.current]);
 
   const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
@@ -101,6 +115,7 @@ useEffect(() => {
   const [formData, setFormData] = useState({
     trade: "",
     businessName: "",
+    location: "",
     businessLocation: "",
     lookingFor: "",
     businessType: "",
@@ -112,7 +127,7 @@ useEffect(() => {
     businessEmail: "",
     businessPhone: "",
     mobile_number: "",
-    service_cost: "",
+    // service_cost: "",
     skills: [], 
     about_artisan: "", 
 
@@ -243,14 +258,14 @@ useEffect(() => {
         const artisanProfilePayload = {
             service_details_id: unique_id,
             businessName: formData.businessName,
-            businessLocation: formData.businessLocation,
+            location: formData.location,
             lookingFor: formData.lookingFor,
             businessType: formData.businessType,
-            service_cost: formData.service_cost,
+            //service_cost: formData.service_cost,
             employeeCount: formData.employeeCount,
             skills: formData.skills.map((skill) => String(skill)),
             experience: formData.experience || 0,
-            location: formData.businessLocation,
+            businessLocation: formData.businessLocation,
             postcode: formData.postcode,
             user_id: response1Data.unique_id,
         };
@@ -434,8 +449,8 @@ useEffect(() => {
                     <label htmlFor="serviceSelect">Where is your business located?</label>
                     <input 
                      type="text"
-                     name="businessLocation"
-                     value={formData.businessLocation}
+                     name="location"
+                     value={formData.location}
                      onChange={handleInputChange}
                      placeholder="Enter your business address*" />
                   </div>
@@ -517,7 +532,7 @@ useEffect(() => {
                     </div>
                   </div>
 
-                  <div className="Gland-Quest-data">
+                  {/* <div className="Gland-Quest-data">
                       <label>Cost of services/skills (Optional)</label>
                       <input
                           type="Number"
@@ -527,7 +542,7 @@ useEffect(() => {
                           value={formData.service_cost}
                           onChange={handleInputChange}
                       />
-                  </div>
+                  </div> */}
             
             
                   <div className="Gland-Quest-data">
@@ -542,7 +557,7 @@ useEffect(() => {
                             <input
                               type="text"
                               placeholder="Search for your address"
-                              ref={inputRef}
+                              ref={inputRef} // Ensure this is correctly assigned
                             />
 
 
