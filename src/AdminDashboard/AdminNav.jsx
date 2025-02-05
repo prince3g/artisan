@@ -10,8 +10,6 @@ import SearchIcon from './Img/search-icon.svg';
 import AdminUu from './Img/admin_uu.jpg';
 
 
-
-
 function AdminNav({ toggleNav }) {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 

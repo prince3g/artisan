@@ -19,17 +19,7 @@ const CostumerLogin2 = () => {
   const [timer, setTimer] = useState(25);
   const [isResendVisible, setResendVisible] = useState(false);
 
-  // Handle input changes
-  // const handleInputChange = (index, event) => {
-  //   const value = event.target.value;
 
-  //   // Allow only numeric input
-  //   if (/^\d*$/.test(value)) {
-  //     const newInputs = [...inputs];
-  //     newInputs[index] = value;
-  //     setInputs(newInputs);
-  //   }
-  // };
 
   const handleInputChange = (index, event) => {
     const value = event.target.value;

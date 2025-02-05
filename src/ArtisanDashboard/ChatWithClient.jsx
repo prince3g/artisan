@@ -29,28 +29,7 @@ const ChatWithClient = () => {
     const [activeSection, setActiveSection] = useState('chat');
     const [isToggled, setIsToggled] = useState(false);
 
-    // const fetchMessages = async () => {
-    //     const sender = artisanUniqueID;  // Assuming artisanUniqueID is stored in localStorage
-    //     const receiver = artisan_name;  // Assuming artisan_name is the receiver's unique identifier
 
-    //     try {
-    //         const response = await fetch(`${djangoHostname}/api/messages/conversation/?sender=${sender}&receiver=${receiver}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             setMessages(data);  // Set the fetched messages to state
-    //         } else {
-    //             console.error('Failed to fetch messages');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching messages:', error);
-    //     }
-    // };
 
     const fetchMessages = async () => {
       const sender = artisanUniqueID;
@@ -134,14 +113,14 @@ const ChatWithClient = () => {
             {activeSection === 'chat' && (
                 <div className="Chattt-Topp">
                     <div className="Chattt-Topp-1">
-                        <h3>Chat</h3>
+                        <h3>Chat Client chat</h3>
                     </div>
                     <div className="Chattt-Topp-2">
                         <span>
-                            Online<i className="online"></i>
+                            Online Client chat<i className="online"></i>
                         </span>
                         <span>
-                            <div>Chats</div> <b>{messages.length}</b>
+                            <div>Chats Client chat</div> <b>{messages.length}</b>
                         </span>
                         <button onClick={handleNewChat}>
                             <ChatIcon /> <div>New chat</div>
