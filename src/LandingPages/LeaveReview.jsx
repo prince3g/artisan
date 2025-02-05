@@ -535,13 +535,16 @@ const LeaveReview = () => {
             </div>
 
             <div className="Gland-Cnt-Btn">
+
               <button type="button" className="back-btn" onClick={() => navigate(-1)}>
                 Back
               </button>
+
               <button
                   type="submit"  className="post-job-btn" onClick={handleSubmit}  disabled={isSubmitting} >
                   {isSubmitting ? 'Submitting...' : 'Submit'}
               </button>
+              
             </div>
           </div>
         </div>
