@@ -599,7 +599,7 @@ const ServiceSlider = () => {
                 {selectedService.services.map((service, idx) => (
                   <li key={idx}>
                     <Link
-                      to={`/search-results?trade=${selectedService.name}&service=${service}&service_details_id=${selectedService.unique_id}&services=${encodeURIComponent(
+                      to={`/post-code?trade=${selectedService.name}&service=${service}&service_details_id=${selectedService.unique_id}&services=${encodeURIComponent(
                         JSON.stringify(selectedService.services)
                       )}`}
                       onClick={() => {
@@ -621,3 +621,5 @@ const ServiceSlider = () => {
 };
 
 export default ServiceSlider;
+
+

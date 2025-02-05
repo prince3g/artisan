@@ -77,7 +77,7 @@ const LocationList = () => {
                   ? selectedTrade.services.map((service, index) => (
                       <li key={index}>
                         {/* Link to search result with query parameters */}
-                        <Link to={`/search-results?trade=${selectedTrade.name}&service=${service}&services=${encodeURIComponent(
+                        <Link to={`/post-code?trade=${selectedTrade.name}&service=${service}&services=${encodeURIComponent(
                           JSON.stringify(selectedTrade.services)
                         )}`}>
                           {service} <ArrowForward />
