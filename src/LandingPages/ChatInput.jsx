@@ -56,9 +56,13 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
         //console.log("🔹 Headers:", headers);
 
         try {
+
+          const trimmedReceiver = receiverId.trim();
+          const trimmedSender = senderId.trim();
             const response = await api.post(endpoint, {
-                receiver: receiverId,
-                sender: senderId,
+              
+                receiver: trimmedReceiver,
+                sender: trimmedSender,
                 content: message,
             }, { headers });
 
