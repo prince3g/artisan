@@ -82,6 +82,8 @@ const ArtisanChattingPage = () => {
   useEffect(() => {
     fetchMessages();
   }, [artisanUniqueID, senderID]);
+
+  
   const handleNewMessage = (newMessage) => {
     const currentTime = new Date();
     setMessages((prevMessages) => [
@@ -391,6 +393,7 @@ const ArtisanChattingPage = () => {
                         <span>No messages yet. Start a conversation!</span>
                       </p>
                     )}
+                    
                     {messages.map((msg, index) => (
                       <div
                         key={index}
