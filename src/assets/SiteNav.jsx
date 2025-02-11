@@ -1,136 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom"; 
-// import SiteLogo from './Img/site-logo.png';
-// import DropIcon1 from './Img/DropIcon/1.png';
-// import DropIcon2 from './Img/DropIcon/2.png';
-// import DropIcon3 from './Img/DropIcon/3.png';
-
-// function SiteNav() {
-//   const [isNavActive, setIsNavActive] = useState(false);
-//   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
-//   const toggleNav = (e) => {
-//     e.stopPropagation();
-//     setIsNavActive((prev) => !prev);
-//     setIsDropdownVisible(false);
-//   };
-
-//   const closeNav = () => {
-//     setIsNavActive(false);
-//   };
-
-//   const toggleDropdown = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     setIsDropdownVisible((prev) => !prev);
-//   };
-
-//   const closeDropdown = () => {
-//     setIsDropdownVisible(false);
-//   };
-
-//   const handleOutsideClick = (e) => {
-//     const navContent = document.querySelector(".MainNav-Content");
-//     const dropdown = document.querySelector(".All-DropDown");
-//     if (
-//       navContent && !navContent.contains(e.target) &&
-//       dropdown && !dropdown.contains(e.target)
-//     ) {
-//       closeNav();
-//       closeDropdown();
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (isNavActive || isDropdownVisible) {
-//       document.addEventListener("click", handleOutsideClick);
-//     } else {
-//       document.removeEventListener("click", handleOutsideClick);
-//     }
-
-//     return () => {
-//       document.removeEventListener("click", handleOutsideClick);
-//     };
-//   }, [isNavActive, isDropdownVisible]);
-
-//   const handleNavLinkClick = () => {
-//     closeNav();
-//     closeDropdown();
-//   };
-
-//   return (
-//     <nav className={`SiteNav ${isNavActive ? "active-NavMbl" : ""}`}>
-//       <div className="large-container">
-//         <div className="Nav-Content">
-//           <Link to="/" className="Nav-logo this-mobile" onClick={handleNavLinkClick}>
-//             <img src={SiteLogo} alt="Site Logo" />
-//           </Link>
-//           <div className="MainNav-Content">
-//             <Link to="/" className="Nav-logo" onClick={handleNavLinkClick}>
-//               <img src={SiteLogo} alt="Site Logo" />
-//             </Link>
-//             <ul>
-//               <li><Link to="/post-job" onClick={handleNavLinkClick}>Post a Job</Link></li>
-//               <li>
-//                 <Link
-//                   to="#"
-//                   onClick={(e) => {
-//                     toggleDropdown(e);
-//                   }}
-//                   className={isDropdownVisible ? "active" : ""}
-//                 >
-//                   Customer
-//                 </Link>
-//               </li>
-//               <li><Link to="/about" onClick={handleNavLinkClick}>About Us</Link></li>
-//             </ul>
-//             <ul className="Ul-Last">
-//             <li><Link to="/artisan-overview" onClick={handleNavLinkClick}>Artisan Sign-Up</Link></li>
-//               <li><Link to="/customer-signup" className="home-login" onClick={handleNavLinkClick}>Customer Signup</Link></li>
-//               <li><Link to="/login" className="trade-login" onClick={handleNavLinkClick}>Login</Link></li>
-//             </ul>
-//           </div>
-//           <div
-//             className="Nav-Toggler this-mobile"
-//             onClick={toggleNav}
-//           >
-//             <span></span>
-//             <span></span>
-//             <span></span>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className={`All-DropDown ${isDropdownVisible ? "show-All-DropDown" : ""}`}>
-//         <div className="large-container">
-//           <ul>
-//             <li>
-//               <h3><img src={DropIcon1} alt="Icon 1" />Review a Trade</h3>
-//               <p>Have you completed a project recently? Let your Artisan know how they did.</p>
-//               <Link to="/leave-review" onClick={handleNavLinkClick}>Leave a review</Link>
-//             </li>
-
-//             <li>
-//               <h3><img src={DropIcon3} alt="Icon 3" />Saved Trades</h3>
-//               <p>Easily access your saved Artisan and keep track of those you may want to hire in the future.</p>
-//               <Link to="/saved-trades" onClick={handleNavLinkClick}>View saved trades</Link>
-//             </li>
-
-//             <li>
-//               <h3><img src={DropIcon2} alt="Icon 2" />Advice Centre</h3>
-//               <p>Get Inspired! Check the latest industry expertise and read insider tips from our vetted tradespeople.</p>
-//               <Link to="/advice-centre" onClick={handleNavLinkClick}>Visit Advice Centre</Link>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default SiteNav;
-
-
 import React, { useState, useEffect, useRef} from "react";
 import { Link } from "react-router-dom";
 import SiteLogo from "./Img/site-logo.png";
@@ -163,20 +30,25 @@ import PaymentIcon from "@mui/icons-material/Payment";
 function SiteNav() {
   const [isNavActive, setIsNavActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
+  const [isLoggedIn, setILoggedIn] = useState("");
+  const [user_first_name, setUserFirstName] = useState("");
+  const [user_last_name, setUserLastName] = useState("");
+  const [user_date_joined, setUserUserDateJoined] = useState("");
 
-
-  const [isLoggedIn2, setIsLoggedIn2] = useState(false);
-  const [userType2, setUserType2] = useState("");
 
   useEffect(() => {
-    // Check login status and user type
-    const token = localStorage.getItem("access_token");
-    const userTypeFromStorage = localStorage.getItem("user_type");
-    setIsLoggedIn(!!token);
-    setUserType(userTypeFromStorage || "");
-  }, []);
+    setILoggedIn(sessionStorage.getItem("access_token"));
+    setUserType(sessionStorage.getItem("user_type"));
+    setUserFirstName(sessionStorage.getItem("user_first_name"));
+    setUserLastName(sessionStorage.getItem("user_last_name"));
+    setUserUserDateJoined(sessionStorage.getItem("user_date_joined"));
+
+}, [userType, isLoggedIn]);
+
+// console.log("isLoggedIn")
+// console.log(userType)
+// console.log("isLoggedIn")
 
   const toggleNav = (e) => {
     e.stopPropagation();
@@ -230,10 +102,23 @@ function SiteNav() {
   };
 
   const handleLogout = () => {
-    localStorage.clear(); // Clear all local storage
-    setIsLoggedIn(false); // Update the login state
+    sessionStorage.clear(); // Clear all sessionStorage storage
+    setILoggedIn(""); // Update the login state
     setUserType(""); // Clear user type
+    window.location.href = "/";
   };
+
+  const handleVisitProfile = () => {
+  if(userType === "customer"){
+    window.location.href = "/user-dashboard";
+    }
+    else if(userType === "artisan"){
+      window.location.href = "/artisan-dashboard";
+    }
+    else if(userType === "super_admin"){
+      window.location.href = "/admin";
+    }
+  }
 
   // Determine links based on user_type
   const getAccountLink = () => {
@@ -309,7 +194,12 @@ function SiteNav() {
     setIsArtisanDropdownOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return ""; // Handle case where date is missing
   
+    const options = { year: "numeric", month: "short", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
 
   return (
     <nav className={`SiteNav ${isNavActive ? "active-NavMbl" : ""}`}>
@@ -415,20 +305,37 @@ function SiteNav() {
            <div className="Mobioll-pos"> 
            
            {/* Main Login Link */}
-           
-               <Link to="/account">
-                <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
-                </Link>
+
+           {!isLoggedIn? (
+          <Link to="/account">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="37.5"
+              height="30"
+              viewBox="0 0 20 16"
+              fill="#B1BD3B"
+            >
+              <path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path>
+            </svg>
+          </Link>
+        ) : null}
+
+         {/* Customer Profile drop down Button  isLoggedIn && (userType === "customer"*/}               
+          {/* <Link to="/account">
+          <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+          </Link> */}
 
 
 
-                {/* Customer Profile drop down Button */}
+        {/* Customer Profile drop down Button */}
+        {isLoggedIn && (userType === "customer") ? (
 
-                  <button onClick={ProfileMenuForUsers}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
-                  </button>
+        <button onClick={ProfileMenuForUsers}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+        </button>
+          ) : null}
 
-                  {isUserDropdownOpen && (
+        {isUserDropdownOpen && (
         <div className="Main-Gen-DropDwn" ref={userDropdownRef}>
           <div className="Genns-Top">
             <div className="Genns-Top-1">
@@ -436,20 +343,27 @@ function SiteNav() {
             </div>
             <div className="Genns-Top-2">
               <div>
-                <h3>Prince</h3>
-                <p>Member Since Jan 22, 2025</p>
+                <h3>{user_first_name} {user_last_name}</h3>
+                {/* <p>Member Since Jan 22, 2025</p> */}
+                <p>Member Since {formatDate(user_date_joined)}</p>
               </div>
             </div>
           </div>
 
           <ul className="Glandy-Ul">
             <li>
-              <Link to="/user-dashboard/" onClick={CloseProfileMenuForUsers}>
+              <Link to="/user-dashboard/" onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleVisitProfile();
+                    }}>
                 <DashboardIcon /> Dashboard
               </Link>
             </li>
             <li>
-              <Link to="/user-dashboard/edit-profile" onClick={CloseProfileMenuForUsers}>
+              <Link to="/user-dashboard/edit-profile" onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleVisitProfile();
+                    }}>
                 <SettingsIcon /> Profile Setting
               </Link>
             </li>
@@ -459,7 +373,11 @@ function SiteNav() {
               </Link>
             </li>
             <li>
-              <button className="logout-btnn" onClick={CloseProfileMenuForUsers}>
+              <button className="logout-btnn" 
+              onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleLogout();
+                    }}>
                 <ExitToAppIcon /> Log Out
               </button>
             </li>
@@ -475,15 +393,16 @@ function SiteNav() {
 
 
 
-                 {/* Artisan Profile drop down Button */}
+        {/* Artisan Profile drop down Button */}
+
+        {isLoggedIn && (userType === "artisan") ? (
+        <button onClick={ArtisanProfileMenu}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+        </button>
+          ) : null}
 
 
-                 <button onClick={ArtisanProfileMenu}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
-                  </button>
-
-
-                  {isArtisanDropdownOpen && (
+        {isArtisanDropdownOpen && (
         <div className="Main-Gen-DropDwn"  ref={artisanDropdownRef}>
             <div className="Genns-Top">
             <div className="Genns-Top-1">
@@ -491,14 +410,18 @@ function SiteNav() {
             </div>
             <div className="Genns-Top-2">
               <div>
-                <h3>Prince</h3>
-                <p>Member Since Jan 22, 2025</p>
+              <h3>{user_first_name} {user_last_name}</h3>
+                {/* <p>Member Since Jan 22, 2025</p> */}
+                <p>Member Since {formatDate(user_date_joined)}</p>
               </div>
             </div>
           </div>
           <ul className="Glandy-Ul">
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="" onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleVisitProfile();
+                    }}>
                 <DashboardIcon /> Dashboard
               </Link>
             </li>
@@ -508,7 +431,10 @@ function SiteNav() {
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="" onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleVisitProfile();
+                    }}>
                 <SettingsIcon /> Profile Setting
               </Link>
             </li>
@@ -538,7 +464,10 @@ function SiteNav() {
               </Link>
             </li>
             <li>
-              <button className="logout-btnn" onClick={CloseArtisanProfileMenu}>
+              <button className="logout-btnn" onClick={() => {
+                      CloseProfileMenuForUsers();
+                      handleLogout();
+                    }}>
                 <ExitToAppIcon /> Log Out
               </button>
             </li>
