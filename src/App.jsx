@@ -56,6 +56,7 @@ import AdminDashboard from './AdminDashboard/AdminDashboard';
 
 
 import CompletedReg from './LandingPages/CompletedReg';
+import SubscriptionPage from './LandingPages/SubscriptionPage';
 
 
 
@@ -107,6 +108,8 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/post-code" element={<PostCode />} />
           <Route path="/completed-registeration" element={<CompletedReg />} />
+          <Route path="/subscription" element={<SubscriptionPage />} />
+
 
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />

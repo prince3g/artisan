@@ -1494,3 +1494,268 @@ input[type="password"] {
   font-weight: 700;
   text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* subscript-pgg */
+
+
+.subscript-pgg{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.subscript-pgg .AA-page-header{
+  padding: 80px 0px !important;
+  padding-bottom: 200px !important;
+}
+@media screen and (max-width:1000px){
+  .subscript-pgg .AA-page-header{
+    text-align: center !important;
+  }
+}
+
+/* subb-boxes-sec */
+
+.subb-boxes-sec{
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 20;
+  margin-top: -150px;
+}
+
+.subb-boxes-Grid{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 30px;
+  gap: 30px;
+}
+
+@media screen and (max-width:900px){
+  .subb-boxes-Grid{
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+.subb-box{
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border:1px solid #d8d6d6;
+  border-radius: 10px;
+  padding:30px 20px;
+  text-align: center;
+  padding-bottom: 120px;
+}
+
+.subb-box h2{
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.subb-box h3{
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 100%;
+  margin-bottom: 20px;
+  color: #96a133;
+}
+
+.subb-box h3 span{
+  font-size: 14px;
+  font-weight: 400;
+  color: #4B4B4B;
+}
+
+.subb-box ul{
+  position: relative;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  grid-gap: 10px;
+}
+
+.subb-box ul li{
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  grid-gap: 10px;
+  font-size: 14px;
+  color: #4B4B4B;
+}
+
+.subb-box ul li svg{
+  color: #96a133;
+  font-size: 15px;
+  margin-top: 3px;
+  font-weight: 700;
+}
+
+.subb-box h4{
+  margin: 20px 0px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.subb-box ol{
+  position: relative;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  grid-gap: 10px;
+  padding-left: 20px;
+}
+.subb-box ol li{
+  position: relative;
+  gap: 10px;
+  grid-gap: 10px;
+  font-size: 13px;
+  color: #4B4B4B;
+  list-style: disc !important;
+}
+
+.Fin-subbnna-btn{
+  position: absolute;
+  bottom: 30px;
+  transform: translateX(-50%);
+  left: 50%;
+  padding: 12px 30px;
+  background-color: #B1BD3B;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.Fin-subbnna-btn:hover{
+  background-color: #96a133;
+}
+
+
+
+
+
+
+
+/* compriss-sec */
+
+.compriss-sec{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 80px;
+}
+
+.compriss-header{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.compriss-header h2{
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.compriss-table{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 50px !important;
+  overflow-x: auto;
+}
+
+@media screen and (max-width:1000px){
+  .compriss-sec{
+    margin-top: 50px !important;
+  }
+  .compriss-table{
+    margin-top: 30px !important;
+  }
+}
+
+
+
+/* Table Styling */
+.compriss-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+/* Table Header Styling */
+.compriss-table th {
+  background-color: #B1BD3B;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #ddd;
+}
+
+/* Table Cell Styling */
+.compriss-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.compriss-table td:first-child{
+  font-weight: 700;
+}
+
+/* Alternate Row Styling */
+.compriss-table tbody tr:nth-child(even) {
+  background-color: #e9e9e9;
+}
+
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .compriss-table th, .compriss-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .compriss-table {
+    margin: 10px 0;
+  }
+}
