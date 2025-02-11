@@ -16,10 +16,10 @@ const Footer = () => {
           <li><Link to="/faq">FAQs</Link></li>
         </ul>
         <div className="footer-social">
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/share/14kCHuSwvh/" target="_blank" rel="noopener noreferrer">
             <Facebook style={{ fontSize: 30 }} />
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/simulmgt?igsh=MjRrcGw3MWEwYXk1" target="_blank" rel="noopener noreferrer">
             <Instagram style={{ fontSize: 30 }} />
           </a>
           <a href="#" target="_blank" rel="noopener noreferrer">
@@ -30,7 +30,7 @@ const Footer = () => {
           </a>
         </div>
         <p className="footer-copyright">
-          © {currentYear} SimserviceHub - All rights reserved
+           {currentYear} Simul Management Solutions Ltd - All rights reserved
         </p>
       </div>
     </footer>

@@ -54,7 +54,8 @@ function ContactUs() {
           <div className='site-container'>
             <div className='contact-Dlts-header'>
               <h2 className='big-text'>Contact us</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>If you have any concerns or questions about your data, please contact the SimserviceHub Data Protection Team at the address below: 
+              </p>
             </div>
 
             <div className='Contact_SeccO_1'>
@@ -64,8 +65,8 @@ function ContactUs() {
                     <img src={ChatIcon} alt='Chat icon' />
                   </span>
                   <div className='DDl_Div'>
-                    <h3>Lorem Email</h3>
-                    <h4><a href='#'>lorem@ipsum.com</a></h4>
+                    <h3>Email</h3>
+                    <h4><a href='mailto:privacy@simservicehub.com'>privacy@simservicehub.com </a></h4>
                   </div>
                 </li>
                 <li>
@@ -73,8 +74,8 @@ function ContactUs() {
                     <img src={CallIcon} alt='Call icon' />
                   </span>
                   <div className='DDl_Div'>
-                    <h3>Lorem Call</h3>
-                    <h4>+123 456 7890, +987 654 3210</h4>
+                    <h3>Call</h3>
+                    <h4>09066484496</h4>
                   </div>
                 </li>
                 <li>
@@ -82,8 +83,8 @@ function ContactUs() {
                     <img src={LocationIcon} alt='Location icon' />
                   </span>
                   <div className='DDl_Div'>
-                    <h3>Lorem Location</h3>
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h4>
+                    <h3>Location</h3>
+                    <h4>Simul Management Solutions <br></br>SimserviceHub Head Office, </h4>
                   </div>
                 </li>
               </ul>
@@ -155,10 +156,7 @@ function ContactUs() {
                 {error && <div className='error-message'>{error}</div>}
 
                 <div className='message-form-input'>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam. Visit{' '}
-                    <Link to='/privacy-policy' className='ploc-ahhs'>Lorem Privacy Policy</Link>
-                  </p>
+                  <p>If you feel that we have not processed your data fairly or you are not satisfied with how we have handled your personal information, please contact our privacy team.</p>
                 </div>
 
                 <div className='message-form-input'>

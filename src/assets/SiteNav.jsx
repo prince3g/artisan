@@ -131,12 +131,34 @@
 // export default SiteNav;
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import { Link } from "react-router-dom";
 import SiteLogo from "./Img/site-logo.png";
 import DropIcon1 from "./Img/DropIcon/1.png";
 import DropIcon2 from "./Img/DropIcon/2.png";
 import DropIcon3 from "./Img/DropIcon/3.png";
+
+
+import ProfilePlaceholder from './Img/user-placeholder.png';
+
+
+
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SettingsIcon from "@mui/icons-material/Settings";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import DeleteIcon from "@mui/icons-material/Delete";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+
+import BookIcon from "@mui/icons-material/Book"; 
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions"; 
+import EventAvailableIcon from "@mui/icons-material/EventAvailable"; 
+import StarRateIcon from "@mui/icons-material/StarRate"; 
+import PaymentIcon from "@mui/icons-material/Payment"; 
+
+
+
 
 function SiteNav() {
   const [isNavActive, setIsNavActive] = useState(false);
@@ -221,6 +243,72 @@ function SiteNav() {
     return "#";
   };
 
+
+
+
+  // State and ref for Users dropdown
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const userDropdownRef = useRef(null);
+
+  // State and ref for Artisan dropdown
+  const [isArtisanDropdownOpen, setIsArtisanDropdownOpen] = useState(false);
+  const artisanDropdownRef = useRef(null);
+
+  // Toggle Users Profile Dropdown
+  const ProfileMenuForUsers = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+    setIsArtisanDropdownOpen(false); // Close Artisan menu if open
+  };
+
+  // Toggle Artisan Profile Dropdown
+  const ArtisanProfileMenu = () => {
+    setIsArtisanDropdownOpen(!isArtisanDropdownOpen);
+    setIsUserDropdownOpen(false); // Close Users menu if open
+  };
+
+  // Close Users dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target)
+      ) {
+        setIsUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Close Artisan dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        artisanDropdownRef.current &&
+        !artisanDropdownRef.current.contains(event.target)
+      ) {
+        setIsArtisanDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Close dropdown when clicking any link or button
+  const CloseProfileMenuForUsers = () => {
+    setIsUserDropdownOpen(false);
+  };
+
+  const CloseArtisanProfileMenu = () => {
+    setIsArtisanDropdownOpen(false);
+  };
+
   
 
   return (
@@ -249,19 +337,19 @@ function SiteNav() {
               </li>
               <li><Link to="/about" onClick={handleNavLinkClick}>About Us</Link></li>
             </ul>
-            <ul className="Ul-Last">
-              {/* Dynamic Artisan Link */}
+
+
+            {/* <ul className="Ul-Last">
               {isLoggedIn && userType === "artisan" ? (
                 <li>
                   <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
                 </li>
               ) : (
                 <li>
-                  <Link to="/artisan-overview" onClick={handleNavLinkClick}>Artisan Sign-Up</Link>
+                  <Link to="/artisan-overview" className="trade-login" onClick={handleNavLinkClick}>Artisan Sign-Up</Link>
                 </li>
               )}
 
-              {/* Dynamic Customer/Super Admin Link */}
               {isLoggedIn && (userType === "customer" || userType === "super_admin") ? (
                 <li>
                   <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
@@ -274,7 +362,6 @@ function SiteNav() {
                 </li>
               )}
 
-              {/* Login/Logout Link */}
               {isLoggedIn ? (
                 <li>
                   <Link
@@ -295,13 +382,184 @@ function SiteNav() {
                   </Link>
                 </li>
               )}
+
+            </ul> */}
+
+
+            <ul className="Ul-Last">
+
+            {isLoggedIn && userType === "artisan" ? (
+                <li>
+                  <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/artisan-overview" className="trade-login" onClick={handleNavLinkClick}>Artisan Sign-Up</Link>
+                </li>
+              )}
+
+              {isLoggedIn && (userType === "customer" || userType === "super_admin") ? (
+                <li>
+                  <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/customer-signup" className="home-login" onClick={handleNavLinkClick}>
+                    Customer Signup
+                  </Link>
+                </li>
+              )}
+
             </ul>
           </div>
+           <div className="Mobioll-pos"> 
+           
+           {/* Main Login Link */}
+           
+               <Link to="/account">
+                <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+                </Link>
+
+
+
+                {/* Customer Profile drop down Button */}
+
+                  <button onClick={ProfileMenuForUsers}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+                  </button>
+
+                  {isUserDropdownOpen && (
+        <div className="Main-Gen-DropDwn" ref={userDropdownRef}>
+          <div className="Genns-Top">
+            <div className="Genns-Top-1">
+              <img src={ProfilePlaceholder} alt="Profile" />
+            </div>
+            <div className="Genns-Top-2">
+              <div>
+                <h3>Prince</h3>
+                <p>Member Since Jan 22, 2025</p>
+              </div>
+            </div>
+          </div>
+
+          <ul className="Glandy-Ul">
+            <li>
+              <Link to="/user-dashboard/" onClick={CloseProfileMenuForUsers}>
+                <DashboardIcon /> Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/user-dashboard/edit-profile" onClick={CloseProfileMenuForUsers}>
+                <SettingsIcon /> Profile Setting
+              </Link>
+            </li>
+            <li>
+              <Link to="/saved-trades" onClick={CloseProfileMenuForUsers}>
+                <FavoriteIcon /> Saved Trades
+              </Link>
+            </li>
+            <li>
+              <button className="logout-btnn" onClick={CloseProfileMenuForUsers}>
+                <ExitToAppIcon /> Log Out
+              </button>
+            </li>
+            <li>
+              <button className="deletAcc-btnn" onClick={CloseProfileMenuForUsers}>
+                <DeleteIcon /> Delete Account
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
+
+
+
+
+                 {/* Artisan Profile drop down Button */}
+
+
+                 <button onClick={ArtisanProfileMenu}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
+                  </button>
+
+
+                  {isArtisanDropdownOpen && (
+        <div className="Main-Gen-DropDwn"  ref={artisanDropdownRef}>
+            <div className="Genns-Top">
+            <div className="Genns-Top-1">
+              <img src={ProfilePlaceholder} alt="Profile" />
+            </div>
+            <div className="Genns-Top-2">
+              <div>
+                <h3>Prince</h3>
+                <p>Member Since Jan 22, 2025</p>
+              </div>
+            </div>
+          </div>
+          <ul className="Glandy-Ul">
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <DashboardIcon /> Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <BookIcon /> Booking List
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <SettingsIcon /> Profile Setting
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <MonetizationOnIcon /> Payout Setting
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <SubscriptionsIcon /> Subscription
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <EventAvailableIcon /> Availability
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <StarRateIcon /> Reviews
+              </Link>
+            </li>
+            <li>
+              <Link to="" onClick={CloseArtisanProfileMenu}>
+                <PaymentIcon /> Payment
+              </Link>
+            </li>
+            <li>
+              <button className="logout-btnn" onClick={CloseArtisanProfileMenu}>
+                <ExitToAppIcon /> Log Out
+              </button>
+            </li>
+            <li>
+              <button className="deletAcc-btnn" onClick={CloseArtisanProfileMenu}>
+                <DeleteIcon /> Delete Account
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
+
+                  
+
+
           <div className="Nav-Toggler this-mobile" onClick={toggleNav}>
             <span></span>
             <span></span>
             <span></span>
           </div>
+          </div>  
         </div>
       </div>
 

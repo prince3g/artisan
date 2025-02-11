@@ -737,23 +737,22 @@
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
   padding: 80px;
 }
 
 .jja-Info{
   position: relative;
-  width: 100%;
+  width: 350px;
   height: auto;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 10px;
-  grid-gap: 10px;
   padding: 20px;
   background-color: #fff;
   border:1px solid #B1BD3B;
   border-radius: 10px;
+}
+@media screen and (max-width:600px){
+  .jja-Info{
+    width: 100% !important;
+  }
 }
 
 .jja-Info-1 svg{
@@ -816,10 +815,17 @@
   margin-top: 30px;
   text-align: center;
 }
-.hha-Info p{
+.jja-Info p{
   font-size: 14px;
   color: #4B4B4B;
-  margin-bottom: 20px;
+  margin-top: 15px;
+}
+.jja-Info p a{
+  color: #B1BD3B !important;
+  font-weight: 500 !important;
+}
+.jja-Info p a:hover{
+  text-decoration: underline !important;
 }
 
 .hha-Info a{
@@ -831,6 +837,24 @@
 }
 
 
+.gland-pal{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #e6ecb2;
+}
+
+.gland-pal .hha-btn a{
+  background-color: transparent !important;
+  color: #B1BD3B !important;
+  border:1px solid #B1BD3B !important;
+  transition: all 0.3s ease-in-out;
+}
+.gland-pal .hha-btn a:hover{
+  background-color: #F1F1F1 !important;
+}
 .Rememevbe{
   position: relative;
   width: 100%;
@@ -1152,4 +1176,195 @@ grid-gap: 20px;
 
 input[type="password"] {
   padding-right: 40px; /* Adjust based on button size */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobioll-pos */
+
+
+.Mobioll-pos{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  grid-gap: 10px;
+  margin-left: 15px !important;
+}
+
+.Mobioll-pos button,
+.Mobioll-pos a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+
+.Main-Gen-DropDwn{
+  position: absolute;
+  width: 240px;
+  height: auto;
+  min-height: 200px;
+  background-color: #fff;
+  top: 100%;
+  right: 0%;
+  margin-top: 10px;
+  z-index: 1;
+  box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  -moz-box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  border-radius: 10px;
+  border:1px solid rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.Main-Gen-DropDwn::before{
+  content: '';
+  position: absolute;
+  width:10px;
+  height: 10px;
+  background-color: #fff;
+  right: 15px;
+  z-index: -10;
+  transform: rotate(45deg);
+  top: -5px;
+  border-left:1px solid rgba(0,0,0,0.1);
+  border-top:1px solid rgba(0,0,0,0.1);
+}
+
+
+
+
+
+/* Genns-Top */
+
+.Genns-Top{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+  gap: 10px;
+  border-bottom: 1px solid #cdcbcb;
+  padding-bottom: 10px;
+}
+
+.Genns-Top-1{
+  position: relative;
+}
+
+.Genns-Top-1 img{
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  -moz-box-shadow: 0 0 10px rgb(0 0 0 / 8%);
+  border:1px solid #fff;
+}
+
+.Genns-Top-2{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+.Genns-Top-2 h3{
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.Genns-Top-2 p{
+  font-size: 11px;
+  color: #4E4E4E;
+}
+
+
+
+/* Glandy-Ul */
+
+.Glandy-Ul{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  grid-gap: 9px;
+}
+
+.Glandy-Ul li{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.Glandy-Ul li button,
+.Glandy-Ul li a{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+  gap: 8px;
+  grid-gap: 8px;
+  padding: 5px;
+  font-size: 14px;
+  color: #505050 !important;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+.Glandy-Ul li button svg,
+.Glandy-Ul li a svg{
+  font-size: 16px;
+}
+
+.Glandy-Ul li button{
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 10px !important;
+  border:1px solid transparent;
+}
+
+.Glandy-Ul li button.logout-btnn{
+  background-color: #B1BD3B !important;
+  color: #fff !important;
+}
+.Glandy-Ul li button.logout-btnn:hover{
+  background-color: #96a133 !important;
+}
+.Glandy-Ul li button.deletAcc-btnn{
+  border-color: #f72424 !important;
+  color: #f72424 !important;
+}
+
+.Glandy-Ul li button.deletAcc-btnn:hover{
+  background-color: #f72424  !important;
+  color: #fff !important;
 }
