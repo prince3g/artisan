@@ -1379,3 +1379,118 @@ input[type="password"] {
   background-color: #f72424  !important;
   color: #fff !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Succ-Sec */
+
+.Succ-Sec{
+  position: relative;
+  padding:50px 20px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto !important;
+}
+@media screen and (max-width:600px){
+  .Succ-Sec{
+    padding: 0px !important;
+  }
+}
+.Succ-Box{
+  position: relative;
+  width: 350px;
+  padding: 30px;
+  border:1px solid #d8d6d6;
+  text-align: center;
+  border-radius: 20px;
+}
+
+@media screen and (max-width:450px){
+  .Succ-Box{
+    width: 100% !important;
+    border:none !important;
+  }
+}
+
+.Succ-Box img{
+  max-width: 200px;
+  margin-bottom: 30px;
+}
+
+.Succ-Box h3{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.Succ-Box p{
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.Succ-Box h6{
+  font-size: 14px;
+  font-weight: 400;
+  color: #4E4E4E;
+  margin-bottom: 10px;
+}
+
+.Succ-Box h2{
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.oo-finish-btn{
+  position: relative;
+  width: 100%;
+  height: auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #B1BD3B;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.oo-finish-btn:hover{
+  background-color: #96a133;
+}
+
+.Succ-Box h5{
+  font-size: 14px;
+  font-weight: 500;
+  color: #4B4B4B;
+}
+.Succ-Box h5 a{
+  color: #96a133;
+  font-weight: 700;
+  text-decoration: underline;
+}

@@ -55,6 +55,9 @@ import ArtisanDashboard from './ArtisanDashboard/ArtisanDashboard';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 
 
+import CompletedReg from './LandingPages/CompletedReg';
+
+
 
 
 function App() {
@@ -103,6 +106,7 @@ function App() {
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/post-code" element={<PostCode />} />
+          <Route path="/completed-registeration" element={<CompletedReg />} />
 
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
