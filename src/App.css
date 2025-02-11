@@ -1250,6 +1250,17 @@ input[type="password"] {
   border-top:1px solid rgba(0,0,0,0.1);
 }
 
+@media screen and (max-width:1200px){
+  .Main-Gen-DropDwn::before{
+    display: none !important;
+  }
+}
+
+@media screen and (max-width:300px){
+  .Main-Gen-DropDwn{
+    width: 200px !important;
+  }
+}
 
 
 
