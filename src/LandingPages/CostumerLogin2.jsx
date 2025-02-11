@@ -21,16 +21,38 @@ const CostumerLogin2 = () => {
 
 
 
+  // const handleInputChange = (index, event) => {
+  //   const value = event.target.value;
+  
+  //   // Allow only numeric input
+  //   if (/^\d*$/.test(value)) {
+  //     const newInputs = [...inputs];
+  //     newInputs[index] = value;
+  //     setInputs(newInputs);
+  //   }
+  // };
+  
   const handleInputChange = (index, event) => {
     const value = event.target.value;
   
-    // Allow only numeric input
-    if (/^\d*$/.test(value)) {
+    // Allow only numeric input and move to next field if a digit is entered
+    if (/^\d$/.test(value)) {
       const newInputs = [...inputs];
       newInputs[index] = value;
       setInputs(newInputs);
+  
+      // Move to the next input field if not the last one
+      if (index < inputs.length - 1) {
+        document.getElementById(`otp-input-${index + 1}`).focus();
+      }
+    } else if (value === "") {
+      // Allow deletion and move cursor back
+      const newInputs = [...inputs];
+      newInputs[index] = "";
+      setInputs(newInputs);
     }
   };
+
   
   const handlePaste = (event) => {
     const pasteData = event.clipboardData.getData("text");
@@ -62,21 +84,18 @@ const CostumerLogin2 = () => {
       if (response.status === 200) {
         // Save user data to localStorage
         sessionStorage.setItem('user_id', response.data.userId);
+        sessionStorage.setItem('Address', response.data.address);
         sessionStorage.setItem('user_email', response.data.email);
         sessionStorage.setItem('user_phone', response.data.phone);
         sessionStorage.setItem('user_type', response.data.user_type);
         sessionStorage.setItem('unique_user_id', response.data.unique_user_id);
         sessionStorage.setItem('user_first_name', response.data.first_name);
         sessionStorage.setItem('user_last_name', response.data.last_name);
-        sessionStorage.setItem('Address', response.data.address);
         sessionStorage.setItem('access_token', response.data.access);
         sessionStorage.setItem('refresh_token', response.data.refresh);
-        sessionStorage.setItem('date_joined', response.data.date_joined);
+        sessionStorage.setItem('user_date_joined', response.data.user_date_joined);
 
         // Route based on user type
-        // console.log("data")
-        // console.log(response.data)
-        // console.log("data")
 
         
 
@@ -137,7 +156,7 @@ const CostumerLogin2 = () => {
         <div className="site-container">
           <p>
             <Link to="/">Simservicehub</Link> <ChevronRightIcon />
-            <Link to="/customer-login"> Customer Sign up or create account </Link> <ChevronRightIcon />
+            <Link to="/customer-login"> Customer Sign up or create account  QWERTYQWERTY </Link> <ChevronRightIcon />
             <Link to="/verify-email"> Verify {inputType === "email" ? "Email" : "Phone"}</Link>
           </p>
         </div>
@@ -156,7 +175,7 @@ const CostumerLogin2 = () => {
             <div className="Gradnded-Box-Body hga-body">
               <div className="Gland-Quest">
                 <div className="Gland-Quest-data gghaja-flex">
-                  {inputs.map((input, index) => (
+                  {/* {inputs.map((input, index) => (
                     <input
                       key={index}
                       type="text"
@@ -165,7 +184,20 @@ const CostumerLogin2 = () => {
                       onPaste={handlePaste} // Handle pasting the full token
                       maxLength={1} // Limit to 1 digit per input
                     />
+                  ))} */}
+
+                  {inputs.map((input, index) => (
+                    <input
+                      key={index}
+                      id={`otp-input-${index}`} // Assign a unique ID to each input
+                      type="text"
+                      value={input}
+                      onChange={(e) => handleInputChange(index, e)}
+                      onPaste={handlePaste}
+                      maxLength={1} // Restrict input to 1 character
+                    />
                   ))}
+
                 </div>
               </div>
               <div className="ghha-foot">

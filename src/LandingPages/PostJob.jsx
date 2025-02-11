@@ -9,6 +9,10 @@ import React, { useState, useEffect } from 'react';
 
 const PostJob = () => {
 
+  const user_unique_user_id = sessionStorage.getItem('unique_user_id');
+  const user_access_token = sessionStorage.getItem('access_token');
+  const user_type = sessionStorage.getItem('user_type');
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
@@ -21,6 +25,16 @@ const PostJob = () => {
 
   const [loading, setLoading] = useState(false);  // New loading state
   const navigate = useNavigate();
+
+  
+    // Check if the user is logged in
+    useEffect(() => {
+      if (!user_unique_user_id || !user_access_token || user_type !== "customer") {
+        alert("You must be logged in as a customer to post a job.");
+        navigate("/login");
+      }
+    }, []);
+    
 
   // Fetch all services in one go (no pagination)
   const fetchServices = async () => {
