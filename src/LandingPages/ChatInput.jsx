@@ -20,7 +20,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
   const emojiPickerRef = useRef(null);
   const chatInputRef = useRef(null);
 
-  const message_sender = localStorage.getItem('unique_user_id');
+  const message_sender = sessionStorage.getItem('unique_user_id');
 
   // Adjust textarea height dynamically
   const adjustTextAreaHeight = () => {
@@ -39,7 +39,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
         setLoading(true);
         const endpoint = `/api/messaging/auth/messages/send_message/`;
 
-        let token = localStorage.getItem('access_token');
+        let token = sessionStorage.getItem('access_token');
         //console.log("🔹 Sending token:", token);  // Log token before sending
 
         if (!token) {

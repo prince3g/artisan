@@ -47,7 +47,7 @@ const ArtisanChattingPage = () => {
   const [message, setMessage] = useState('');
   
 
-  const senderID = localStorage.getItem('unique_user_id');
+  const senderID = sessionStorage.getItem('unique_user_id');
 
   const lastMessageRef = useRef(null);
     // Create a ref for the chat container

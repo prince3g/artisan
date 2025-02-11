@@ -20,7 +20,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
   const emojiPickerRef = useRef(null);
   const chatInputRef = useRef(null);
 
-  const message_sender = localStorage.getItem('unique_user_id');
+  const message_sender = sessionStorage.getItem('unique_user_id');
 
   // Adjust textarea height dynamically
   const adjustTextAreaHeight = () => {

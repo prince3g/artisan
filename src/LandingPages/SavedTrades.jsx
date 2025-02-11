@@ -34,12 +34,9 @@ const SavedTrades = () => {
                 }
             
                 const data = await response.json();
+       
       
-                // console.log("data")
-                // console.log(data)
-                // console.log("data")
-      
-                setArtisanData(data);
+                setArtisanData(data.results);
               } catch (error) {
                 console.error('Error fetching artisan data:', error);
               }

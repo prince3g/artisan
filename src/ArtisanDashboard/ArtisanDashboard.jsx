@@ -20,8 +20,9 @@ import ProfileSettings from './ProfileSettings';
 const ArtisanDashboard = () => {
 
 
-    const last_name = localStorage.getItem('user_last_name');
-    const first_name = localStorage.getItem('user_first_name');
+
+    const last_name = sessionStorage.getItem('user_last_name');
+    const first_name = sessionStorage.getItem('user_first_name');
 
 
   return (

@@ -69,6 +69,7 @@ import RegisteredArtisans from './RegisteredArtisans';
 const AdminHomePage = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanCount, setArtisanCount] = useState(0); // State to store artisan count
+    const [customerCount, setCustomerCount] = useState(0); // State to store artisan count
     const [jobCount, setJobCount] = useState(0); // State to store job count
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
@@ -91,7 +92,12 @@ const AdminHomePage = () => {
                     throw new Error(errorData.detail || 'An error occurred while fetching artisans.');
                 }
                 const data = await response.json();
-                setArtisanCount(data.length); // Use the length of the array to get the count
+                setArtisanCount(data.count); // Use the length of the array to get the count
+                
+            console.log("data")
+            console.log(data)
+            console.log("data")
+
             } catch (error) {
                 setError(error.message);
             }
@@ -110,6 +116,12 @@ const AdminHomePage = () => {
                     throw new Error(errorData.detail || 'An error occurred while fetching jobs.');
                 }
                 const data = await response.json();
+
+                
+            // console.log("data")
+            // console.log(data)
+            // console.log("data")
+
                 setJobCount(data.count); // Set the job count from API response
             } catch (error) {
                 setError(error.message);
@@ -131,6 +143,10 @@ const AdminHomePage = () => {
             // Filter users to include only customers
             const customers = data.results.filter((user) => user.user_type === "customer");
             setUsers(customers);
+
+            // console.log("data")
+            // console.log(data)
+            // console.log("data")
     
           } catch (error) {
             setError(error.message);
@@ -170,7 +186,7 @@ const AdminHomePage = () => {
                         <h3>SimserviceHub Artisan</h3>
                         {/* Display artisan count */}
                         <h2>{artisanCount}</h2>
-                        {error && <p className="error">Error: {error}</p>}
+                        {/* {error && <p className="error">Error: {error}</p>} */}
                     </li>
                     <li>
                         <h3>Registered Customers</h3>
@@ -178,7 +194,7 @@ const AdminHomePage = () => {
                     </li>
                     <li>
                         <h3>Completed Trades</h3>
-                        <h2>20</h2>
+                        <h2>0</h2>
                     </li>
                     <li>
                         <h3>Posted Jobs</h3>

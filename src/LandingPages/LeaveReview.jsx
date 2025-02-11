@@ -43,7 +43,7 @@ const LeaveReview = () => {
   const [reviewData, setReviewData] = useState({
     service_category_id: '',
     artisan: artisan_unique_id.trim(),
-    customer_id:  localStorage.getItem('unique_user_id'),
+    customer_id:  sessionStorage.getItem('unique_user_id'),
     reliability_rating: null,
     workmanship_rating: null,
     tidiness_rating: null,
