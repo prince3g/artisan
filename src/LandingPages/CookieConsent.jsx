@@ -3,7 +3,6 @@ import "./Css/CookieConsent.css";
 import { Link } from 'react-router-dom';
 
 import CloseIcon from '@mui/icons-material/Close';
-
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const CookieConsent = () => {
@@ -14,30 +13,46 @@ const CookieConsent = () => {
     functionality: false,
     unclassified: false,
   });
-  const [showDetails, setShowDetails] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  // Check if preferences exist in localStorage
+  // Check if preferences exist in localStorage or cookies
   useEffect(() => {
     const savedPreferences = localStorage.getItem("cookiePreferences");
     if (!savedPreferences) {
-      setVisible(true); // Show the modal if no preferences are saved
+      const cookies = document.cookie.split('; ');
+      const cookieConsent = cookies.some(cookie => cookie.includes('cookiePreferences=true'));
+      if (!cookieConsent) {
+        setVisible(true); // Show the modal if no preferences or consent cookie is found
+      }
     }
   }, []);
 
+  // Helper function to set cookies
+  const setCookie = (name, value, days) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+  };
+
+  // Handle checkbox change
   const handleCheckboxChange = (key) => {
     setPreferences({ ...preferences, [key]: !preferences[key] });
   };
 
+  // Accept all cookies and save preferences
   const handleAcceptAll = () => {
     const allTruePreferences = Object.fromEntries(
       Object.keys(preferences).map((key) => [key, true])
     );
     setPreferences(allTruePreferences);
     savePreferences(allTruePreferences);
+    Object.keys(allTruePreferences).forEach(key => {
+      setCookie(key, "true", 365); // Set cookie for each preference
+    });
     setVisible(false);
   };
 
+  // Decline all cookies and save preferences
   const handleDeclineAll = () => {
     const allFalsePreferences = Object.fromEntries(
       Object.keys(preferences).map((key) => [key, false])
@@ -45,19 +60,20 @@ const CookieConsent = () => {
     allFalsePreferences.strictlyNecessary = true; // Always required
     setPreferences(allFalsePreferences);
     savePreferences(allFalsePreferences);
+    Object.keys(allFalsePreferences).forEach(key => {
+      setCookie(key, "false", 365); // Set cookie for each preference
+    });
     setVisible(false);
   };
 
+  // Save preferences to localStorage
   const savePreferences = (prefs) => {
     localStorage.setItem("cookiePreferences", JSON.stringify(prefs));
   };
 
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
-
+  // Close the modal without saving preferences
   const handleClose = () => {
-    setVisible(false); // Hide the modal without saving preferences
+    setVisible(false);
   };
 
   return visible ? (
@@ -65,9 +81,9 @@ const CookieConsent = () => {
       <div className="cookie-content">
         {/* Close Button */}
         <div className="Conags-Top">
-        <button className="close-button" onClick={handleClose}>
-          <span className="material-icons"><CloseIcon /></span>
-        </button>
+          {/* <button className="close-button" onClick={handleClose}>
+            <span className="material-icons"><CloseIcon /></span>
+          </button> */}
         </div>
         <h2>This website uses cookies</h2>
         <p>
@@ -122,7 +138,7 @@ const CookieConsent = () => {
           <button onClick={handleDeclineAll}>Decline All</button>
         </div>
         <div className="cookie-details-toggle">
-        <Link to="/cookies"><SettingsIcon /> Show details</Link>
+          <Link to="/cookies"><SettingsIcon /> Show details</Link>
         </div>
       </div>
     </div>
