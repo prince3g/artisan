@@ -10,13 +10,13 @@ import SearchIcon from './Img/search-icon.svg';
 import AdminUu from './Img/admin_uu.jpg';
 
 
-
-
 function AdminNav({ toggleNav }) {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-  const email = localStorage.getItem("email");
-  const userId = localStorage.getItem("user_id");
+
+
+  const email = sessionStorage.getItem("email");
+  const userId = sessionStorage.getItem("user_id");
 
   const [userImage, setUserImage] = useState(""); // State to store the user image URL
 

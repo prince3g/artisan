@@ -39,10 +39,10 @@ const ProfileSettings = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem('user_phone', data.phone || '');
-      localStorage.setItem('user_first_name', data.first_name || '');
-      localStorage.setItem('user_last_name', data.last_name || '');
-      localStorage.setItem('Address', data.address || '');
+      sessionStorage.setItem('user_phone', data.phone || '');
+      sessionStorage.setItem('user_first_name', data.first_name || '');
+      sessionStorage.setItem('user_last_name', data.last_name || '');
+      sessionStorage.setItem('Address', data.address || '');
 
       alert("Profile updated successfully!");
     } catch (error) {

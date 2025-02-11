@@ -40,7 +40,7 @@ const Userdashbaord = () => {
           // console.log(data)
           // console.log("data")
 
-          setArtisanData(data);
+          setArtisanData(data.results);
         } catch (error) {
           console.error('Error fetching artisan data:', error);
         }

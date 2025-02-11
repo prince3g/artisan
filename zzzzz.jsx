@@ -1,546 +1,642 @@
-import React, { useState, useEffect } from 'react';
-import './Css/Main.css';
-import { debounce } from 'lodash';
-import { useNavigate } from 'react-router-dom';
-import PageServices from '../data/PageServices'; // Assuming this contains your trade data
-import { Link } from 'react-router-dom';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-const LeaveReview = () => {
-
-  const [artisanProfiles, setArtisanProfiles] = useState([]);
-  const [selectedArtisan, setSelectedArtisan] = useState(null);
+// For the react part I have two components already please modify them to integrate all your inplementations
+// The ChatInput is for typing and sending messages while the ArtisanChattingPage  is for displaying the messages
 
 
-  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+// import React, { useState, useEffect } from 'react';
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import './Css/ArtisanProfile.css';
+// import UserImg from './Img/user-img.jpg';
+// import Star from '@mui/icons-material/Star';
+// import Handyman from '@mui/icons-material/Handyman';
+// import MyLocation from '@mui/icons-material/MyLocation';
+// import Favorite from '@mui/icons-material/Favorite';
+// import Share from '@mui/icons-material/Share';
+// import ChatIcon from '@mui/icons-material/Chat';
+// import CallIcon from '@mui/icons-material/Call';
+// import DateRangeIcon from '@mui/icons-material/DateRange';
+// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+// import CloseIcon from '@mui/icons-material/Close';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-  const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const artisan_unique_id = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
+// import ChatInput from './ChatInput';
+// import ChatBanner from './Img/nochat-banner.svg';
+// import Comments from './Comments';
 
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-  const [error, setError] = useState('');
+// import { Link } from "react-router-dom";
 
-  const [reliabilityYesNo, setReliabilityYesNo] = useState('');
-  const [activeReliabilityButton, setActiveReliabilityButton] = useState(null);
-  const [isCheckedReliability, setIsCheckedReliability] = useState(false);
-  const [activeWorkmanshipButton, setActiveWorkmanshipButton] = useState(null);
-  const [isCheckedWorkmanship, setIsCheckedWorkmanship] = useState(false);
-  const [activeTidinessButton, setActiveTidinessButton] = useState(null);
-  const [isCheckedTidiness, setIsCheckedTidiness] = useState(false);
-  const [activeCourtesyButton, setActiveCourtesyButton] = useState(null);
-  const [isCheckedCourtesy, setIsCheckedCourtesy] = useState(false);
+// const ArtisanChattingPage = () => {
+//   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const searchParams = new URLSearchParams(location.search);
+
+//   const service = decodeURIComponent(searchParams.get('service') || '');
+//   const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
+//   const service_details = decodeURIComponent(searchParams.get('service_details') || '');
+//   const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
+//   const artisanUniqueID = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
+//   const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
+
+//   const [artisanData, setArtisanData] = useState([]);
+//   const [isExpanded, setIsExpanded] = useState(false);
+//   const [messages, setMessages] = useState([]);
+//   const [showTyping, setShowTyping] = useState(false);
+//   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+//   const [hasSentFirstMessage, setHasSentFirstMessage] = useState(false);
+//   const [welcomeMessageTime, setWelcomeMessageTime] = useState('');
+//   const [activeSection, setActiveSection] = useState("chat");
+//   const [isToggled, setIsToggled] = useState(false);
+//   const [rating, setRating] = useState("");
+//   const [review, setReview] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState("");
+
+//   const senderID = localStorage.getItem('unique_user_id');
+
+//   const fetchMessages = async () => {
+//     try {
+//       const authToken = 'your-auth-token-here'; // Replace with your actual token
+//       const response = await fetch(`${djangoHostname}/api/messaging/auth/api/messages/conversation/?sender=${senderID}&receiver=${artisanUniqueID}`, {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'Authorization': `Bearer ${localStorage.getItem('access_token')}`, // Include the auth token in the header
+//         },
+//         credentials: 'include',
+//       });
+  
+//       if (response.ok) {
+//         const data = await response.json();
+
+//         console.log("data")
+//         console.log(data)
+//         console.log("data")
+      
+//         setMessages(data);
+//       } else {
+//         console.error('Failed to fetch messages');
+//       }
+//     } catch (error) {
+//       console.error('Error fetching messages:', error);
+//     }
+//   };
+  
+//   useEffect(() => {
+//     fetchMessages();
+//   }, []);
+
+//   const handleReviewSubmit = async () => {
+//     if (!rating || !review.trim()) {
+//       setMessage("Please provide a rating and a review.");
+//       return;
+//     }
+
+//     setLoading(true);
+//     setMessage("");
+
+//     try {
+//       const sanitizedId = artisanUniqueID.trim();
+//       const response = await fetch(`${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           artisan: sanitizedId,
+//           reviewer_name: "5e2fa660-58a2-4b5d-8e59-70f3a1b704e2",
+//           artisan_name,
+//           rating,
+//           review_text: review,
+//         }),
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok) {
+//         setMessage("Review submitted successfully!");
+//         setRating("");
+//         setReview("");
+//       } else {
+//         setMessage(`Error: ${data.message || "Failed to submit review."}`);
+//       }
+//     } catch (error) {
+//       setMessage("An error occurred. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleToggleView = () => {
+//     setIsExpanded(!isExpanded);
+//   };
+
+//   const handleNewMessage = (message, image) => {
+//     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+//     setMessages([...messages, { message, image, timestamp, isSent: true, isDelivered: false }]);
+//   };
+
+//   const handleNewChat = () => {
+//     setMessages([]);
+//     setShowTyping(false);
+//     setShowWelcomeMessage(false);
+//     setHasSentFirstMessage(false);
+//   };
+
+//   useEffect(() => {
+//     const timer = setTimeout(() => {
+//       setMessages((prevMessages) =>
+//         prevMessages.map((msg) =>
+//           msg.isSent && !msg.isDelivered ? { ...msg, isDelivered: true } : msg
+//         )
+//       );
+
+//       if (!hasSentFirstMessage && messages.length > 0 && messages[0].isDelivered) {
+//         setHasSentFirstMessage(true);
+//         setShowTyping(true);
+//         setWelcomeMessageTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+//         setTimeout(() => {
+//           setShowTyping(false);
+//           setShowWelcomeMessage(true);
+//         }, 3000);
+//       }
+//     }, 1000);
+
+//     return () => clearTimeout(timer);
+//   }, [messages, hasSentFirstMessage]);
+
+//   const handleSectionClick = (section) => {
+//     setActiveSection(section);
+//     setIsToggled(true);
+//   };
+
+//   const handleCloseClick = () => {
+//     setActiveSection(null);
+//     setIsToggled(false);
+//   };
+
+//   useEffect(() => {
+//     const sanitizedId = artisanUniqueID?.trim();
+//     const fetchArtisanDetail = async () => {
+//       if (!sanitizedId) {
+//         console.error('Artisan Unique ID is missing');
+//         return;
+//       }
+//       try {
+//         const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+//           method: 'GET',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           credentials: 'include',
+//         });
+
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         setArtisanData(data);
+//       } catch (error) {
+//         console.error('Error fetching artisan data:', error);
+//       }
+//     };
+
+//     fetchArtisanDetail();
+//   }, [artisanUniqueID, djangoHostname]);
+
+
+//   return (
+//     <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
+//       <div className="navigating-ttarvs">
+//         <div className="large-container">
+//         <p>
+//           <Link to="/">
+//             Simservicehub
+//           </Link>
+//           <ChevronRightIcon /> {service_details}
+//           <ChevronRightIcon /> {artisanData.service_details?.name && artisanData.service_details?.name? `${artisanData.service_details.name}`: "Artisan Name"}
+//           <ChevronRightIcon /> {artisan_name}
+
+//             <ChevronRightIcon /> <Link to="/artisan-profile">Artisan Profile</Link>
+//             <ChevronRightIcon /> <Link to="/chat-with-artisan">Chat with {artisanData.user?.first_name && artisanData.user?.last_name
+//                           ? `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</Link>
+//         </p>
+
+//         </div>
+//       </div>
+
+//       <div className="Prof-Sec">
+//         <div className="large-container">
+//           <div className="Prof-Main">
+//             <div className="Prof-Left">
+//               <div className="Prof-Left-main">
+//                 <div className="prof-top">
+        
+
+//                   <div className="ggaa-navsi">
+//                   <button onClick={() => handleSectionClick("chat")}>
+//                     <ChatIcon /> <span className="toolTipsa">Chat</span>
+//                   </button>
+//                   <button onClick={() => handleSectionClick("call")}>
+//                     <CallIcon /> <span className="toolTipsa">Call</span>
+//                   </button>
+
+//                   <button>
+//                       <Favorite /> <span className="toolTipsa">Favourite</span>
+//                     </button>
+
+                  
+
+//                 </div>
+
+
+//                   <div className="Uuua-sec">
+//                     <div className="Uuua-1">
+//                       <img src={UserImg} alt="User" />
+//                     </div>
+//                     <div className="Uuua-2">
+//                       <div>
+//                         <h3>{artisan_name}</h3>
+//                         <h6>
+//                           <span>
+//                             <Star />
+//                             <Star />
+//                             <Star />
+//                             <Star />
+//                             <Star />
+//                           </span>{' '}
+//                           <span>Reviews (150)</span>
+//                         </h6>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="aius">
+//                     <h6>{artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: " "} &nbsp; Profile</h6>
+//                     <p>
+//                       <span>
+//                         <Handyman /> {artisanData.service_details?.name && artisanData.service_details?.name?`${artisanData.service_details.name}`: "Artisan Skills"} 
+//                       </span>
+//                       <span>
+//                         <MyLocation /> {artisanData.location? `${artisanData.location}`: "Address"}
+//                       </span>
+//                     </p>
+//                     <h4>
+//                       <DateRangeIcon /> Member Since {artisanData?.user?.date_joined? new Date(artisanData.user.date_joined).toLocaleString('default', { year: 'numeric', month: 'long' })
+//                         : 'Date Unavailable'}
+//                     </h4>
+//                   </div>
+//                 </div>
+
+//                 <div className="ooais-sec">
+//                   <div className="ooais-Part">
+//                     <h4>About</h4>
+//                     <p className={`about-text ${isExpanded ? 'expanded' : ''}`}>
+//                       {/* We create outfits that befit your personality..., think classy,
+//                       think Impression stitches. Our mission is to redefine fashion by
+//                       creating timeless designs and ensuring quality in every stitch.
+//                       Experience unparalleled craftsmanship with our bespoke tailoring
+//                       service, where every detail is tailored to perfection. */}
+//                       {artisanData.user?.about_artisan && artisanData.user?.about_artisan? `${artisanData.user.about_artisan}`: "Artisan Name"}
+//                     </p>
+//                     <span className="viewMoreOrLess" onClick={handleToggleView}>
+//                       {isExpanded ? 'View less' : 'View more'}
+//                     </span>
+//                   </div>
+//                   <div className="ooais-Part">
+//                     <h4>Skills</h4>
+//                     <ul>
+//                     {artisanData.skills ? (
+//                       artisanData.skills.map((skill, index) => (
+//                         <li key={index}>
+//                           <CheckCircleIcon />
+//                           {skill.trim()}
+//                         </li>
+//                       ))
+//                     ) : (
+//                       <li>No skills available</li>
+//                     )}
+//                     </ul>
+//                   </div>
+
+//                 </div>
+//               </div>
+//             </div>
+
+//             <div className="Chattt-sec">
+//             <div className="Chattt-Topp">
+//               <div className="Chattt-Topp-1">
+//                 <h3>Chat with {artisanData.user?.first_name && artisanData.user?.last_name ? `${artisanData.user.first_name} ${artisanData.user.last_name}` : " "} &nbsp;</h3>
+//               </div>
+//               <div className="Chattt-Topp-2">
+//                 <span>
+//                   Online<i className="online"></i>
+//                 </span>
+//                 <span>
+//                   <div>Chats</div> <b>{messages.length}</b>
+//                 </span>
+//                 <button onClick={handleNewChat}>
+//                   <ChatIcon /> <div>New chat</div>
+//                 </button>
+//               </div>
+//             </div>
+
+//             <div className="Chattt-Mid">
+//               <div className='Chatting-section'>
+//                 <div className='Chatting-section-Main'>
+//                 {messages.length === 0 && (
+//             <p className="no-messages">
+//               <img src={ChatBanner} alt="No Chat Banner" />
+//               <span>No messages yet. Start a conversation!</span>
+//             </p>
+//           )}
+
+//           {messages.slice(1).map((msg, index) => (
+//             <div key={index} className="Chatting-Clamp respond-Box">
+//               <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
+//                 <p>{msg.content}</p> {/* Use msg.content here */}
+//                 {msg.image && (
+//                   <img src={msg.image} alt="uploaded" className="Main-image-preview" />
+//                 )}
+//                 <div className="Mess-hsja">
+//                   <span>{msg.timestamp || 'Just now'}</span>
+//                   {msg.isSent && !msg.isDelivered ? (
+//                     <span className="message-status single-check">✔</span>
+//                   ) : (
+//                     <span className="message-status double-check">✔✔</span>
+//                   )}
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+
+
+//         {messages.slice(1).map((msg, index) => (
+//           <div key={index} className="Chatting-Clamp respond-Box">
+//             <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
+//               <p>{msg.content}</p> {/* Corrected to msg.content */}
+//               {msg.image && (
+//                 <img src={msg.image} alt="uploaded" className="Main-image-preview" />
+//               )}
+//               <div className="Mess-hsja">
+//                 <span>{msg.timestamp || 'Just now'}</span>
+//                 {msg.isSent && !msg.isDelivered ? (
+//                   <span className="message-status single-check">✔</span>
+//                 ) : (
+//                   <span className="message-status double-check">✔✔</span>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+
+
+//         {showWelcomeMessage && (
+//           <div className="Chatting-Clamp">
+//             <div className="Mnachatting-box">
+//               <p>Thank you for reaching out! ❤️ I'm here to bring your vision to life. 💡</p>
+//               <div className="Mess-hsja">
+//                 <span>{welcomeMessageTime}</span>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+
+//         {showTyping && (
+//           <div className="Chatting-Clamp">
+//             <div className="Mnachatting-box typing">
+//               <p>Typing...</p>
+//             </div>
+//           </div>
+//         )}
+
+//         {messages.slice(1).map((msg, index) => (
+//           <div key={index} className="Chatting-Clamp respond-Box">
+//             <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
+//               <p>{msg.message}</p>
+//               {msg.image && (
+//                 <img src={msg.image} alt="uploaded" className="Main-image-preview" />
+//               )}
+//               <div className="Mess-hsja">
+//                 <span>{msg.timestamp || 'Just now'}</span>
+//                 {msg.isSent && !msg.isDelivered ? (
+//                   <span className="message-status single-check">✔</span>
+//                 ) : (
+//                   <span className="message-status double-check">✔✔</span>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//     <div className="Chattt-Foot">
+//       <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueID}  senderId={senderID}/>
+//     </div>
+
+//   </div>
+// </div>
+
+//         </div>
+//       </div>
+//     </div>
+
+
+
+
+//     </div>
+//   );
+// };
+
+// export default ArtisanChattingPage;
+
+
+// import React, { useState, useRef, useEffect } from 'react';
+// import SendIcon from '@mui/icons-material/Send';
+// import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+// import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+// import { IconButton, CircularProgress } from '@mui/material'; // Import CircularProgress for loader
+// import CloseIcon from '@mui/icons-material/Close';
+// import api from '../axios_instance/'; // Path to your Axios instance
+
+// const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
+//   const textAreaRef = useRef(null);
+//   const [message, setMessage] = useState('');
+//   const [image, setImage] = useState(null);
+//   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+//   const [loading, setLoading] = useState(false); // State for loader
+
+//   const message_sender = localStorage.getItem('unique_user_id');
+
+//   const adjustTextAreaHeight = () => {
+//     const textarea = textAreaRef.current;
+//     textarea.style.height = 'auto';
+//     textarea.style.height = `${textarea.scrollHeight}px`;
+//   };
+
+//   const emojiPickerRef = useRef(null);
+//   const chatInputRef = useRef(null);
+
+//   const resetTextAreaHeight = () => {
+//     const textarea = textAreaRef.current;
+//     textarea.style.height = 'auto';
+//   };
+
+//   const handleSendMessage = async () => {
+//     if (message.trim()) {
+//       setLoading(true); // Show loader
+//       const endpoint = messageId 
+//         ? `/api/messaging/auth/api/${messageId}/1/reply/` 
+//         : `/api/messaging/auth/api/messages/send_message/`;
+  
+//       const payload = messageId 
+//         // ? { content: message }
+//         ? { receiver: receiverId, sender: senderId, content: message }
+//         : { receiver: receiverId, sender: senderId, content: message };
+  
+//       try {
+
+//         console.log("payload")
+//         console.log(payload)
+//         console.log("payload")
+        
+//         const response = await api.post(endpoint, payload);
+
 
   
-  const [selectedTrade, setSelectedTrade] = useState('');
-  const [selectedTradeId, setSelectedTradeId] = useState(null);
-  const [serviceCategories, setServiceCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+//         if (response.status === 201) {
+//           onNewMessage(message);
+//           setMessage('');
+//           resetTextAreaHeight();
+//         }
+//       } catch (error) {
+//         console.error('Error sending message:', error);
+  
+//         if (error.response) {
+//           // Check if the error response has a specific message
+//           const errorMessage = error.response.data.error || 'An unexpected error occurred';
+//           alert(errorMessage); // Display error message to the user
+//         } else {
+//           alert('Network error. Please try again later.');
+//         }
+  
+//         if (error.response && error.response.status === 401) {
+//           console.error('Unauthorized. Redirecting to login.');
+//           window.location.href = '/login';
+//         }
+//       } finally {
+//         setLoading(false); // Hide loader
+//       }
+//     }
+//   };
   
 
-  const [reviewData, setReviewData] = useState({
-    service_category_id: '',
-    artisan: artisan_unique_id.trim(),
-    customer_id: "4711b4e5-8f18-4639-a9b5-496b2cdb8a2c",
-    reliability_rating: null,
-    workmanship_rating: null,
-    tidiness_rating: null,
-    courtesy_rating: null,
-    overall_rating: null,
-    review_title: '',
-    comment: '',
-    service_required: '',
-    date_of_experience: '',
-    value_of_work: null,
-    contact_name: '',
-    contact_email: '',
-    mobile_number: '',
-  });
+//   const handleInputChange = (e) => {
+//     setMessage(e.target.value);
+//     adjustTextAreaHeight();
+//   };
 
+//   const handleKeyDown = (e) => {
+//     if (e.key === 'Enter' && !e.shiftKey) {
+//       e.preventDefault();
+//       handleSendMessage();
+//     }
+//   };
 
-  
+//   const handleImageUpload = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       setImage(URL.createObjectURL(file));
+//     }
+//   };
 
-  useEffect(() => {
-    const fetchArtisanProfiles = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
-        const data = await response.json();
-        setArtisanProfiles(data);
-      } catch (error) {
-        setError('Error fetching artisan profiles. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+//   const handleRemoveImage = () => {
+//     setImage(null);
+//   };
 
-    fetchArtisanProfiles();
-  }, [djangoHostname]);
+//   const handleClickOutside = (e) => {
+//     if (
+//       emojiPickerRef.current &&
+//       !emojiPickerRef.current.contains(e.target) &&
+//       chatInputRef.current &&
+//       !chatInputRef.current.contains(e.target)
+//     ) {
+//       setShowEmojiPicker(false);
+//     }
+//   };
 
-  // Handle input change for review fields
-  const handleInputChangeReview = (field, value) => {
-    setReviewData((prev) => ({ ...prev, [field]: value }));
-  };
+//   useEffect(() => {
+//     document.addEventListener('mousedown', handleClickOutside);
 
+//     return () => {
+//       document.removeEventListener('mousedown', handleClickOutside);
+//     };
+//   }, []);
 
-  const handleRatingChange = (field, value) => {
-    if (!isCheckedReliability && !isCheckedWorkmanship && !isCheckedTidiness && !isCheckedCourtesy) {
-      setReviewData((prev) => ({
-        ...prev,
-        [`${field}_rating`]: value,  // Dynamically update the rating field
-      }));
-    }
-  };
-  
+//   return (
+//     <div className="chat-input-container" ref={chatInputRef}>
+//       <div className="chat-input-wrapper">
+//         <textarea
+//           className="chat-input"
+//           ref={textAreaRef}
+//           value={message}
+//           onChange={handleInputChange}
+//           onKeyDown={handleKeyDown}
+//           placeholder="Type your message..."
+//           rows="1"
+//         />
+//         {showEmojiPicker && (
+//           <div className="emoji-picker" ref={emojiPickerRef}>
+//             <button onClick={() => setMessage(message + '😊')}>😊</button>
+//             <button onClick={() => setMessage(message + '😂')}>😂</button>
+//             <button onClick={() => setMessage(message + '❤️')}>❤️</button>
+//             <button onClick={() => setMessage(message + '😎')}>😎</button>
+//             <button onClick={() => setMessage(message + '🥺')}>🥺</button>
+//             <button onClick={() => setMessage(message + '✨')}>✨</button>
+//             <button onClick={() => setMessage(message + '🔥')}>🔥</button>
+//             <button onClick={() => setMessage(message + '💯')}>💯</button>
+//             <button onClick={() => setMessage(message + '🙏')}>🙏</button>
+//             <button onClick={() => setMessage(message + '👍')}>👍</button>
+//             <button onClick={() => setMessage(message + '👀')}>👀</button>
+//             <button onClick={() => setMessage(message + '💀')}>💀</button>
+//             <button onClick={() => setMessage(message + '🤔')}>🤔</button>
+//             <button onClick={() => setMessage(message + '🎉')}>🎉</button>
+//             <button onClick={() => setMessage(message + '💥')}>💥</button>
+//             <button onClick={() => setMessage(message + '🥳')}>🥳</button>
+//             <button onClick={() => setMessage(message + '🤗')}>🤗</button>
+//             <button onClick={() => setMessage(message + '💔')}>💔</button>
+//             <button onClick={() => setMessage(message + '👑')}>👑</button>
+//             <button onClick={() => setMessage(message + '🎶')}>🎶</button>
+//             <button onClick={() => setMessage(message + '🍕')}>🍕</button>
+//             <button onClick={() => setMessage(message + '🍔')}>🍔</button>
+//             <button onClick={() => setMessage(message + '🍻')}>🍻</button>
+//             <button onClick={() => setMessage(message + '🌍')}>🌍</button>
+//             <button onClick={() => setMessage(message + '📱')}>📱</button>
+//             <button onClick={() => setMessage(message + '🏆')}>🏆</button>
+//             <button onClick={() => setMessage(message + '🥇')}>🥇</button>
+//             <button onClick={() => setMessage(message + '🏀')}>🏀</button>
+//             <button onClick={() => setMessage(message + '💃')}>💃</button>
+//             <button onClick={() => setMessage(message + '🕺')}>🕺</button>
+//             <button onClick={() => setMessage(message + '👨‍💻')}>👨‍💻</button>
+//             <button onClick={() => setMessage(message + '👩‍💻')}>👩‍💻</button>
+//           </div>
+//         )}
+        
+//         {image && (
+//           <div className="image-preview-container">
+//             <img src={image} alt="uploaded" className="image-preview" />
+//             <span onClick={handleRemoveImage} className="close-image-btn">
+//               <CloseIcon />
+//             </span>
+//           </div>
+//         )}
+//         <div className="chat-buttons">
+//           <IconButton onClick={handleSendMessage} disabled={loading}>
+//             {loading ? <CircularProgress size={30} /> : <SendIcon />}
+//           </IconButton>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-  const handleRatingWorkmanshipChange = (value) => {
-    setActiveWorkmanshipButton(value);
-    handleRatingChange('workmanship', value);
-  };
-
-  const handleRatingTidinessChange = (value) => {
-    setActiveTidinessButton(value);
-    handleRatingChange('tidiness', value);
-  };
-
-  const handleRatingCourtesyChange = (value) => {
-    setActiveCourtesyButton(value);
-    handleRatingChange('courtesy', value);
-  };
-
-  
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-  
-    const error = validateReviewData();
-    if (error) {
-      console.log(error);
-      alert(error);
-      return;
-    }
-  
-    // Ensure that if a rating is set to null due to 'Not applicable' checkbox, it's handled properly
-    const reviewPayload = {
-      service_category: reviewData.service_category_id,
-      artisan: reviewData.artisan,
-      reviewer_name: reviewData.customer_id,
-      // customer_id: reviewData.customer_id,
-      rating: reviewData.reliability_rating || null,
-      reliability_rating: reviewData.reliability_rating || null,
-      workmanship_rating: reviewData.workmanship_rating || null,
-      tidiness_rating: reviewData.tidiness_rating || null,
-      date_of_experience: reviewData.date_of_experience || null,
-      courtesy_rating: reviewData.courtesy_rating || null,
-      review_title: reviewData.review_title,
-      review_text: reviewData.comment,
-      value_of_work: reviewData.value_of_work,
-      contact_name: reviewData.contact_name,
-      contact_email: reviewData.contact_email,
-      mobile_number: reviewData.mobile_number,
-    };
-  
-    // Make the POST request
-    const url = `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`;
-    //const url = `${djangoHostname}/api/tradeReviews/auth/api/trade-reviews/`;
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reviewPayload),
-      });
-  
-      if (response.ok) {
-        alert('Review submitted successfully!');
-        navigate('/thank-you');
-      } else {
-        const errorData = await response.json();
-        console.error('Error:', errorData);
-        alert('Failed to submit the review. Please try again.');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      alert('An error occurred while submitting the review.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-  
-  const validateReviewData = () => {
-    if (!reviewData.service_category_id) return "Please select a trade.";
-    if (!reviewData.reliability_rating) return "Please rate reliability.";
-    if (!reviewData.workmanship_rating) return "Please rate workmanship.";
-    if (!reviewData.tidiness_rating) return "Please rate tidiness.";
-    if (!reviewData.courtesy_rating) return "Please rate courtesy.";
-    if (!reviewData.review_title) return "Please provide a review title.";
-    if (!reviewData.comment) return "Please provide your review.";
-    if (!reviewData.contact_name) return "Please provide your contact name.";
-    if (!reviewData.contact_email) return "Please provide your contact email.";
-    if (!reviewData.mobile_number) return "Please provide your mobile number.";
-
-    console.log("reviewData")
-    console.log(reviewData)
-    console.log("reviewData")
-    return null;
-  };
-  
-
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
-    if (e.target.value) {
-      debounceFetchArtisans(e.target.value);
-    } else {
-      setArtisanProfiles([]);
-    }
-  };
-
- 
-  const debounceFetchArtisans = debounce(async (query) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?search=${query}`);
-      const data = await response.json();
-      setArtisanProfiles(data);
-    } catch (error) {
-      setError('Error fetching artisan profiles.');
-    } finally {
-      setLoading(false);
-    }
-  }, 500);
-
-  const handleArtisanSelect = (artisan) => {
-    setSelectedArtisan(artisan);
-    setQuery(artisan.user.first_name + ' ' + artisan.user.last_name);
-  };
-
-
-  const handleSuggestionClick = (service) => {
-    setSelectedTrade(service.name);
-    setSelectedTradeId(service.unique_id);
-    setReviewData((prev) => ({ ...prev, service_category_id: service.unique_id }));
-    setSuggestions([]);
-};
-
-
-  const handleCheckboxChangeReliability = () => {
-    setIsCheckedReliability(!isCheckedReliability);
-    if (!isCheckedReliability) {
-      setActiveReliabilityButton(null);  // Reset rating
-      setReviewData((prev) => ({
-        ...prev,
-        reliability_rating: null,  // Set rating to null
-      }));
-    }
-  };
-  
-
-  const handleCheckboxChangeWorkmanship = () => {
-    setIsCheckedWorkmanship(!isCheckedWorkmanship);
-    if (!isCheckedWorkmanship) {
-      setActiveWorkmanshipButton(null);  // Reset rating
-      setReviewData((prev) => ({
-        ...prev,
-        workmanship_rating: null,  // Reset the rating value
-      }));
-    }
-  };
-  
-  const handleCheckboxChangeTidiness = () => {
-    setIsCheckedTidiness(!isCheckedTidiness);
-    if (!isCheckedTidiness) {
-      setActiveTidinessButton(null);
-      setReviewData((prev) => ({
-        ...prev,
-        tidiness_rating: null,  // Reset the rating value
-      }));
-    }
-  };
-  
-  const handleCheckboxChangeCourtesy = () => {
-    setIsCheckedCourtesy(!isCheckedCourtesy);
-    if (!isCheckedCourtesy) {
-      setActiveCourtesyButton(null);
-      setReviewData((prev) => ({
-        ...prev,
-        courtesy_rating: null,  // Reset the rating value
-      }));
-    }
-  };
-  
-
-  const handleReliabilityChange = (value) => {
-    setReliabilityYesNo(value);
-    setReviewData((prevData) => ({
-      ...prevData,
-      reliability_answer: value,  // add this to review data
-    }));
-  };
-  
-
-  return (
-    <div className="Gradnded-page">
-      <div className="navigating-ttarvs">
-        <div className="site-container">
-          <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/leave-review"> Leave a Review</Link> </p>
-        </div>
-      </div>
-      <div className="site-container">
-        <div className="Gradnded-main">
-          <div className="Gradnded-Box">
-            <div className="Gradnded-Box-header">
-              <h2 className="big-text">Leave a Review</h2>
-            </div>
-            <div className="Gradnded-Box-Body">
-              <div className="Gland-Quest">
-                                
-                <div className="Gland-Quest-data">
-                <label htmlFor="artisanSelect">Which artisan would you like to review?</label>
-                <input
-                  type="text"
-                  placeholder="Start typing the name of the artisan..."
-                  value={query}
-                  onChange={handleInputChange}
-                  disabled={loading}
-                />
-
-                {loading && <div className="loading-spinner">Loading...</div>}
-                      {!loading && artisanProfiles.length > 0 && (
-                        <ul className="suggestions-list">
-                          {artisanProfiles.map((artisan) => (
-                            <li key={artisan.id} onClick={() => handleArtisanSelect(artisan)}>
-                              {artisan.user.first_name} {artisan.user.last_name}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    {error && <div className="error-message">{error}</div>}
-                  </div>
-
-                  {selectedArtisan && (
-                <div className="artisan-details">
-                  <h3>Selected Artisan: {selectedArtisan.user.first_name} {selectedArtisan.user.last_name}</h3>
-                  <p>{selectedArtisan.service_details.simpleDescription}</p>
-                  <p>{selectedArtisan.location}</p>
-                </div>
-              )}
-
-                {selectedArtisan  && (
-                  <div className="glahs-sec">
-                    <div className="Gland-Quest-data">
-                      <label htmlFor="serviceSelect">Was any work carried out?</label>
-                      <div className="Opticas">
-                        <button
-                          className={reliabilityYesNo === 'yes' ? 'active-dect-btn' : ''}
-                          onClick={() => handleReliabilityChange('yes')}
-                        >
-                          Yes
-                        </button>
-                        <button
-                          className={reliabilityYesNo === 'no' ? 'active-dect-btn' : ''}
-                          onClick={() => handleReliabilityChange('no')}
-                        >
-                          No
-                        </button>
-
-
-                      </div>
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                      <label htmlFor="serviceSelect">How would you rate the experience?</label>
-                      <div className="omac-p">
-                        <h6>(1 = Terrible, 10 = Excellent)</h6>
-                        <h4>Reliability & timekeeping</h4>
-                        <div className="omac-p-btns">
-                          {Array.from({ length: 10 }, (_, i) => (
-                            <button
-                              key={i + 1}
-                              className={activeReliabilityButton === i + 1 && !isCheckedReliability ? 'active-dect-btn' : ''}
-                              onClick={() => {
-                                if (!isCheckedReliability) {
-                                  setActiveReliabilityButton(i + 1);
-                                  handleRatingChange('reliability', i + 1);  // Update reviewData
-                                }
-                              }}
-                            >
-                              {i + 1}
-                            </button>
-
-
-                          ))}
-                        </div>
-                        <div className="not-applicable-section">
-                          <label className="styled-checkbox-label">
-                            <input
-                              type="checkbox"
-                              className="styled-checkbox"
-                              checked={isCheckedReliability}
-                              onChange={handleCheckboxChangeReliability}
-                            />
-                            <h5>Not applicable</h5>
-                          </label>
-                        </div>
-                      </div>
-                      <div className="omac-p">
-                        <h4>Quality of workmanship</h4>
-                        <div className="omac-p-btns">
-                          {Array.from({ length: 10 }, (_, i) => (
-                            <button
-                              key={i + 1}
-                              className={activeWorkmanshipButton === i + 1 && !isCheckedWorkmanship ? 'active-dect-btn' : ''}
-                              onClick={() => handleRatingWorkmanshipChange(i + 1)} // Set the rating
-                            >
-                              {i + 1}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="omac-p">
-                        <h4>Tidiness</h4>
-                        <div className="omac-p-btns">
-                          {Array.from({ length: 10 }, (_, i) => (
-                            <button
-                              key={i + 1}
-                              className={activeTidinessButton === i + 1 && !isCheckedTidiness ? 'active-dect-btn' : ''}
-                              onClick={() => handleRatingTidinessChange(i + 1)} // Set the rating
-                            >
-                              {i + 1}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="omac-p">
-                        <h4>Courtesy</h4>
-                        <div className="omac-p-btns">
-                          {Array.from({ length: 10 }, (_, i) => (
-                            <button
-                              key={i + 1}
-                              className={activeCourtesyButton === i + 1 && !isCheckedCourtesy ? 'active-dect-btn' : ''}
-                              onClick={() => handleRatingCourtesyChange(i + 1)} // Set the rating
-                            >
-                              {i + 1}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                        <label>Your brief description</label>
-                        <h6>(This will be used as your review title)</h6>
-                        <input
-                          type="text"
-                          placeholder="E.g. Bathroom fitting..."
-                          value={reviewData.review_title} // Bind state
-                          onChange={(e) => handleInputChangeReview('review_title', e.target.value)} // Update state
-                        />
-
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                        <label>Your review</label>
-                      <textarea
-                        type="text"
-                        placeholder="In your words, tell us about your experience.."
-                        value={reviewData.comment} // Bind the state here
-                        onChange={(e) => handleInputChangeReview('comment', e.target.value)} // Update the state on change
-                    ></textarea>
-
-                    </div>
-
-
-
-                    <div className="Gland-Quest-data">
-                        <label>What services did you require?</label>
-                        <input
-                            type="text"
-                            placeholder="E.g. Bathroom fitting..."
-                            value={reviewData.service_required} // Bind state
-                            onChange={(e) => handleInputChangeReview('service_required', e.target.value)} // Update state
-                            
-
-                        />
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                        <label>Date of experience</label>
-                        <input
-                            type="date"
-                            placeholder="E.g. Bathroom fitting..."
-                            value={reviewData.date_of_experience} // Bind state
-                            onChange={(e) => handleInputChangeReview('date_of_experience', e.target.value)} // Update state
-                        />
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                        <label>What was the value of work completed? (Optional)</label>
-                        <h6>In naira (₦)</h6>
-                        <input
-                            type="number"
-                            placeholder="Enter the value in naira (₦)"
-                            value={reviewData.value_of_work} // Bind state
-                            onChange={(e) => handleInputChangeReview('value_of_work', e.target.value)} // Update state
-                        />
-                    </div>
-
-
-                    <div className="Gland-Quest-data">
-                        <label>Your contact details</label>
-                        <input
-                            type="text"
-                            placeholder="Full name"
-                            value={reviewData.contact_name} // Bind state
-                            onChange={(e) => handleInputChangeReview('contact_name', e.target.value)} // Update state
-                        />
-                         <input
-                            type="text"
-                            placeholder="Email address"
-                            value={reviewData.contact_email} // Bind state
-                            onChange={(e) => handleInputChangeReview('contact_email', e.target.value)} // Update state
-                        />
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                        <label>Your mobile number</label>
-                        <h6>We'll send you an SMS to very your review.</h6>
-                        <input
-                            type="number"
-                            placeholder="Mobile phone number"
-                            value={reviewData.mobile_number} // Bind state
-                            onChange={(e) => handleInputChangeReview('mobile_number', e.target.value)} // Update state
-                        />
-                        
-                    </div>
-
-
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="Gland-Cnt-Btn">
-              <button type="button" className="back-btn" onClick={() => navigate(-1)}>
-                Back
-              </button>
-              <button
-                  type="submit"  className="post-job-btn" onClick={handleSubmit}  disabled={isSubmitting} >
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default LeaveReview;
+// export default ChatInput;

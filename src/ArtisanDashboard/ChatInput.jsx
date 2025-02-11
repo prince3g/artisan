@@ -2,21 +2,27 @@ import React, { useState, useRef, useEffect } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-import { IconButton } from '@mui/material';
+import { IconButton, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import api from '../axios_instance/'; // Path to your Axios instance
+import { toast } from 'react-toastify'; // For push notifications
 
-const ChatInput = ({ onNewMessage }) => {
+const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-  
+  const textAreaRef = useRef(null);
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // Typing indicator state
 
-  // Refs for detecting clicks outside
-  const textAreaRef = useRef(null);
   const emojiPickerRef = useRef(null);
   const chatInputRef = useRef(null);
 
+  const message_sender = sessionStorage.getItem('unique_user_id');
+
+  // Adjust textarea height dynamically
   const adjustTextAreaHeight = () => {
     const textarea = textAreaRef.current;
     textarea.style.height = 'auto';
@@ -25,33 +31,99 @@ const ChatInput = ({ onNewMessage }) => {
 
   const resetTextAreaHeight = () => {
     const textarea = textAreaRef.current;
-    textarea.style.height = 'auto'; // Reset to the initial height
+    textarea.style.height = 'auto';
   };
 
+  const handleSendMessage = async () => {
+    if (message.trim()) {
+        setLoading(true);
+        const endpoint = `/api/messaging/auth/messages/send_message/`;
+
+        let token = localStorage.getItem('access_token');
+        //console.log("🔹 Sending token:", token);  // Log token before sending
+
+        if (!token) {
+            toast.error("You are not authenticated. Please log in again.");
+            setLoading(false);
+            return;
+        }
+
+        const headers = {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        };
+
+        //console.log("🔹 Headers:", headers);
+
+        try {
+            const response = await api.post(endpoint, {
+                receiver: receiverId,
+                sender: senderId,
+                content: message,
+            }, { headers });
+
+            //console.log("🔹 Response status:", response.status);
+            
+            if (response.status === 201) {
+                onNewMessage(response.data);
+                setMessage('');
+                toast.success('Message sent!');
+
+                window.location.reload()
+            }
+        } catch (error) {
+            console.error("🔻 Error sending message:", error);
+            if (error.response?.status === 401) {
+                toast.error("Unauthorized! Your session may have expired.");
+            } else {
+                toast.error(error.response?.data?.error || 'An unexpected error occurred');
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+};
+
+
+
+  // Handle typing indicator
   const handleInputChange = (e) => {
     setMessage(e.target.value);
     adjustTextAreaHeight();
-  };
 
-  const handleSendMessage = () => {
-    if (message.trim() || image) {
-      // Pass message and image back to the parent component
-      onNewMessage(message, image);
-      setMessage('');
-      setImage(null);
-      resetTextAreaHeight(); // Reset the textarea height
-      setShowEmojiPicker(false); // Hide emoji picker
+    if (!isTyping) {
+      setIsTyping(true);
+      api.post(`/api/messaging/auth/messages/typing_indicator/`, {
+        receiver_id: receiverId,
+        is_typing: true,
+      });
     }
   };
 
+  // Reset typing indicator after 2 seconds of inactivity
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isTyping) {
+        setIsTyping(false);
+        api.post(`/api/messaging/auth/messages/typing_indicator/`, {
+          receiver_id: receiverId,
+          is_typing: false,
+        });
+      }
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [isTyping, receiverId]);
+
+  // Handle keydown events (e.g., pressing Enter to send)
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // Prevent default Enter behavior
-      handleSendMessage(); // Send the message
-      setShowEmojiPicker(false); // Hide emoji picker
+      e.preventDefault();
+      handleSendMessage();
     }
   };
 
+  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -59,11 +131,12 @@ const ChatInput = ({ onNewMessage }) => {
     }
   };
 
+  // Remove uploaded image
   const handleRemoveImage = () => {
-    setImage(null); // Reset the image state, hiding the container
+    setImage(null);
   };
 
-  // Hide emoji picker when clicking outside
+  // Close emoji picker when clicking outside
   const handleClickOutside = (e) => {
     if (
       emojiPickerRef.current &&
@@ -76,14 +149,12 @@ const ChatInput = ({ onNewMessage }) => {
   };
 
   useEffect(() => {
-    // Add event listener for click outside
     document.addEventListener('mousedown', handleClickOutside);
-
-    // Cleanup the event listener
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
 
   return (
     <div className="chat-input-container" ref={chatInputRef}>
@@ -93,7 +164,7 @@ const ChatInput = ({ onNewMessage }) => {
           ref={textAreaRef}
           value={message}
           onChange={handleInputChange}
-          onKeyDown={handleKeyDown} // Handle Enter and Shift+Enter
+          onKeyDown={handleKeyDown}
           placeholder="Type your message..."
           rows="1"
         />
@@ -133,8 +204,7 @@ const ChatInput = ({ onNewMessage }) => {
             <button onClick={() => setMessage(message + '👩‍💻')}>👩‍💻</button>
           </div>
         )}
-
-        {/* Conditionally render image preview */}
+        
         {image && (
           <div className="image-preview-container">
             <img src={image} alt="uploaded" className="image-preview" />
@@ -143,25 +213,9 @@ const ChatInput = ({ onNewMessage }) => {
             </span>
           </div>
         )}
-
         <div className="chat-buttons">
-          <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-            <EmojiEmotionsIcon />
-          </IconButton>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            id="image-upload"
-            style={{ display: 'none' }}
-          />
-          <label htmlFor="image-upload">
-            <IconButton component="span">
-              <InsertPhotoIcon />
-            </IconButton>
-          </label>
-          <IconButton onClick={handleSendMessage}>
-            <SendIcon />
+          <IconButton onClick={handleSendMessage} disabled={loading}>
+            {loading ? <CircularProgress size={30} /> : <SendIcon />}
           </IconButton>
         </div>
       </div>

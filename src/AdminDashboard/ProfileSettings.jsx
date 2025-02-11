@@ -15,14 +15,18 @@ const ProfileSettings = () => {
   const [isLoading, setIsLoading] = useState(false); // Loader state
 
   // Load data from localStorage when the component mounts
+
+
+
+
   useEffect(() => {
     const storedData = {
-      email: localStorage.getItem("email") || "",
-      firstName: localStorage.getItem("user_first_name") || "",
-      lastName: localStorage.getItem("user_last_name") || "",
-      phoneNumber: localStorage.getItem("user_phone") || "",
-      address: localStorage.getItem("Address") || "",
-      userId: localStorage.getItem("user_id") || "",
+      email: sessionStorage.getItem("email") || "",
+      firstName: sessionStorage.getItem("user_first_name") || "",
+      lastName: sessionStorage.getItem("user_last_name") || "",
+      phoneNumber: sessionStorage.getItem("user_phone") || "",
+      address: sessionStorage.getItem("Address") || "",
+      userId: sessionStorage.getItem("user_id") || "",
     };
     setFormData(storedData);
     setUserId(storedData.userId);
@@ -76,10 +80,13 @@ const ProfileSettings = () => {
       window.location.reload();
 
       // Update localStorage with the latest data
-      localStorage.setItem("user_first_name", formData.firstName);
-      localStorage.setItem("user_last_name", formData.lastName);
-      localStorage.setItem("user_phone", formData.phoneNumber);
-      localStorage.setItem("Address", formData.address);
+
+
+      sessionStorage.setItem("user_first_name", formData.firstName);
+      sessionStorage.setItem("user_last_name", formData.lastName);
+      sessionStorage.setItem("user_phone", formData.phoneNumber);
+      sessionStorage.setItem("Address", formData.address);
+
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile. Please try again.");

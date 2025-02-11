@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Css/ArtisanProfile.css';
 import UserImg from './Img/user-img.jpg';
@@ -13,12 +13,11 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { toast } from 'react-toastify'; // For push notifications
 
 import ChatInput from './ChatInput';
 import ChatBanner from './Img/nochat-banner.svg';
-import Comments from './Comments';
-
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const ArtisanChattingPage = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -40,34 +39,37 @@ const ArtisanChattingPage = () => {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const [hasSentFirstMessage, setHasSentFirstMessage] = useState(false);
   const [welcomeMessageTime, setWelcomeMessageTime] = useState('');
-  const [activeSection, setActiveSection] = useState("chat");
+  const [activeSection, setActiveSection] = useState('chat');
   const [isToggled, setIsToggled] = useState(false);
-  const [rating, setRating] = useState("");
-  const [review, setReview] = useState("");
+  const [rating, setRating] = useState('');
+  const [review, setReview] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
+  
 
-  const senderID = localStorage.getItem('unique_user_id');
+  const senderID = sessionStorage.getItem('unique_user_id');
 
+  const lastMessageRef = useRef(null);
+    // Create a ref for the chat container
+  const chatContainerRef = useRef(null);
+
+  // Fetch messages from the backend
   const fetchMessages = async () => {
     try {
-      const authToken = 'your-auth-token-here'; // Replace with your actual token
-      const response = await fetch(`${djangoHostname}/api/messaging/auth/api/messages/conversation/?sender=${senderID}&receiver=${artisanUniqueID}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`, // Include the auth token in the header
-        },
-        credentials: 'include',
-      });
-  
+      const response = await fetch(
+        `${djangoHostname}/api/messaging/auth/messages/conversation/?sender=${senderID}&receiver=${artisanUniqueID}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          credentials: 'include',
+        }
+      );
+
       if (response.ok) {
         const data = await response.json();
-
-        console.log("data")
-        console.log(data)
-        console.log("data")
-      
         setMessages(data);
       } else {
         console.error('Failed to fetch messages');
@@ -76,61 +78,85 @@ const ArtisanChattingPage = () => {
       console.error('Error fetching messages:', error);
     }
   };
-  
+
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [artisanUniqueID, senderID]);
 
-  const handleReviewSubmit = async () => {
-    if (!rating || !review.trim()) {
-      setMessage("Please provide a rating and a review.");
-      return;
+  
+  const handleNewMessage = (newMessage) => {
+    const currentTime = new Date();
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        ...newMessage,
+        isSent: true,
+        isDelivered: false,
+        timestamp: "just now", // Set initial timestamp to "just now"
+        created_at: currentTime.toISOString(), // Save the actual timestamp
+      },
+    ]);
+  
+    // Show typing indicator and welcome message
+    if (!hasSentFirstMessage) {
+      setHasSentFirstMessage(true);
+      setShowTyping(true);
+      setWelcomeMessageTime(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      setTimeout(() => {
+        setShowTyping(false);
+        setShowWelcomeMessage(true);
+      }, 3000);
     }
+  };
+  
 
-    setLoading(true);
-    setMessage("");
-
+  const markMessagesAsRead = async () => {
+    const unreadMessages = messages.filter(msg => !msg.is_read && msg.receiver === senderID);
+    const messageIds = unreadMessages.map(msg => msg.id);
+  
+    if (messageIds.length === 0) return;
+  
     try {
-      const sanitizedId = artisanUniqueID.trim();
-      const response = await fetch(`${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`, {
-        method: "POST",
+      const response = await fetch(`${djangoHostname}/api/messaging/auth/messages/mark_as_read/`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
-          artisan: sanitizedId,
-          reviewer_name: "5e2fa660-58a2-4b5d-8e59-70f3a1b704e2",
-          artisan_name,
-          rating,
-          review_text: review,
+          message_ids: messageIds,
+          receiver_id: senderID,
         }),
       });
-
-      const data = await response.json();
-
+  
       if (response.ok) {
-        setMessage("Review submitted successfully!");
-        setRating("");
-        setReview("");
+        const data = await response.json();
+        console.log(data.message);
+        // Optionally, update the local state to reflect that messages have been read
+        setMessages(prevMessages => prevMessages.map(msg => 
+          messageIds.includes(msg.id) ? { ...msg, is_read: true } : msg
+        ));
       } else {
-        setMessage(`Error: ${data.message || "Failed to submit review."}`);
+        console.error('Failed to mark messages as read');
       }
     } catch (error) {
-      setMessage("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
+      console.error('Error marking messages as read:', error);
     }
   };
+  
+  useEffect(() => {
+    if (messages.length > 0) {
+      markMessagesAsRead();
+    }
+  }, [messages]);
 
-  const handleToggleView = () => {
-    setIsExpanded(!isExpanded);
-  };
+  useEffect(() => {
+    if (messages.length > 0) {
+      markMessagesAsRead();
+    }
+  }, [messages]);
 
-  const handleNewMessage = (message, image) => {
-    const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setMessages([...messages, { message, image, timestamp, isSent: true, isDelivered: false }]);
-  };
-
+  // Handle new chat
   const handleNewChat = () => {
     setMessages([]);
     setShowTyping(false);
@@ -138,38 +164,19 @@ const ArtisanChattingPage = () => {
     setHasSentFirstMessage(false);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMessages((prevMessages) =>
-        prevMessages.map((msg) =>
-          msg.isSent && !msg.isDelivered ? { ...msg, isDelivered: true } : msg
-        )
-      );
-
-      if (!hasSentFirstMessage && messages.length > 0 && messages[0].isDelivered) {
-        setHasSentFirstMessage(true);
-        setShowTyping(true);
-        setWelcomeMessageTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-        setTimeout(() => {
-          setShowTyping(false);
-          setShowWelcomeMessage(true);
-        }, 3000);
-      }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [messages, hasSentFirstMessage]);
-
+  // Handle section click (chat, call, etc.)
   const handleSectionClick = (section) => {
     setActiveSection(section);
     setIsToggled(true);
   };
 
+  // Handle close click
   const handleCloseClick = () => {
     setActiveSection(null);
     setIsToggled(false);
   };
 
+  // Fetch artisan details
   useEffect(() => {
     const sanitizedId = artisanUniqueID?.trim();
     const fetchArtisanDetail = async () => {
@@ -200,24 +207,69 @@ const ArtisanChattingPage = () => {
     fetchArtisanDetail();
   }, [artisanUniqueID, djangoHostname]);
 
+  const handleToggleView = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const formatTimestamp = (createdAt) => {
+    const now = new Date();
+    const messageDate = new Date(createdAt);
+  
+    if (createdAt === "just now") {
+      return "just now"; // If it's just now, return that
+    }
+  
+    const timeDifference = now - messageDate; // Time difference in milliseconds
+    const isMoreThan24Hours = timeDifference > 24 * 60 * 60 * 1000;
+  
+    // Format the timestamp
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    };
+  
+    if (isMoreThan24Hours) {
+      return messageDate.toLocaleString('default', options);
+    } else {
+      return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+  };
+  
+  useEffect(() => {
+    // Scroll to the bottom whenever messages are updated
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]); // Dependency on messages to scroll when they change
+  
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]); // Scroll when messages change
+  
+
+  
 
   return (
-    <div className={`artii-profile-page ${isToggled ? "toggle-mobile-messi" : ""}`}>
+    <div className={`artii-profile-page ${isToggled ? 'toggle-mobile-messi' : ''}`}>
       <div className="navigating-ttarvs">
         <div className="large-container">
-        <p>
-          <Link to="/">
-            Simservicehub
-          </Link>
-          <ChevronRightIcon /> {service_details}
-          <ChevronRightIcon /> {artisanData.service_details?.name && artisanData.service_details?.name? `${artisanData.service_details.name}`: "Artisan Name"}
-          <ChevronRightIcon /> {artisan_name}
-
+          <p>
+            <Link to="/">Simservicehub</Link>
+            <ChevronRightIcon /> {service_details}
+            <ChevronRightIcon /> {artisanData.service_details?.name && artisanData.service_details?.name
+              ? `${artisanData.service_details.name}`
+              : 'Artisan Name'}
+            <ChevronRightIcon /> {artisan_name}
             <ChevronRightIcon /> <Link to="/artisan-profile">Artisan Profile</Link>
             <ChevronRightIcon /> <Link to="/chat-with-artisan">Chat with {artisanData.user?.first_name && artisanData.user?.last_name
-                          ? `${artisanData.user.first_name} ${artisanData.user.last_name}`: "Artisan Name"}</Link>
-        </p>
-
+              ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
+              : 'Artisan Name'}</Link>
+          </p>
         </div>
       </div>
 
@@ -227,24 +279,17 @@ const ArtisanChattingPage = () => {
             <div className="Prof-Left">
               <div className="Prof-Left-main">
                 <div className="prof-top">
-        
-
                   <div className="ggaa-navsi">
-                  <button onClick={() => handleSectionClick("chat")}>
-                    <ChatIcon /> <span className="toolTipsa">Chat</span>
-                  </button>
-                  <button onClick={() => handleSectionClick("call")}>
-                    <CallIcon /> <span className="toolTipsa">Call</span>
-                  </button>
-
-                  <button>
+                    <button onClick={() => handleSectionClick('chat')}>
+                      <ChatIcon /> <span className="toolTipsa">Chat</span>
+                    </button>
+                    <button onClick={() => handleSectionClick('call')}>
+                      <CallIcon /> <span className="toolTipsa">Call</span>
+                    </button>
+                    <button>
                       <Favorite /> <span className="toolTipsa">Favourite</span>
                     </button>
-
-                  
-
-                </div>
-
+                  </div>
 
                   <div className="Uuua-sec">
                     <div className="Uuua-1">
@@ -267,17 +312,23 @@ const ArtisanChattingPage = () => {
                     </div>
                   </div>
                   <div className="aius">
-                    <h6>{artisanData.user?.first_name && artisanData.user?.last_name? `${artisanData.user.first_name} ${artisanData.user.last_name}`: " "} &nbsp; Profile</h6>
+                    <h6>{artisanData.user?.first_name && artisanData.user?.last_name
+                      ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
+                      : ' '}{' '}
+                      &nbsp; Profile</h6>
                     <p>
                       <span>
-                        <Handyman /> {artisanData.service_details?.name && artisanData.service_details?.name?`${artisanData.service_details.name}`: "Artisan Skills"} 
+                        <Handyman /> {artisanData.service_details?.name && artisanData.service_details?.name
+                          ? `${artisanData.service_details.name}`
+                          : 'Artisan Skills'}
                       </span>
                       <span>
-                        <MyLocation /> {artisanData.location? `${artisanData.location}`: "Address"}
+                        <MyLocation /> {artisanData.location ? `${artisanData.location}` : 'Address'}
                       </span>
                     </p>
                     <h4>
-                      <DateRangeIcon /> Member Since {artisanData?.user?.date_joined? new Date(artisanData.user.date_joined).toLocaleString('default', { year: 'numeric', month: 'long' })
+                      <DateRangeIcon /> Member Since {artisanData?.user?.date_joined
+                        ? new Date(artisanData.user.date_joined).toLocaleString('default', { year: 'numeric', month: 'long' })
                         : 'Date Unavailable'}
                     </h4>
                   </div>
@@ -287,12 +338,9 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>About</h4>
                     <p className={`about-text ${isExpanded ? 'expanded' : ''}`}>
-                      {/* We create outfits that befit your personality..., think classy,
-                      think Impression stitches. Our mission is to redefine fashion by
-                      creating timeless designs and ensuring quality in every stitch.
-                      Experience unparalleled craftsmanship with our bespoke tailoring
-                      service, where every detail is tailored to perfection. */}
-                      {artisanData.user?.about_artisan && artisanData.user?.about_artisan? `${artisanData.user.about_artisan}`: "Artisan Name"}
+                      {artisanData.user?.about_artisan && artisanData.user?.about_artisan
+                        ? `${artisanData.user.about_artisan}`
+                        : 'Artisan Name'}
                     </p>
                     <span className="viewMoreOrLess" onClick={handleToggleView}>
                       {isExpanded ? 'View less' : 'View more'}
@@ -301,144 +349,104 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>Skills</h4>
                     <ul>
-                    {artisanData.skills ? (
-                      artisanData.skills.map((skill, index) => (
-                        <li key={index}>
-                          <CheckCircleIcon />
-                          {skill.trim()}
-                        </li>
-                      ))
-                    ) : (
-                      <li>No skills available</li>
-                    )}
+                      {artisanData.skills
+                        ? artisanData.skills.map((skill, index) => (
+                            <li key={index}>
+                              <CheckCircleIcon />
+                              {skill.trim()}
+                            </li>
+                          ))
+                        : <li>No skills available</li>}
                     </ul>
                   </div>
-
                 </div>
               </div>
             </div>
 
             <div className="Chattt-sec">
-            <div className="Chattt-Topp">
-              <div className="Chattt-Topp-1">
-                <h3>Chat with {artisanData.user?.first_name && artisanData.user?.last_name ? `${artisanData.user.first_name} ${artisanData.user.last_name}` : " "} &nbsp;</h3>
-              </div>
-              <div className="Chattt-Topp-2">
-                <span>
-                  Online<i className="online"></i>
-                </span>
-                <span>
-                  <div>Chats</div> <b>{messages.length}</b>
-                </span>
-                <button onClick={handleNewChat}>
-                  <ChatIcon /> <div>New chat</div>
-                </button>
-              </div>
-            </div>
-
-            <div className="Chattt-Mid">
-              <div className='Chatting-section'>
-                <div className='Chatting-section-Main'>
-                {messages.length === 0 && (
-            <p className="no-messages">
-              <img src={ChatBanner} alt="No Chat Banner" />
-              <span>No messages yet. Start a conversation!</span>
-            </p>
-          )}
-
-          {messages.slice(1).map((msg, index) => (
-            <div key={index} className="Chatting-Clamp respond-Box">
-              <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
-                <p>{msg.content}</p> {/* Use msg.content here */}
-                {msg.image && (
-                  <img src={msg.image} alt="uploaded" className="Main-image-preview" />
-                )}
-                <div className="Mess-hsja">
-                  <span>{msg.timestamp || 'Just now'}</span>
-                  {msg.isSent && !msg.isDelivered ? (
-                    <span className="message-status single-check">✔</span>
-                  ) : (
-                    <span className="message-status double-check">✔✔</span>
-                  )}
+              <div className="Chattt-Topp">
+                <div className="Chattt-Topp-1">
+                  <h3>Chat with {artisanData.user?.first_name && artisanData.user?.last_name
+                    ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
+                    : ' '}{' '}
+                    &nbsp;</h3>
+                </div>
+                <div className="Chattt-Topp-2">
+                  <span>
+                    Online<i className="online"></i>
+                  </span>
+                  <span>
+                    <div>Chats</div> <b>{messages.length}</b>
+                  </span>
+                  <button onClick={handleNewChat}>
+                    <ChatIcon /> <div>New chat</div>
+                  </button>
                 </div>
               </div>
-            </div>
-          ))}
+
+              <div className="Chattt-Mid" ref={chatContainerRef}>
+                <div className="Chatting-section">
+                  <div className="Chatting-section-Main">
+                    {messages.length === 0 && (
+                      <p className="no-messages">
+                        <img src={ChatBanner} alt="No Chat Banner" />
+                        <span>No messages yet. Start a conversation!</span>
+                      </p>
+                    )}
+                    
+                    {messages.map((msg, index) => (
+                      <div
+                        key={index}
+                        className={`Chatting-Clamp respond-Box ${msg.isSent ? 'sent' : 'received'}`}
+                        ref={index === messages.length - 1 ? lastMessageRef : null} // Attach ref to last message
+                      >
+                        <div className="Mnachatting-box">
+                          <p>{msg.content}</p>
+                          {msg.image && (
+                            <img src={msg.image} alt="uploaded" className="Main-image-preview" />
+                          )}
+                          <div className="Mess-hsja">
+                            <span>{formatTimestamp(msg.created_at)}</span>
+                            {msg.isSent && !msg.isDelivered ? (
+                              <span className="message-status single-check">✔</span>
+                            ) : (
+                              <span className="message-status double-check">✔✔</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
 
 
-        {messages.slice(1).map((msg, index) => (
-          <div key={index} className="Chatting-Clamp respond-Box">
-            <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
-              <p>{msg.content}</p> {/* Corrected to msg.content */}
-              {msg.image && (
-                <img src={msg.image} alt="uploaded" className="Main-image-preview" />
-              )}
-              <div className="Mess-hsja">
-                <span>{msg.timestamp || 'Just now'}</span>
-                {msg.isSent && !msg.isDelivered ? (
-                  <span className="message-status single-check">✔</span>
-                ) : (
-                  <span className="message-status double-check">✔✔</span>
-                )}
+                    {/* {showWelcomeMessage && (
+                      <div className="Chatting-Clamp">
+                        <div className="Mnachatting-box">
+                          <p>Thank you for reaching out! ❤️ I'm here to bring your vision to life. 💡</p>
+                          <div className="Mess-hsja">
+                            <span>{welcomeMessageTime}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )} */}
+
+                    {showTyping && (
+                      <div className="Chatting-Clamp">
+                        <div className="Mnachatting-box typing">
+                          <p>Typing...</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="Chattt-Foot">
+                <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueID} senderId={senderID} />
               </div>
             </div>
           </div>
-        ))}
-
-
-        {showWelcomeMessage && (
-          <div className="Chatting-Clamp">
-            <div className="Mnachatting-box">
-              <p>Thank you for reaching out! ❤️ I'm here to bring your vision to life. 💡</p>
-              <div className="Mess-hsja">
-                <span>{welcomeMessageTime}</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showTyping && (
-          <div className="Chatting-Clamp">
-            <div className="Mnachatting-box typing">
-              <p>Typing...</p>
-            </div>
-          </div>
-        )}
-
-        {messages.slice(1).map((msg, index) => (
-          <div key={index} className="Chatting-Clamp respond-Box">
-            <div className={`Mnachatting-box ${msg.isSent ? 'sent' : 'received'}`}>
-              <p>{msg.message}</p>
-              {msg.image && (
-                <img src={msg.image} alt="uploaded" className="Main-image-preview" />
-              )}
-              <div className="Mess-hsja">
-                <span>{msg.timestamp || 'Just now'}</span>
-                {msg.isSent && !msg.isDelivered ? (
-                  <span className="message-status single-check">✔</span>
-                ) : (
-                  <span className="message-status double-check">✔✔</span>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-    <div className="Chattt-Foot">
-      <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueID}  senderId={senderID}/>
-    </div>
-
-  </div>
-</div>
-
         </div>
       </div>
-    </div>
-
-
-
-
     </div>
   );
 };

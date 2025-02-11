@@ -119,12 +119,12 @@ import MyArtisan from './MyArtisan';
 
 const UserHomePage = () => {
 
-  const user_last_name = localStorage.getItem('user_last_name');
-  const user_id= localStorage.getItem('user_id');
-  const Address= localStorage.getItem('Address');
-  const user_first_name = localStorage.getItem('user_first_name');
-  const user_unique_user_id = localStorage.getItem('unique_user_id');
-  const user_phone = localStorage.getItem('user_phone');
+  const user_last_name = sessionStorage.getItem('user_last_name');
+  const user_id= sessionStorage.getItem('user_id');
+  const Address= sessionStorage.getItem('Address');
+  const user_first_name = sessionStorage.getItem('user_first_name');
+  const user_unique_user_id = sessionStorage.getItem('unique_user_id');
+  const user_phone = sessionStorage.getItem('user_phone');
 
   
   // Create an object with the user data to pass through state

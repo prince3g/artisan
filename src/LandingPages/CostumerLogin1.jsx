@@ -16,8 +16,8 @@ const CostumerLogin1 = () => {
 
     // Load remembered email/phone from localStorage
     useEffect(() => {
-        const savedEmail = localStorage.getItem("email");
-        const savedPhone = localStorage.getItem("phone");
+        const savedEmail = sessionStorage.getItem("email");
+        const savedPhone = sessionStorage.getItem("phone");
         if (savedEmail) setEmail(savedEmail);
         if (savedPhone) setPhone(savedPhone);
     }, []);
@@ -58,9 +58,9 @@ const CostumerLogin1 = () => {
                 // Save the email/phone if "Remember Me" is checked
                 if (rememberMe) {
                     if (inputType === "email") {
-                        localStorage.setItem("email", email);
+                        sessionStorage.setItem("email", email);
                     } else {
-                        localStorage.setItem("phone", phone);
+                        sessionStorage.setItem("phone", phone);
                     }
                 }
             }

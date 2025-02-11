@@ -15,12 +15,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const ArtisanTopNav = () => {
 
-  const last_name = localStorage.getItem('user_last_name');
-  const first_name = localStorage.getItem('user_first_name');
-  const user_id= localStorage.getItem('user_id');
-  const Address= localStorage.getItem('Address');
+  const last_name = sessionStorage.getItem('user_last_name');
+  const first_name = sessionStorage.getItem('user_first_name');
+  const user_id= sessionStorage.getItem('user_id');
+  const Address= sessionStorage.getItem('Address');
   const user_unique_user_id = localStorage.getItem('unique_user_id');
-  const user_phone = localStorage.getItem('user_phone');
+  const user_phone = sessionStorage.getItem('user_phone');
 
 
   const userData = {

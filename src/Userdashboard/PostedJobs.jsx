@@ -10,7 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 
 const PostedJobs = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-  const user_unique_user_id = localStorage.getItem('unique_user_id');
+  const user_unique_user_id = sessionStorage.getItem('unique_user_id');
   
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
@@ -26,9 +26,9 @@ const PostedJobs = () => {
         }
         const data = await response.json();
         setJobs(data);
-        console.log("data")
-        console.log(data)
-        console.log("data")
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
       } catch (error) {
         setError(error.message);
       }

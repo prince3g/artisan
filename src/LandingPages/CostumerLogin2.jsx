@@ -19,17 +19,7 @@ const CostumerLogin2 = () => {
   const [timer, setTimer] = useState(25);
   const [isResendVisible, setResendVisible] = useState(false);
 
-  // Handle input changes
-  // const handleInputChange = (index, event) => {
-  //   const value = event.target.value;
 
-  //   // Allow only numeric input
-  //   if (/^\d*$/.test(value)) {
-  //     const newInputs = [...inputs];
-  //     newInputs[index] = value;
-  //     setInputs(newInputs);
-  //   }
-  // };
 
   const handleInputChange = (index, event) => {
     const value = event.target.value;
@@ -71,17 +61,17 @@ const CostumerLogin2 = () => {
 
       if (response.status === 200) {
         // Save user data to localStorage
-        localStorage.setItem('user_id', response.data.userId);
-        localStorage.setItem('user_email', response.data.email);
-        localStorage.setItem('user_phone', response.data.phone);
-        localStorage.setItem('user_type', response.data.user_type);
-        localStorage.setItem('unique_user_id', response.data.unique_user_id);
-        localStorage.setItem('user_first_name', response.data.first_name);
-        localStorage.setItem('user_last_name', response.data.last_name);
-        localStorage.setItem('Address', response.data.address);
-        localStorage.setItem('access_token', response.data.access);
-        localStorage.setItem('refresh_token', response.data.refresh);
-        localStorage.setItem('date_joined', response.data.date_joined);
+        sessionStorage.setItem('user_id', response.data.userId);
+        sessionStorage.setItem('user_email', response.data.email);
+        sessionStorage.setItem('user_phone', response.data.phone);
+        sessionStorage.setItem('user_type', response.data.user_type);
+        sessionStorage.setItem('unique_user_id', response.data.unique_user_id);
+        sessionStorage.setItem('user_first_name', response.data.first_name);
+        sessionStorage.setItem('user_last_name', response.data.last_name);
+        sessionStorage.setItem('Address', response.data.address);
+        sessionStorage.setItem('access_token', response.data.access);
+        sessionStorage.setItem('refresh_token', response.data.refresh);
+        sessionStorage.setItem('date_joined', response.data.date_joined);
 
         // Route based on user type
         // console.log("data")

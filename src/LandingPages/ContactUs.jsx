@@ -4,8 +4,16 @@ import ChatIcon from './Img/contact-chat-icon.svg';
 import LocationIcon from './Img/location-icon.svg';
 import CallIcon from './Img/call-icon.svg';
 import { Link } from 'react-router-dom';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx"
 
 function ContactUs() {
+
+  const [flash, setFlash] = useState(null);
+    
+  const showMessage = (message, type) => {
+        setFlash({ message, type });
+      };
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -31,7 +39,7 @@ function ContactUs() {
       });
 
       if (response.status === 200) {
-        alert('Your message has been sent successfully!');
+        showMessage('Your message has been sent successfully!', 'success');
         // Optionally, reset the form
         setFullName('');
         setEmail('');
@@ -41,6 +49,7 @@ function ContactUs() {
       }
     } catch (err) {
       setError('There was an error submitting your message. Please try again later.');
+      showMessage('There was an error submitting your message. Please try again later.', 'failure');
     } finally {
       setLoading(false);
     }
@@ -91,6 +100,15 @@ function ContactUs() {
             </div>
 
             <div className='message_Sec'>
+  
+            {flash && (
+                  <FlashMessage
+                  message={flash.message}
+                  type={flash.type}
+                  onClose={() => setFlash(null)} // Remove flash message after timeout
+                  />
+              )}
+
               <h2>Send us a message</h2>
               <form className='message-form' onSubmit={handleSubmit}>
                 <div className='message-DFlex'>
@@ -158,7 +176,7 @@ function ContactUs() {
                 <div className='message-form-input'>
                   <p>If you feel that we have not processed your data fairly or you are not satisfied with how we have handled your personal information, please contact our privacy team.</p>
                 </div>
-
+ 
                 <div className='message-form-input'>
                   <button type='submit' disabled={loading}>
                     {loading ? 'Sending...' : 'Submit'}
