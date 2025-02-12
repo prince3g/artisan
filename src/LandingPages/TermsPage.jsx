@@ -818,7 +818,7 @@ const TermsPage = () => {
 
             <section id="feedback">
                 <h2>11. Feedback</h2>
-                <p>We appreciate any feedback, ideas, and suggestions from you about the platform and/or our services, and you can leave feedback for us via support@simservicehub.ng. If you provide us with feedback, you agree that we can use, quote, and/or refer to that feedback and/or content at our discretion.</p>
+                <p>We appreciate any feedback, ideas, and suggestions from you about the platform and/or our services, and you can leave feedback for us via info@simservicehub.com. If you provide us with feedback, you agree that we can use, quote, and/or refer to that feedback and/or content at our discretion.</p>
             </section>
 
             <section>
