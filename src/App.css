@@ -2038,12 +2038,19 @@ input[type="password"] {
 }
 
 .faq-item summary{
-  font-weight: 700 !important;
+  font-weight: 500 !important;
   font-size: 17px !important;
+  cursor: pointer;
 }
 
 .faq-item summary::marker{
   color: #B1BD3B !important;
+}
+
+@media screen and (max-width:500px){
+  .faq-item summary{
+    font-size: 15px !important;
+  }
 }
 
 

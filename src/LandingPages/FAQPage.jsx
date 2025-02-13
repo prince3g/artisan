@@ -30,8 +30,10 @@ const faqData = {
     { question: 'What if I need to cancel or reschedule an appointment with an artisan or a client?', answer: 'As a customer, if you need to reschedule an appointment with an artisan, it is imperative that you reach out to us in a timely and effective manner, so the necessary adjustments are made to the appointment. As an artisan, if you need to reschedule an appointment with a customer, it is also imperative that you reach out to us so we can liaise with the customer and see if it is feasible OR not for them.' }
   ],
   payments: [
-    { question: 'What payment methods are accepted?', answer: 'We accept credit/debit cards and mobile payments...' },
-    { question: 'Can I get a refund?', answer: 'Refunds are subject to our policy, which can be found...' }
+    { question: 'How do you handle payment details?', answer: '' },
+    { question: 'How long does it take to process payment for an Artisan?', answer: '' },
+    { question: 'What is the refund policy for services booked through the app?', answer: '' },
+    { question: 'How do I subscribe for a package as an Artisan?', answer: '' }
   ]
 };
 
