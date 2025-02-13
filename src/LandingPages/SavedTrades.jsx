@@ -17,6 +17,7 @@ const SavedTrades = () => {
 
       const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
       const [artisanData, setArtisanData] = useState([]);
+      const [numArtisanData, setNumArtisanData] = useState([]);
 
           useEffect(() => {
             const fetchArtisans = async () => {
@@ -36,6 +37,7 @@ const SavedTrades = () => {
                 const data = await response.json();
        
       
+                setNumArtisanData(data.count);
                 setArtisanData(data.results);
               } catch (error) {
                 console.error('Error fetching artisan data:', error);
@@ -63,7 +65,7 @@ const SavedTrades = () => {
                     
             <div className='garoo-Gird-part2'>
                 <div className='garoo-Gird-part2'>
-                  {artisanData.length === 0 ? (
+                  {numArtisanData === 0 ? (
                     <div className="no-artisans">
                       <p>No artisan in this category</p>
                     </div>

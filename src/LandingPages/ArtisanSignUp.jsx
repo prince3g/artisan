@@ -9,24 +9,7 @@ import { Link } from "react-router-dom";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-// const loadGoogleMapsScript = (callback) => {
-//   if (!window.google) {
-//     const script = document.createElement("script");
-//     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
-//     script.async = true;
-//     script.onload = () => {
-//       console.log("Google Maps script loaded successfully!"); // Debugging
-//       callback();
-//     };
-//     script.onerror = () => {
-//       console.error("Failed to load Google Maps script!"); // Debugging
-//     };
-//     document.body.appendChild(script);
-//   } else {
-//     console.log("Google Maps script already loaded!"); // Debugging
-//     callback();
-//   }
-// };
+
 const loadGoogleMapsScript = (callback) => {
   if (window.google && window.google.maps) {
     console.log("Google Maps script already loaded!");
@@ -284,8 +267,10 @@ const ArtisanSignUp = () => {
             setError(errorMessage);
         } else {
             const result = await response2.json();
+            
             console.log("Second request successful:", result);
-            navigate("/login");
+
+            navigate("/completed-registeration");
         }
     } catch (error) {
         setError(error.message || "An unexpected error occurred. Please try again later.");
