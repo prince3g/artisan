@@ -191,6 +191,12 @@ const PostJob = () => {
                         </li>
                       ))}
                     </ul>
+
+                    <div className="Gland-Quest-data">
+                    <label>Other services</label>
+                    <input type="tel"  name="businessPhone" placeholder="Please enter business phone with country Code (+23491234567678)"/>
+                    </div>
+
                   </div>
                 )}
 

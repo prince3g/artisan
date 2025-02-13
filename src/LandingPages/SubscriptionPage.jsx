@@ -11,17 +11,17 @@ const handleBackClick = () => {
 const SubscriptionPage = () => {
 
     // Data array with features for the table
-    const data = [
-      { feature: "Ideal For", basic: "Individuals or small artisans just starting out", standard: "Growing artisans or small businesses needing more functionality", standardPlus: "Established businesses requiring advanced features & dedicated support" },
-      { feature: "Pricing", basic: "Lower monthly fee", standard: "Moderate monthly fee", standardPlus: "Higher monthly fee" },
-      { feature: "Job Submissions", basic: "Up to 20 job quotes every month to secure new projects and grow your client base.", standard: "Up to 40 job quotes every month to increase your chances of landing quality jobs.", standardPlus: "Unlimited job submissions every month, allowing you to take on as many projects as you can handle." },
-      { feature: "Payment Gateways", basic: "Single payment gateway", standard: "Multiple payment gateways", standardPlus: "Multiple gateways + advanced payment options (recurring debit)" },
-      { feature: "Marketing Tools", basic: "Limited to social media integration", standard: "Includes email marketing & promotional campaigns", standardPlus: "Comprehensive marketing suite" },
-      { feature: "Customer Support", basic: "Email support on weekdays", standard: "Email + live chat support (extended hours)", standardPlus: "Priority support (phone, email, live chat, and dedicated account manager)" },
-      { feature: "Onboarding & Training", basic: "Self-guided setup resources (tutorials/documentation)", standard: "Assisted setup (live sessions for initial configuration)", standardPlus: "Comprehensive onboarding + tailored training for your team" },
-      { feature: "Scalability & Future Growth", basic: "Best for small-scale operations", standard: "Room to grow with added features and resources", standardPlus: "Seamless scaling to larger product lines, higher traffic, and expanding teams" },
-      { feature: "Overall Cost-Benefit", basic: "Most budget-friendly option - Ideal for testing new ideas", standard: "Solid balance of price and functionality - Good for steady growth", standardPlus: "Highest ROI for advanced needs - Suitable for established or rapidly expanding businesses" },
-    ];
+    // const data = [
+    //   { feature: "Ideal For", basic: "Individuals or small artisans just starting out", standard: "Growing artisans or small businesses needing more functionality", standardPlus: "Established businesses requiring advanced features & dedicated support" },
+    //   { feature: "Pricing", basic: "Lower monthly fee", standard: "Moderate monthly fee", standardPlus: "Higher monthly fee" },
+    //   { feature: "Job Submissions", basic: "Up to 20 job quotes every month to secure new projects and grow your client base.", standard: "Up to 40 job quotes every month to increase your chances of landing quality jobs.", standardPlus: "Unlimited job submissions every month, allowing you to take on as many projects as you can handle." },
+    //   { feature: "Payment Gateways", basic: "Single payment gateway", standard: "Multiple payment gateways", standardPlus: "Multiple gateways + advanced payment options (recurring debit)" },
+    //   { feature: "Marketing Tools", basic: "Limited to social media integration", standard: "Includes email marketing & promotional campaigns", standardPlus: "Comprehensive marketing suite" },
+    //   { feature: "Customer Support", basic: "Email support on weekdays", standard: "Email + live chat support (extended hours)", standardPlus: "Priority support (phone, email, live chat, and dedicated account manager)" },
+    //   { feature: "Onboarding & Training", basic: "Self-guided setup resources (tutorials/documentation)", standard: "Assisted setup (live sessions for initial configuration)", standardPlus: "Comprehensive onboarding + tailored training for your team" },
+    //   { feature: "Scalability & Future Growth", basic: "Best for small-scale operations", standard: "Room to grow with added features and resources", standardPlus: "Seamless scaling to larger product lines, higher traffic, and expanding teams" },
+    //   { feature: "Overall Cost-Benefit", basic: "Most budget-friendly option - Ideal for testing new ideas", standard: "Solid balance of price and functionality - Good for steady growth", standardPlus: "Highest ROI for advanced needs - Suitable for established or rapidly expanding businesses" },
+    // ];
 
 
   return (
@@ -65,7 +65,7 @@ const SubscriptionPage = () => {
             <li>Access to essential features without a large investment</li>
           </ol>
 
-          <button className='Fin-subbnna-btn'>Subscribe</button>
+          <Link to="/payment" className='Fin-subbnna-btn'>Subscribe</Link>
         </div>
 
         <div className='subb-box'>
@@ -91,7 +91,7 @@ const SubscriptionPage = () => {
             <li>Enough customization to reflect your brand’s unique identity</li>
           </ol>
 
-          <button className='Fin-subbnna-btn'>Subscribe</button>
+         <Link to="/payment" className='Fin-subbnna-btn'>Subscribe</Link>
         </div>
 
 
@@ -120,7 +120,7 @@ const SubscriptionPage = () => {
             <li> Ideal for established businesses needing robust performance and specialized features</li>
           </ol>
 
-          <button className='Fin-subbnna-btn'>Subscribe</button>
+         <Link to="/payment" className='Fin-subbnna-btn'>Subscribe</Link>
         </div>
 
 

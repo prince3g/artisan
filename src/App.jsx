@@ -42,9 +42,12 @@ import CostumerLogin3 from './LandingPages/CostumerLogin3';
 import CostumerLogin4 from './LandingPages/CostumerLogin4';
 import AccountPage from './LandingPages/AccountPage';
 import ContactUs from './LandingPages/ContactUs';
-import Footer from './LandingPages/Footer';PostCode
+import Footer from './LandingPages/Footer';
 
 import PostCode from './LandingPages/PostCode';
+
+
+import PaymentPage from './LandingPages/PaymentPage';
 
 
 import Userdashbaord from './Userdashboard/Userdashbaord';
@@ -119,6 +122,7 @@ function App() {
           <Route path="/pending-approval" element={<PendingAproval />} />
           <Route path="/change-password" element={<ChangePass />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/payment" element={<PaymentPage />} />
 
           <Route path="/user-dashboard/*" element={<Userdashbaord />} />
           <Route path="/artisan-dashboard/*" element={<ArtisanDashboard />} />
