@@ -290,12 +290,12 @@ function SiteNav() {
 
               {isLoggedIn && (userType === "customer" || userType === "super_admin") ? (
                 <li>
-                  <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
+                  <Link to={getAccountLink()} onClick={handleNavLinkClick} className="home-login">Account</Link>
                 </li>
               ) : (
                 <li>
                   <Link to="/customer-signup" className="home-login" onClick={handleNavLinkClick}>
-                    Customer Signup
+                    Customer Sign-Up
                   </Link>
                 </li>
               )}

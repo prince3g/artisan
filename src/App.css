@@ -2069,3 +2069,42 @@ input[type="password"] {
   color: #B1BD3B;
   font-weight:500;
 }
+
+
+
+
+
+
+
+
+
+
+/* hj-inpuusy */
+
+.hj-inpuusy{
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  grid-gap: 10px;
+  margin-top: 10px !important;
+}
+.hj-inpuusy input{
+  margin-top: 0px !important;
+}
+
+.hj-inpuusy button{
+  position: relative;
+  height: 50px;
+  width: auto;
+  padding: 0px 20px;
+  background-color: #B1BD3B;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.hj-inpuusy button:hover{
+  background-color: #96a133;
+}

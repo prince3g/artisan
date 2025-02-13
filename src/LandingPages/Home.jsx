@@ -104,7 +104,7 @@ function Home() {
       const trade = services.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());
       if (trade) {
         setPopupContent({
-          title: `What do you need a ${trade.name} for?`,
+          title: `What do you need  ${trade.name} for?`,
           list: trade.services,
         });
         setShowPopup(true);
@@ -361,6 +361,14 @@ function Home() {
                   </li>
                 ))}
               </ul>
+
+              {/* <div className="Gland-Quest-data">
+                    <label>Other services</label>
+                    <div className='hj-inpuusy'>
+                    <input type="tel"  name="businessPhone" placeholder="Enter other services here.."/>
+                    <button>Continue</button>
+                    </div>
+                    </div> */}
             </div>
           </div>
         </div>

@@ -137,6 +137,13 @@ const PostJob = () => {
   };
 
 
+  const handleOtherServiceKeyDown = (event) => {
+    if (event.key.length === 1 || event.key === "Backspace") {
+      setExpandedService(0);  // Ensure expandedService is set
+    }
+  };
+  
+
 
 
   return (
@@ -191,10 +198,14 @@ const PostJob = () => {
                         </li>
                       ))}
                     </ul>
-
                     <div className="Gland-Quest-data">
-                    <label>Other services</label>
-                    <input type="tel"  name="businessPhone" placeholder="Please enter business phone with country Code (+23491234567678)"/>
+                      <label>Other services</label>
+                      <input 
+                        type="text"  
+                        name="businessPhone" 
+                        placeholder="Enter other services here.." 
+                        onKeyDown={handleOtherServiceKeyDown} 
+                      />
                     </div>
 
                   </div>
