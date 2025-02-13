@@ -532,10 +532,18 @@ const ArtisanSignUp = () => {
             
                   <div className="Gland-Quest-data">
                     
-                    <label htmlFor="serviceSelect">Final details</label>
-                    <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
+                    <div className="Gland-Quest-data">
+                      <label>First Name</label>
+                      <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                      <label>Surname</label>
                     <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
+                    </div>
                    
+
+                    <div className="Gland-Quest-data">
+                      <label>Address</label>
                     {/* <input type="text"  name="" placeholder="Post code" /> */}
 
                             {/* Address Search (Postcode will be extracted from selected address) */}
@@ -545,27 +553,49 @@ const ArtisanSignUp = () => {
                               ref={inputRef} // Ensure this is correctly assigned
                             />
 
+                            </div>
+
+                            <div className="Gland-Quest-data">
+                            <label>Post Code</label>
 
                     {/* Automatically filled postcode field */}
                     <input type="text" name="postcode" placeholder="Post code" value={formData.postcode} readOnly />
 
+                    </div>
 
+                    <div className="Gland-Quest-data">
+                    <label>Password</label>
                     <input  type="password" name="password" placeholder="Password should be at least 8 characters long" value={formData.password} onChange={handleInputChange}/>
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Confirm Password</label>
                     <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
                       {error && <div className="error-message">{error}
                         
                     
                     </div>}
 
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Business Email</label>
                     <input type="email" name="businessEmail" placeholder="Your business email" value={formData.businessEmail} onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Business Phone Number</label>
                     <input type="tel"  name="businessPhone" placeholder="Please enter business phone with country Code (+23491234567678)" value={formData.businessPhone} onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Mobile Number</label>
                     <input type="tel" name="mobile_number" placeholder="Please enter mobile  with country Code (+23491234567678)" value={formData.mobile_number} onChange={handleInputChange}/>
-					
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>About Yourself</label>
 					          <textarea
                       id="about_artisan" className="description-textarea" name="about_artisan"
                       value={formData.about_artisan} onChange={handleInputChange}
                       placeholder="Tell us about yourself.."
                     />
+                    </div>
                   </div>
 
                 </div>

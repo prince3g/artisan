@@ -211,6 +211,7 @@
     grid-gap: 10px;
   }
 
+  .Gland-Cnt-Btn a,
   .Gland-Cnt-Btn button{
     position: relative;
     width: auto;
@@ -224,14 +225,21 @@
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
+  .Gland-Cnt-Btn a:hover,
   .Gland-Cnt-Btn button:hover{
     background-color: #e2e1e1;
   }
+  .Gland-Cnt-Btn a:last-child,
   .Gland-Cnt-Btn button:last-child{
     background-color: #B1BD3B;
     color: #fff;
   }
+  .Gland-Cnt-Btn a:last-child:hover,
   .Gland-Cnt-Btn button:last-child:hover{
     background-color: #96a131;
   }
