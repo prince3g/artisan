@@ -21,17 +21,6 @@ const CostumerLogin2 = () => {
 
 
 
-  // const handleInputChange = (index, event) => {
-  //   const value = event.target.value;
-  
-  //   // Allow only numeric input
-  //   if (/^\d*$/.test(value)) {
-  //     const newInputs = [...inputs];
-  //     newInputs[index] = value;
-  //     setInputs(newInputs);
-  //   }
-  // };
-  
   const handleInputChange = (index, event) => {
     const value = event.target.value;
   
