@@ -6,6 +6,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const CostumerLogin4 = () => {
+    
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -67,7 +68,7 @@ const CostumerLogin4 = () => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    console.log('User created successfully:', result);
+                    // console.log('User created successfully:', result);
                     navigate("/login", { state: { email } }); // Pass email in state
                 } else {
                     const errorData = await response.json();
