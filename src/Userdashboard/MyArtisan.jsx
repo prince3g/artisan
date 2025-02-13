@@ -17,6 +17,7 @@ const Userdashbaord = () => {
 
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanData, setArtisanData] = useState([]);
+    const [numArtisanData, setNumArtisanData] = useState([]);
 
     
     useEffect(() => {
@@ -40,7 +41,10 @@ const Userdashbaord = () => {
           // console.log(data)
           // console.log("data")
 
-          setArtisanData(data.results);
+          // console.log(data.results);
+          setArtisanData(data.results || []);
+          setNumArtisanData(data.count || 0);
+
         } catch (error) {
           console.error('Error fetching artisan data:', error);
         }
@@ -59,7 +63,7 @@ const Userdashbaord = () => {
              
      <div className='garoo-Gird-part2'>
         <div className='garoo-Gird-part2'>
-          {artisanData.length === 0 ? (
+          {numArtisanData === 0 ? (
             <div className="no-artisans">
               <p>No artisan in this category</p>
             </div>
