@@ -38,7 +38,7 @@ const ArtisanHomePage = () => {
 
             if (data.results && data.results.length > 0) {
                 const artisan = data.results[0]; // Access first item in the array
-                sessionStorage.setItem("", artisan.service_details.unique_id);
+                sessionStorage.setItem("artisanCategory", artisan.service_details.unique_id);
                 sessionStorage.setItem("artisanCategoryName", artisan.service_details.postName);
             } else {
                 console.error("No artisan data found.");
@@ -188,10 +188,16 @@ const ArtisanHomePage = () => {
                             </button>
                         </div>
                         {selectedTrade && (
+                            <>
+                            {/* <p> {selectedTrade.customer.unique_id} </p>
+                            <p> {sessionStorage.getItem('unique_user_id')} </p> */}
                             <ChatWithClient 
-                                customerUniqueId={selectedTrade.customer.unique_id} 
-                                artisanUniqueId={sessionStorage.getItem('unique_user_id')} // Assuming artisan ID is stored in localStorage
+                                receiverId = {selectedTrade.customer.unique_id} 
+                                receiverEmail = {selectedTrade.customer.email} 
+                                senderId = {sessionStorage.getItem('unique_user_id')} // Assuming artisan ID is stored in localStorage
+                                senderIdEmail = {sessionStorage.getItem('user_email')} // Assuming artisan ID is stored in localStorage
                             />
+                            </>
                         )}
                     </div>
 

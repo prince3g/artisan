@@ -250,7 +250,7 @@ const ArtisanPostedJobs = () => {
         }
         const data = await response.json();
         setJobs(data || []); // Ensure data is an array
-        // console.log("Fetched jobs:", data.results);
+        // console.log("Fetched jobs:", data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -264,7 +264,7 @@ const ArtisanPostedJobs = () => {
   }, [ djangoHostname]);
 
   if (loading) return <p>Loading jobs...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>No Jobs Posted yet in your service category</p>;
 
   return (
     <div className="ooUserdashbaord-Page">

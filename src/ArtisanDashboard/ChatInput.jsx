@@ -7,9 +7,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import api from '../axios_instance/'; // Path to your Axios instance
 import { toast } from 'react-toastify'; // For push notifications
 
-const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
+const ChatInput = ({ onNewMessage, receiverId, senderId }) => {
 
-  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
   const textAreaRef = useRef(null);
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
@@ -20,7 +20,6 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
   const emojiPickerRef = useRef(null);
   const chatInputRef = useRef(null);
 
-  const message_sender = sessionStorage.getItem('unique_user_id');
 
   // Adjust textarea height dynamically
   const adjustTextAreaHeight = () => {
@@ -56,10 +55,23 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
         //console.log("🔹 Headers:", headers);
 
         try {
+
+          const trimmedReceiver = receiverId.trim();
+          const trimmedSender = senderId.trim();
+          
+        // console.log("receiverId")
+        // console.log(trimmedSender)
+        // console.log("receiverId")
+
+        // console.log("senderID")
+        // console.log(trimmedReceiver)
+        // console.log("senderID")
+
             const response = await api.post(endpoint, {
-                receiver: receiverId,
-                sender: senderId,
-                content: message,
+              sender: senderId,
+              receiver: receiverId,
+                
+              content: message,
             }, { headers });
 
             //console.log("🔹 Response status:", response.status);
@@ -68,6 +80,14 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
                 onNewMessage(response.data);
                 setMessage('');
                 toast.success('Message sent!');
+
+                // console.log("receiverId")
+                // console.log(trimmedReceiver)
+                // console.log("receiverId")
+        
+                // console.log("senderID")
+                // console.log(trimmedSender)
+                // console.log("senderID")
 
                 window.location.reload()
             }

@@ -57,12 +57,13 @@ const ArtisanChattingPage = () => {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
+        
         `${djangoHostname}/api/messaging/auth/messages/conversation/?sender=${senderID}&receiver=${artisanUniqueID}`,
         {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
           },
           credentials: 'include',
         }
@@ -71,9 +72,9 @@ const ArtisanChattingPage = () => {
       if (response.ok) {
         const data = await response.json();
         setMessages(data);
-        console.log("data");
-        console.log(data);
-        console.log("data");
+        // console.log("data");
+        // console.log(data);
+        // console.log("data");
       } else {
         console.error('Failed to fetch messages');
       }
@@ -188,7 +189,7 @@ const ArtisanChattingPage = () => {
         return;
       }
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${sanitizedId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -396,36 +397,14 @@ const ArtisanChattingPage = () => {
                         <span>No messages yet. Start a conversation!</span>
                       </p>
                     )}
-                    
-                    {/* {messages.map((msg, index) => (
-                      <div
-                        key={index}
-                        className={`Chatting-Clamp ${msg.sender === senderID ? 'sent' : 'received'}`}
-                        ref={index === messages.length - 1 ? lastMessageRef : null} // Attach ref to last message
-                      >
-                        <div className="Mnachatting-box">
-                          <p>{msg.content}</p>
-                          {msg.image && (
-                            <img src={msg.image} alt="uploaded" className="Main-image-preview" />
-                          )}
-                          <div className="Mess-hsja">
-                            <span>{formatTimestamp(msg.created_at)}</span>
-                            {msg.isSent && !msg.isDelivered ? (
-                              <span className="message-status single-check">✔</span>
-                            ) : (
-                              <span className="message-status double-check">✔✔</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))} */}
-                    
+{/*                                         
                     {messages.map((msg, index) => {
-                      const isOutgoing = msg.sender === senderIDEmail; // Compare sender's email
+                     // const isOutgoing = msg.sender === senderIDEmail; // Compare sender's email
+                      const isOutgoing = msg.sender; // Compare sender's email
                       return (
                         <div
                           key={index}
-                          className={`Chatting-Clamp ${isOutgoing ? 'sent' : 'received'}`}
+                          className={`Chatting-Clamp ${isOutgoing ? senderIDEmail : msg.receiver}`}
                           ref={index === messages.length - 1 ? lastMessageRef : null}
                         >
                           <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
@@ -446,7 +425,27 @@ const ArtisanChattingPage = () => {
                           </div>
                         </div>
                       );
+                    })} */}
+
+                    {messages.map((msg, index) => {
+                      const isOutgoing = msg.sender === senderIDEmail; // Check if the message was sent by the current user
+                      
+                      return (
+                        <div
+                          key={index}
+                          className={`Chatting-Clamp ${isOutgoing ? 'sent' : 'received'}`}
+                          ref={index === messages.length - 1 ? lastMessageRef : null}
+                        >
+                          <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
+                            <p>{msg.content}</p>
+                            <p>{msg.sender}</p>
+                            <p>{isOutgoing ? "Outgoing" : "Incoming"}</p>
+                          </div>
+                        </div>
+                      );
                     })}
+
+
                     {showTyping && (
                       <div className="Chatting-Clamp">
                         <div className="Mnachatting-box typing">
@@ -460,7 +459,7 @@ const ArtisanChattingPage = () => {
                 </div>
               </div>
 
-              <div className="Chattt-Foot">
+              <div className="Chattt-Foot"> 
                 <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueID} senderId={senderID} />
               </div>
             </div>
