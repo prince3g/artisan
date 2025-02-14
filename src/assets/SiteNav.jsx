@@ -418,7 +418,7 @@ function SiteNav() {
           </div>
           <ul className="Glandy-Ul">
             <li>
-              <Link to="" onClick={() => {
+              <Link to="/artisan-dashboard/" onClick={() => {
                       CloseProfileMenuForUsers();
                       handleVisitProfile();
                     }}>
@@ -426,12 +426,12 @@ function SiteNav() {
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/booking-list" onClick={CloseArtisanProfileMenu}>
                 <BookIcon /> Booking List
               </Link>
             </li>
             <li>
-              <Link to="" onClick={() => {
+              <Link to="/artisan-dashboard/profile-settings" onClick={() => {
                       CloseProfileMenuForUsers();
                       handleVisitProfile();
                     }}>
@@ -439,27 +439,27 @@ function SiteNav() {
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/payout-setting" onClick={CloseArtisanProfileMenu}>
                 <MonetizationOnIcon /> Payout Setting
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/artisan-subscription" onClick={CloseArtisanProfileMenu}>
                 <SubscriptionsIcon /> Subscription
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/availability" onClick={CloseArtisanProfileMenu}>
                 <EventAvailableIcon /> Availability
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/reviews" onClick={CloseArtisanProfileMenu}>
                 <StarRateIcon /> Reviews
               </Link>
             </li>
             <li>
-              <Link to="" onClick={CloseArtisanProfileMenu}>
+              <Link to="/artisan-dashboard/payment" onClick={CloseArtisanProfileMenu}>
                 <PaymentIcon /> Payment
               </Link>
             </li>
