@@ -169,7 +169,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
           value={message}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder="Type your message... "
           rows="1"
         />
         {showEmojiPicker && (

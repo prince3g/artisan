@@ -39,7 +39,7 @@ const ChatInput = ({ onNewMessage, messageId, receiverId, senderId }) => {
         setLoading(true);
         const endpoint = `/api/messaging/auth/messages/send_message/`;
 
-        let token = localStorage.getItem('access_token');
+        let token = sessionStorage.getItem('access_token');
         //console.log("🔹 Sending token:", token);  // Log token before sending
 
         if (!token) {

@@ -14,7 +14,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { toast } from 'react-toastify'; // For push notifications
-
 import ChatInput from './ChatInput';
 import ChatBanner from './Img/nochat-banner.svg';
 import { Link } from 'react-router-dom';
@@ -48,6 +47,7 @@ const ArtisanChattingPage = () => {
   
 
   const senderID = sessionStorage.getItem('unique_user_id');
+  const senderIDEmail= sessionStorage.getItem('user_email');
 
   const lastMessageRef = useRef(null);
     // Create a ref for the chat container
@@ -71,6 +71,9 @@ const ArtisanChattingPage = () => {
       if (response.ok) {
         const data = await response.json();
         setMessages(data);
+        console.log("data");
+        console.log(data);
+        console.log("data");
       } else {
         console.error('Failed to fetch messages');
       }
@@ -252,7 +255,6 @@ const ArtisanChattingPage = () => {
   }, [messages]); // Scroll when messages change
   
 
-  
 
   return (
     <div className={`artii-profile-page ${isToggled ? 'toggle-mobile-messi' : ''}`}>
@@ -284,7 +286,7 @@ const ArtisanChattingPage = () => {
                       <ChatIcon /> <span className="toolTipsa">Chat</span>
                     </button>
                     <button onClick={() => handleSectionClick('call')}>
-                      <CallIcon /> <span className="toolTipsa">Call</span>
+                      <CallIcon /> <span className="toolTipsa">Call   </span>
                     </button>
                     <button>
                       <Favorite /> <span className="toolTipsa">Favourite</span>
@@ -366,7 +368,7 @@ const ArtisanChattingPage = () => {
             <div className="Chattt-sec">
               <div className="Chattt-Topp">
                 <div className="Chattt-Topp-1">
-                  <h3>Chat with {artisanData.user?.first_name && artisanData.user?.last_name
+                  <h3>Chat with   {artisanData.user?.first_name && artisanData.user?.last_name
                     ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
                     : ' '}{' '}
                     &nbsp;</h3>
@@ -387,6 +389,7 @@ const ArtisanChattingPage = () => {
               <div className="Chattt-Mid" ref={chatContainerRef}>
                 <div className="Chatting-section">
                   <div className="Chatting-section-Main">
+
                     {messages.length === 0 && (
                       <p className="no-messages">
                         <img src={ChatBanner} alt="No Chat Banner" />
@@ -394,10 +397,10 @@ const ArtisanChattingPage = () => {
                       </p>
                     )}
                     
-                    {messages.map((msg, index) => (
+                    {/* {messages.map((msg, index) => (
                       <div
                         key={index}
-                        className={`Chatting-Clamp respond-Box ${msg.isSent ? 'sent' : 'received'}`}
+                        className={`Chatting-Clamp ${msg.sender === senderID ? 'sent' : 'received'}`}
                         ref={index === messages.length - 1 ? lastMessageRef : null} // Attach ref to last message
                       >
                         <div className="Mnachatting-box">
@@ -415,20 +418,35 @@ const ArtisanChattingPage = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
-
-
-                    {/* {showWelcomeMessage && (
-                      <div className="Chatting-Clamp">
-                        <div className="Mnachatting-box">
-                          <p>Thank you for reaching out! ❤️ I'm here to bring your vision to life. 💡</p>
-                          <div className="Mess-hsja">
-                            <span>{welcomeMessageTime}</span>
+                    ))} */}
+                    
+                    {messages.map((msg, index) => {
+                      const isOutgoing = msg.sender === senderIDEmail; // Compare sender's email
+                      return (
+                        <div
+                          key={index}
+                          className={`Chatting-Clamp ${isOutgoing ? 'sent' : 'received'}`}
+                          ref={index === messages.length - 1 ? lastMessageRef : null}
+                        >
+                          <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
+                            <p>{msg.content}</p>
+                            <p>{msg.receiver}</p>
+                            <p>{msg.sender}</p>
+                            {msg.image && (
+                              <img src={msg.image} alt="uploaded" className="Main-image-preview" />
+                            )}
+                            <div className="Mess-hsja">
+                              <span>{formatTimestamp(msg.created_at)}</span>
+                              {msg.isSent && !msg.isDelivered ? (
+                                <span className="message-status single-check">✔</span>
+                              ) : (
+                                <span className="message-status double-check">✔✔</span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )} */}
-
+                      );
+                    })}
                     {showTyping && (
                       <div className="Chatting-Clamp">
                         <div className="Mnachatting-box typing">
@@ -436,6 +454,8 @@ const ArtisanChattingPage = () => {
                         </div>
                       </div>
                     )}
+                  
+                  
                   </div>
                 </div>
               </div>

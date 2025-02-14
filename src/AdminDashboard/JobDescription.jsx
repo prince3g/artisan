@@ -7,8 +7,16 @@ import UserPlaceholder from "./Img/user-placeholder.png";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const JobDescription = () => {
+
+  const [flash, setFlash] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
 
   const navigate = useNavigate(); // Initialize useNavigate
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -34,13 +42,15 @@ const JobDescription = () => {
         if (!response.ok) {
           throw new Error("Failed to delete the job. Please try again.");
         }
-  
-        alert("Job deleted successfully!");
+
+        showMessage("Job deleted successfully!", "success"); 
+        navigate("/admin/posted-jobs");
+
         // Redirect to the job listing page or update the state
-       navigate("/admin/posted-jobs");
       } catch (error) {
         console.error("Failed to delete job:", error);
-        alert(error.message || "An error occurred while deleting the job.");
+        // alert(error.message || "An error occurred while deleting the job.");
+        showMessage(error.message || "An error occurred while deleting the job.", "failure");
       } finally {
         setDeletingJobId(null); // Clear the deleting state
       }
@@ -60,6 +70,15 @@ const JobDescription = () => {
           <Link to="/admin/posted-jobs" className="back_Link">
             <ArrowBackIcon /> Back
           </Link>
+
+          {flash && (
+              <FlashMessage
+                message={flash.message}
+                type={flash.type}
+                onClose={() => setFlash(null)}
+              />
+            )}
+
           <div className="Habgb-sec">
             <div className="My-Artisan-Body">
               <div className="garoo-Gird-part2">
@@ -103,7 +122,7 @@ const JobDescription = () => {
                         <span>{job.job?.job_type === "simple" ? "Simple Job" : "Complex Job"}</span>
 
                           <span>
-                            <BusinessCenterIcon /> 20 Applications
+                          <BusinessCenterIcon /> {job.job?.num_appllications} {job.job?.num_appllications > 1 ? "Applications" : "Application" }
                           </span>
                         </div>
                         <div className="GLnad-btns-2">

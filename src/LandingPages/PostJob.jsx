@@ -98,7 +98,7 @@ const PostJob = () => {
       category: selectedService.name,
       title: selectedService.name,
       location: "N0 10 station Road Ph, R/s",
-      customer: localStorage.getItem('unique_user_id'),
+      customer: sessionStorage.getItem('unique_user_id'),
       budget: 50.00,
 
       type: activeIndex === 0 ? 'simple' : 'complex',  // Set job type based on selected option

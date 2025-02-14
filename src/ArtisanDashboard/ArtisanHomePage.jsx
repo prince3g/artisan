@@ -11,19 +11,56 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ChatWithClient from './ChatWithClient';
 
 const ArtisanHomePage = () => {
+    
     const [clients, setClients] = useState([]);
     const [groupedMessages, setGroupedMessages] = useState({}); // State for grouped messages
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-    useEffect(() => {
-        if (!sessionStorage.getItem("hasReloaded")) {
-            sessionStorage.setItem("hasReloaded", "true");
-            window.location.reload();
-        }
-    }, []);
+    // http://127.0.0.1:9090/api/profiles/auth/api/artisan-profile/?unique_id=f01c79e8-a180-498a-89c2-e529d4b3da45
 
     useEffect(() => {
-        const artisanUniqueID = localStorage.getItem('unique_user_id');
+        const unique_user_id = sessionStorage.getItem("unique_user_id");
+
+        console.log("unique_user_id")
+        console.log(unique_user_id)
+        console.log("unique_user_id")
+        
+        const fetchArtisanDetail = async () => {
+          if (!unique_user_id?.trim()) {
+            console.error('Artisan Unique ID is missing');
+            return;
+          }
+    
+          try {
+            const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${unique_user_id}`, {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+            });
+    
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    
+            const data = await responseartisanCategory.json();
+
+            if (data.results && data.results.length > 0) {
+                const artisan = data.results[0]; // Access first item in the array
+                sessionStorage.setItem("", artisan.service_details.unique_id);
+                sessionStorage.setItem("artisanCategoryName", artisan.service_details.postName);
+            } else {
+                console.error("No artisan data found.");
+            }
+            
+          } catch (error) {
+            console.error('Error fetching artisan data:', error);
+          }
+        };
+    
+        fetchArtisanDetail();
+      }, [djangoHostname]);
+
+
+    useEffect(() => {
+        const artisanUniqueID = sessionStorage.getItem('unique_user_id');
 
         const fetchMessages = async () => {
             try {
@@ -106,7 +143,7 @@ const ArtisanHomePage = () => {
                         <div className="AA_Dash_Left_Box">
                             <div className="recent_trades_sec">
                                 <div className="AA_Dash_Left_Top">
-                                    <h3>Recent Trades <span>{Object.keys(groupedMessages).length}</span></h3>
+                                    <h3>Recent Trades <span>{Object.keys(groupedMessages).length} </span></h3>
                                 </div>
                                 <div className="Trade_Secs">
                                     {Object.keys(groupedMessages).map((email, index) => (
@@ -159,7 +196,7 @@ const ArtisanHomePage = () => {
                         {selectedTrade && (
                             <ChatWithClient 
                                 customerUniqueId={selectedTrade.customer.unique_id} 
-                                artisanUniqueId={localStorage.getItem('unique_user_id')} // Assuming artisan ID is stored in localStorage
+                                artisanUniqueId={sessionStorage.getItem('unique_user_id')} // Assuming artisan ID is stored in localStorage
                             />
                         )}
                     </div>
