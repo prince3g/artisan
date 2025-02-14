@@ -16,14 +16,8 @@ const ArtisanHomePage = () => {
     const [groupedMessages, setGroupedMessages] = useState({}); // State for grouped messages
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-    // http://127.0.0.1:9090/api/profiles/auth/api/artisan-profile/?unique_id=f01c79e8-a180-498a-89c2-e529d4b3da45
-
     useEffect(() => {
         const unique_user_id = sessionStorage.getItem("unique_user_id");
-
-        console.log("unique_user_id")
-        console.log(unique_user_id)
-        console.log("unique_user_id")
         
         const fetchArtisanDetail = async () => {
           if (!unique_user_id?.trim()) {
@@ -40,7 +34,7 @@ const ArtisanHomePage = () => {
     
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
     
-            const data = await responseartisanCategory.json();
+            const data = await response.json();
 
             if (data.results && data.results.length > 0) {
                 const artisan = data.results[0]; // Access first item in the array

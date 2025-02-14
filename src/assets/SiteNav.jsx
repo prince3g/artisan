@@ -119,6 +119,15 @@ function SiteNav() {
       window.location.href = "/admin";
     }
   }
+  // const handleVisitProfile1 = () => {
+ 
+  //  if(userType === "artisan"){
+  //     window.location.href = "/artisan-dashboard/profile-settings";
+  //   }
+  //   else if(userType === "super_admin"){
+  //     window.location.href = "/admin";
+  //   }
+  // }
 
   // Determine links based on user_type
   const getAccountLink = () => {
@@ -127,8 +136,6 @@ function SiteNav() {
     if (userType === "super_admin") return "/admin";
     return "#";
   };
-
-
 
 
   // State and ref for Users dropdown
@@ -430,14 +437,14 @@ function SiteNav() {
                 <BookIcon /> Booking List
               </Link>
             </li>
-            <li>
-              <Link to="/artisan-dashboard/profile-settings" onClick={() => {
+            {/* <li>
+              <Link to="/artisan-dashboard/profile-settings/" onClick={() => {
                       CloseProfileMenuForUsers();
                       handleVisitProfile();
                     }}>
                 <SettingsIcon /> Profile Setting
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/artisan-dashboard/payout-setting" onClick={CloseArtisanProfileMenu}>
                 <MonetizationOnIcon /> Payout Setting

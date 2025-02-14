@@ -68,7 +68,7 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
       }
 
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${artisanUniqueId}/`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${artisanUniqueId}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -77,7 +77,7 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
-        setArtisanData(data);
+        setArtisanData(data.results[0]);
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
