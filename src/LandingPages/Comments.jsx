@@ -394,6 +394,7 @@ import MessageIcon from '@mui/icons-material/Message';
 const Comments = ({ artisanUniqueId }) => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
+
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [averageRating, setAverageRating] = useState('0.0');
@@ -408,9 +409,10 @@ const Comments = ({ artisanUniqueId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        if (!artisanUniqueId) return;
+        // if (!artisanUniqueId) return;
 
-        const sanitizedId = artisanUniqueId.trim();
+
+        const sanitizedId = sessionStorage.getItem("unique_user_id").trim() || artisanUniqueId.trim();
         const response = await axios.get(
           `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${sanitizedId}/`
         );
@@ -471,7 +473,7 @@ const Comments = ({ artisanUniqueId }) => {
       <div className='rating-secc'>
         <div className='rating-secc-box'>
           <p>
-            <Star /> Artisan Rating
+            <Star /> Artisan Rating OOOKK 
           </p>
           <div className='cart-pro-rating-sec'>
             <div className='t-cart-pro-rating'>

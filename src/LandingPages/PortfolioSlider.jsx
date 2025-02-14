@@ -49,7 +49,9 @@ const PortfolioSlider = (artisanUniqueID) => {
 
 
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-  const artisanUniqueId = artisanUniqueID.artisanUniqueID
+
+  const artisanUniqueId = artisanUniqueID.artisanUniqueID || sessionStorage.getItem("unique_user_id").trim();
+  // const artisanUniqueId = artisanUniqueID.artisanUniqueID
 
 
 
@@ -114,7 +116,8 @@ const PortfolioSlider = (artisanUniqueID) => {
         return;
       }
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${sanitizedId}`, {
+        // const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
