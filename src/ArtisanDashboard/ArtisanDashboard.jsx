@@ -14,6 +14,10 @@ import JobDescription from './JobDescription';
 
 import ProfileSettings from './ProfileSettings';
 
+import ArtisanSubscription from './ArtisanSubscription';
+
+import ArtisanReview from './ArtisanReview';
+
 
 
 
@@ -46,6 +50,9 @@ const ArtisanDashboard = () => {
                 <Route path="/jobs" element={<ArtisanPostedJobs />} />
                 <Route path="/job-description" element={<JobDescription />} />
                 <Route path="/profile-settings" element={<ProfileSettings />} />
+                <Route path="/artisan-subscription" element={<ArtisanSubscription />} />
+                <Route path="/reviews" element={<ArtisanReview />} />
+
              </Routes>
 
 
