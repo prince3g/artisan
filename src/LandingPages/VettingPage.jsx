@@ -81,12 +81,15 @@ const VettingPage = () => {
                 <div className="Gland-Quest-data">
                   <label>Proof of Address</label>
                   <input type="file" onChange={(e) => handleFileChange(e, setProofOfAddress)} />
+                  <span className="kja-span">(Acceptable Documents are <b>JPG,PNG and PDF</b>)</span>
                 </div>
 
                 <div className="Gland-Quest-data">
                   <label>Proof of Identity</label>
                   <select onChange={(e) => setDocType(e.target.value)}>
-                    <option value="NIN">NIN</option>
+                    <option value="National Identification Number">National Identification Number</option>
+                    <option value="Driver's Licence">Driver's Licence</option>
+                    <option value="National Identity">National Identity</option>
                     <option value="Others">Others</option>
                   </select>
                   <input
@@ -95,6 +98,9 @@ const VettingPage = () => {
                       docType === "NIN" ? handleFileChange(e, setNinDoc) : handleFileChange(e, setOtherDoc)
                     }
                   />
+
+                  <span className="kja-span">(Acceptable Documents are <b>JPG,PNG and PDF</b>)</span>
+
                 </div>
 
                 <div className="Consit-sec">

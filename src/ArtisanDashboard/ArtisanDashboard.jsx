@@ -20,6 +20,8 @@ import ArtisanReview from './ArtisanReview';
 
 import ArtisanAvailability from './ArtisanAvailability';
 
+import ArtisanPayout from './ArtisanPayout';
+
 
 
 
@@ -55,7 +57,7 @@ const ArtisanDashboard = () => {
                 <Route path="/artisan-subscription" element={<ArtisanSubscription />} />
                 <Route path="/availability" element={<ArtisanAvailability />} />
                 <Route path="/reviews" element={<ArtisanReview />} />
-
+                <Route path="/payout-setting" element={<ArtisanPayout />} />
              </Routes>
 
 

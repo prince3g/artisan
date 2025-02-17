@@ -1,189 +1,720 @@
-
-import React, { useState } from "react";
-import "../LandingPages/Css/Main.css";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef} from "react";
+import { useNavigate } from "react-router-dom";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import { Link } from "react-router-dom";
+
+
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+
+const loadGoogleMapsScript = (callback) => {
+  if (window.google && window.google.maps) {
+    console.log("Google Maps script already loaded!");
+    callback();
+    return;
+  }
+
+  if (document.querySelector(`script[src*="maps.googleapis.com/maps/api/js"]`)) {
+   // console.log("Google Maps script is already being loaded.");
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+  script.async = true;
+  script.onload = () => {
+    console.log("Google Maps script loaded successfully!");
+    callback();
+  };
+  script.onerror = () => {
+    console.error("Failed to load Google Maps script!");
+  };
+  document.body.appendChild(script);
+};
+
 
 const ProfileSettings = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const inputRef = useRef(null);
 
-  const location = useLocation();
-  const { user_id, Address = '', first_name = '', last_name = '', user_phone = '' } = location.state || {};
+    useEffect(() => {
+      let isMounted = true;
+    
+      loadGoogleMapsScript(() => {
+        if (!isMounted) return;
+    
+        if (!window.google || !window.google.maps || !inputRef.current) {
+          console.error("Google Maps API or input ref not available.");
+          return;
+        }
+    
+        const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
+          types: ["geocode"],
+        });
+    
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          console.log("Selected place:", place);
+          if (!place || !place.address_components) {
+            console.log("No address components found.");
+            return;
+          }
+    
+          const postalCodeComponent = place.address_components.find((component) =>
+            component.types.includes("postal_code")
+          );
+    
+          if (postalCodeComponent) {
+            console.log("Postcode found:", postalCodeComponent.long_name);
+            setFormData((prevState) => ({
+              ...prevState,
+              postcode: postalCodeComponent.long_name,
+            }));
+          } else {
+            console.log("No postcode found in the selected address.");
+          }
+        });
+      });
+    
+      return () => {
+        isMounted = false; // Cleanup on unmount
+      };
+    }, [inputRef.current]);
 
-  // console.log(location.state)
-
-  const [firstName, setFirstName] = useState(first_name);
-  const [lastName, setLastName] = useState(last_name);
-  const [phone, setPhone] = useState(user_phone);
-  const [address, setAddress] = useState(Address);
-  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [services, setServices] = useState([]);
+  const [query, setQuery] = useState("");
+  const [unique_id, setUnique_id] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [error, setError] = useState("");
+  const [selectedTrade, setSelectedTrade] = useState("");
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const [skills, setSkills] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
 
-    const formData = new FormData();
-    formData.append("first_name", firstName);
-    formData.append("last_name", lastName);
-    formData.append("phone", phone);
-    formData.append("address", address);
-    if (profilePhoto) formData.append("profile_photo", profilePhoto);
+  const [formData, setFormData] = useState({
+    trade: "",
+    businessName: "",
+    location: "",
+    businessLocation: "",
+    lookingFor: "",
+    businessType: "",
+    employeeCount: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    confirmPassword: "", // Added confirmPassword field
+    businessEmail: "",
+    businessPhone: "",
+    mobile_number: "",
+    // service_cost: "",
+    skills: [], 
+    about_artisan: "", 
 
-    try {
-      const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${user_id}/`, {
-        method: "PATCH",
-        body: formData,
-      });
+    postcode: "" // Added postcode field
+  });
 
-      if (!response.ok) {
-        throw new Error("Error updating profile");
+  useEffect(() => {
+    const fetchServices = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${djangoHostname}/api/jobs/auth/service-categories/`
+        );
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      sessionStorage.setItem('user_phone', data.phone || '');
-      sessionStorage.setItem('user_first_name', data.first_name || '');
-      sessionStorage.setItem('user_last_name', data.last_name || '');
-      sessionStorage.setItem('Address', data.address || '');
+    fetchServices();
+  }, [djangoHostname]);
 
-      alert("Profile updated successfully!");
-    } catch (error) {
-      console.log("An error occurred. Please try again.", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+  
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  
+    if (name === "trade") {
+      const input = value.trim();
+      setQuery(input);
+  
+      if (input === "") {
+        setSuggestions([]);
+        setError("");
+      } else {
+        const filteredSuggestions = services.filter((service) =>
+          service.name.toLowerCase().includes(input.toLowerCase())
+        );
+        setSuggestions(filteredSuggestions);
+  
+        if (filteredSuggestions.length === 0) {
+          setError("Trade does not exist");
+        } else {
+          setError("");
+        }
+      }
     }
   };
+  
+  const handleSuggestionClick = (service, unique_id) => {
+    setSelectedTrade({
+      name: service,
+      unique_id: unique_id, // Save the unique_id of the selected trade
+    });
+    setQuery(service.name); // Populate the input with the selected trade name
+    setUnique_id(unique_id); // Populate the unique_id state
+    setFormData((prevData) => ({
+      ...prevData,
+      trade: service.name, // Set the selected trade in formData
+    }));
+    setSuggestions([]); // Clear the suggestions after selection
+    setError(""); // Clear any existing error message
+  };
 
-  if (!user_id) {
-    return <div>Loading...</div>;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+      // Check if the password is at least 8 characters long
+  if (formData.password.length < 8) {
+    setError("Password must be at least 8 characters long.");
+    setLoading(false);
+    return;
   }
 
 
+    if (formData.password !== formData.confirmPassword) {
+        setError("Passwords do not match.");
+        setLoading(false);
+        return;
+    }
 
-    const [files, setFiles] = useState([]);
-  
-    const OOhandleFileChange = (e) => {
-      const newFiles = [...e.target.files];
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    const requestPayload = {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        password: formData.password,
+        email: formData.businessEmail,
+        user_type: "artisan",
+        phone: formData.businessPhone,
+        mobile_number: formData.mobile_number,
+        about_artisan: formData.about_artisan,
     };
+
+    try {
+        const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestPayload),
+        });
+
+        if (!response1.ok) {
+            const errorData = await response1.json();
+            const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
+            setError(errorMessage);
+            setLoading(false);
+            return;
+        }
+
+        const response1Data = await response1.json();
+        //console.log("First request successful:", response1Data);
+        sessionStorage.setItem('unique_user_id', response1Data.unique_id);
+        sessionStorage.setItem('artisanID', response1Data.id);
+        sessionStorage.setItem('user_type', response1Data.user_type);
+
+        if (!selectedTrade || !selectedTrade.unique_id) {
+            setError("Please select a valid trade.");
+            setLoading(false);
+            return;
+        }
+
+        const artisanProfilePayload = {
+            service_details_id: unique_id,
+            businessName: formData.businessName,
+            location: formData.location,
+            lookingFor: formData.lookingFor,
+            businessType: formData.businessType,
+            //service_cost: formData.service_cost,
+            employeeCount: formData.employeeCount,
+            skills: formData.skills.map((skill) => String(skill)),
+            experience: formData.experience || 0,
+            businessLocation: formData.businessLocation,
+            postcode: formData.postcode,
+            user_id: response1Data.unique_id,
+        };
+
+        const response2 = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(artisanProfilePayload),
+        });
+
+        if (!response2.ok) {
+            const errorData = await response2.json();
+            const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
+            setError(errorMessage);
+        } else {
+            const result = await response2.json();
+            
+            // console.log("Second request successful:", result.unique_id);
+            // sessionStorage.setItem('unique_user_id', result.unique_user_id);
+            // sessionStorage.setItem('artisanID', result.id);
+            // sessionStorage.setItem('artisan', result.artisan);
+
+            navigate("/subscription");
+        }
+    } catch (error) {
+        setError(error.message || "An unexpected error occurred. Please try again later.");
+    } finally {
+        setLoading(false);
+    }
+};
+
+
+  const handleInputClick = () => {
+    if (!query || !query.trim()) {
+      setSuggestions(services);
+    }
+    setError('');
+  };
   
-    const OOhandleRemoveFile = (index) => {
-      setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    };
+  
+  const resetAllActiveStates = () => {
+    setActiveReliabilityButton(null);
+    setActiveWorkmanshipButton(null);
+    setActiveTidinessButton(null);
+    setActiveCourtesyButton(null);
+    setReliabilityYesNo(null);
+    setIsCheckedReliability(false);
+    setIsCheckedWorkmanship(false);
+    setIsCheckedTidiness(false);
+    setIsCheckedCourtesy(false);
+  };
+
+
+  const handleBackClick = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
+
+  const [activeIndex, setActiveIndex] = useState({});
+
+  const handleItemClick = (ulIndex, liIndex) => {
+    setActiveIndex((prevState) => ({
+      ...prevState,
+      [ulIndex]: liIndex,
+    }));
+  };
+
+  const renderList = (items, ulIndex) => {
+    return (
+      <ul className="service-list">
+        {items.map((item, liIndex) => (
+          <li
+            key={liIndex}
+            className={`service-item ${
+              activeIndex[ulIndex] === liIndex ? "active-gland-list-Li" : ""
+            }`}
+            onClick={() => handleItemClick(ulIndex, liIndex)}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  
+
+  const addSkill = () => {
+    if (skillInput.trim() && !skills.includes(skillInput)) {
+      setSkills((prevSkills) => {
+        const updatedSkills = [...prevSkills, skillInput.trim()];
+        setFormData((prevData) => ({
+          ...prevData,
+          skills: updatedSkills, // Sync skills in formData
+        }));
+        return updatedSkills;
+      });
+      setSkillInput(""); // Clear input
+    }
+  };
+  
+  
+  const removeSkill = (skillToRemove) => {
+    setSkills((prevSkills) => {
+      const updatedSkills = prevSkills.filter((skill) => skill !== skillToRemove);
+      // Update formData.skills
+      setFormData((prevData) => ({
+        ...prevData,
+        skills: updatedSkills, // Sync skills in formData
+      }));
+      return updatedSkills;
+    });
+  };
+  
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
+  };
+
+
+
+
+
+
+  const [qualificationsFiles, setQualificationsFiles] = useState([]);
+  const [previousJobsFiles, setPreviousJobsFiles] = useState([]);
+  
+  const OOhandleFileChange = (e) => {
+    const newFiles = [...e.target.files];
+    setQualificationsFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+  
+  const OOhandleRemoveFile = (index) => {
+    setQualificationsFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+  
+  const SShandleFileChange = (e) => {
+    const newFiles = [...e.target.files];
+    setPreviousJobsFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+  
+  const SShandleRemoveFile = (index) => {
+    setPreviousJobsFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
 
   return (
     <div className="Gradnded-page">
+                
       <div className="site-container">
         <div className="Gradnded-main">
           <div className="Gradnded-Box Shirolls_Box">
-            <div className="Gradnded-Box-header uupoa">
+            <div className="Gradnded-Box-header">
               <h2 className="big-text">Profile Settings</h2>
-              <p><Link to="/artisan-dashboard/">Go back</Link></p>
             </div>
-
             <div className="Gradnded-Box-Body">
               <div className="Gland-Quest">
                 <div className="Gland-Quest-data">
-                  <label>First name</label>
+                  <label htmlFor="serviceSelect">What type of work do you do?</label>
+
                   <input
                     type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Search category"
+                    value={selectedTrade.name || query} // Use selectedTrade.name when it's set, otherwise fallback to query
+                    onChange={handleInputChange}
+                    onClick={handleInputClick}
                   />
-                </div>
 
-                <div className="Gland-Quest-data">
-                  <label>Last name</label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
+                  {suggestions.length > 0 && (
+                    <ul className="suggestions-list">
+                      {suggestions.map((service, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleSuggestionClick(service.name, service.unique_id)}
+                          className="suggestion-item"
+                        >
+                          {service.name}
+                        </li>
+                      ))}
+                    </ul>
 
-                <div className="Gland-Quest-data">
-                  <label>Phone number</label>
-                  <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
+                  )}
 
-                <div className="Gland-Quest-data">
-                  <label>Address</label>
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                </div>
-
-                
-
-                <div className="Gland-Quest-data">
-                  <label>"Post code</label>
-                  <input type="text"  name="" placeholder="Post code" />
-                </div>
-
-                <div className="Gland-Quest-data all-prolFilw">
-                  <label>Upload Profile Photo (Optional)</label>
-                  <input
-                    type="file"
-                    onChange={(e) => setProfilePhoto(e.target.files[0])}
-                  />
+                  {error && <div className="error-message">{error}</div>}
                 </div>
 
 
-
-
-                <div className="Gland-Quest-data all-prolFilw">
-                    <label>Upload Your Previous Jobs</label>
-                    <input
-                      type="file"
-                      accept="image/*, video/*"
-                      multiple
-                      onChange={OOhandleFileChange}
-                      className="file-input"
-                    />
-                    <div className="thumbnail-container">
-                      {files.map((file, index) => (
-                        <div key={index} className="thumbnail">
-                          {file.type.startsWith('image') ? (
-                            <img src={URL.createObjectURL(file)} alt="thumbnail" className="thumbnail-image" />
-                          ) : (
-                            <video
-                              src={URL.createObjectURL(file)}
-                              className="thumbnail-video"
-                              controls
-                            ></video>
-                          )}
+                  <div className="glahs-sec">
+                  <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">What is your business called?</label>
+                    <input type="text"
+                     name="businessName" 
+                     value={formData.businessName}
+                     onChange={handleInputChange}
+                     placeholder="Enter your business name*" />
+                  </div>
+            
+                  <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">Where is your business located?</label>
+                    <input 
+                     type="text"
+                     name="location"
+                     value={formData.location}
+                     onChange={handleInputChange}
+                     placeholder="Enter your business address*" />
+                  </div>
+            
+                  <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">What are you looking for?</label>
+                    {renderList(
+                      [
+                        "I'm looking to fill the gaps in my diary",
+                        "I need a steady flow of leads",
+                        "I need as many leads as possible",
+                        "I just want a Simservicehub profile",
+                        "I'm not sure",
+                      ],
+                      0
+                    )}
+                  </div>
+            
+                  <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">Tell us more about your business</label>
+                    <h5>Business type</h5>
+                    {renderList(
+                      ["Self Employed", "Limited company", "Looking to start a business"],
+                      1
+                    )}
+                  </div>
+            
+                  <div className="Gland-Quest-data">
+                  <label htmlFor="serviceSelect">Tell us more about your business</label>
+                  <ul className="service-list GG-UL-Flex">
+                    {[
+                      { count: "1", label: "Employee" },
+                      { count: "2-5", label: "Employees" },
+                      { count: "6-9", label: "Employees" },
+                      { count: "10+", label: "Employees" },
+                    ].map((item, index) => (
+                      <li
+                        key={index}
+                        className={`service-item ${
+                          activeIndex[2] === index ? "active-gland-list-Li" : ""
+                        }`}
+                        onClick={() => handleItemClick(2, index)}
+                      >
+                        <span>
+                          {item.count} <br />
+                          <span>{item.label}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+				
+				 <div className="Gland-Quest-data">
+                    <label htmlFor="serviceSelect">What are your skills</label>
+                    <div className="flangSec">
+                      <input
+                        type="text"
+                        placeholder="Enter a skill*"
+                        value={skillInput}
+                        onChange={(e) => setSkillInput(e.target.value)}
+                        onKeyPress={handleKeyPress} // Add skill on Enter
+                      />
+                      <button onClick={addSkill}>
+                        <AddIcon /> Add Skill
+                      </button>
+                    </div>
+                    <div className="skills-container">
+                      {skills.map((skill, index) => (
+                        <div className="skill-box" key={index}>
+                          {skill}
                           <button
-                            onClick={() => OOhandleRemoveFile(index)}
-                            className="remove-button"
+                            className="remove-skill-btn"
+                            onClick={() => removeSkill(skill)}
                           >
-                            X
+                            <CloseIcon />
                           </button>
                         </div>
                       ))}
                     </div>
                   </div>
 
+                  {/* <div className="Gland-Quest-data">
+                      <label>Cost of services/skills (Optional)</label>
+                      <input
+                          type="Number"
+                          placeholder="Enter Amount"
 
+                          name="service_cost"
+                          value={formData.service_cost}
+                          onChange={handleInputChange}
+                      />
+                  </div> */}
+            
+            
+                  <div className="Gland-Quest-data">
+                    
+                    <div className="Gland-Quest-data">
+                      <label>First Name</label>
+                      <input type="text"  name="first_name" placeholder="Your first name" value={formData.first_name}onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                      <label>Surname</label>
+                    <input  type="text" name="last_name"placeholder="Your surname" value={formData.last_name} onChange={handleInputChange}/>
+                    </div>
+                   
 
-                <div className="Gland-Cnt-Btn">
-                  <button
-                    type="submit"
-                    className="post-job-btn"
-                    onClick={handleSubmit}
-                    disabled={loading}
-                  >
-                    {loading ? "Uploading..." : "Save Changes"}
-                  </button>
+                    <div className="Gland-Quest-data">
+                      <label>Address</label>
+                    {/* <input type="text"  name="" placeholder="Post code" /> */}
+
+                            {/* Address Search (Postcode will be extracted from selected address) */}
+                            <input
+                              type="text"
+                              placeholder="Search for your address"
+                              ref={inputRef} // Ensure this is correctly assigned
+                            />
+
+                            </div>
+
+                            <div className="Gland-Quest-data">
+                            <label>Post Code</label>
+
+                    {/* Automatically filled postcode field */}
+                    <input type="text" name="postcode" placeholder="Post code" value={formData.postcode} readOnly />
+
+                    </div>
+
+                    <div className="Gland-Quest-data">
+                    <label>Password</label>
+                    <input  type="password" name="password" placeholder="Password should be at least 8 characters long" value={formData.password} onChange={handleInputChange}/>
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
+                      {error && <div className="error-message">{error}
+                        
+                    
+                    </div>}
+
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Business Email</label>
+                    <input type="email" name="businessEmail" placeholder="Your business email" value={formData.businessEmail} onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Business Phone Number</label>
+                    <input type="tel"  name="businessPhone" placeholder="Please enter business phone with country Code (+23491234567678)" value={formData.businessPhone} onChange={handleInputChange} />
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="mobile_number" placeholder="Please enter mobile  with country Code (+23491234567678)" value={formData.mobile_number} onChange={handleInputChange}/>
+                    </div>
+                    <div className="Gland-Quest-data">
+                    <label>About Yourself</label>
+					          <textarea
+                      id="about_artisan" className="description-textarea" name="about_artisan"
+                      value={formData.about_artisan} onChange={handleInputChange}
+                      placeholder="Tell us about yourself.."
+                    />
+                    </div>
+                  </div>
+
                 </div>
+
               </div>
             </div>
+            <div className="Gland-Quest-data all-prolFilw">
+                <label>Upload Qualifications</label>
+                <input
+                  type="file"
+                  accept="image/*,application/pdf"
+                  multiple
+                  onChange={OOhandleFileChange}
+                  className="file-input"
+                />
+                <div className="thumbnail-container">
+                  {qualificationsFiles.map((file, index) => (
+                    <div key={index} className="thumbnail">
+                      {file.type.startsWith("image") ? (
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt="thumbnail"
+                          className="thumbnail-image"
+                        />
+                      ) : (
+                        <video
+                          src={URL.createObjectURL(file)}
+                          className="thumbnail-video"
+                          controls
+                        ></video>
+                      )}
+                      <button
+                        onClick={() => OOhandleRemoveFile(index)}
+                        className="remove-button"
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="Gland-Quest-data all-prolFilw">
+                <label>Upload Your Previous Jobs</label>
+                <input
+                  type="file"
+                  accept="image/*, video/*"
+                  multiple
+                  onChange={SShandleFileChange}
+                  className="file-input"
+                />
+                <div className="thumbnail-container">
+                  {previousJobsFiles.map((file, index) => (
+                    <div key={index} className="thumbnail">
+                      {file.type.startsWith("image") ? (
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt="thumbnail"
+                          className="thumbnail-image"
+                        />
+                      ) : (
+                        <video
+                          src={URL.createObjectURL(file)}
+                          className="thumbnail-video"
+                          controls
+                        ></video>
+                      )}
+                      <button
+                        onClick={() => SShandleRemoveFile(index)}
+                        className="remove-button"
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            <div className="Gland-Cnt-Btn">
+            <button
+                  type="submit"
+                  className="post-job-btn"
+                  onClick={handleSubmit}
+                  disabled={loading} // Disable the button while loading
+                >
+                  {loading ? (
+                    <span className="loader">Submitting ...</span> // Add a loader icon or animation here
+                  ) : (
+                    "Continue"
+                  )}
+                </button>
+            </div>
+
+
+    
           </div>
         </div>
       </div>
@@ -191,4 +722,6 @@ const ProfileSettings = () => {
   );
 };
 
+
 export default ProfileSettings;
+
