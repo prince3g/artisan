@@ -99,8 +99,6 @@ function Home() {
     }
   };
 
-
-
   const handleSearch = () => {
     if (currentSearch === 'trade') {
       const trade = services.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());
@@ -149,7 +147,6 @@ function Home() {
             `${foundProfile.user.first_name} ${foundProfile.user.last_name}`
           )}`
         );
-
       } else {
         setPopupContent({ title: 'No matching artisan found', list: [] });
         setShowPopup(true);
