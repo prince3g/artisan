@@ -34,7 +34,7 @@ function Home() {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile-no-pagination/`);
         const data = await response.json();
         setProfiles(Array.isArray(data) ? data : []); // Ensure data is an array
       } catch (error) {

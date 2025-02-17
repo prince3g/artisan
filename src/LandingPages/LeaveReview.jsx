@@ -13,10 +13,10 @@ const LeaveReview = () => {
   const [query, setQuery] = useState('');
 
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const artisan_unique_id = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
+  
 
 
   const [suggestions, setSuggestions] = useState([]);
@@ -69,12 +69,17 @@ const LeaveReview = () => {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile-no-pagination/`);
         const data = await response.json();
         if (data.length === 0) {
           setError('No artisans found');
         }
         setArtisanProfiles(data);
+
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
+
       } catch {
         setError('Error fetching artisan profiles. Please try again later.');
       } finally {
@@ -115,7 +120,6 @@ const LeaveReview = () => {
     }
   };
   
-
   const handleRatingWorkmanshipChange = (value) => {
     setActiveWorkmanshipButton(value);
     handleRatingChange('workmanship', value);
@@ -506,19 +510,19 @@ const LeaveReview = () => {
                     <div className="Gland-Quest-data">
                         <label>Your mobile number</label>
                         <h6>We'll send you an SMS to verify your review.</h6>
+
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Mobile phone number"
                             value={reviewData.mobile_number} // Bind state
                             onChange={(e) => handleInputChangeReview('mobile_number', e.target.value)} // Update state
                         />
                         
                     </div>
-
-
                   </div>
                 )}
               </div>
+
             </div>
 
             <div className="Gland-Cnt-Btn">

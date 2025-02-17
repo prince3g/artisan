@@ -100,7 +100,7 @@ const ChatWithClient = () => {
       {activeSection === "chat" && (
         <div className="Chattt-Topp">
           <div className="Chattt-Topp-1">
-            <h3>Chat</h3>
+            <h3>Chat </h3>
           </div>
           <div className="Chattt-Topp-2">
             <span>Online<i className="online"></i></span>
@@ -116,7 +116,7 @@ const ChatWithClient = () => {
             <div className='Chatting-section-Main'>
               {messages.length === 0 && (
                 <p className="no-messages hahggs-TIa">
-                  <span>No messages yet. Start a conversation!</span>
+                  <span>No messages yet. Start a conversation! </span>
                 </p>
               )}
 
@@ -127,7 +127,7 @@ const ChatWithClient = () => {
                     {messages[0].image && <img src={messages[0].image} alt="uploaded" className="Main-image-preview" />}
                     <div className="Mess-hsja">
                       <span>{messages[0].timestamp || 'Just now'}</span>
-                      <span className="message-status double-check">✔✔</span>
+                      <span className="message-status double-check">✔✔</span> 
                     </div>
                   </div>
                 </div>

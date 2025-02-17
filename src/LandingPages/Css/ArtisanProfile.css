@@ -1107,3 +1107,28 @@
     display: none  !important;
   }
 }
+
+.Chatting-Clamp.sent {
+  text-align: right;
+}
+
+.Chatting-Clamp.received {
+  text-align: left;
+}
+
+.Mnachatting-box {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.Mnachatting-box.sent {
+  background-color: #dcf8c6; /* Light green for outgoing messages */
+  align-self: flex-end;
+}
+
+.Mnachatting-box.received {
+  background-color: #f1f0f0; /* Light gray for incoming messages */
+  align-self: flex-start;
+}

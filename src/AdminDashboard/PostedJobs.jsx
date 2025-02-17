@@ -9,8 +9,15 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import UserPlaceholder from "./Img/user-placeholder.png";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const PostedJobs = () => {
+
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [jobs, setJobs] = useState([]); // State to hold job data
   const [loading, setLoading] = useState(true); // State to track loading state
@@ -56,10 +63,10 @@ const PostedJobs = () => {
   
         // Remove the deleted job from the list
         setJobs(jobs.filter((job) => job.id !== jobId));
-        alert("Job deleted successfully!");
+        showMessage("Job deleted successfully!", "failure");
       } catch (error) {
         console.error("Failed to delete job:", error);
-        alert(error.message || "An error occurred while deleting the job.");
+        showMessage(error.message || "An error occurred while deleting the job.", "failure");
       } finally {
         setDeletingJobId(null); // Clear the deleting state
       }
@@ -82,6 +89,15 @@ const PostedJobs = () => {
           <div className="Gradnded-Box-header">
             <h2 className="big-text">Posted Jobs</h2>
           </div>
+
+          {flash && (
+              <FlashMessage
+                message={flash.message}
+                type={flash.type}
+                onClose={() => setFlash(null)}
+              />
+            )}
+
           <div className="Habgb-sec">
             <div className="My-Artisan-Body">
               <div className="garoo-Gird-part2">
@@ -115,7 +131,8 @@ const PostedJobs = () => {
                           <div className="GLnad-btns-1">
                             <span>{job.service_details.postName}</span>
                             <span>
-                              <BusinessCenterIcon /> 20 Applications
+                              {/* <BusinessCenterIcon /> 20 Applications */}
+                              <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application" }
                             </span>
                           </div>
                           <div className="GLnad-btns-2">

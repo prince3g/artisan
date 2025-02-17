@@ -10,6 +10,8 @@ const ProfileSettings = () => {
   const location = useLocation();
   const { user_id, Address = '', first_name = '', last_name = '', user_phone = '' } = location.state || {};
 
+  // console.log(location.state)
+
   const [firstName, setFirstName] = useState(first_name);
   const [lastName, setLastName] = useState(last_name);
   const [phone, setPhone] = useState(user_phone);

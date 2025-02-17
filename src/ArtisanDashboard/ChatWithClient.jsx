@@ -5,8 +5,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChatIcon from '@mui/icons-material/Chat';
 import ChatBanner from './Img/nochat-banner.svg';
 import ChatInput from './ChatInput';
+import './ChatWithClient.css';
 
-const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
+const ChatWithClient =  ({ receiverId, receiverEmail, senderId, senderIdEmail }) => {
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [clients, setClients] = useState([]);
   const [artisanData, setArtisanData] = useState([]);
@@ -62,13 +64,13 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
 
   useEffect(() => {
     const fetchArtisanDetail = async () => {
-      if (!artisanUniqueId?.trim()) {
+      if (!senderId?.trim()) {
         console.error('Artisan Unique ID is missing');
         return;
       }
 
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${artisanUniqueId}/`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${senderId}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -77,21 +79,21 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
-        setArtisanData(data);
+        setArtisanData(data.results[0]);
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
     };
 
     fetchArtisanDetail();
-  }, [artisanUniqueId, djangoHostname]);
+  }, [senderId, djangoHostname]);
 
 
   useEffect(() => {
 
     const fetchMessages = async () => {
         try {
-          const response = await fetch(`${djangoHostname}/api/messaging/auth/messages/conversation/?sender=${customerUniqueId}&receiver=${artisanUniqueId}`, {
+          const response = await fetch(`${djangoHostname}/api/messaging/auth/messages/conversation/?sender=${senderId}&receiver=${receiverId}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -103,7 +105,8 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
           setClients(data.senders || []);
           setMessages(data || []); // Ensure messages is always an array
       
-          // console.log("Chat data", data);
+          //console.log("Chat data", data);
+
         } catch (error) {
           console.error('Error fetching messages:', error);
           setMessages([]); // Set an empty array on error to prevent `undefined`
@@ -112,7 +115,7 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
       
 
     fetchMessages();
-  }, [artisanUniqueId, djangoHostname]);
+  }, [senderId, receiverId, djangoHostname]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -147,7 +150,8 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
   
 
   const markMessagesAsRead = async () => {
-    const unreadMessages = messages.filter(msg => !msg.is_read && msg.receiver === artisanUniqueId);
+    const unreadMessages = messages.filter(msg => !msg.is_read);
+    //const unreadMessages = messages.filter(msg => !msg.is_read && msg.receiver === artisanUniqueId);
     const messageIds = unreadMessages.map(msg => msg.id);
   
     if (messageIds.length === 0) return;
@@ -161,7 +165,8 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
         },
         body: JSON.stringify({
           message_ids: messageIds,
-          receiver_id: senderID,
+          // receiver_id: senderID,
+          // sender_id: senderID,
         }),
       });
   
@@ -208,20 +213,16 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
   };
   
   useEffect(() => {
-    // Scroll to the bottom whenever messages are updated
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center", // Ensures message is centered
+      });
     }
-  }, [messages]); // Dependency on messages to scroll when they change
+  }, [messages]);
   
-//   useEffect(() => {
-//     if (lastMessageRef.current) {
-//       lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-//     }
-//   }, [messages]); // Scroll when messages change
   
-
-
+  
   return (
     <div className="Chattt-sec">
       {activeSection === "chat" && (
@@ -250,13 +251,18 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
             )}
             
             {messages.map((msg, index) => (
+              
                 <div
                 key={index}
-                className={`Chatting-Clamp respond-Box ${msg.isSent ? 'sent' : 'received'}`}
+                
+                // className={`Chatting-Clamp respond-Box ${msg.isSent ? 'sent' : 'received'}`}
+                className={`Chatting-Clamp ${msg.sender === senderIdEmail ? 'sent' : 'received'}`}
                 ref={index === messages.length - 1 ? lastMessageRef : null} // Attach ref to last message
                 >
                 <div className="Mnachatting-box">
                     <p>{msg.content}</p>
+                    {/* <p>{msg.sender}</p>
+                    <p>{msg.receiver}</p> */}
                     {msg.image && (
                     <img src={msg.image} alt="uploaded" className="Main-image-preview" />
                     )}
@@ -297,7 +303,11 @@ const ChatWithClient =  ({ customerUniqueId, artisanUniqueId }) => {
       )}
 
         <div className="Chattt-Foot">
-            <ChatInput onNewMessage={handleNewMessage} receiverId={artisanUniqueId} senderId={customerUniqueId} />
+          {/* <p>Receiver: {artisanUniqueId}</p>
+          <p>Sender: {customerUniqueId}</p> */}
+            {/* <ChatInput onNewMessage={handleNewMessage} senderId={currentUserId} receiverId={chatPartnerId}  /> */}
+            <ChatInput onNewMessage={handleNewMessage} senderId={senderId} receiverId={receiverId}  />
+            
         </div>
 
       {activeSection === "call" && (
