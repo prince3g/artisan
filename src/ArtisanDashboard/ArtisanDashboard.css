@@ -949,3 +949,75 @@
     margin-top: 0px !important;
     border-top: none !important;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* avilability-table */
+
+  .avilability-table td,
+  .avilability-table{
+    border:none !important;
+  }
+
+  .avilability-table td span{
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    grid-gap: 10px;
+  }
+
+  .avilability-table td span p{
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .avilability-table td span input[type="time"]{
+    border: 1px solid #cacaca;
+    width: 130px;
+    height: 30px;
+    padding: 0px 10px;
+    border-radius: 5px;
+  }
+
+
+  .save-bbbna{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .save-bbbna button{
+    position: relative;
+    padding: 12px 20px;
+    background-color: #B1BD3B;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .save-bbbna button:hover{
+    background-color: #a6b23d;
+  }
