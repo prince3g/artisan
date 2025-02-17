@@ -104,8 +104,6 @@ const ChatInput = ({ onNewMessage, receiverId, senderId }) => {
     }
 };
 
-
-
   // Handle typing indicator
   const handleInputChange = (e) => {
     setMessage(e.target.value);

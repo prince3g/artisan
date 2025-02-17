@@ -46,11 +46,9 @@ const mediaData = [
 
 const PortfolioSlider = (artisanUniqueID) => {
 
+
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-
- // const artisanUniqueId = artisanUniqueID.artisanUniqueID || sessionStorage.getItem("unique_user_id").trim();
-  const artisanUniqueId = artisanUniqueID.artisanUniqueID
-
 
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -106,7 +104,7 @@ const PortfolioSlider = (artisanUniqueID) => {
 
   
   useEffect(() => {
-    const sanitizedId = artisanUniqueId; // Ensure artisanUniqueId is defined
+    const sanitizedId = artisanUniqueID.artisanUniqueID; // Ensure artisanUniqueId is defined
   
     const fetchArtisanDetail = async () => {
       if (!sanitizedId) {
@@ -114,69 +112,37 @@ const PortfolioSlider = (artisanUniqueID) => {
         return;
       }
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${sanitizedId}`, {
-        // const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/${sanitizedId}/`, {
+
+      const sanitizedId = artisanUniqueID.artisanUniqueID.replace(/\/$/, ""); // Remove trailing slash
+      const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${sanitizedId}`, {
+      
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
           credentials: 'include', // Match server-side CORS_ALLOW_CREDENTIALS
         });
-  
+    
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+    
         const data = await response.json();
-       console.log("Fetched Artisans:", data.reults);
-        setArtisanData(data.results[0]);
+        //console.log("Fetched Artisan Data:", data);
+        setArtisanData(data);
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
     };
+    
   
     fetchArtisanDetail();
-  }, [djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
+  }, [artisanUniqueID, djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
   
-
-  const plumberingServices = [
-    "Pipe Installation and Repair",
-    "Leak Detection and Repair",
-    "Clogged Drains Cleaning",
-    "Water Heater Installation",
-    "Water Heater Repair",
-    "Sewer Line Repair",
-    "Septic Tank Installation",
-    "Septic Tank Maintenance",
-    "Toilet Installation and Repair",
-    "Faucet Installation and Repair",
-    "Shower and Tub Installation",
-    "Garbage Disposal Installation",
-    "Garbage Disposal Repair",
-    "Gas Line Installation",
-    "Gas Line Leak Repair",
-    "Backflow Prevention Services",
-    "Sump Pump Installation",
-    "Sump Pump Repair",
-    "Water Softener Installation",
-    "Water Filtration System Installation",
-    "Outdoor Plumbing Repairs",
-    "Frozen Pipe Repair",
-    "Bathroom Plumbing Renovation",
-    "Kitchen Plumbing Renovation",
-    "Hydro Jetting Services",
-    "Main Water Line Repair",
-    "Pressure Regulator Repair",
-    "Drainage System Installation",
-    "Emergency Plumbing Services",
-  ];
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-
-
-
   
   return (
     <div className="portfolio-slider">

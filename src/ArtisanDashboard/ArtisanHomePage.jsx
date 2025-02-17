@@ -10,6 +10,7 @@ import Star from '@mui/icons-material/Star';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ChatWithClient from './ChatWithClient';
 
+
 const ArtisanHomePage = () => {
     
     const [clients, setClients] = useState([]);

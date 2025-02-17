@@ -391,7 +391,7 @@ import { Link } from 'react-router-dom';
 import PortfolioSlider from './PortfolioSlider';
 import MessageIcon from '@mui/icons-material/Message';
 
-const Comments = ({ artisanUniqueId}) => {
+const Comments = ({ artisanUniqueId }) => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
 
@@ -406,16 +406,14 @@ const Comments = ({ artisanUniqueId}) => {
     courtesy: '0.0',
   });
 
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        // if (!artisanUniqueId) return;
+        if (!artisanUniqueId) return;
 
 
-        const sanitizedId = sessionStorage.getItem("unique_user_id").trim() || artisanUniqueId.trim();
         const response = await axios.get(
-          `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${sanitizedId}/`
+          `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${artisanUniqueId}/`
         );
         const data = response.data;
 
