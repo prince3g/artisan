@@ -438,8 +438,8 @@ const ArtisanChattingPage = () => {
                         >
                           <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
                             <p>{msg.content}</p>
-                            <p>{msg.sender}</p>
-                            <p>{isOutgoing ? "Outgoing" : "Incoming"}</p>
+                            {/* <p>{msg.sender}</p>
+                            <p>{isOutgoing ? "Outgoing" : "Incoming"}</p> */}
                           </div>
                         </div>
                       );

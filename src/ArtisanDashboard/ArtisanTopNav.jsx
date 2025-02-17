@@ -21,6 +21,7 @@ const ArtisanTopNav = () => {
   const Address= sessionStorage.getItem('Address');
   const user_unique_user_id = localStorage.getItem('unique_user_id');
   const user_phone = sessionStorage.getItem('user_phone');
+  const artisanCategoryName = sessionStorage.getItem('artisanCategoryName');
 
 
   const userData = {
@@ -41,7 +42,7 @@ const ArtisanTopNav = () => {
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
         <img src={UserPlaceholder}></img>
-        <h3>{last_name} {first_name} <span>Electrician</span></h3>
+        <h3>{last_name} {first_name} <span>{artisanCategoryName}</span></h3>
     </div>
     <div className="Artisan-TopNav-Main-2">
         <ul>
