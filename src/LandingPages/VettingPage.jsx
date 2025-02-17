@@ -81,6 +81,7 @@ const VettingPage = () => {
                 <div className="Gland-Quest-data">
                   <label>Proof of Address</label>
                   <input type="file" onChange={(e) => handleFileChange(e, setProofOfAddress)} />
+                  <span className="kja-span">(Acceptable Documents are <b>JPG,PNG and PDF</b>)</span>
                 </div>
 
                 <div className="Gland-Quest-data">

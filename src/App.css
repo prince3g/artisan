@@ -2108,3 +2108,10 @@ input[type="password"] {
 .hj-inpuusy button:hover{
   background-color: #96a133;
 }
+
+
+.kja-span{
+  font-size: 12px;
+  margin-top: 10px;
+  font-style: italic;
+}
