@@ -46,12 +46,10 @@ const mediaData = [
 
 const PortfolioSlider = (artisanUniqueID) => {
 
-
-
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-  const artisanUniqueId = artisanUniqueID.artisanUniqueID || sessionStorage.getItem("unique_user_id").trim();
-  // const artisanUniqueId = artisanUniqueID.artisanUniqueID
+ // const artisanUniqueId = artisanUniqueID.artisanUniqueID || sessionStorage.getItem("unique_user_id").trim();
+  const artisanUniqueId = artisanUniqueID.artisanUniqueID
 
 
 
@@ -108,7 +106,7 @@ const PortfolioSlider = (artisanUniqueID) => {
 
   
   useEffect(() => {
-    const sanitizedId = artisanUniqueId?.trim(); // Ensure artisanUniqueId is defined
+    const sanitizedId = artisanUniqueId; // Ensure artisanUniqueId is defined
   
     const fetchArtisanDetail = async () => {
       if (!sanitizedId) {
@@ -130,15 +128,15 @@ const PortfolioSlider = (artisanUniqueID) => {
         }
   
         const data = await response.json();
-       // console.log("Fetched Artisan Data:", data);
-        setArtisanData(data);
+       console.log("Fetched Artisans:", data.reults);
+        setArtisanData(data.results[0]);
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
     };
   
     fetchArtisanDetail();
-  }, [artisanUniqueId, djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
+  }, [djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
   
 
   const plumberingServices = [
