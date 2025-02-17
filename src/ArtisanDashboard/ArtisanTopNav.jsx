@@ -41,7 +41,7 @@ const ArtisanTopNav = () => {
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
         <img src={UserPlaceholder}></img>
-        <h3>{last_name} {first_name} <a href="#">SimserviceHub Artisan</a></h3>
+        <h3>{last_name} {first_name} <span>Electrician</span></h3>
     </div>
     <div className="Artisan-TopNav-Main-2">
         <ul>

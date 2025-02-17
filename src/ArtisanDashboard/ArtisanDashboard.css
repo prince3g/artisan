@@ -70,8 +70,8 @@
     font-size: 14px;
     font-weight: 600;
 }
-.Artisan-TopNav-Main-1 h3 a{
-    font-size: 10px;
+.Artisan-TopNav-Main-1 h3 span{
+    font-size: 13px;
     font-weight: 400;
     background-color: #F1F1F1;
     border:1px solid #dfdede;
@@ -81,9 +81,7 @@
     color: #505050;
     transition: all 0.3s ease-in-out;
 }
-.Artisan-TopNav-Main-1 h3 a:hover{
-    text-decoration: underline;
-}
+
 
 .Artisan-TopNav-Main-2{
     position: relative;
