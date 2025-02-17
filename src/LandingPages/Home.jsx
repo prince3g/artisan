@@ -231,6 +231,7 @@ function Home() {
                         )}
                       </div>
                     )}
+
                     {currentSearch === 'location' && (
                       <div className="Seach-OO1">
                         <label htmlFor="location-input">Search by Location</label>
@@ -320,6 +321,7 @@ function Home() {
           </div>
         </div>
       </div>
+
 
       {showPopup && (
         <div className="Services-PopUp-Sec">

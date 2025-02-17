@@ -27,14 +27,11 @@ import UserImg from './Img/user-img.jpg';
 // Importing Material Icons
 import { IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-
 // Importing local images and videos
 import image1 from "./Img/PortImgs/1.jpg";
 import image2 from "./Img/PortImgs/2.jpg";
 import image3 from "./Img/PortImgs/3.jpg";
 import video1 from "./Img/PortImgs/video1.mp4";
-
-
 
 
 const mediaData = [
@@ -46,15 +43,11 @@ const mediaData = [
 
 const PortfolioSlider = (artisanUniqueID) => {
 
-
-
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-
-
   const [currentSlide, setCurrentSlide] = useState(0);
   const mainSliderRef = useRef(null); // Reference for the main slider
-
   const [artisanData, setArtisanData] = useState([]); // Initialize service categories state
+
 
   const settings = {
     dots: false,
@@ -64,6 +57,7 @@ const PortfolioSlider = (artisanUniqueID) => {
     slidesToScroll: 1,
     beforeChange: (_, next) => setCurrentSlide(next),
   };
+
 
   const thumbnailSettings = {
     dots: false,
@@ -77,9 +71,7 @@ const PortfolioSlider = (artisanUniqueID) => {
     arrows: false, // Hide navigation buttons for thumbnails
   };
 
-
   const [isVisible, setIsVisible] = useState(true);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1000) {
@@ -88,13 +80,10 @@ const PortfolioSlider = (artisanUniqueID) => {
         setIsVisible(true); // Desktop screens
       }
     };
-
     // Check screen size on initial render
     handleResize();
-
     // Add event listener for window resize
     window.addEventListener('resize', handleResize);
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -105,6 +94,7 @@ const PortfolioSlider = (artisanUniqueID) => {
   
   useEffect(() => {
     const sanitizedId = artisanUniqueID.artisanUniqueID; // Ensure artisanUniqueId is defined
+
   
     const fetchArtisanDetail = async () => {
       if (!sanitizedId) {
@@ -137,7 +127,7 @@ const PortfolioSlider = (artisanUniqueID) => {
     
   
     fetchArtisanDetail();
-  }, [artisanUniqueID, djangoHostname]); // Use artisanUniqueId and djangoHostname in dependency array
+  }, []); // Use artisanUniqueId and djangoHostname in dependency array
   
 
   const toggleVisibility = () => {
@@ -186,11 +176,6 @@ const PortfolioSlider = (artisanUniqueID) => {
             : "Artisan Skills"}
           <span>&nbsp; &nbsp; {artisanData.skills ? artisanData.skills.length : 0} &nbsp; &nbsp; Skills</span>
         </h3>
-
-         {/* {artisanData.user?.first_name && artisanData.user?.last_name
-              ? `${artisanData.user.first_name} ${artisanData.user.last_name}`
-              : "Artisan Name"}
-                */}
 
           <div className="Ull-is">
             {artisanData.skills ? (
@@ -395,7 +380,7 @@ const PortfolioSlider = (artisanUniqueID) => {
       </li>
       <li>
         <span>
-          <LanguageIcon /> Website
+          <LanguageIcon /> Email
         </span>
         <a href={`mailto:${artisanData.user?.email ? artisanData.user.email : "example@example.com"}`}  target="_blank" rel="noopener noreferrer">
         {artisanData.user?.email && artisanData.user?.email? 

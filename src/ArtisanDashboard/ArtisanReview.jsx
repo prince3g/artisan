@@ -31,10 +31,11 @@ const ArtisanReview = () => {
   const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
   const service_details = decodeURIComponent(searchParams.get('service_details') || '');
   const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
-  const artisan_unique_id = decodeURIComponent(searchParams.get('artisan_unique_id') || '');
+  // const artisan_unique_id = decodeURIComponent(searchParams.get('artisan_unique_id') || '');
   const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
-  
 
+  const artisan_unique_id = sessionStorage.getItem('unique_user_id');
+  
   
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]); // To store messages
@@ -46,7 +47,6 @@ const ArtisanReview = () => {
   const [activeSection, setActiveSection] = useState("chat");
 
   const [isToggled, setIsToggled] = useState(false);
-
 
 
   const [rating, setRating] = useState(""); // For storing selected rating
