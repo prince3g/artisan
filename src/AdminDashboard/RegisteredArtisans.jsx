@@ -123,6 +123,8 @@ const RegisteredArtisans = () => {
                     >
                       Profile
                     </a>
+                    <span className="active-Btn">Activate</span>
+
                     <span className="suspend-Btn">Suspend</span>
                     <span
                       className="Remove-Btn"
@@ -145,7 +147,7 @@ const RegisteredArtisans = () => {
           Previous
         </button>
         {/* Optionally, display the total count or current page info */}
-        <span>{count} Artisan{count !== 1 ? "s" : ""}</span>
+        <span>{count} {count !== 1 ? " " : ""}</span>
         <button onClick={handleNextPage} disabled={!nextPage}>
           Next
         </button>

@@ -914,6 +914,10 @@
 .action-btn .accept-Btn{
 	background: #B1BD3B;
 }
+.action-btn a:hover,
+.action-btn span:hover{
+  opacity: 0.8;
+}
 
 .action-btn a svg,
 .action-btn span svg{
@@ -933,6 +937,10 @@
   border:1px solid #FF4F4F !important;
 }
 
+.active-Btn{
+	color: #B1BD3B !important;
+  border:1px solid #B1BD3B !important;
+}
 
 .more-sec{
 	position: relative;
