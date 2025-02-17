@@ -59,6 +59,19 @@ const ProfileSettings = () => {
     return <div>Loading...</div>;
   }
 
+
+
+    const [files, setFiles] = useState([]);
+  
+    const OOhandleFileChange = (e) => {
+      const newFiles = [...e.target.files];
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    };
+  
+    const OOhandleRemoveFile = (index) => {
+      setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
+
   return (
     <div className="Gradnded-page">
       <div className="site-container">
@@ -107,7 +120,12 @@ const ProfileSettings = () => {
                   />
                 </div>
 
-                <input type="text"  name="" placeholder="Post code" />
+                
+
+                <div className="Gland-Quest-data">
+                  <label>"Post code</label>
+                  <input type="text"  name="" placeholder="Post code" />
+                </div>
 
                 <div className="Gland-Quest-data all-prolFilw">
                   <label>Upload Profile Photo (Optional)</label>
@@ -116,6 +134,43 @@ const ProfileSettings = () => {
                     onChange={(e) => setProfilePhoto(e.target.files[0])}
                   />
                 </div>
+
+
+
+
+                <div className="Gland-Quest-data all-prolFilw">
+                    <label>Upload Your Previous Jobs</label>
+                    <input
+                      type="file"
+                      accept="image/*, video/*"
+                      multiple
+                      onChange={OOhandleFileChange}
+                      className="file-input"
+                    />
+                    <div className="thumbnail-container">
+                      {files.map((file, index) => (
+                        <div key={index} className="thumbnail">
+                          {file.type.startsWith('image') ? (
+                            <img src={URL.createObjectURL(file)} alt="thumbnail" className="thumbnail-image" />
+                          ) : (
+                            <video
+                              src={URL.createObjectURL(file)}
+                              className="thumbnail-video"
+                              controls
+                            ></video>
+                          )}
+                          <button
+                            onClick={() => OOhandleRemoveFile(index)}
+                            className="remove-button"
+                          >
+                            X
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+
 
                 <div className="Gland-Cnt-Btn">
                   <button
