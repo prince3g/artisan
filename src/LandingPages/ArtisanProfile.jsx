@@ -39,7 +39,8 @@ const ArtisanProfile = () => {
   const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
   
 
-  
+
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]); // To store messages
   const [showTyping, setShowTyping] = useState(false); // Control "Typing..." message
@@ -181,7 +182,7 @@ const ArtisanProfile = () => {
 
       <div className='Artisan-comment-sec'>
         <div className='large-container'>
-          <Comments artisanUniqueId={artisan_unique_id} />
+        <Comments artisanUniqueId={artisan_unique_id}/>
           {/* <div className='Drop-Revvo'>
             <button onClick={() => {
               handleSectionClick("review");

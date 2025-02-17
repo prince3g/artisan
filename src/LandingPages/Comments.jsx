@@ -391,7 +391,7 @@ import { Link } from 'react-router-dom';
 import PortfolioSlider from './PortfolioSlider';
 import MessageIcon from '@mui/icons-material/Message';
 
-const Comments = ({ artisanUniqueId }) => {
+const Comments = ({ artisanUniqueId}) => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
 
@@ -405,6 +405,7 @@ const Comments = ({ artisanUniqueId }) => {
     tidiness: '0.0',
     courtesy: '0.0',
   });
+
 
   useEffect(() => {
     const fetchReviews = async () => {
