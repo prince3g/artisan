@@ -284,3 +284,10 @@ p,h1,h2,h3,h4,h5,h6,ul,ol,li,a,button,input,span,textarea, select{
 /* .Chatting-Clamp.sent .Mnachatting-box{
   background-color: #dbe95b !important;
 } */
+
+
+
+
+.oo-dlsts-OO2 h4 span{
+  display: none !important;
+}
