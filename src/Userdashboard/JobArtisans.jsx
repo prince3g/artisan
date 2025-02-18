@@ -67,8 +67,8 @@ const JobArtisans = () => {
                 <span><Star /> Top Rated</span>
                  </div>
                  <div className='GLnad-btns-2'>
-                 <button><Favorite /></button>
-                 <Link to="/artisan-profile">View Profile</Link>
+                 <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link>
+                 <Link to="/artisan-profile">Profile</Link>
                  </div>
                </div>
            </div>
@@ -99,8 +99,8 @@ const JobArtisans = () => {
                 <span><Star /> Top Rated</span>
                  </div>
                  <div className='GLnad-btns-2'>
-                 <button><Favorite /></button>
-                 <Link to="/artisan-profile">View Profile</Link>
+                 <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link>
+                 <Link to="/artisan-profile">Profile</Link>
                  </div>
                </div>
            </div>
