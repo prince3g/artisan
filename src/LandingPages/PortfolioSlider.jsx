@@ -133,6 +133,24 @@ const PortfolioSlider = (artisanUniqueID) => {
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
+
+
+    const [isTableVisible, setIsTableVisible] = useState(false);
+  
+    const [availability] = useState([
+      { day: 'Monday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Tuesday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Wednesday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Thursday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Friday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Saturday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+      { day: 'Sunday', fromTime: '4:30 AM', toTime: '7:30 PM' },
+    ]);
+  
+    const toggleTableVisibility = () => {
+      setIsTableVisible(!isTableVisible);
+    };
   
   return (
     <div className="portfolio-slider">
@@ -163,9 +181,9 @@ const PortfolioSlider = (artisanUniqueID) => {
       <h2 onClick={toggleVisibility}>
         Services and Skills
         {isVisible ? (
-          <ExpandMoreIcon style={{ marginLeft: '8px' }} />
-        ) : (
           <ExpandLessIcon style={{ marginLeft: '8px' }} />
+        ) : (
+          <ExpandMoreIcon style={{ marginLeft: '8px' }} />
         )}
       </h2>
       {isVisible && (
@@ -192,6 +210,100 @@ const PortfolioSlider = (artisanUniqueID) => {
        </ul>
       )}
     </div>
+
+    <div className="Rogoos-sec hayyshs-sec">
+      <h2 onClick={toggleTableVisibility} style={{ cursor: 'pointer' }}>
+        Time Availability
+        {isTableVisible ? <ExpandLessIcon style={{ marginLeft: '8px' }} /> : <ExpandMoreIcon style={{ marginLeft: '8px' }} />}
+      </h2>
+      {isTableVisible && (
+        <div className="Rogoos-Tables oahsk-tabel">
+          <table>
+            <thead>
+              <tr>
+                <th>Days</th>
+                <th>From Time</th>
+                <th>To Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {availability.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.day}</td>
+                  <td>{item.fromTime}</td>
+                  <td>{item.toTime}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+
+
+
+
+<div className="jahs-slider">
+
+      {/* Main Media Slider */}
+      <Slider {...settings} ref={mainSliderRef}>
+        {mediaData.map((media, index) => (
+          <div key={index}>
+            {media.type === "image" ? (
+              <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
+            ) : (
+              <video
+                src={media.src}
+                controls
+                className="main-media"
+                alt={`Media ${index + 1}`}
+              />
+            )}
+          </div>
+        ))}
+      </Slider>
+
+      {/* Thumbnail Navigation */}
+      <div className="thumbnails">
+        <Slider {...thumbnailSettings}>
+          {mediaData.map((media, index) => (
+            <div
+              key={index}
+              className={`thumbnail ${currentSlide === index ? "active" : ""}`}
+              onClick={() => mainSliderRef.current.slickGoTo(index)} // Navigate to clicked thumbnail
+            >
+              {media.type === "image" ? (
+                <img src={media.src} alt={`Thumbnail ${index + 1}`} className="thumbnail-image" />
+              ) : (
+                <video
+                  src={media.src}
+                  muted
+                  className="thumbnail-image"
+                  alt={`Thumbnail ${index + 1}`}
+                />
+              )}
+            </div>
+          ))}
+        </Slider>
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="navigation-buttons">
+        <IconButton
+          onClick={() => mainSliderRef.current.slickPrev()}
+          className="nav-button prev-button"
+        >
+          <ArrowBack />
+        </IconButton>
+        <IconButton
+          onClick={() => mainSliderRef.current.slickNext()}
+          className="nav-button next-button"
+        >
+          <ArrowForward />
+        </IconButton>
+      </div>
+    </div>
+
 
     <div className="Rogoos-sec">
       <h2>Company Profile</h2>
@@ -295,68 +407,6 @@ const PortfolioSlider = (artisanUniqueID) => {
           </td>
         </tr>
       </table>
-      </div>
-    </div>
-
-
-<div className="jahs-slider">
-
-      {/* Main Media Slider */}
-      <Slider {...settings} ref={mainSliderRef}>
-        {mediaData.map((media, index) => (
-          <div key={index}>
-            {media.type === "image" ? (
-              <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
-            ) : (
-              <video
-                src={media.src}
-                controls
-                className="main-media"
-                alt={`Media ${index + 1}`}
-              />
-            )}
-          </div>
-        ))}
-      </Slider>
-
-      {/* Thumbnail Navigation */}
-      <div className="thumbnails">
-        <Slider {...thumbnailSettings}>
-          {mediaData.map((media, index) => (
-            <div
-              key={index}
-              className={`thumbnail ${currentSlide === index ? "active" : ""}`}
-              onClick={() => mainSliderRef.current.slickGoTo(index)} // Navigate to clicked thumbnail
-            >
-              {media.type === "image" ? (
-                <img src={media.src} alt={`Thumbnail ${index + 1}`} className="thumbnail-image" />
-              ) : (
-                <video
-                  src={media.src}
-                  muted
-                  className="thumbnail-image"
-                  alt={`Thumbnail ${index + 1}`}
-                />
-              )}
-            </div>
-          ))}
-        </Slider>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="navigation-buttons">
-        <IconButton
-          onClick={() => mainSliderRef.current.slickPrev()}
-          className="nav-button prev-button"
-        >
-          <ArrowBack />
-        </IconButton>
-        <IconButton
-          onClick={() => mainSliderRef.current.slickNext()}
-          className="nav-button next-button"
-        >
-          <ArrowForward />
-        </IconButton>
       </div>
     </div>
 

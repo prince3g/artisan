@@ -2115,3 +2115,36 @@ input[type="password"] {
   margin-top: 10px;
   font-style: italic;
 }
+
+
+
+
+
+
+
+/* oahsk-tabel */
+
+.oahsk-tabel{
+  width: 100% !important;
+  display: block !important;
+  border:none !important;
+}
+
+.oahsk-tabel table{
+  width: 100% !important;
+  font-size: 13px !important;
+}
+
+.oahsk-tabel table thead th{
+  text-align: left !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 10px  10px !important;
+  border:1px solid #dfdede;
+  font-size: 12px;
+}
+
+.oahsk-tabel table,
+.oahsk-tabel table td{
+  border:none !important;
+}
