@@ -2148,3 +2148,224 @@ input[type="password"] {
 .oahsk-tabel table td{
   border:none !important;
 }
+
+
+
+
+
+/* hggah-req */
+
+.hggah-req{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 30px;
+  gap: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border:1px solid #c1c1c1;
+}
+@media screen and (max-width:600px){
+  .hggah-req{
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px !important;
+    grid-gap: 10px !important;
+    padding:20px 0px !important;
+    border: none !important;
+    border-bottom:1px solid #c1c1c1 !important;
+    background-color: transparent !important;
+  }
+  .hggah-req:first-child{
+    border-top:1px solid #c1c1c1 !important;
+  }
+}
+
+.hggah-req-1{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.hggah-req-2 h3,
+.hggah-req-1 h3{
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hggah-req-1 p{
+  color: #505050 !important;
+}
+
+.hggah-req-2 select,
+.hggah-req-2 input{
+  position: relative;
+  width: 150px;
+  height: 40px;
+  border:1px solid #c1c1c1;
+  padding: 0px 20px;
+  border-radius: 8px;
+}
+.muteddd-inpt input,
+.user-quote .hggah-req-2 input{
+  background-color: #F1F1F1 !important;
+  border-color: transparent !important;
+  font-weight: 700;
+}
+@media screen and (max-width:600px){
+  .user-quote .hggah-req-2 input{
+    border:1px solid #c1c1c1 !important;
+  }
+}
+
+.aaggs-sec-btns{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap:10px;
+  grid-gap: 10px;
+}
+
+.aaggs-sec-btns button{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border:1px solid transparent;
+}
+
+.aaggs-sec-btns button.accpt-qqut{
+  background-color: #B1BD3B;
+  color: #fff;
+}
+.aaggs-sec-btns button.accpt-qqut:hover{
+  background-color: #96a133;
+}
+
+.aaggs-sec-btns button.dec-qqut{
+  background-color: transparent;
+  border-color: #000;
+}
+.aaggs-sec-btns button.dec-qqut:hover{
+  border-color: #B1BD3B;
+  color: #B1BD3B;
+}
+
+
+
+
+
+/* qquqps-drops */
+
+.qquqps-drops{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+}
+
+.qquqps-drops .site-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.qquqps-Box{
+  position: relative;
+  width: 550px;
+  height: auto;
+  min-height: 200px;
+  background-color: #fff;
+  padding: 50px;
+}
+@media screen and (max-width:700px){
+  .qquqps-Box{
+    width: 100% !important;
+    padding:40px 20px !important;
+  }
+}
+.Close-qquqps-Box{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 0;
+  top: 0;
+  background-color: #e3e2e2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.Close-qquqps-Box:hover{
+  background-color: #d2d2d2;
+}
+
+
+
+.qquqps-Cont{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border:1px solid #c1c1c1;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.qquqps-Cont:hover{
+  background-color: #e3e2e2;
+}
+
+.qquqps-Cont h3{
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.qquqps-Cont p{
+  color: #505050 !important;
+  font-size: 14px !important;
+}
+
+@media screen and (max-width:500px){
+  .qquqps-Cont h3{
+    font-size: 13px !important;
+  }
+  .qquqps-Cont p{
+    font-size: 12px !important;
+  }
+}
+.exctip-pay{
+  background-color: #96a133 !important;
+  color: #fff !important;
+  border-color: #96a133 !important;
+}
+
+.exctip-pay p{
+  color: #fff !important;
+}

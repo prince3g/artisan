@@ -109,7 +109,7 @@ const PostedJobs = () => {
 
                           <div className='GLnad-btns ggfa-btns'>
                             <div className='GLnad-btns-1'>
-                              <span>{job.title}</span>
+                              <span>Active</span>
                               <span><BusinessCenterIcon /> 23 Applications</span>
                             </div>
                             <div className='GLnad-btns-2'>

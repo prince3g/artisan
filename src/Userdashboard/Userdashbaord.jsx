@@ -14,6 +14,8 @@ import PostedJobs from './PostedJobs';
 
 import JobArtisans from './JobArtisans';
 
+import ViewQuote from './ViewQuote';
+
 
 
 const Userdashbaord = () => {
@@ -25,6 +27,7 @@ const Userdashbaord = () => {
                 <Route path="/edit-profile" element={<EditProfile />} />
                 <Route path="/jobs" element={<PostedJobs />} />
                 <Route path="/job-artisans" element={<JobArtisans />} />
+                <Route path="/view-quote" element={<ViewQuote />} />
              </Routes>
 
 

@@ -23,6 +23,9 @@ import ArtisanAvailability from './ArtisanAvailability';
 import ArtisanPayout from './ArtisanPayout';
 
 
+import SendQuote from './SendQuote';
+
+
 
 
 const ArtisanDashboard = () => {
@@ -58,6 +61,7 @@ const ArtisanDashboard = () => {
                 <Route path="/availability" element={<ArtisanAvailability />} />
                 <Route path="/reviews" element={<ArtisanReview />} />
                 <Route path="/payout-setting" element={<ArtisanPayout />} />
+                <Route path="/send-quote" element={<SendQuote />} />
              </Routes>
 
 

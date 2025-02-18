@@ -225,3 +225,60 @@ a.edit-Bntnn:hover{
     background-color: #e22222 !important;
     color: #fff !important;
 }
+
+
+
+
+
+
+
+
+
+
+/* route-to-chat-btn */
+
+.route-to-chat-btn{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    grid-gap: 5px;
+    font-size: 11px;
+    padding: 3px 8px;
+    background-color: #F1F1F1;
+    border-radius: 30px;
+    border: 1px solid #dddbdb;
+    margin-top: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.route-to-chat-btn:hover{
+    background-color: #e8e7e7; 
+}
+.route-to-chat-btn span{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: #394c13;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    font-size: 8px;
+}
+
+
+
+.Vw-qquote-btnna{
+    background-color: transparent !important;
+    border:1px solid #394c13 !important;
+    color: #394c13 !important;
+}
+
+.Vw-qquote-btnna:hover{
+    background-color: #394c13 !important;
+    color: #fff !important;
+}

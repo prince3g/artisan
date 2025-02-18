@@ -144,13 +144,7 @@ const JobDescription = () => {
                  </div>
                  <div className='GLnad-btns-2'>
 
-                 <button
-                    className="apply-brnsns"
-                    onClick={() => handleDelete(job.job.id)}
-                    disabled={deletingJobId === job.job.id}
-                  >
-                    {deletingJobId === job.job.id ? "Applying..." : "Apply now"}
-                  </button>
+                   <Link to="/artisan-dashboard/send-quote">Send Quote</Link>
 
                  </div>
                </div>
