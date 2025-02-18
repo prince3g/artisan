@@ -23,6 +23,11 @@ const PostJob = () => {
   const [textareaContent, setTextareaContent] = useState('');
   const [jobType, setJobType] = useState('simple');  // Track job type (Simple or Complex)
 
+  const [jobAddress, setJobAddress] = useState(""); // New state for job address
+
+
+
+
   const [loading, setLoading] = useState(false);  // New loading state
   const navigate = useNavigate();
 
@@ -79,6 +84,10 @@ const PostJob = () => {
     setTextareaContent(event.target.value);
   };
 
+  const handleAddressChange = (event) => {
+    setJobAddress(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -97,7 +106,7 @@ const PostJob = () => {
     // },
       category: selectedService.name,
       title: selectedService.name,
-      location: "N0 10 station Road Ph, R/s",
+      location: jobAddress,  // Include job address
       customer: sessionStorage.getItem('unique_user_id'),
       budget: 50.00,
 
@@ -117,8 +126,6 @@ const PostJob = () => {
 
       if (response.ok) {
         const result = await response.json();
-        //console.log('Job posted successfully:', result);
-        // alert('Your job has been posted successfully!');
         navigate('/user-dashboard/jobs');
       } else {
         console.error('Failed to post job:', response.statusText);
@@ -235,6 +242,17 @@ const PostJob = () => {
 
                 {activeIndex !== null && (
                   <div className="Gland-Quest-data">
+                    <label>Where  do you want this job done?</label>
+                    <input 
+                      type="text"  
+                      name="job_address" 
+                      placeholder="Enter the job address here.." 
+                      value={jobAddress} 
+                      onChange={handleAddressChange} 
+                      onKeyDown={handleOtherServiceKeyDown} 
+                    />
+
+                    
                     <label>Add a description to your job</label>
                     <textarea
                       id="descriptionTextarea"

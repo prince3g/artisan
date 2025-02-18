@@ -397,36 +397,6 @@ const ArtisanChattingPage = () => {
                         <span>No messages yet. Start a conversation!</span>
                       </p>
                     )}
-{/*                                         
-                    {messages.map((msg, index) => {
-                     // const isOutgoing = msg.sender === senderIDEmail; // Compare sender's email
-                      const isOutgoing = msg.sender; // Compare sender's email
-                      return (
-                        <div
-                          key={index}
-                          className={`Chatting-Clamp ${isOutgoing ? senderIDEmail : msg.receiver}`}
-                          ref={index === messages.length - 1 ? lastMessageRef : null}
-                        >
-                          <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
-                            <p>{msg.content}</p>
-                            <p>{msg.receiver}</p>
-                            <p>{msg.sender}</p>
-                            {msg.image && (
-                              <img src={msg.image} alt="uploaded" className="Main-image-preview" />
-                            )}
-                            <div className="Mess-hsja">
-                              <span>{formatTimestamp(msg.created_at)}</span>
-                              {msg.isSent && !msg.isDelivered ? (
-                                <span className="message-status single-check">✔</span>
-                              ) : (
-                                <span className="message-status double-check">✔✔</span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })} */}
-
                     {messages.map((msg, index) => {
                       const isOutgoing = msg.sender === senderIDEmail; // Check if the message was sent by the current user
                       
@@ -438,6 +408,7 @@ const ArtisanChattingPage = () => {
                         >
                           <div className={`Mnachatting-box ${isOutgoing ? 'sent' : 'received'}`}>
                             <p>{msg.content}</p>
+                            <span>{formatTimestamp(msg.created_at)}</span>
                             {/* <p>{msg.sender}</p>
                             <p>{isOutgoing ? "Outgoing" : "Incoming"}</p> */}
                           </div>
