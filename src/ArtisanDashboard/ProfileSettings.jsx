@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef} from "react";
 import { useNavigate } from "react-router-dom";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
 
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-
 const loadGoogleMapsScript = (callback) => {
   if (window.google && window.google.maps) {
-    console.log("Google Maps script already loaded!");
+    //console.log("Google Maps script already loaded!");
     callback();
     return;
   }
@@ -25,7 +21,7 @@ const loadGoogleMapsScript = (callback) => {
   script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
   script.async = true;
   script.onload = () => {
-    console.log("Google Maps script loaded successfully!");
+    // console.log("Google Maps script loaded successfully!");
     callback();
   };
   script.onerror = () => {
@@ -37,6 +33,7 @@ const loadGoogleMapsScript = (callback) => {
 
 const ProfileSettings = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const artisan_unique_id = sessionStorage.getItem('unique_user_id');
   const inputRef = useRef(null);
 
     useEffect(() => {
@@ -56,7 +53,7 @@ const ProfileSettings = () => {
     
         autocomplete.addListener("place_changed", () => {
           const place = autocomplete.getPlace();
-          console.log("Selected place:", place);
+          // console.log("Selected place:", place);
           if (!place || !place.address_components) {
             console.log("No address components found.");
             return;
@@ -67,7 +64,7 @@ const ProfileSettings = () => {
           );
     
           if (postalCodeComponent) {
-            console.log("Postcode found:", postalCodeComponent.long_name);
+            // console.log("Postcode found:", postalCodeComponent.long_name);
             setFormData((prevState) => ({
               ...prevState,
               postcode: postalCodeComponent.long_name,
@@ -85,6 +82,7 @@ const ProfileSettings = () => {
 
   const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
+  const [service_name, setService_name] = useState("");
   const [unique_id, setUnique_id] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState("");
@@ -97,26 +95,82 @@ const ProfileSettings = () => {
 
   const [formData, setFormData] = useState({
     trade: "",
-    businessName: "",
+    business_name: "",
     location: "",
-    businessLocation: "",
+    business_location: "",
     lookingFor: "",
     businessType: "",
     employeeCount: "",
     first_name: "",
     last_name: "",
     password: "",
-    confirmPassword: "", // Added confirmPassword field
+    confirmPassword: "",
     businessEmail: "",
     businessPhone: "",
     mobile_number: "",
-    // service_cost: "",
-    skills: [], 
-    about_artisan: "", 
-
-    postcode: "" // Added postcode field
+    skills: [],
+    about_artisan: "",
+    postcode: "",
   });
 
+  // Fetch user and artisan profile data on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetch user data
+        const userResponse = await fetch(
+          `${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`
+        );
+        const userData = await userResponse.json();
+  
+        // Fetch artisan profile data
+        const artisanResponse = await fetch(
+          `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`
+        );
+        const artisanData = await artisanResponse.json();
+
+         setService_name(artisanData.service_details.name)
+  
+        // Update formData and skills state with fetched data
+        setFormData((prevData) => ({
+          ...prevData,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          businessEmail: userData.email,
+          businessPhone: userData.phone,
+          mobile_number: userData.mobile_number,
+          about_artisan: userData.about_artisan,
+          business_name: artisanData.business_name,
+          business_location: artisanData.business_location,
+          lookingFor: artisanData.lookingFor,
+          businessType: artisanData.businessType,
+          employeeCount: artisanData.employeeCount,
+          postcode: artisanData.postcode,
+          skills: artisanData.skills || [], // Sync skills in formData
+        }));
+  
+        // Update the skills state
+        setSkills(artisanData.skills || []);
+  
+        // Set selected trade if available
+        if (artisanData.service_details_id) {
+          setSelectedTrade({
+            name: artisanData.service_details_id.name,
+            unique_id: artisanData.service_details_id.unique_id,
+          });
+          setQuery(artisanData.service_details_id.name);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [artisan_unique_id, djangoHostname]);
+  
   useEffect(() => {
     const fetchServices = async () => {
       setLoading(true);
@@ -171,16 +225,16 @@ const ProfileSettings = () => {
   const handleSuggestionClick = (service, unique_id) => {
     setSelectedTrade({
       name: service,
-      unique_id: unique_id, // Save the unique_id of the selected trade
+      unique_id: unique_id, 
     });
-    setQuery(service.name); // Populate the input with the selected trade name
-    setUnique_id(unique_id); // Populate the unique_id state
+    setQuery(service.name); 
+    setUnique_id(unique_id); 
     setFormData((prevData) => ({
       ...prevData,
-      trade: service.name, // Set the selected trade in formData
+      trade: service.name, 
     }));
-    setSuggestions([]); // Clear the suggestions after selection
-    setError(""); // Clear any existing error message
+    setSuggestions([]); 
+    setError(""); 
   };
 
   const handleSubmit = async (event) => {
@@ -206,15 +260,14 @@ const ProfileSettings = () => {
         last_name: formData.last_name,
         password: formData.password,
         email: formData.businessEmail,
-        user_type: "artisan",
         phone: formData.businessPhone,
         mobile_number: formData.mobile_number,
         about_artisan: formData.about_artisan,
     };
 
     try {
-        const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
-            method: "POST",
+        const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -243,7 +296,7 @@ const ProfileSettings = () => {
 
         const artisanProfilePayload = {
             service_details_id: unique_id,
-            businessName: formData.businessName,
+            business_name: formData.business_name,
             location: formData.location,
             lookingFor: formData.lookingFor,
             businessType: formData.businessType,
@@ -251,13 +304,13 @@ const ProfileSettings = () => {
             employeeCount: formData.employeeCount,
             skills: formData.skills.map((skill) => String(skill)),
             experience: formData.experience || 0,
-            businessLocation: formData.businessLocation,
+            business_location: formData.business_location,
             postcode: formData.postcode,
             user_id: response1Data.unique_id,
         };
 
-        const response2 = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
-            method: "POST",
+        const response2 = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -270,11 +323,7 @@ const ProfileSettings = () => {
             setError(errorMessage);
         } else {
             const result = await response2.json();
-            
-            // console.log("Second request successful:", result.unique_id);
-            // sessionStorage.setItem('unique_user_id', result.unique_user_id);
-            // sessionStorage.setItem('artisanID', result.id);
-            // sessionStorage.setItem('artisan', result.artisan);
+      
 
             navigate("/subscription");
         }
@@ -285,7 +334,6 @@ const ProfileSettings = () => {
     }
 };
 
-
   const handleInputClick = () => {
     if (!query || !query.trim()) {
       setSuggestions(services);
@@ -293,54 +341,6 @@ const ProfileSettings = () => {
     setError('');
   };
   
-  
-  const resetAllActiveStates = () => {
-    setActiveReliabilityButton(null);
-    setActiveWorkmanshipButton(null);
-    setActiveTidinessButton(null);
-    setActiveCourtesyButton(null);
-    setReliabilityYesNo(null);
-    setIsCheckedReliability(false);
-    setIsCheckedWorkmanship(false);
-    setIsCheckedTidiness(false);
-    setIsCheckedCourtesy(false);
-  };
-
-
-  const handleBackClick = () => {
-    navigate(-1);  // Go back to the previous page
-  };
-
-
-  const [activeIndex, setActiveIndex] = useState({});
-
-  const handleItemClick = (ulIndex, liIndex) => {
-    setActiveIndex((prevState) => ({
-      ...prevState,
-      [ulIndex]: liIndex,
-    }));
-  };
-
-  const renderList = (items, ulIndex) => {
-    return (
-      <ul className="service-list">
-        {items.map((item, liIndex) => (
-          <li
-            key={liIndex}
-            className={`service-item ${
-              activeIndex[ulIndex] === liIndex ? "active-gland-list-Li" : ""
-            }`}
-            onClick={() => handleItemClick(ulIndex, liIndex)}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  
-
   const addSkill = () => {
     if (skillInput.trim() && !skills.includes(skillInput)) {
       setSkills((prevSkills) => {
@@ -375,10 +375,6 @@ const ProfileSettings = () => {
       addSkill();
     }
   };
-
-
-
-
 
 
   const [qualificationsFiles, setQualificationsFiles] = useState([]);
@@ -420,7 +416,7 @@ const ProfileSettings = () => {
                   <input
                     type="text"
                     placeholder="Search category"
-                    value={selectedTrade.name || query} // Use selectedTrade.name when it's set, otherwise fallback to query
+                    value={selectedTrade.name || service_name} // Use selectedTrade.name when it's set, otherwise fallback to query
                     onChange={handleInputChange}
                     onClick={handleInputClick}
                   />
@@ -448,8 +444,8 @@ const ProfileSettings = () => {
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">What is your business called?</label>
                     <input type="text"
-                     name="businessName" 
-                     value={formData.businessName}
+                     name="business_name" 
+                     value={formData.business_name}
                      onChange={handleInputChange}
                      placeholder="Enter your business name*" />
                   </div>
@@ -458,60 +454,13 @@ const ProfileSettings = () => {
                     <label htmlFor="serviceSelect">Where is your business located?</label>
                     <input 
                      type="text"
-                     name="location"
-                     value={formData.location}
+                     name="business_location"
+                     value={formData.business_location}
                      onChange={handleInputChange}
                      placeholder="Enter your business address*" />
                   </div>
             
-                  <div className="Gland-Quest-data">
-                    <label htmlFor="serviceSelect">What are you looking for?</label>
-                    {renderList(
-                      [
-                        "I'm looking to fill the gaps in my diary",
-                        "I need a steady flow of leads",
-                        "I need as many leads as possible",
-                        "I just want a Simservicehub profile",
-                        "I'm not sure",
-                      ],
-                      0
-                    )}
-                  </div>
-            
-                  <div className="Gland-Quest-data">
-                    <label htmlFor="serviceSelect">Tell us more about your business</label>
-                    <h5>Business type</h5>
-                    {renderList(
-                      ["Self Employed", "Limited company", "Looking to start a business"],
-                      1
-                    )}
-                  </div>
-            
-                  <div className="Gland-Quest-data">
-                  <label htmlFor="serviceSelect">Tell us more about your business</label>
-                  <ul className="service-list GG-UL-Flex">
-                    {[
-                      { count: "1", label: "Employee" },
-                      { count: "2-5", label: "Employees" },
-                      { count: "6-9", label: "Employees" },
-                      { count: "10+", label: "Employees" },
-                    ].map((item, index) => (
-                      <li
-                        key={index}
-                        className={`service-item ${
-                          activeIndex[2] === index ? "active-gland-list-Li" : ""
-                        }`}
-                        onClick={() => handleItemClick(2, index)}
-                      >
-                        <span>
-                          {item.count} <br />
-                          <span>{item.label}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-				
+
 				 <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">What are your skills</label>
                     <div className="flangSec">
@@ -539,20 +488,9 @@ const ProfileSettings = () => {
                         </div>
                       ))}
                     </div>
+
                   </div>
-
-                  {/* <div className="Gland-Quest-data">
-                      <label>Cost of services/skills (Optional)</label>
-                      <input
-                          type="Number"
-                          placeholder="Enter Amount"
-
-                          name="service_cost"
-                          value={formData.service_cost}
-                          onChange={handleInputChange}
-                      />
-                  </div> */}
-            
+           
             
                   <div className="Gland-Quest-data">
                     
@@ -568,9 +506,6 @@ const ProfileSettings = () => {
 
                     <div className="Gland-Quest-data">
                       <label>Address</label>
-                    {/* <input type="text"  name="" placeholder="Post code" /> */}
-
-                            {/* Address Search (Postcode will be extracted from selected address) */}
                             <input
                               type="text"
                               placeholder="Search for your address"
@@ -582,22 +517,7 @@ const ProfileSettings = () => {
                             <div className="Gland-Quest-data">
                             <label>Post Code</label>
 
-                    {/* Automatically filled postcode field */}
                     <input type="text" name="postcode" placeholder="Post code" value={formData.postcode} readOnly />
-
-                    </div>
-
-                    <div className="Gland-Quest-data">
-                    <label>Password</label>
-                    <input  type="password" name="password" placeholder="Password should be at least 8 characters long" value={formData.password} onChange={handleInputChange}/>
-                    </div>
-                    <div className="Gland-Quest-data">
-                    <label>Confirm Password</label>
-                    <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleInputChange}/>
-                      {error && <div className="error-message">{error}
-                        
-                    
-                    </div>}
 
                     </div>
                     <div className="Gland-Quest-data">
@@ -712,9 +632,6 @@ const ProfileSettings = () => {
                   )}
                 </button>
             </div>
-
-
-    
           </div>
         </div>
       </div>
