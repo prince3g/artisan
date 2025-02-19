@@ -124,6 +124,7 @@
 // };
 
 // export default JobArtisans;
+
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate} from "react-router-dom";
 import './Userdashbaord.css';
@@ -275,7 +276,7 @@ const JobArtisans = () => {
                           </div>
                           <div className='GLnad-btns'>
                             <div className='GLnad-btns-1'>
-                              
+
                               <span>{artisan.status}</span>
                               {artisan.topRated && <span><Star /> Top Rated</span>}
                             </div>
