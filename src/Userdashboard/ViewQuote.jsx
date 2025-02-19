@@ -5,11 +5,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import './Userdashbaord.css';
 
 const ViewQuote = () => {
+
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 
   const [bid_amount, setBid_amount] = useState("");
   const [job_duration, setJob_duration] = useState("");
 
+  
     const navigate = useNavigate(); // Initialize useNavigate
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const location = useLocation();
@@ -47,9 +49,8 @@ const ViewQuote = () => {
   };
 
 
+
   return (
-
-
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
         <div className="site-container">
