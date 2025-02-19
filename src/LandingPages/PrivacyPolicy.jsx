@@ -113,7 +113,7 @@ const PrivacyPolicy = () => {
 
   <h2>Contact Us</h2>
   <p>
-    If you have any enquiries about this Data and Privacy Policy or the way we collect and process this data from you OR you would like to lay a complaint about anything related to this policy, please do not hesitate to reach out to us via email at <a href="mailto:compliance@simu-l.com">compliance@simu-l.com</a> OR call us on <a href="tel:09066484496">09066484496</a> where you can reach our Data Protection Officer.
+    If you have any enquiries about this Data and Privacy Policy or the way we collect and process this data from you OR you would like to lay a complaint about anything related to this policy, please do not hesitate to reach out to us via email at <a href="mailto:compliance@simu-l.com">compliance@simu-l.com</a> OR call us on <a href="tel:02013309262">0201 330 9262</a> where you can reach our Data Protection Officer.
   </p>
 </div>
   
