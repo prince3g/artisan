@@ -30,7 +30,7 @@ const SendQuote = () => {
     const payload = {
      artisan_id: uniqueUserId,
       job_request_id: job?.job?.job?.unique_id,
-      // bid_amount: bidAmount,
+      bid_amount: bidAmount,
       freelancer_service_fee: serviceFee,
       job_duration: jobDuration,
     };

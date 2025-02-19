@@ -26,9 +26,11 @@ const PostedJobs = () => {
         }
         const data = await response.json();
         setJobs(data);
+
         // console.log("data")
         // console.log(data)
         // console.log("data")
+
       } catch (error) {
         setError(error.message);
       }
@@ -113,7 +115,17 @@ const PostedJobs = () => {
                               <span><BusinessCenterIcon /> 23 Applications</span>
                             </div>
                             <div className='GLnad-btns-2'>
-                              <Link to="/user-dashboard/job-artisans">View Artisans</Link>
+
+                              {/* <Link to="/user-dashboard/job-artisans">View Artisans</Link> */}
+
+                              <Link 
+                                  to={{
+                                    pathname: "/user-dashboard/job-artisans",
+                                  }} 
+                                  state={{ job }}
+                                >
+                                  View Artisans
+                                </Link>
 
                               <button 
                                 className="rwmovooo-btn" 
