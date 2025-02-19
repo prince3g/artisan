@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-
 import { Link, useLocation, useNavigate} from "react-router-dom";
-
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import './Userdashbaord.css';
@@ -24,10 +22,7 @@ const ViewQuote = () => {
         setJob_duration(artisan.artisan.quote.job_duration);
       }
     }, [artisan]); // Ensure this only runs when artisan changes
-    
-
-
-
+  
   const handleAcceptQuote = () => {
     setShowPaymentOptions(true);
     setShowArtisanDetails(false);
