@@ -37,7 +37,6 @@ const JobDescription = () => {
   // console.log("job.job.num_appllications")
 
 
-
   const [deletingJobId, setDeletingJobId] = useState(null); // Track job being deleted
   
     

@@ -1,11 +1,32 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
+import { Link, useLocation, useNavigate} from "react-router-dom";
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import './Userdashbaord.css';
 
 const ViewQuote = () => {
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+
+  const [bid_amount, setBid_amount] = useState("");
+  const [job_duration, setJob_duration] = useState("");
+
+    const navigate = useNavigate(); // Initialize useNavigate
+    const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+    const location = useLocation();
+    const artisan = location.state || {};
+  
+
+    useEffect(() => {
+      if (artisan.artisan?.quote) {
+        setBid_amount(artisan.artisan.quote.bid_amount);
+        setJob_duration(artisan.artisan.quote.job_duration);
+      }
+    }, [artisan]); // Ensure this only runs when artisan changes
+    
+
+
 
   const handleAcceptQuote = () => {
     setShowPaymentOptions(true);
@@ -16,6 +37,8 @@ const ViewQuote = () => {
   };
 
   return (
+
+
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
         <div className="site-container">
@@ -47,7 +70,7 @@ const ViewQuote = () => {
                     </div>
                     <div className="hggah-req-2">
                       <h3>NGN</h3>
-                      <input type="text" value="20,000" readOnly />
+                      <input type="text" value={bid_amount} readOnly />
                     </div>
                   </div>
 
@@ -57,7 +80,7 @@ const ViewQuote = () => {
                       <p>How long it will take to complete the Job</p>
                     </div>
                     <div className="hggah-req-2">
-                      <input type="text" value="1 Week" readOnly />
+                    <input type="text" value={job_duration} readOnly />
                     </div>
                   </div>
 
