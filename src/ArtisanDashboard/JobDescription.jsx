@@ -144,7 +144,13 @@ const JobDescription = () => {
                  </div>
                  <div className='GLnad-btns-2'>
 
-                   <Link to="/artisan-dashboard/send-quote">Send Quote</Link>
+                   {/* <Link to="/artisan-dashboard/send-quote">Send Quote</Link> */}
+
+                  <Link 
+                      to={{
+                      pathname: "/artisan-dashboard/send-quote",}} 
+                      state={{job}}>Send Quote
+                  </Link>
 
                  </div>
                </div>

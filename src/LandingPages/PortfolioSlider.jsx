@@ -47,6 +47,9 @@ const PortfolioSlider = (artisanUniqueID) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const mainSliderRef = useRef(null); // Reference for the main slider
   const [artisanData, setArtisanData] = useState([]); // Initialize service categories state
+  const [isVisible, setIsVisible] = useState(true);
+  const [isTableVisible, setIsTableVisible] = useState(false);
+  const [availability, setAvailability] = useState([]);
 
 
   const settings = {
@@ -71,7 +74,7 @@ const PortfolioSlider = (artisanUniqueID) => {
     arrows: false, // Hide navigation buttons for thumbnails
   };
 
-  const [isVisible, setIsVisible] = useState(true);
+ 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1000) {
@@ -120,6 +123,7 @@ const PortfolioSlider = (artisanUniqueID) => {
         const data = await response.json();
         //console.log("Fetched Artisan Data:", data);
         setArtisanData(data);
+        parseAvailabilityData(data.availability);
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
@@ -129,24 +133,35 @@ const PortfolioSlider = (artisanUniqueID) => {
     fetchArtisanDetail();
   }, []); // Use artisanUniqueId and djangoHostname in dependency array
   
+  const parseAvailabilityData = (availabilityData) => {
+    if (availabilityData?.AllDay?.enabled) {
+      // If "All Day" is enabled, show only that
+      setAvailability([
+        {
+          day: "All Day",
+          fromTime: availabilityData.AllDay.from,
+          toTime: availabilityData.AllDay.to,
+        },
+      ]);
+    } else {
+      // If "All Day" is not enabled, show only individually enabled days
+      const individualAvailability = Object.entries(availabilityData)
+        .filter(([day, times]) => day !== "AllDay" && times.enabled) // Exclude "All Day" and disabled days
+        .map(([day, times]) => ({
+          day,
+          fromTime: times.from,
+          toTime: times.to,
+        }));
+      setAvailability(individualAvailability);
+    }
+  };
+  
+
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
 
-
-
-    const [isTableVisible, setIsTableVisible] = useState(false);
-  
-    const [availability] = useState([
-      { day: 'Monday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Tuesday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Wednesday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Thursday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Friday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Saturday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-      { day: 'Sunday', fromTime: '4:30 AM', toTime: '7:30 PM' },
-    ]);
   
     const toggleTableVisibility = () => {
       setIsTableVisible(!isTableVisible);
@@ -211,37 +226,36 @@ const PortfolioSlider = (artisanUniqueID) => {
       )}
     </div>
 
-    <div className="Rogoos-sec hayyshs-sec">
-      <h2 onClick={toggleTableVisibility} style={{ cursor: 'pointer' }}>
-        Time Availability
-        {isTableVisible ? <ExpandLessIcon style={{ marginLeft: '8px' }} /> : <ExpandMoreIcon style={{ marginLeft: '8px' }} />}
-      </h2>
-      {isTableVisible && (
-        <div className="Rogoos-Tables oahsk-tabel">
-          <table>
-            <thead>
-              <tr>
-                <th>Days</th>
-                <th>From Time</th>
-                <th>To Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              {availability.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.day}</td>
-                  <td>{item.fromTime}</td>
-                  <td>{item.toTime}</td>
+
+
+<div className="Rogoos-sec hayyshs-sec">
+        <h2 onClick={toggleTableVisibility} style={{ cursor: 'pointer' }}>
+          Time Availability
+          {isTableVisible ? <ExpandLessIcon style={{ marginLeft: '8px' }} /> : <ExpandMoreIcon style={{ marginLeft: '8px' }} />}
+        </h2>
+        {isTableVisible && (
+          <div className="Rogoos-Tables oahsk-tabel">
+            <table>
+              <thead>
+                <tr>
+                  <th>Days</th>
+                  <th>From Time</th>
+                  <th>To Time</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-
-
-
+              </thead>
+              <tbody>
+                {availability.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.day}</td>
+                    <td>{item.fromTime}</td>
+                    <td>{item.toTime}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
 <div className="jahs-slider">
 
