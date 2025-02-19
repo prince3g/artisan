@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-
 import { Link, useLocation, useNavigate} from "react-router-dom";
-
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
 import './Userdashbaord.css';
 
 const ViewQuote = () => {
+
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showArtisanDetails, setShowArtisanDetails] = useState(false);
   const navigate = useNavigate();
 
   const [bid_amount, setBid_amount] = useState("");
   const [job_duration, setJob_duration] = useState("");
+
+  
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const location = useLocation();
@@ -25,10 +27,7 @@ const ViewQuote = () => {
         setJob_duration(artisan.artisan.quote.job_duration);
       }
     }, [artisan]); // Ensure this only runs when artisan changes
-    
-
-
-
+  
   const handleAcceptQuote = () => {
     setShowPaymentOptions(true);
     setShowArtisanDetails(false);
@@ -53,9 +52,8 @@ const ViewQuote = () => {
   };
 
 
+
   return (
-
-
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
         <div className="site-container">
