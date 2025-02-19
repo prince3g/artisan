@@ -14,7 +14,6 @@ const ViewQuote = () => {
   const [job_duration, setJob_duration] = useState("");
 
   
-    const navigate = useNavigate(); // Initialize useNavigate
 
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const location = useLocation();
