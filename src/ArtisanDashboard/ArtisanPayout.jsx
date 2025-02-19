@@ -55,3 +55,4 @@ const ArtisanPayout = () => {
 };
 
 export default ArtisanPayout;
+
