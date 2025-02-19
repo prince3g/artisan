@@ -236,195 +236,99 @@ const ProfileSettings = () => {
     setError(""); 
   };
 
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-//     setLoading(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
 
+    const requestPayload = {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        password: formData.password,
+        email: formData.businessEmail,
+        phone: formData.businessPhone,
+        mobile_number: formData.mobile_number,
+        about_artisan: formData.about_artisan,
+    };
 
+    try {
+        const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestPayload),
+        });
 
-
-//     const requestPayload = {
-//         first_name: formData.first_name,
-//         last_name: formData.last_name,
-//         password: formData.password,
-//         email: formData.businessEmail,
-//         phone: formData.businessPhone,
-//         mobile_number: formData.mobile_number,
-//         about_artisan: formData.about_artisan,
-//     };
-
-//     try {
-//         const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(requestPayload),
-//         });
-
-//         if (!response1.ok) {
-//             const errorData = await response1.json();
-//             const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
-//             setError(errorMessage);
-//             setLoading(false);
+        if (!response1.ok) {
+            const errorData = await response1.json();
+            const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
+            setError(errorMessage);
+            setLoading(false);
             
          
-//             return;
-//         }
+            return;
+        }
 
 
-//         const response1Data = await response1.json();
-//         //console.log("First request successful:", response1Data);
-//         sessionStorage.setItem('unique_user_id', response1Data.unique_id);
-//         sessionStorage.setItem('artisanID', response1Data.id);
-//         sessionStorage.setItem('user_type', response1Data.user_type);
+        const response1Data = await response1.json();
+        //console.log("First request successful:", response1Data);
+        sessionStorage.setItem('unique_user_id', response1Data.unique_id);
+        sessionStorage.setItem('artisanID', response1Data.id);
+        sessionStorage.setItem('user_type', response1Data.user_type);
 
-//         if (!selectedTrade || !selectedTrade.unique_id) {
-//             setError("Please select a valid trade.");
-//             alert("Please select a valid trade.");
-//             setLoading(false);
-//             return;
-//         }
+        if (!selectedTrade || !selectedTrade.unique_id) {
+            setError("Please select a valid trade.");
+            alert("Please select a valid trade.");
+            setLoading(false);
+            return;
+        }
 
-//         const artisanProfilePayload = {
-//             service_details_id: unique_id,
-//             business_name: formData.business_name,
-//             location: formData.location,
-//             lookingFor: formData.lookingFor,
-//             businessType: formData.businessType,
-//             //service_cost: formData.service_cost,
-//             employeeCount: formData.employeeCount,
-//             skills: formData.skills.map((skill) => String(skill)),
-//             experience: formData.experience || 0,
-//             business_location: formData.business_location,
-//             previous_jobs: formData.previous_jobs,
-//             qualifications: formData.qualifications,
-//             postcode: formData.postcode,
-//             user_id: response1Data.unique_id,
-//         };
+        const artisanProfilePayload = {
+            service_details_id: unique_id,
+            business_name: formData.business_name,
+            location: formData.location,
+            lookingFor: formData.lookingFor,
+            businessType: formData.businessType,
+            //service_cost: formData.service_cost,
+            employeeCount: formData.employeeCount,
+            skills: formData.skills.map((skill) => String(skill)),
+            experience: formData.experience || 0,
+            business_location: formData.business_location,
+            previous_jobs: formData.previous_jobs,
+            qualifications: formData.qualifications,
+            postcode: formData.postcode,
+            user_id: response1Data.unique_id,
+        };
 
-//         const response2 = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`, {
-//             method: "PATCH",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(artisanProfilePayload),
-//         });
+        const response2 = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(artisanProfilePayload),
+        });
 
-//         if (!response2.ok) {
-//             const errorData = await response2.json();
-//             const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
-//             setError(errorMessage);
-//         } else {
-//             const result = await response2.json();
+        if (!response2.ok) {
+            const errorData = await response2.json();
+            const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
+            setError(errorMessage);
+        } else {
+            const result = await response2.json();
 
-//             sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
-//             sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
+            sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
+            sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
 
 
-//             navigate("/artisan-dashboard");
-//         }
-//     } catch (error) {
-//         setError(error.message || "An unexpected error occurred. Please try again later.");
-//     } finally {
-//         setLoading(false);
-//     }
-// };
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  setLoading(true);
-
-  const requestPayload = {
-    first_name: formData.first_name,
-    last_name: formData.last_name,
-    password: formData.password,
-    email: formData.businessEmail,
-    phone: formData.businessPhone,
-    mobile_number: formData.mobile_number,
-    about_artisan: formData.about_artisan,
-  };
-
-  try {
-    const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestPayload),
-    });
-
-    if (!response1.ok) {
-      const errorData = await response1.json();
-      const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
-      setError(errorMessage);
-      setLoading(false);
-      return;
+            navigate("/artisan-dashboard");
+        }
+    } catch (error) {
+        setError(error.message || "An unexpected error occurred. Please try again later.");
+    } finally {
+        setLoading(false);
     }
-
-    const response1Data = await response1.json();
-    sessionStorage.setItem('unique_user_id', response1Data.unique_id);
-    sessionStorage.setItem('artisanID', response1Data.id);
-    sessionStorage.setItem('user_type', response1Data.user_type);
-
-    if (!selectedTrade || !selectedTrade.unique_id) {
-      setError("Please select a valid trade.");
-      alert("Please select a valid trade.");
-      setLoading(false);
-      return;
-    }
-
-    const formDataPayload = new FormData();
-    formDataPayload.append('service_details_id', unique_id);
-    formDataPayload.append('business_name', formData.business_name);
-    formDataPayload.append('location', formData.location);
-    formDataPayload.append('lookingFor', formData.lookingFor);
-    formDataPayload.append('businessType', formData.businessType);
-    formDataPayload.append('employeeCount', formData.employeeCount);
-    formDataPayload.append('skills', JSON.stringify(formData.skills.map((skill) => String(skill))));
-    formDataPayload.append('experience', formData.experience || 0);
-    formDataPayload.append('business_location', formData.business_location);
-    formDataPayload.append('postcode', formData.postcode);
-    formDataPayload.append('user_id', response1Data.unique_id);
-
-    // Append qualifications files
-    qualificationsFiles.forEach((file, index) => {
-      formDataPayload.append(`qualifications`, file);
-    });
-
-    // Append previous jobs files
-    previousJobsFiles.forEach((file, index) => {
-      formDataPayload.append(`previous_jobs`, file);
-    });
-
-    // console.log("formDataPayload contents:");
-    // for (let pair of formDataPayload.entries()) {
-    //     console.log(pair[0] + ": ", pair[1]);
-    // }
-    // console.log("formDataPayload contents")
-    
-
-    const response2 = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`, {
-      method: "PATCH",
-      body: formDataPayload,
-    });
-
-    if (!response2.ok) {
-      const errorData = await response2.json();
-      const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
-      setError(errorMessage);
-    } else {
-      const result = await response2.json();
-      sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
-      sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
-      navigate("/artisan-dashboard");
-    }
-  } catch (error) {
-    setError(error.message || "An unexpected error occurred. Please try again later.");
-  } finally {
-    setLoading(false);
-  }
 };
+
+
 
   const handleInputClick = () => {
     if (!query || !query.trim()) {

@@ -87,7 +87,8 @@ const Userdashbaord = () => {
                       </h3>
                       <div className='oo-dlsts-110'>
                         <div className='oo-dlsts-OO1'>
-                         <Link to="/chat-with-artisan" className='route-to-chat-btn'><span>0</span>Chat(s)</Link>
+                         <Link to={`/chat-with-artisan?artisanUniqueID=${artisan.user.unique_id}&service=${artisan.service_details.unique_id}`} 
+                          className='route-to-chat-btn'><span>0</span>Chat(s)</Link>
                         </div>
                         <div className='oo-dlsts-OO2'>
                           <h4>

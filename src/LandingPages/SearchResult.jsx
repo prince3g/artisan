@@ -49,6 +49,10 @@ const SearchResult = () => {
         const data = await response.json();
         setArtisanData(data);
 
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
+
         // Filter artisans by postCode if provided
         if (postCode) {
           const filteredData = data.filter((artisan) => artisan.postcode === postCode);
