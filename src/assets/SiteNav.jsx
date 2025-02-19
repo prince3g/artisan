@@ -432,19 +432,12 @@ function SiteNav() {
                 <DashboardIcon /> Dashboard
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/artisan-dashboard/booking-list" onClick={CloseArtisanProfileMenu}>
                 <BookIcon /> Booking List
               </Link>
-            </li>
-            {/* <li>
-              <Link to="/artisan-dashboard/profile-settings/" onClick={() => {
-                      CloseProfileMenuForUsers();
-                      handleVisitProfile();
-                    }}>
-                <SettingsIcon /> Profile Setting
-              </Link>
             </li> */}
+
             <li>
               <Link to="/artisan-dashboard/payout-setting" onClick={CloseArtisanProfileMenu}>
                 <MonetizationOnIcon /> Payout Setting
@@ -465,11 +458,11 @@ function SiteNav() {
                 <StarRateIcon /> Reviews
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/artisan-dashboard/payment" onClick={CloseArtisanProfileMenu}>
                 <PaymentIcon /> Payment
               </Link>
-            </li>
+            </li> */}
             <li>
               <button className="logout-btnn" onClick={() => {
                       CloseProfileMenuForUsers();

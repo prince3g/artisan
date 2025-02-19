@@ -209,11 +209,11 @@ const ArtisanOverview = () => {
         </div>
         <div className='Call_Cnt_Sub_2'>
           <p>Speak to an advisor today:</p>
-          <h3>Call +2349066484496</h3>
+          <h3>Call: 0201 330 9262</h3>
         </div>
       </div>
       <div className='Call_Cnt_Bottom'>
-        <a href="tel:+2349066484496" to="">Call now</a>
+        <a href="tel:02013309262" to="">Call now</a>
       </div>
     </div>
 

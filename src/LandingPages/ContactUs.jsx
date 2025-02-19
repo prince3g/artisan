@@ -75,7 +75,7 @@ function ContactUs() {
                   </span>
                   <div className='DDl_Div'>
                     <h3>Email</h3>
-                    <h4><a href='mailto:info@simservicehub.com'>info@simservicehub.com </a></h4>
+                    <h4><a href='mailto:info@simservicehub.com'>Info@simservicehub.com </a></h4>
                   </div>
                 </li>
                 <li>
@@ -84,7 +84,7 @@ function ContactUs() {
                   </span>
                   <div className='DDl_Div'>
                     <h3>Phone/whatsapp</h3>
-                    <h4>+2349066484496</h4>
+                    <h4>0201 330 9262</h4>
                   </div>
                 </li>
                 <li>
