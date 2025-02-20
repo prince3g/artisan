@@ -63,6 +63,7 @@ import SubscriptionPage from './LandingPages/SubscriptionPage';
 import VettingPage from './LandingPages/VettingPage';
 import ContractAgreement from './LandingPages/ContractAgreement';
 import PendingAproval from './LandingPages/PendingAproval';
+import PendingApprovalCheck from './LandingPages/PendingApprovalCheck';
 import ChangePass from './LandingPages/ChangePass';
 import ForgotPassword from './LandingPages/ForgotPassword';
 
@@ -115,11 +116,15 @@ function App() {
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/post-code" element={<PostCode />} />
+
           <Route path="/completed-registeration" element={<CompletedReg />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/vetting-page" element={<VettingPage />} />
+          {/* <Route path="/pending-approval" element={<PendingAproval />} /> */}
+          <Route path="/pending-approval" element={<PendingApprovalCheck />} />
+
           <Route path="/contract-agreement" element={<ContractAgreement />} />
-          <Route path="/pending-approval" element={<PendingAproval />} />
+          
           <Route path="/change-password" element={<ChangePass />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/payment" element={<PaymentPage />} />

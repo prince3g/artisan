@@ -232,7 +232,7 @@ const ArtisanSignUp = () => {
         }
 
         const response1Data = await response1.json();
-        //console.log("First request successful:", response1Data);
+        console.log("First request successful:", response1Data);
         sessionStorage.setItem('unique_user_id', response1Data.unique_id);
         sessionStorage.setItem('artisanID', response1Data.id);
         sessionStorage.setItem('user_type', response1Data.user_type);
@@ -275,9 +275,9 @@ const ArtisanSignUp = () => {
             const result = await response2.json();
             
             // console.log("Second request successful:", result.unique_id);
-            sessionStorage.setItem('unique_user_id', result.unique_user_id);
-            sessionStorage.setItem('artisanID', result.id);
-            sessionStorage.setItem('artisan', result.artisan);
+            // sessionStorage.setItem('unique_user_id', result.unique_user_id);
+            // sessionStorage.setItem('artisanID', result.id);
+            // sessionStorage.setItem('artisan', result.artisan);
 
             navigate("/vetting-page");
         }

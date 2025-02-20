@@ -11,7 +11,7 @@ const PendingAproval = () => {
             <div className='Succ-Box'>
                 <img src={PendingImg}></img>
                 <h3>Profile pending</h3>
-                <h6>Verification ongoing (This will be for 24hours)</h6>
+                <h6>Verification ongoing (This will be for 24hours) </h6>
             </div>
         
           </div>

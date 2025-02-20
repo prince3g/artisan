@@ -128,7 +128,7 @@ const SubscriptionPage = () => {
                 <button type="button" className="back-btn" onClick={handleBackClick}>
                   Back
                 </button>
-                <Link to="/vetting-page">
+                <Link to="/pending-approval">
                   Next
                 </Link>
               </div>
