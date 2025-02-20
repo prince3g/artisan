@@ -177,9 +177,9 @@ const JobArtisans = () => {
           const data = await response.json();
           setArtisans(data);
 
-          // console.log("data")
-          // console.log(data)
-          // console.log("data")
+          console.log("data")
+          console.log(data)
+          console.log("data")
           
         } catch (error) {
           setError(error.message);
@@ -287,7 +287,7 @@ const JobArtisans = () => {
                             <div className='GLnad-btns-2'>
                               {/* <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link> */}
 
-                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote </Link>
+                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote   QWERTY</Link>
 
                               <Link
                                 to={`/artisan-profile?service_details=${encodeURIComponent(

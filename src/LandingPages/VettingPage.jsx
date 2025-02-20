@@ -23,19 +23,24 @@ const VettingPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    if (!proofOfAddress && !ninDoc && !otherDoc) {
+      showMessage("Please upload at least one document before proceeding.", "failure");
+      return;
+    }
+  
     const unique_user_id = sessionStorage.getItem("unique_user_id");
     if (!unique_user_id) {
       showMessage("User ID not found. Please log in again.", "failure");
       return;
     }
-
+  
     setIsLoading(true);
     const formData = new FormData();
     if (proofOfAddress) formData.append("proof_of_address", proofOfAddress);
     if (ninDoc) formData.append("NIN_doc", ninDoc);
     if (otherDoc) formData.append("other_doc", otherDoc);
-
+  
     try {
       const response = await fetch(
         `${djangoHostname}/api/accounts/auth/api/user/${unique_user_id}/update/`,
@@ -44,20 +49,59 @@ const VettingPage = () => {
           body: formData,
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to update documents");
       }
-
-      showMessage("Documents updated successfully!", "success"); 
-      navigate("/pending-approval");
+  
+      showMessage("Documents updated successfully!", "success");
+      navigate("/subscription");
     } catch (error) {
       console.error("Error updating documents:", error);
-      showMessage(`Error updating documents. Please try again. ${error}`, "failure"); 
+      showMessage(`Error updating documents. Please try again. ${error}`, "failure");
     } finally {
       setIsLoading(false);
     }
   };
+  
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const unique_user_id = sessionStorage.getItem("unique_user_id");
+  //   if (!unique_user_id) {
+  //     showMessage("User ID not found. Please log in again.", "failure");
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   const formData = new FormData();
+  //   if (proofOfAddress) formData.append("proof_of_address", proofOfAddress);
+  //   if (ninDoc) formData.append("NIN_doc", ninDoc);
+  //   if (otherDoc) formData.append("other_doc", otherDoc);
+
+  //   try {
+  //     const response = await fetch(
+  //       `${djangoHostname}/api/accounts/auth/api/user/${unique_user_id}/update/`,
+  //       {
+  //         method: "PATCH",
+  //         body: formData,
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to update documents");
+  //     }
+
+  //     showMessage("Documents updated successfully!", "success"); 
+  //     navigate("/subscription");
+  //   } catch (error) {
+  //     console.error("Error updating documents:", error);
+  //     showMessage(`Error updating documents. Please try again. ${error}`, "failure"); 
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="Gradnded-page">
