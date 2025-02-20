@@ -85,6 +85,7 @@ function ContactUs() {
                   <div className='DDl_Div'>
                     <h3>Phone/whatsapp</h3>
                     <h4>0201 330 9262</h4>
+                    <h4>+2349066484496</h4>
                   </div>
                 </li>
                 <li>
