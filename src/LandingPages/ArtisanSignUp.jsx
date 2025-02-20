@@ -210,6 +210,7 @@ const ArtisanSignUp = () => {
         address: formData.location,
         user_type: "artisan",
         phone: formData.businessPhone,
+        business_location: formData.business_location,
         mobile_number: formData.mobile_number,
         about_artisan: formData.about_artisan,
     };
@@ -232,11 +233,12 @@ const ArtisanSignUp = () => {
         }
 
         const response1Data = await response1.json();
-        console.log("First request successful:", response1Data);
+        //console.log("First request successful:", response1Data);
         sessionStorage.setItem('unique_user_id', response1Data.unique_id);
         sessionStorage.setItem('artisanID', response1Data.id);
         sessionStorage.setItem('user_type', response1Data.user_type);
-        sessionStorage.setItem('Address', response1Data.address);
+        // sessionStorage.setItem('Address', response1Data.address);
+        sessionStorage.setItem('Address', response1Data.business_location);
 
         if (!selectedTrade || !selectedTrade.unique_id) {
             setError("Please select a valid trade.");
@@ -247,14 +249,12 @@ const ArtisanSignUp = () => {
         const artisanProfilePayload = {
             service_details_id: unique_id,
             businessName: formData.businessName,
-            location: formData.location,
             lookingFor: formData.lookingFor,
             businessType: formData.businessType,
             //service_cost: formData.service_cost,
             employeeCount: formData.employeeCount,
             skills: formData.skills.map((skill) => String(skill)),
             experience: formData.experience || 0,
-            business_location: formData.business_location,
             postcode: formData.postcode,
             user_id: response1Data.unique_id,
         };
@@ -275,7 +275,7 @@ const ArtisanSignUp = () => {
             const result = await response2.json();
             
             // console.log("Second request successful:", result.unique_id);
-            // sessionStorage.setItem('unique_user_id', result.unique_user_id);
+             sessionStorage.setItem('Address', result.business_location);
             // sessionStorage.setItem('artisanID', result.id);
             // sessionStorage.setItem('artisan', result.artisan);
 
@@ -443,8 +443,8 @@ const ArtisanSignUp = () => {
                     <label htmlFor="serviceSelect">Where is your business located?</label>
                     <input 
                      type="text"
-                     name="location"
-                     value={formData.location}
+                     name="business_location"
+                     value={formData.business_location}
                      onChange={handleInputChange}
                      placeholder="Enter your business address*" />
                   </div>

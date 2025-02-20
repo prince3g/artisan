@@ -13,7 +13,12 @@ const PendingApprovalCheck = () => {
     const uniqueUserId = sessionStorage.getItem("unique_user_id");
     const fetchProfileStatus = async () => {
       try {
+
+        // console.log("uniqueUserId")
+        // console.log(uniqueUserId)
+        // console.log("uniqueUserId")
         const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueUserId}`
+        //const response = await fetch(`http://127.0.0.1:9090/api/profiles/auth/artisan-profile/?unique_id=e7e8578d-efed-4cdb-89cf-c8bf4b4ccb35`
         );
 
         if (!response.ok) {
@@ -23,10 +28,10 @@ const PendingApprovalCheck = () => {
         const data = await response.json();
         setIsApproved(data.is_approved);
 
-        console.log("data")
-        console.log(data)
-        console.log("data")
-        
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
+
         setUserData(data);
         
       } catch (error) {

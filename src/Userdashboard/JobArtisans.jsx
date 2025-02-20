@@ -264,8 +264,8 @@ const JobArtisans = () => {
                             <h3>{artisan.artisan.first_name} {artisan.artisan.last_name} <span><Handyman /> {serviceDetailsProfession}</span></h3>
                             <div className='oo-dlsts-110'>
                               <div className='oo-dlsts-OO1'>
-                                {/* <h5><MyLocation /> {artisan.location}</h5> */}
-                                <h5><MyLocation /> Umuahia Abia state</h5>
+                                <h5><MyLocation /> {artisan.artisan.business_location}</h5>
+                                {/* <h5><MyLocation /> Umuahia Abia state</h5> */}
                               </div>
                               <div className='oo-dlsts-OO2'>
                                 {/* <h4><span> <Visibility /> {artisan.views}</span> <span><Star /> {artisan.rating} qwerty</span></h4> */}
@@ -287,7 +287,7 @@ const JobArtisans = () => {
                             <div className='GLnad-btns-2'>
                               {/* <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link> */}
 
-                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote   QWERTY</Link>
+                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote </Link>
 
                               <Link
                                 to={`/artisan-profile?service_details=${encodeURIComponent(
