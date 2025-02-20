@@ -14,8 +14,8 @@ const EditProfile = () => {
   // State for form fields
   const [firstName, setFirstName] = useState(user_first_name);
   const [lastName, setLastName] = useState(user_last_name);
+  const [business_location, setBusiness_location] = useState(Address);
   const [phone, setPhone] = useState(user_phone);
-  const [address, setAddress] = useState(Address);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [loading, setLoading] = useState(false); // Loading state for the submit button
 
@@ -28,11 +28,13 @@ const EditProfile = () => {
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
     formData.append("phone", phone);
-    formData.append("address", address);
-    if (profilePhoto) formData.append("profile_photo", profilePhoto);
+    formData.append("address", business_location);
+    // if (profilePhoto) formData.append("profile_photo", profilePhoto);
+    if (profilePhoto) formData.append("user_image", profilePhoto);
+
 
     try {
-      const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${user_id}/`, {
+      const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${user_unique_user_id}/`, {
         method: "PATCH",
         body: formData,
       });
@@ -51,7 +53,7 @@ const EditProfile = () => {
       sessionStorage.setItem('user_phone', data.phone);
       sessionStorage.setItem('user_first_name', data.first_name);
       sessionStorage.setItem('user_last_name', data.last_name);
-      sessionStorage.setItem('Address', data.address);
+      sessionStorage.setItem('Address', data.business_location);
 
       alert("Profile updated successfully!");
     } catch (error) {
@@ -116,8 +118,8 @@ const EditProfile = () => {
                   <label>Address</label>
                   <input
                     type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    value={business_location}
+                    onChange={(e) => setBusiness_location(e.target.value)}
                   />
                 </div>
 

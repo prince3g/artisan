@@ -177,9 +177,9 @@ const JobArtisans = () => {
           const data = await response.json();
           setArtisans(data);
 
-          console.log("data")
-          console.log(data)
-          console.log("data")
+          // console.log("data")
+          // console.log(data)
+          // console.log("data")
           
         } catch (error) {
           setError(error.message);
