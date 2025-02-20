@@ -789,6 +789,12 @@
 .tran-card-tableSec{
 	width: 100%;
 	overflow-x: auto;
+  padding:20px 100px;
+}
+@media screen and (max-width:1000px){
+  .tran-card-tableSec{
+    padding: 20px 30px !important;
+  }
 }
 .table{
 	position: relative;
@@ -1260,4 +1266,37 @@ td .rejected-ammount,
 
 .back_Link svg{
   font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* admin-ggg-subi */
+
+.admin-ggg-subi{
+  margin-top: 30px !important;
+}
+
+.admin-ggg-subi .subb-box h3{
+  font-size: 20px !important;
+}
+
+.admin-ggg-subi .subb-box{
+  padding-bottom: 30px !important;
 }

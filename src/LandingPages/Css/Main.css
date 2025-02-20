@@ -180,6 +180,7 @@
 .Gland-Quest-data ul li.active-gland-list-Li::before{
     border-color: #B1BD3B;
     border-width: 2px;
+    background-color: #B1BD3B !important;
   }
 
   .gahys-li ul li{
@@ -750,4 +751,147 @@
 }
 .jjhs-Ull li button.active-OOBtnPush::before{
   margin-left: 15.5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* cccrs-secs-header */
+
+.cccrs-secs-header{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  grid-gap: 10px;
+}
+@media screen and (max-width:400px){
+  .cccrs-secs-header{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+}
+.cccrs-secs-header label{
+  margin-bottom: 0px !important;
+}
+
+.cccrs-secs-header span{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  grid: 3px;
+  grid-gap: 3px;
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: #F1F1F1 !important;
+  border:1px solid #d6d6d6;
+  user-select: none;
+}
+
+.cccrs-secs-header span svg{
+  font-size: 11px;
+}
+
+.cccrs-secs-header span:hover{
+  background-color: #e2e0e0 !important;
+}
+
+
+.remove-inputt-span{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  background-color: #fd3e3e !important;
+  color: #fff !important;
+  border-radius: 50%;
+  margin-top: 3px;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.remove-inputt-span svg{
+  font-size: 12px;
+}
+
+.remove-inputt-span:hover{
+  background-color: #fc6b6b !important;
+}
+
+
+.subb-box-Btns{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  grid-gap: 10px;
+}
+
+
+.subb-box-Btns button,
+.subb-box-Btns a{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  grid: 3px;
+  grid-gap: 3px;
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  border:1px solid #d6d6d6;
+  user-select: none;
+}
+
+
+.subb-box-Btns button:hover{
+  background-color: #e2e0e0 !important;
+}
+
+
+.subb-box-Btns a{
+  background-color: #B1BD3B !important;
+  border-color: #B1BD3B !important;
+  color: #fff !important;
+}
+
+.subb-box-Btns a:hover{
+  background-color: #96a131 !important;
+  border-color: #96a131 !important;
 }

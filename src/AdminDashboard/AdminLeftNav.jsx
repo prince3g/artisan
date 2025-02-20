@@ -176,11 +176,11 @@ const AdminLeftNav = () => {
         </li>
         <li>
           <Link
-            to="/admin/view-quotes"
-            className={location.pathname === "/admin/view-quotes" ? "Active_Admin_Nav_Icon" : ""}
+            to="/admin/subscriptions"
+            className={location.pathname === "/admin/subscriptions" ? "Active_Admin_Nav_Icon" : ""}
             onClick={ClosetoggleNav}
           >
-            <FormatQuoteIcon /> View Quotes
+            <FormatQuoteIcon /> Subscription Plans
           </Link>
         </li>
         <li>

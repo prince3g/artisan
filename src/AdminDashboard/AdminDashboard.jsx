@@ -25,7 +25,15 @@ import PostedJobs from './PostedJobs';
 
 import JobDescription from './JobDescription';
 
-import QuotesPage from './QuotesPage';
+import Subscriptions from './Subscriptions';
+
+import AddSubscription from './AddSubscription';
+
+import EditSubscriptionPlan from './EditSubscriptionPlan';
+
+
+
+
 
 const AdminDashboard = () => {
   const [showNavBar, setShowNavBar] = useState(false);
@@ -69,7 +77,10 @@ const AdminDashboard = () => {
               <Route path="/profile-settings" element={<ProfileSettings />} />
               <Route path="/posted-jobs" element={<PostedJobs />} />
               <Route path="/job-description" element={<JobDescription />} />
-              <Route path="/view-quotes" element={<QuotesPage />} />
+              <Route path="/subscriptions" element={<Subscriptions />} />
+              <Route path="/add-subscription" element={<AddSubscription />} />
+              <Route path="/edit-plan" element={<EditSubscriptionPlan />} />
+
             </Routes>
 
             <AdminFooter />

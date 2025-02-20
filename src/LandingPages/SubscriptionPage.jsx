@@ -48,7 +48,6 @@ const SubscriptionPage = () => {
 
           <ul>
             <li><CheckIcon />  Individuals or small artisans just starting out	</li>
-            <li><CheckIcon />  Lower monthly fee	</li>
             <li><CheckIcon />  Up to 20 job quotes every month to secure new projects and grow your client base.	</li>
             <li><CheckIcon />  Single payment gateway</li>
             <li><CheckIcon />  Limited to social media integration</li>
@@ -74,7 +73,6 @@ const SubscriptionPage = () => {
 
           <ul>
             <li><CheckIcon />  Growing artisans or small businesses needing more functionality</li>
-            <li><CheckIcon />  Moderate monthly fee</li>
             <li><CheckIcon />  Up to 40 job quotes every month to increase your chances of landing quality jobs.</li>
             <li><CheckIcon />  Multiple payment gateways</li>
             <li><CheckIcon />  Includes email marketing & promotional campaigns</li>
@@ -102,7 +100,6 @@ const SubscriptionPage = () => {
 
           <ul>
             <li><CheckIcon />  Established businesses requiring advanced features & dedicated support</li>
-            <li><CheckIcon />  Higher monthly fee</li>
             <li><CheckIcon />  Unlimited job submissions every month, allowing you to take on as many projects as you can handle.</li>
             <li><CheckIcon />  Multiple gateways + advanced payment options (recurring debit)</li>
             <li><CheckIcon />  Comprehensive marketing suite</li>
