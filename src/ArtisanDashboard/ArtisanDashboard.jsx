@@ -12,6 +12,9 @@ import ArtisanPostedJobs from './ArtisanPostedJobs';
 
 import JobDescription from './JobDescription';
 
+import ViewJobDescription from './ViewJobDescription';
+
+
 import ProfileSettings from './ProfileSettings';
 
 import ArtisanSubscription from './ArtisanSubscription';
@@ -24,6 +27,9 @@ import ArtisanPayout from './ArtisanPayout';
 
 
 import SendQuote from './SendQuote';
+
+import BookingList from './BookingList';
+
 
 
 
@@ -42,7 +48,7 @@ const ArtisanDashboard = () => {
                 <div className="large-container">
                     <p>
                         <Link to="/">Simservicehub</Link> <ChevronRightIcon />
-                        <Link to="/artisan-dashboard/"> Artisan dashboardd</Link> <ChevronRightIcon />
+                        <Link to="/artisan-dashboard/"> Artisan dashboard</Link> <ChevronRightIcon />
                         <Link to="/artisan-dashboard/">
                         {last_name} {first_name} </Link>
                     </p>
@@ -56,12 +62,14 @@ const ArtisanDashboard = () => {
                 <Route path="/" element={<ArtisanHomePage />} />
                 <Route path="/jobs" element={<ArtisanPostedJobs />} />
                 <Route path="/job-description" element={<JobDescription />} />
+                <Route path="/view-job-description" element={<ViewJobDescription />} />
                 <Route path="/profile-settings" element={<ProfileSettings />} />
                 <Route path="/artisan-subscription" element={<ArtisanSubscription />} />
                 <Route path="/availability" element={<ArtisanAvailability />} />
                 <Route path="/reviews" element={<ArtisanReview />} />
                 <Route path="/payout-setting" element={<ArtisanPayout />} />
                 <Route path="/send-quote" element={<SendQuote />} />
+                <Route path="/booking-list" element={<BookingList />} />
              </Routes>
 
 

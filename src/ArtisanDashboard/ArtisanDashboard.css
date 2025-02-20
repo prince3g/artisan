@@ -1090,3 +1090,43 @@
   .remove-button:hover {
     background-color: #000;
   }
+
+
+  .boook-Table-Sec,
+  .oooa-tb{
+    overflow-x: auto !important;
+  }
+
+  .oooa-tb th,
+  .oooa-tb td{
+    font-size: 13px !important;
+  }
+
+  .completed-td{
+    color: #B1BD3B !important;
+    font-weight: 500 !important;
+  }
+
+  .active-td{
+    color: #FDA760 !important;
+    font-weight: 500 !important;
+  }
+
+  .gagf-dessdioa-btn{
+    position: relative;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 15px;
+    background-color: #B1BD3B;
+    color: #fff !important;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .gagf-dessdioa-btn:hover{
+    background-color: #a3ae3d;
+  }

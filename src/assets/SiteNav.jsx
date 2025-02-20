@@ -432,11 +432,11 @@ function SiteNav() {
                 <DashboardIcon /> Dashboard
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link to="/artisan-dashboard/booking-list" onClick={CloseArtisanProfileMenu}>
                 <BookIcon /> Booking List
               </Link>
-            </li> */}
+            </li>
 
             <li>
               <Link to="/artisan-dashboard/payout-setting" onClick={CloseArtisanProfileMenu}>
