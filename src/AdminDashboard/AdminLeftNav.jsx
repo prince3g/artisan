@@ -174,7 +174,7 @@ const AdminLeftNav = () => {
             <PeopleIcon /> Customers
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             to="/admin/view-quotes"
             className={location.pathname === "/admin/view-quotes" ? "Active_Admin_Nav_Icon" : ""}
@@ -182,7 +182,7 @@ const AdminLeftNav = () => {
           >
             <FormatQuoteIcon /> View Quotes
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             to="/admin/completed-trades"

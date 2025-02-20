@@ -180,6 +180,7 @@
 .Gland-Quest-data ul li.active-gland-list-Li::before{
     border-color: #B1BD3B;
     border-width: 2px;
+    background-color: #B1BD3B !important;
   }
 
   .gahys-li ul li{
