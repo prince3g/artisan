@@ -17,8 +17,7 @@ const ViewQuote = () => {
 
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const location = useLocation();
-    const artisan = location.state || {};
-  
+    const artisan = location.state || {};  
 
     useEffect(() => {
       if (artisan.artisan?.quote) {
