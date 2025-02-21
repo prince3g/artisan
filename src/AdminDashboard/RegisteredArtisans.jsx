@@ -181,8 +181,21 @@ const RegisteredArtisans = () => {
         </table>
         {error && <p className="error">Error: {error}</p>}
       </div>
+            {/* Pagination buttons */}
+            <div className="pagination">
+        <button onClick={handlePreviousPage} disabled={!prevPage}>
+          Previous
+        </button>
+        {/* Optionally, display the total count or current page info */}
+        <span>{count} {count !== 1 ? " " : ""}</span>
+        <button onClick={handleNextPage} disabled={!nextPage}>
+          Next
+        </button>
+      </div>
+      
     </div>
   );
 };
 
 export default RegisteredArtisans;
+
