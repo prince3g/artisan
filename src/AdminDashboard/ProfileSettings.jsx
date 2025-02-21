@@ -102,7 +102,7 @@ const ProfileSettings = () => {
       </div>
 
       <div className="tran-card">
-        <form className="tran-card-tableSec" onSubmit={handleSubmit}>
+        <form className="tran-card-tableSec PPtran-card-tableSec" onSubmit={handleSubmit}>
           <div className="Gland-Quest-data">
             <label>First name</label>
             <input

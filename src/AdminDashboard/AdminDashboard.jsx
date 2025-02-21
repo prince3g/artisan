@@ -31,6 +31,10 @@ import AddSubscription from './AddSubscription';
 
 import EditSubscriptionPlan from './EditSubscriptionPlan';
 
+import ArtisanCridentials from './ArtisanCridentials';
+
+import ArtisanReviews from './ArtisanReviews';
+
 
 
 
@@ -80,6 +84,9 @@ const AdminDashboard = () => {
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="/add-subscription" element={<AddSubscription />} />
               <Route path="/edit-plan" element={<EditSubscriptionPlan />} />
+              <Route path="/artisan-cridentials" element={<ArtisanCridentials />} />
+
+              <Route path="/artisan-reviews" element={<ArtisanReviews />} />
 
             </Routes>
 

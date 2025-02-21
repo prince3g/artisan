@@ -385,14 +385,14 @@ const ArtisanSignUp = () => {
     <div className="Gradnded-page">
                     <div className='navigating-ttarvs'>
         <div className='site-container'>
-        <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/artisan-sign-up"> Artisan Registeration</Link> </p>
+        <p><Link to="/">Simservicehub</Link> <ChevronRightIcon /> <Link to="/artisan-sign-up"> Artisan Registration</Link> </p>
           </div>
           </div>
       <div className="site-container">
         <div className="Gradnded-main">
           <div className="Gradnded-Box Shirolls_Box">
             <div className="Gradnded-Box-header">
-              <h2 className="big-text">Artisan Registeration</h2>
+              <h2 className="big-text">Artisan Registration</h2>
             </div>
             <div className="Gradnded-Box-Body">
               <div className="Gland-Quest">

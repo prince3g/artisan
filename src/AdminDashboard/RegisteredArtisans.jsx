@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PlacHolderImg1 from './Img/hu/hu1.jpg';
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
+import { Link } from "react-router-dom";
+
 const RegisteredArtisans = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const navigate = useNavigate();
@@ -101,14 +103,15 @@ const RegisteredArtisans = () => {
             {artisanData.map((artisanDatum) => (
               <tr key={artisanDatum.id}>
                 <td className="slt-td">
-                  <div className="td-grid">
+                  <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
+
                     <div className="td-grid-img">
                       <img src={PlacHolderImg1} alt="Artisan" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
                     </div>
-                  </div>
+                  </a>
                 </td>
                 <td>{artisanDatum.user.email}</td>
                 <td>{artisanDatum.user.phone}</td>
@@ -116,14 +119,9 @@ const RegisteredArtisans = () => {
                 <td>{new Date(artisanDatum.user.date_joined).toLocaleDateString()}</td>
                 <td>
                   <div className="action-btn">
-                    <a
-                      href="#!"
-                      className="accept-Btn"
-                      onClick={() => handleProfileClick(artisanDatum)}
-                    >
-                      Profile
-                    </a>
+                    <Link to="/admin/artisan-cridentials" className="accept-Btn">Cridentials</Link>
                     <span className="active-Btn">Activate</span>
+
 
                     <span className="suspend-Btn">Suspend</span>
                     <span
@@ -132,6 +130,9 @@ const RegisteredArtisans = () => {
                     >
                       {deletingId === artisanDatum.id ? "Deleting..." : "Remove"}
                     </span>
+                  </div>
+                  <div className="action-btn secc-bagbs-asa">
+                  <Link to="/admin/artisan-reviews" className="reviews-Btn">Reviews</Link>
                   </div>
                 </td>
               </tr>

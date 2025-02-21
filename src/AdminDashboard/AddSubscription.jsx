@@ -50,7 +50,7 @@ const AddSubscription = () => {
   return (
     <div className="Gen_Admin_BBD">
       <div className="tran-card">
-        <form className="tran-card-tableSec">
+        <form className="tran-card-tableSec PPtran-card-tableSec">
           <div className="top-sec-main Gen_Admin_Header">
             <h3>Add Subscription Plan</h3>
           </div>

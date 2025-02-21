@@ -40,7 +40,7 @@ const EditSubscriptionPlan = () => {
   return (
     <div className="Gen_Admin_BBD">
       <div className="tran-card">
-        <form className="tran-card-tableSec">
+        <form className="tran-card-tableSec PPtran-card-tableSec">
           <div className="top-sec-main Gen_Admin_Header">
             <h3>Edit Subscription (Basic Plan)</h3>
           </div>
