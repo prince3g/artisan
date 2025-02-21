@@ -5,8 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import PageServices from '../data/PageServices';
 import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
+
 
 const LeaveReview = () => {
+
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
 
   const [artisanProfiles, setArtisanProfiles] = useState([]);
   const [selectedArtisan, setSelectedArtisan] = useState(null);
@@ -60,39 +67,30 @@ const LeaveReview = () => {
   });
 
   useEffect(() => {
-    if (!query) {
-      setArtisanProfiles([]);
-      return;
-    }
-
-    const fetchArtisanProfiles = debounce(async (query) => {
+    const fetchArtisanProfiles = async () => {
       setLoading(true);
       setError('');
       try {
         const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile-no-pagination/`);
         const data = await response.json();
-        if (data.length === 0) {
-          setError('No artisans found');
-        }
         setArtisanProfiles(data);
-
-        // console.log("data")
-        // console.log(data)
-        // console.log("data")
-
       } catch {
         setError('Error fetching artisan profiles. Please try again later.');
       } finally {
         setLoading(false);
       }
-    }, 300);
-
-    fetchArtisanProfiles(query);
-
-    return () => {
-      fetchArtisanProfiles.cancel();
     };
-  }, [query, djangoHostname]);
+  
+    fetchArtisanProfiles();
+  }, [djangoHostname]);
+  
+ 
+  const filteredArtisans = artisanProfiles.filter(artisan =>
+    `${artisan.user.first_name} ${artisan.user.last_name}`
+      .toLowerCase()
+      .includes(query.toLowerCase())
+  );
+  
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
@@ -181,8 +179,9 @@ const LeaveReview = () => {
       });
   
       if (response.ok) {
-        alert('Review submitted successfully!');
-        navigate('/thank-you');
+        //alert('Review submitted successfully!');
+        showMessage("Review submitted successfully!!!", "success");
+        navigate('/');
       } else {
         const errorData = await response.json();
         console.error('Error:', errorData);
@@ -304,6 +303,13 @@ const LeaveReview = () => {
         <div className="Gradnded-main">
           <div className="Gradnded-Box">
             <div className="Gradnded-Box-header">
+            {flash && (
+            <FlashMessage
+                message={flash.message}
+                type={flash.type}
+                onClose={() => setFlash(null)}
+            />
+            )}
               <h2 className="big-text">Leave a Review</h2>
             </div>
             <div className="Gradnded-Box-Body">
@@ -320,25 +326,26 @@ const LeaveReview = () => {
                 />
 
                 {loading && <div className="loading-spinner">Loading...</div>}
-                      {!loading && artisanProfiles.length > 0 && (
-                        <ul className="suggestions-list">
-                          {artisanProfiles.map((artisan) => (
-                            <li key={artisan.id} onClick={() => handleArtisanSelect(artisan)}>
-                              {artisan.user.first_name} {artisan.user.last_name}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                {!loading && filteredArtisans.length > 0 && (
+                    <ul className="suggestions-list">
+                      {filteredArtisans.map((artisan) => (
+                        <li key={artisan.id} onClick={() => handleArtisanSelect(artisan)}>
+                          {artisan.user.first_name} {artisan.user.last_name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
                     {error && <div className="error-message">{error}</div>}
                   </div>
 
-                  {selectedArtisan && (
+                  {/* {selectedArtisan && (
                 <div className="artisan-details">
                   <h3>Selected Artisan: {selectedArtisan.user.first_name} {selectedArtisan.user.last_name}</h3>
                   <p>{selectedArtisan.service_details.simpleDescription}</p>
                   <p>{selectedArtisan.location}</p>
                 </div>
-              )}
+              )} */}
 
                 {selectedArtisan  && (
                   <div className="glahs-sec">

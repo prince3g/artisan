@@ -27,6 +27,11 @@ const RegisteredArtisans = () => {
       }
       const data = await response.json();
       setArtisanData(data.results);
+
+      // console.log("data.results")
+      // console.log(data.results)
+      // console.log("data.results")
+      
       setNextPage(data.next);
       setPrevPage(data.previous);
       setCount(data.count);
@@ -93,7 +98,7 @@ const RegisteredArtisans = () => {
         )
       );
 
-      console.log("Success")
+      // console.log("Success")
       showMessage("Artisan status changed successfully", "Success");
     } catch (error) {
       alert(error.message);
@@ -141,7 +146,7 @@ const RegisteredArtisans = () => {
                 <td className="slt-td">
                   <div className="td-grid">
                     <div className="td-grid-img">
-                      <img src={PlacHolderImg1} alt="Artisan" />
+                      <img src={artisanDatum.user_image || PlacHolderImg1} alt="Artisan" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
@@ -192,7 +197,7 @@ const RegisteredArtisans = () => {
           Next
         </button>
       </div>
-      
+
     </div>
   );
 };

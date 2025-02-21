@@ -199,20 +199,21 @@
     height: auto;
   }
   
-  .comments-sec-box{
+  .comments-sec-box {
     position: relative;
     width: 100%;
-    height: auto;
+    height: auto; /* Ensure height is auto */
     margin-top: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #EDEDED;
     padding: 15px 0px;
+    overflow: visible; /* Ensure content is not clipped */
   }
   
-  .s-comment{
+  .s-comment {
     position: relative;
     width: 100%;
-    height: auto;
+    height: auto; /* Ensure height is auto */
     display: grid;
     grid-template-columns: 0.5fr 1fr;
     grid-gap: 50px;
@@ -293,10 +294,11 @@
     color: #9b9b9b;
   }
   
-  .s-comment-2{
+  .s-comment-2 {
     position: relative;
     width: 100%;
-    height: auto;
+    height: auto; /* Ensure height is auto */
+    overflow: visible; /* Ensure content is not clipped */
   }
   
   .s-comment-2 span{
@@ -378,13 +380,24 @@
   }
 
 
-  @media screen and (max-width:1000px){
-    .Chhah-btns{
-      position: fixed !important;
-      bottom: 10px !important;
-      transform: translateX(-50%) !important;
-      left: 50% !important;
-      z-index: 1500 !important;
-      width: 80% !important;
+  @media screen and (max-width:450px){
+    .comments-sec-box {
+      border-bottom: none !important;
+    }
+    .s-comment {
+      display: block !important; /* Ensure grid layout is not causing issues */
+    }
+    .s-comment-1 {
+      word-wrap: 100% !important;
+      border-bottom: 1px solid #EDEDED;
+      padding-bottom: 15px;
+    }
+    .s-comment-10 span {
+      width: 40px !important;
+      height: 40px !important;
+      font-size: 16px !important;
+    }
+    .s-comment-11 span {
+      font-size: 15px !important;
     }
   }

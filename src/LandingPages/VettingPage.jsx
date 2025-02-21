@@ -70,6 +70,7 @@ const VettingPage = () => {
       }
   
       showMessage("Documents updated successfully!", "success");
+      
       navigate("/subscription");
     } catch (error) {
       console.error("Error updating documents:", error);

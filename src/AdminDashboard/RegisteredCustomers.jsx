@@ -102,7 +102,7 @@ const RegisteredUsers = () => {
                 <td className="slt-td">
                   <div className="td-grid">
                     <div className="td-grid-img">
-                      <img src={PlacHolderImg1} alt="Customer" />
+                      <img src={user.user_image} alt="Customer" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{`${user.first_name} ${user.last_name}`}</p>

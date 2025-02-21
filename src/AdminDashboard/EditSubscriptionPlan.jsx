@@ -1,66 +1,135 @@
-import React, { useState } from "react";
-import "../LandingPages/Css/Main.css";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
+
 
 const EditSubscriptionPlan = () => {
-  const [features, setFeatures] = useState([
-    "Individuals or small artisans just starting out",
-    "Up to 20 job quotes every month to secure new projects and grow your client base.",
-    "Single payment gateway",
-    "Limited to social media integration",
-    "Email support on weekdays",
-    "Self-guided setup resources (tutorials/documentation)",
-    "Best for small-scale operations",
-    "Most budget-friendly option - Ideal for testing new ideas",
-  ]);
 
-  const [benefits, setBenefits] = useState([
-    "Cost-effective solution for solo artisans or those experimenting with online sales",
-    "Quick to set up with minimal complexity",
-    "Access to essential features without a large investment",
-  ]);
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
+  const location = useLocation();
+  const navigate = useNavigate();
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
+  // Get the passed plan data from location.state
+  const plan = location.state?.plan;
 
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [promoPrice, setPromoPrice] = useState("");
+  const [features, setFeatures] = useState([]);
+  const [keyBenefits, setKeyBenefits] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (plan) {
+      setName(plan.name || "");
+      setPrice(plan.price || "");
+      setPromoPrice(plan.promo_price || "");
+      setFeatures(plan.features || [""]);
+      setKeyBenefits(plan.key_benefits || [""]);
+    }
+  }, [plan]);
+
+  // Add & Remove Features
   const addFeature = () => setFeatures([...features, ""]);
-  const removeFeature = (index) => setFeatures(features.filter((_, i) => i !== index));
+  const removeFeature = (index) => {
+    if (features.length > 1) setFeatures(features.filter((_, i) => i !== index));
+  };
   const handleFeatureChange = (index, value) => {
     const newFeatures = [...features];
     newFeatures[index] = value;
     setFeatures(newFeatures);
   };
 
-
-  const addBenefit = () => setBenefits([...benefits, ""]);
-  const removeBenefit = (index) => setBenefits(benefits.filter((_, i) => i !== index));
+  // Add & Remove Key Benefits
+  const addBenefit = () => setKeyBenefits([...keyBenefits, ""]);
+  const removeBenefit = (index) => {
+    if (keyBenefits.length > 1) setKeyBenefits(keyBenefits.filter((_, i) => i !== index));
+  };
   const handleBenefitChange = (index, value) => {
-    const newBenefits = [...benefits];
+    const newBenefits = [...keyBenefits];
     newBenefits[index] = value;
-    setBenefits(newBenefits);
+    setKeyBenefits(newBenefits);
   };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+
+    const updatedPlan = {
+      name,
+      price,
+      promo_price: promoPrice,
+      features,
+      key_benefits: keyBenefits,
+    };
+
+    try {
+      const response = await fetch(`${djangoHostname}/api/auth/subscriptions/api/subscriptions/${plan.id}/`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPlan),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        console.error("API Error Response:", responseData);
+        setErrors(responseData);
+        return;
+      }
+
+      //alert("Subscription plan updated successfully!");
+      showMessage("Subscription plan updated successfully!", "success");
+      navigate("/admin/subscriptions"); // Redirect back to subscription list
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!plan) {
+    return <p style={{ textAlign: "center", marginTop: "20px" }}>No plan selected for editing.</p>;
+  }
+
   return (
     <div className="Gen_Admin_BBD">
       <div className="tran-card">
-        <form className="tran-card-tableSec">
+      {flash && (
+        <FlashMessage
+            message={flash.message}
+            type={flash.type}
+            onClose={() => setFlash(null)}
+        />
+        )}
+        <form className="tran-card-tableSec" onSubmit={handleSubmit}>
           <div className="top-sec-main Gen_Admin_Header">
-            <h3>Edit Subscription (Basic Plan)</h3>
+            <h3>Edit Subscription ({name})</h3>
           </div>
 
           <div className="Gland-Quest-data">
             <label>Title</label>
-            <input type="text" defaultValue="Basic Plan" />
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            {errors.name && <p className="error-text">{errors.name[0]}</p>}
           </div>
 
           <div className="Gland-Quest-data">
             <label>Plan Amount (/per month)</label>
-            <input type="text" defaultValue="₦5,000" />
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} required />
+            {errors.price && <p className="error-text">{errors.price[0]}</p>}
           </div>
 
           <div className="Gland-Quest-data">
             <label>Promo Amount (1st month)</label>
-            <input type="text" defaultValue="₦2,500" />
+            <input type="text" value={promoPrice} onChange={(e) => setPromoPrice(e.target.value)} required />
           </div>
 
           {/* Plan Features Section */}
@@ -72,22 +141,14 @@ const EditSubscriptionPlan = () => {
                   <AddIcon /> Add feature
                 </span>
               </div>
-
               {features.map((feature, index) => (
                 <div key={index} className="input-group">
-                  <input
-                    type="text"
-                    placeholder="Enter plan feature"
-                    value={feature}
-                    onChange={(e) => handleFeatureChange(index, e.target.value)}
-                  />
-                  <span
-                    onClick={() => removeFeature(index)}
-                    style={{ cursor: "pointer" }}
-                    className="remove-inputt-span"
-                  >
-                    <RemoveIcon />
-                  </span>
+                  <input type="text" value={feature} onChange={(e) => handleFeatureChange(index, e.target.value)} required />
+                  {features.length > 1 && (
+                    <span onClick={() => removeFeature(index)} style={{ cursor: "pointer" }} className="remove-inputt-span">
+                      <RemoveIcon />
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -102,30 +163,22 @@ const EditSubscriptionPlan = () => {
                   <AddIcon /> Add benefit
                 </span>
               </div>
-
-              {benefits.map((benefit, index) => (
+              {keyBenefits.map((benefit, index) => (
                 <div key={index} className="input-group">
-                  <input
-                    type="text"
-                    placeholder="Enter benefit"
-                    value={benefit}
-                    onChange={(e) => handleBenefitChange(index, e.target.value)}
-                  />
-                  <span
-                    onClick={() => removeBenefit(index)}
-                    style={{ cursor: "pointer" }}
-                    className="remove-inputt-span"
-                  >
-                    <RemoveIcon />
-                  </span>
+                  <input type="text" value={benefit} onChange={(e) => handleBenefitChange(index, e.target.value)} required />
+                  {keyBenefits.length > 1 && (
+                    <span onClick={() => removeBenefit(index)} style={{ cursor: "pointer" }} className="remove-inputt-span">
+                      <RemoveIcon />
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
           </div>
 
           <div className="Gland-Cnt-Btn">
-            <button type="submit" className="post-job-btn">
-              Save Changes
+            <button type="submit" className="post-job-btn" disabled={loading}>
+              {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>

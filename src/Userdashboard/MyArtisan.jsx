@@ -41,7 +41,7 @@ const Userdashbaord = () => {
           // console.log(data)
           // console.log("data")
 
-          // console.log(data.results);
+          console.log(data.results);
           setArtisanData(data.results || []);
           setNumArtisanData(data.count || 0);
 
@@ -115,21 +115,20 @@ const Userdashbaord = () => {
                         </button>
                         <Link
                           to={`/artisan-profile?service_details=${encodeURIComponent(
-                            artisan.service_details.name)}
-                          &artisan_location=${encodeURIComponent(
-                            artisan.location )}
-                            &artisan_phone=${encodeURIComponent(
-                            artisan.user.phone)}
-                          &artisan_unique_id=${encodeURIComponent(
-                            artisan.user.unique_id)}
-                          &artisan_name=${encodeURIComponent(
-                            artisan.user.first_name +
-                              ' ' +
-                              artisan.user.last_name
+                            artisan.service_details.name.trim()
+                          )}&artisan_location=${encodeURIComponent(
+                            artisan.location?.trim() || ''
+                          )}&artisan_phone=${encodeURIComponent(
+                            artisan.user.phone.trim()
+                          )}&artisan_unique_id=${encodeURIComponent(
+                            artisan.user.unique_id.trim()
+                          )}&artisan_name=${encodeURIComponent(
+                            `${artisan.user.first_name.trim()} ${artisan.user.last_name.trim()}`
                           )}`}
                         >
                           View Profile
                         </Link>
+
                       </div>
                     </div>
                   </div>
