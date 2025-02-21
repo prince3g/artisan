@@ -47,7 +47,7 @@ const ArtisanTopNav = () => {
             throw new Error("Failed to fetch user data");
           }
           const data = await response.json();
-           console.log("data QWERTY")
+          // console.log("data QWERTY")
           //  console.log(data)
           //  console.log("data QWERTY")
           

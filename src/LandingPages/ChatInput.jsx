@@ -60,13 +60,13 @@ const ChatInput = ({ onNewMessage, receiverId, senderId }) => {
           const trimmedReceiver = receiverId.trim();
           const trimmedSender = senderId.trim();
           
-        console.log("receiverId")
-        console.log(trimmedReceiver)
-        console.log("receiverId")
+        // console.log("receiverId")
+        // console.log(trimmedReceiver)
+        // console.log("receiverId")
 
-        console.log("senderID")
-        console.log(trimmedSender)
-        console.log("senderID")
+        // console.log("senderID")
+        // console.log(trimmedSender)
+        // console.log("senderID")
 
 
             const response = await api.post(endpoint, {

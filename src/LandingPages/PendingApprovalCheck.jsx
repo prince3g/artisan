@@ -1,55 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
+import { useLocation } from "react-router-dom"; 
 import CompletedReg from "./CompletedReg";
 import PendingAproval from "./PendingAproval";
 
 const PendingApprovalCheck = () => {
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-  const [isApproved, setIsApproved] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const location = useLocation(); // Get state from navigation
+    const [isApproved, setIsApproved] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const uniqueUserId = sessionStorage.getItem("unique_user_id");
-    const fetchProfileStatus = async () => {
-      try {
+    useEffect(() => {
+        // Try getting uniqueUserId from sessionStorage first
+        let uniqueUserId = sessionStorage.getItem("unique_user_id");
 
-        // console.log("uniqueUserId")
-        // console.log(uniqueUserId)
-        // console.log("uniqueUserId")
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueUserId}`
-        //const response = await fetch(`http://127.0.0.1:9090/api/profiles/auth/artisan-profile/?unique_id=e7e8578d-efed-4cdb-89cf-c8bf4b4ccb35`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
+        // If not found, check the state passed during navigation
+        if (!uniqueUserId && location.state?.uniqueId) {
+            uniqueUserId = location.state.uniqueId;
+            sessionStorage.setItem("unique_user_id", uniqueUserId); // Store for future use
         }
 
-        const data = await response.json();
-        setIsApproved(data.is_approved);
+        if (!uniqueUserId) {
+            setError("No unique user ID found. Please log in again.");
+            setLoading(false);
+            return;
+        }
 
-        // console.log("data")
-        // console.log(data)
-        // console.log("data")
+        const fetchProfileStatus = async () => {
+            try {
+                const response = await fetch(
+                    `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueUserId}`
+                );
 
-        setUserData(data);
-        
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
 
-    fetchProfileStatus();
-  }, []);
+                const data = await response.json();
+                setIsApproved(data.is_approved);
+                setUserData(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-  if (loading) return <p>Checking Approval Status...</p>;
-  if (error) return <p>Error: {error}</p>;
+        fetchProfileStatus();
+    }, [location.state]); // Depend on location.state in case of navigation
 
-  return isApproved ? <CompletedReg userData={userData} /> : <PendingAproval />;
+    if (loading) return <p>Checking Approval Status...</p>;
+    if (error) return <p>Error: {error}</p>;
 
+    return isApproved ? <CompletedReg userData={userData} /> : <PendingAproval />;
 };
-
 
 export default PendingApprovalCheck;
