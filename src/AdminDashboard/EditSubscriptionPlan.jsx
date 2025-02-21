@@ -21,6 +21,7 @@ const EditSubscriptionPlan = () => {
     "Access to essential features without a large investment",
   ]);
 
+
   const addFeature = () => setFeatures([...features, ""]);
   const removeFeature = (index) => setFeatures(features.filter((_, i) => i !== index));
   const handleFeatureChange = (index, value) => {
@@ -28,6 +29,7 @@ const EditSubscriptionPlan = () => {
     newFeatures[index] = value;
     setFeatures(newFeatures);
   };
+
 
   const addBenefit = () => setBenefits([...benefits, ""]);
   const removeBenefit = (index) => setBenefits(benefits.filter((_, i) => i !== index));
@@ -37,6 +39,7 @@ const EditSubscriptionPlan = () => {
     setBenefits(newBenefits);
   };
 
+  
   return (
     <div className="Gen_Admin_BBD">
       <div className="tran-card">

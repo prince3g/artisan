@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import PlacHolderImg1 from './Img/hu/hu1.jpg';
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const RegisteredArtisans = () => {
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const navigate = useNavigate();
 
@@ -13,7 +18,6 @@ const RegisteredArtisans = () => {
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
-  // Function to fetch artisan data from a given URL
   const fetchArtisans = async (url) => {
     try {
       const response = await fetch(url);
@@ -31,12 +35,10 @@ const RegisteredArtisans = () => {
     }
   };
 
-  // Fetch the initial artisan profiles
   useEffect(() => {
     fetchArtisans(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`);
   }, [djangoHostname]);
 
-  // Pagination handlers
   const handleNextPage = () => {
     if (nextPage) {
       fetchArtisans(nextPage);
@@ -49,7 +51,6 @@ const RegisteredArtisans = () => {
     }
   };
 
-  // Handle deletion of an artisan
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this artisan?")) return;
 
@@ -59,9 +60,9 @@ const RegisteredArtisans = () => {
         method: "DELETE",
       });
       if (!response.ok) {
+        showMessage("YFailed to delete the artisan", "failure");
         throw new Error("Failed to delete the artisan.");
       }
-      // Update the artisan list after deletion
       setArtisanData((prevData) => prevData.filter((artisan) => artisan.id !== id));
     } catch (error) {
       alert(error.message);
@@ -70,7 +71,35 @@ const RegisteredArtisans = () => {
     }
   };
 
-  // Navigate to the artisan profile details
+  const toggleStatus = async (uniqueId, isApproved, type) => {
+    const url = type === "approve"
+      ? `${djangoHostname}/api/accounts/auth/api/users/${uniqueId}/`
+      : `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueId}`;
+    
+    const body = type === "approve" ? { is_approved: !isApproved } : { is_suspended: !isApproved };
+    
+    try {
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update status.");
+      }
+      setArtisanData((prevData) =>
+        prevData.map((artisan) =>
+          artisan.user.unique_id === uniqueId ? { ...artisan, user: { ...artisan.user, ...body } } : artisan
+        )
+      );
+
+      console.log("Success")
+      showMessage("Artisan status changed successfully", "Success");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const handleProfileClick = (artisanDatum) => {
     const queryParams = new URLSearchParams({
       service_details: artisanDatum.service_details.name,
@@ -83,9 +112,18 @@ const RegisteredArtisans = () => {
     navigate(`/artisan-profile?${queryParams}`);
   };
 
+
   return (
     <div className="tran-card">
       <div className="tran-card-tableSec">
+        {flash && (
+          <FlashMessage
+              message={flash.message}
+              type={flash.type}
+              onClose={() => setFlash(null)}
+          />
+        )}
+        
         <table className="table">
           <thead>
             <tr>
@@ -116,16 +154,19 @@ const RegisteredArtisans = () => {
                 <td>{new Date(artisanDatum.user.date_joined).toLocaleDateString()}</td>
                 <td>
                   <div className="action-btn">
-                    <a
-                      href="#!"
-                      className="accept-Btn"
-                      onClick={() => handleProfileClick(artisanDatum)}
+                    <a href="#" className="accept-Btn" onClick={() => handleProfileClick(artisanDatum)}>Profile</a>
+                    <span 
+                      className="active-Btn" 
+                      onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_approved, "approve")}
                     >
-                      Profile
-                    </a>
-                    <span className="active-Btn">Activate</span>
-
-                    <span className="suspend-Btn">Suspend</span>
+                      {artisanDatum.user.is_approved ? "Deactivate" : "Activate"}
+                    </span>
+                    <span 
+                      className="suspend-Btn" 
+                      onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}
+                    >
+                      {artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend"}
+                    </span>
                     <span
                       className="Remove-Btn"
                       onClick={() => handleDelete(artisanDatum.id)}
@@ -139,18 +180,6 @@ const RegisteredArtisans = () => {
           </tbody>
         </table>
         {error && <p className="error">Error: {error}</p>}
-      </div>
-
-      {/* Pagination buttons */}
-      <div className="pagination">
-        <button onClick={handlePreviousPage} disabled={!prevPage}>
-          Previous
-        </button>
-        {/* Optionally, display the total count or current page info */}
-        <span>{count} {count !== 1 ? " " : ""}</span>
-        <button onClick={handleNextPage} disabled={!nextPage}>
-          Next
-        </button>
       </div>
     </div>
   );
