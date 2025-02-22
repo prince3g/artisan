@@ -6,28 +6,23 @@ import Handyman from '@mui/icons-material/Handyman';
 import MyLocation from '@mui/icons-material/MyLocation';
 import Visibility from '@mui/icons-material/Visibility';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
 import HghImg1 from '../LandingPages/Img/hghImgs/1.png';
 import HghImg2 from '../LandingPages/Img/hghImgs/2.png';
 import HghImg3 from '../LandingPages/Img/hghImgs/3.png';
 
 
-
 const Userdashbaord = () => {
-
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanData, setArtisanData] = useState([]);
     const [numArtisanData, setNumArtisanData] = useState([]);
-
     
     useEffect(() => {
       const fetchArtisans = async () => {
         try {
-
-
           const user_unique_user_id = sessionStorage.getItem('unique_user_id');
-          //http://127.0.0.1:9090/api/messaging/auth/messages/senders_to_user/?receiver_id=5d9f4c56-ba11-4ffe-bd66-f95d0064158b
+
           const response = await fetch(`${djangoHostname}/api/messaging/auth/messages/senders_to_user/?receiver_id=${user_unique_user_id}`, {
+            
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -45,7 +40,7 @@ const Userdashbaord = () => {
           // console.log(data)
           // console.log("data")
 
-          console.log(data.results);
+          // console.log(data.results);
           setArtisanData(data.results || []);
           setNumArtisanData(data.count || 0);
 
@@ -69,7 +64,7 @@ const Userdashbaord = () => {
         <div className='garoo-Gird-part2'>
           {numArtisanData === 0 ? (
             <div className="no-artisans">
-              <p>No artisan in this category</p>
+              <p>You have chatted with any Artisan</p>
             </div>
           ) : (
             artisanData.map((artisan, index) => (
