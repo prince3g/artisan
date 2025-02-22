@@ -11,6 +11,7 @@ import ArtisanHomePage from './ArtisanHomePage';
 import ArtisanPostedJobs from './ArtisanPostedJobs';
 
 import JobDescription from './JobDescription';
+import JobDescription1 from './JobDescription1';
 
 import ViewJobDescription from './ViewJobDescription';
 
@@ -62,6 +63,7 @@ const ArtisanDashboard = () => {
                 <Route path="/" element={<ArtisanHomePage />} />
                 <Route path="/jobs" element={<ArtisanPostedJobs />} />
                 <Route path="/job-description" element={<JobDescription />} />
+                <Route path="/job-description1" element={<JobDescription1 />} />
                 <Route path="/view-job-description" element={<ViewJobDescription />} />
                 <Route path="/profile-settings" element={<ProfileSettings />} />
                 <Route path="/artisan-subscription" element={<ArtisanSubscription />} />

@@ -131,7 +131,7 @@ const Comments = ({ artisanUniqueId }) => {
               ))}
 
               <div className='Gland-Btns'>
-                <Link to={`/leave-review?artisanUniqueID=${artisanUniqueId}`}>
+                <Link to={`/leave-reviews?artisanUniqueID=${artisanUniqueId}`}>
                   <Star /> Leave a Review
                 </Link>
                 <Link

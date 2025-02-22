@@ -14,6 +14,7 @@ import ArtisanProfile from './LandingPages/ArtisanProfile';
 import PostJob from './LandingPages/PostJob';
 import HowSimsWorks from './LandingPages/HowSimsWorks';
 import LeaveReview from './LandingPages/LeaveReview';
+import LeaveReview1 from './LandingPages/LeaveReview1';
 import RequestQuote from './LandingPages/RequestQuote';
 import SavedTrades from './LandingPages/SavedTrades';
 import AdviceCentre from './LandingPages/AdviceCentre';
@@ -90,6 +91,7 @@ function App() {
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/how-sim-works" element={<HowSimsWorks />} />
           <Route path="/leave-review" element={<LeaveReview />} />
+          <Route path="/leave-reviews" element={<LeaveReview1 />} />
           <Route path="/request-quote" element={<RequestQuote />} />
           <Route path="/saved-trades" element={<SavedTrades />} />
           <Route path="/advice-centre" element={<AdviceCentre />} />

@@ -36,7 +36,7 @@ const SendQuote = () => {
     };
   
     try {
-      const response = await fetch(`${djangoHostname}/api/auth/quotes/api/quote_request/`, {
+      const response = await fetch(`${djangoHostname}/api/auth/quotes/quote_request/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -48,7 +48,7 @@ const SendQuote = () => {
         throw new Error(data.error || "An unexpected error occurred."); // Get backend error
       }
   
-      navigate("/dashboard"); // Redirect on success
+      navigate("/artisan-dashboard"); // Redirect on success
     } catch (err) {
       setError(err.message); // Display error message properly
     } finally {

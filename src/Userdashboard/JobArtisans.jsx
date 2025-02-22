@@ -167,7 +167,7 @@ const JobArtisans = () => {
       const fetchJobs = async () => {
         try {
 
-           const response = await fetch(`${djangoHostname}/api/auth/quotes/api/quote_request/artisans-for-job/?job_id=${job_unique_id}`);
+           const response = await fetch(`${djangoHostname}/api/auth/quotes/quote_request/artisans-for-job/?job_id=${job_unique_id}`);
           
           if (!response.ok) {
             // Handle errors appropriately
