@@ -3,6 +3,8 @@ import PlacHolderImg1 from './Img/hu/hu1.jpg';
 import { useNavigate } from "react-router-dom";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
+import { Link } from "react-router-dom";
+
 const RegisteredArtisans = () => {
   const [flash, setFlash] = useState(null);    
   const showMessage = (message, type) => {
@@ -17,6 +19,7 @@ const RegisteredArtisans = () => {
   const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState({});
   const [loadingStatus, setLoadingStatus] = useState({});
 
   const fetchArtisans = async (url) => {
@@ -103,7 +106,10 @@ const RegisteredArtisans = () => {
       alert(error.message);
     } finally {
       setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: false }));
+    } finally {
+      setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: false }));
     }
+
   };
 
   const handleProfileClick = (artisanDatum) => {
@@ -119,7 +125,7 @@ const RegisteredArtisans = () => {
   };
 
 
-  return (
+return (
     <div className="tran-card">
       <div className="tran-card-tableSec">
         {flash && (
@@ -145,14 +151,15 @@ const RegisteredArtisans = () => {
             {artisanData.map((artisanDatum) => (
               <tr key={artisanDatum.id}>
                 <td className="slt-td">
-                  <div className="td-grid">
+                  <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
+
                     <div className="td-grid-img">
                       <img src={artisanDatum.user_image || PlacHolderImg1} alt="Artisan" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
                     </div>
-                  </div>
+                  </a>
                 </td>
                 <td>{artisanDatum.user.email}</td>
                 <td>{artisanDatum.user.phone}</td>
@@ -167,7 +174,10 @@ const RegisteredArtisans = () => {
                     </span>
                     <span className="suspend-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}>
                       {loadingStatus[`${artisanDatum.user.unique_id}-suspend`] ? (artisanDatum.user.is_suspended ? "Unsuspending..." : "Suspending...") : (artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend")}
+                    <span className="suspend-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}>
+                      {loadingStatus[`${artisanDatum.user.unique_id}-suspend`] ? (artisanDatum.user.is_suspended ? "Unsuspending..." : "Suspending...") : (artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend")}
                     </span>
+
 
                     <span
                       className="Remove-Btn"
@@ -175,6 +185,9 @@ const RegisteredArtisans = () => {
                     >
                       {deletingId === artisanDatum.id ? "Deleting..." : "Remove"}
                     </span>
+                  </div>
+                  <div className="action-btn secc-bagbs-asa">
+                  <Link to="/admin/artisan-reviews" className="reviews-Btn">Reviews</Link>
                   </div>
                 </td>
               </tr>

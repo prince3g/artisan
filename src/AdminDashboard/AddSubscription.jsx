@@ -91,6 +91,7 @@ const showMessage = (message, type) => {
         />
         )}
         <form className="tran-card-tableSec" onSubmit={handleSubmit}>
+        <form className="tran-card-tableSec PPtran-card-tableSec">
           <div className="top-sec-main Gen_Admin_Header">
             <h3>Add Subscription Plan</h3>
           </div>
@@ -171,6 +172,7 @@ const showMessage = (message, type) => {
               {loading ? "Creating..." : "Add Plan"}
             </button>
           </div>
+        </form>
         </form>
       </div>
     </div>

@@ -111,6 +111,7 @@ const EditSubscriptionPlan = () => {
         />
         )}
         <form className="tran-card-tableSec" onSubmit={handleSubmit}>
+        <form className="tran-card-tableSec PPtran-card-tableSec">
           <div className="top-sec-main Gen_Admin_Header">
             <h3>Edit Subscription ({name})</h3>
           </div>
@@ -181,6 +182,7 @@ const EditSubscriptionPlan = () => {
               {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>
+        </form>
         </form>
       </div>
     </div>
