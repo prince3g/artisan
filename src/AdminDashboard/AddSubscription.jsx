@@ -139,6 +139,7 @@ const showMessage = (message, type) => {
               ))}
             </div>
           </div>
+          
 
           <div className="cccrs-secs">
             <div className="Gland-Quest-data">
@@ -166,7 +167,6 @@ const showMessage = (message, type) => {
               ))}
             </div>
           </div>
-
           <div className="Gland-Cnt-Btn">
             <button type="submit" className="post-job-btn" disabled={loading}>
               {loading ? "Creating..." : "Add Plan"}

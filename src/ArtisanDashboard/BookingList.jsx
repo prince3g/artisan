@@ -21,6 +21,7 @@ export default function BookingList() {
                 );
 
                 setBookings(response.data);
+                
                 // console.log("response.data");
                 // console.log(response.data[0]);
                 // console.log("response.data");

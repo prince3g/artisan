@@ -30,8 +30,8 @@ const PendingApprovalCheck = () => {
         const fetchProfileStatus = async () => {
             try {
                 const response = await fetch(
-                    // `${djangoHostname}/api/accounts/auth/api/users/${uniqueUserId}`
-                     `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueUserId}`
+                     `${djangoHostname}/api/accounts/auth/api/users/${uniqueUserId}`
+                    // `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueUserId}`
                     
                 );
 
@@ -41,9 +41,9 @@ const PendingApprovalCheck = () => {
 
                 const data = await response.json();
                 setIsApproved(data.is_approved);
-                console.log("data")
-                console.log(data)
-                console.log("data")
+                // console.log("data")
+                // console.log(data)
+                // console.log("data")
 
                 setUserData(data);
 

@@ -11,7 +11,7 @@ const CompletedReg = ({ userData }) => {
 
 
   const handleBackClick = () => {
-    navigate("/subscription");
+    navigate("/login");
   };
 
   return (

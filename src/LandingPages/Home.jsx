@@ -363,14 +363,6 @@ function Home() {
                   </li>
                 ))}
               </ul>
-
-              {/* <div className="Gland-Quest-data">
-                    <label>Other services</label>
-                    <div className='hj-inpuusy'>
-                    <input type="tel"  name="businessPhone" placeholder="Enter other services here.."/>
-                    <button>Continue</button>
-                    </div>
-                    </div> */}
             </div>
           </div>
         </div>

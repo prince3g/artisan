@@ -1,10 +1,17 @@
 // import React, { useState, useEffect } from "react";
-// import { Link, useLocation, useNavigate} from "react-router-dom";
+// import { Link, useLocation, useNavigate } from "react-router-dom";
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // import CloseIcon from '@mui/icons-material/Close';
+// import axios from 'axios'; // Import axios for making HTTP requests
 // import './Userdashbaord.css';
+// import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 // const ViewQuote = () => {
+
+//   const [flash, setFlash] = useState(null);    
+//   const showMessage = (message, type) => {
+//     setFlash({ message, type });
+//   };
 
 //   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
 //   const [showArtisanDetails, setShowArtisanDetails] = useState(false);
@@ -13,28 +20,53 @@
 //   const [bid_amount, setBid_amount] = useState("");
 //   const [job_duration, setJob_duration] = useState("");
 
+//   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+//   const location = useLocation();
+//   const artisan = location.state || {};
+
+//   //console.log("artisan", artisan);
+
+//   useEffect(() => {
+//     if (artisan.artisan?.quote) {
+//       setBid_amount(artisan.artisan.quote.bid_amount);
+//       setJob_duration(artisan.artisan.quote.job_duration);
+//     }
+//   }, [artisan]);
+
+//   const handleAcceptQuote = async () => {
+
+//     try {
+//       const unique_id = artisan.artisan.quote.unique_id;
+//       const response = await axios.post(
+//         `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept/`
+//       );
   
-
-//     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-//     const location = useLocation();
-//     const artisan = location.state || {};  
- 
-//     console.log("artisan")
-//     console.log(artisan.artisan.quote.unique_id)
-//     console.log("artisan")
-
-//     useEffect(() => {
-//       if (artisan.artisan?.quote) {
-//         setBid_amount(artisan.artisan.quote.bid_amount);
-//         setJob_duration(artisan.artisan.quote.job_duration);
+//       if (response.status === 201) {
+//         showMessage("You have accepted the quote successfully", "success");
+//         setShowPaymentOptions(true);
+//         setShowArtisanDetails(false);
+//       } else {
+//         console.error("Failed to accept quote:", response.data);
 //       }
-//     }, [artisan]); // Ensure this only runs when artisan changes
+//     } catch (error) {
+//       if (error.response && error.response.data && error.response.data.error) {
+//         const errorMessage = error.response.data.error;
   
-//   const handleAcceptQuote = () => {
-//     setShowPaymentOptions(true);
-//     setShowArtisanDetails(false);
+//         showMessage(errorMessage, "error");
+  
+//         if (errorMessage === "This quote has already been accepted") {
+//           setShowPaymentOptions(true);
+//           setShowArtisanDetails(false);
+//         }
+        
+//         console.log(errorMessage);
+//       } else {
+//         showMessage("An error occurred while accepting the quote", "error");
+//       }
+//       console.error("Error accepting quote:", error);
+//     }
 //   };
-
+  
 //   const handleClosePaymentOptions = () => {
 //     setShowPaymentOptions(false);
 //     setShowArtisanDetails(false);
@@ -48,12 +80,9 @@
 //     setShowArtisanDetails(false);
 //   };
 
-
 //   const handleDeclineQuote = () => {
 //     navigate(-1);
 //   };
-
-
 
 //   return (
 //     <div className="ooUserdashbaord-Page">
@@ -74,6 +103,13 @@
 //         <div className="Gradnded-main user-quote">
 //           <div className="Gradnded-Box">
 //             <div className="Gradnded-Box-header">
+//             {flash && (
+//             <FlashMessage
+//                 message={flash.message}
+//                 type={flash.type}
+//                 onClose={() => setFlash(null)}
+//             />
+//             )}
 //               <h2 className="big-text">Request Quote</h2>
 //             </div>
 
@@ -81,6 +117,7 @@
 //               <div className="My-Artisan-Body">
 //                 <div className='garoo-Gird-part2'>
 //                   <div className="hggah-req">
+                    
 //                     <div className="hggah-req-1">
 //                       <h3>Bid</h3>
 //                       <p>The total Amount the Artisan is Bidding for this Job</p>
@@ -97,13 +134,13 @@
 //                       <p>How long it will take to complete the Job</p>
 //                     </div>
 //                     <div className="hggah-req-2">
-//                     <input type="text" value={job_duration} readOnly />
+//                       <input type="text" value={job_duration} readOnly />
 //                     </div>
 //                   </div>
 
 //                   <div className="aaggs-sec-btns">
 //                     <button className="accpt-qqut" onClick={handleAcceptQuote}>Accept Quote</button>
-//                    <button className="dec-qqut" onClick={handleDeclineQuote}>Decline Quote</button>
+//                     <button className="dec-qqut" onClick={handleDeclineQuote}>Decline Quote</button>
 //                   </div>
 //                 </div>
 //               </div>
@@ -130,6 +167,7 @@
 //               </div>
 
 //               {showArtisanDetails && (
+
 //                 <div className="bbann-dltss">
 //                   <h3>Artisan Account details</h3>
 //                   <ul>
@@ -143,6 +181,7 @@
 //                     <button className="bba-btn2" onClick={handleCancelArtisanDetails}>Cancel</button>
 //                   </div>
 //                 </div>
+
 //               )}
 //             </div>
 //           </div>
@@ -157,29 +196,23 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
 import './Userdashbaord.css';
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const ViewQuote = () => {
-
-  const [flash, setFlash] = useState(null);    
-  const showMessage = (message, type) => {
-    setFlash({ message, type });
-  };
-
+  const [flash, setFlash] = useState(null);
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [showArtisanDetails, setShowArtisanDetails] = useState(false);
+  const [payoutDetails, setPayoutDetails] = useState(null);
+  
   const navigate = useNavigate();
-
-  const [bid_amount, setBid_amount] = useState("");
-  const [job_duration, setJob_duration] = useState("");
-
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const location = useLocation();
   const artisan = location.state || {};
 
-  //console.log("artisan", artisan);
+  const [bid_amount, setBid_amount] = useState("");
+  const [job_duration, setJob_duration] = useState("");
 
   useEffect(() => {
     if (artisan.artisan?.quote) {
@@ -188,54 +221,45 @@ const ViewQuote = () => {
     }
   }, [artisan]);
 
+  const fetchPayoutDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${djangoHostname}/api/auth/payouts/payouts/${artisan.artisan?.quote?.payout_id}/`
+      );
+      setPayoutDetails(response.data);
+
+      console.log("response.data")
+      console.log(response.data)
+      console.log("response.data")
+      
+    } catch (error) {
+      console.error("Error fetching payout details:", error);
+    }
+  };
+
+  const handleShowArtisanDetails = () => {
+    setShowArtisanDetails(true);
+    fetchPayoutDetails(); // Fetch payout details when the section is shown
+  };
+
   const handleAcceptQuote = async () => {
     try {
       const unique_id = artisan.artisan.quote.unique_id;
       const response = await axios.post(
         `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept/`
       );
-  
+
       if (response.status === 201) {
-        showMessage("You have accepted the quote successfully", "success");
         setShowPaymentOptions(true);
         setShowArtisanDetails(false);
+        setFlash({ message: "You have accepted the quote successfully", type: "success" });
       } else {
         console.error("Failed to accept quote:", response.data);
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        const errorMessage = error.response.data.error;
-  
-        showMessage(errorMessage, "error");
-  
-        if (errorMessage === "This quote has already been accepted") {
-          setShowPaymentOptions(true);
-          setShowArtisanDetails(false);
-        }
-        
-        console.log(errorMessage);
-      } else {
-        showMessage("An error occurred while accepting the quote", "error");
-      }
+      setFlash({ message: "An error occurred while accepting the quote", type: "error" });
       console.error("Error accepting quote:", error);
     }
-  };
-  
-  const handleClosePaymentOptions = () => {
-    setShowPaymentOptions(false);
-    setShowArtisanDetails(false);
-  };
-
-  const handleShowArtisanDetails = () => {
-    setShowArtisanDetails(true);
-  };
-
-  const handleCancelArtisanDetails = () => {
-    setShowArtisanDetails(false);
-  };
-
-  const handleDeclineQuote = () => {
-    navigate(-1);
   };
 
   return (
@@ -257,13 +281,7 @@ const ViewQuote = () => {
         <div className="Gradnded-main user-quote">
           <div className="Gradnded-Box">
             <div className="Gradnded-Box-header">
-            {flash && (
-            <FlashMessage
-                message={flash.message}
-                type={flash.type}
-                onClose={() => setFlash(null)}
-            />
-            )}
+              {flash && <FlashMessage message={flash.message} type={flash.type} onClose={() => setFlash(null)} />}
               <h2 className="big-text">Request Quote</h2>
             </div>
 
@@ -271,7 +289,6 @@ const ViewQuote = () => {
               <div className="My-Artisan-Body">
                 <div className='garoo-Gird-part2'>
                   <div className="hggah-req">
-                    
                     <div className="hggah-req-1">
                       <h3>Bid</h3>
                       <p>The total Amount the Artisan is Bidding for this Job</p>
@@ -294,7 +311,7 @@ const ViewQuote = () => {
 
                   <div className="aaggs-sec-btns">
                     <button className="accpt-qqut" onClick={handleAcceptQuote}>Accept Quote</button>
-                    <button className="dec-qqut" onClick={handleDeclineQuote}>Decline Quote</button>
+                    <button className="dec-qqut" onClick={() => navigate(-1)}>Decline Quote</button>
                   </div>
                 </div>
               </div>
@@ -307,7 +324,7 @@ const ViewQuote = () => {
         <div className="qquqps-drops">
           <div className="site-container">
             <div className="qquqps-Box">
-              <span className="Close-qquqps-Box" onClick={handleClosePaymentOptions}><CloseIcon /></span>
+              <span className="Close-qquqps-Box" onClick={() => setShowPaymentOptions(false)}><CloseIcon /></span>
               <div className="hga-seds" style={{ display: showArtisanDetails ? 'none' : 'block' }}>
                 <div className="qquqps-Cont exctip-pay">
                   <h3>PAY VIA ESCROW</h3>
@@ -320,18 +337,18 @@ const ViewQuote = () => {
                 </div>
               </div>
 
-              {showArtisanDetails && (
+              {showArtisanDetails && payoutDetails && (
                 <div className="bbann-dltss">
                   <h3>Artisan Account details</h3>
                   <ul>
-                    <li><p>Bank Name</p><span>First Bank</span></li>
-                    <li><p>Account Number</p><span>3103583959</span></li>
-                    <li><p>Account Name</p><span>Ndubuisi Prince Godson</span></li>
-                    <li><p>Account Type</p><span>Savings</span></li>
+                    <li><p>Bank Name</p><span>{payoutDetails.bank_name}</span></li>
+                    <li><p>Account Number</p><span>{payoutDetails.account_number}</span></li>
+                    <li><p>Account Name</p><span>{payoutDetails.account_name}</span></li>
+                    <li><p>Account Type</p><span>{payoutDetails.account_type}</span></li>
                   </ul>
                   <div className="bbann-dltss-btns">
                     <button className="bba-btn1">Complete Payment</button>
-                    <button className="bba-btn2" onClick={handleCancelArtisanDetails}>Cancel</button>
+                    <button className="bba-btn2" onClick={() => setShowArtisanDetails(false)}>Cancel</button>
                   </div>
                 </div>
               )}

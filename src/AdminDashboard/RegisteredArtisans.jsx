@@ -62,7 +62,7 @@ const RegisteredArtisans = () => {
 
     setDeletingId(id);
     try {
-      const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/${id}/`, {
+      const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${id}/`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -176,7 +176,7 @@ const RegisteredArtisans = () => {
 
                     <span
                       className="Remove-Btn"
-                      onClick={() => handleDelete(artisanDatum.id)}
+                      onClick={() => handleDelete(artisanDatum.user.unique_id)}
                     >
                       {deletingId === artisanDatum.id ? "Deleting..." : "Remove"}
                     </span>
