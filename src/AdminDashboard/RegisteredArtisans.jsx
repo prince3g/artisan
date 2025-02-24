@@ -17,6 +17,7 @@ const RegisteredArtisans = () => {
   const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState({});
 
   const fetchArtisans = async (url) => {
     try {
@@ -77,10 +78,10 @@ const RegisteredArtisans = () => {
   };
 
   const toggleStatus = async (uniqueId, isApproved, type) => {
-    const url = type === "approve"
-      ? `${djangoHostname}/api/accounts/auth/api/users/${uniqueId}/`
-      : `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${uniqueId}`;
-    
+    setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: true }));
+
+    const url = `${djangoHostname}/api/accounts/auth/api/users/${uniqueId}/`
+
     const body = type === "approve" ? { is_approved: !isApproved } : { is_suspended: !isApproved };
     
     try {
@@ -102,7 +103,10 @@ const RegisteredArtisans = () => {
       showMessage("Artisan status changed successfully", "Success");
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: false }));
     }
+
   };
 
   const handleProfileClick = (artisanDatum) => {
@@ -118,7 +122,7 @@ const RegisteredArtisans = () => {
   };
 
 
-  return (
+return (
     <div className="tran-card">
       <div className="tran-card-tableSec">
         {flash && (
@@ -160,18 +164,15 @@ const RegisteredArtisans = () => {
                 <td>
                   <div className="action-btn">
                     <a href="#" className="accept-Btn" onClick={() => handleProfileClick(artisanDatum)}>Profile</a>
-                    <span 
-                      className="active-Btn" 
-                      onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_approved, "approve")}
-                    >
-                      {artisanDatum.user.is_approved ? "Deactivate" : "Activate"}
+        
+
+                    <span className="active-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_approved, "approve")}>
+                      {loadingStatus[`${artisanDatum.user.unique_id}-approve`] ? (artisanDatum.user.is_approved ? "Deactivating..." : "Activating...") : (artisanDatum.user.is_approved ? "Deactivate" : "Activate")}
                     </span>
-                    <span 
-                      className="suspend-Btn" 
-                      onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}
-                    >
-                      {artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend"}
+                    <span className="suspend-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}>
+                      {loadingStatus[`${artisanDatum.user.unique_id}-suspend`] ? (artisanDatum.user.is_suspended ? "Unsuspending..." : "Suspending...") : (artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend")}
                     </span>
+
                     <span
                       className="Remove-Btn"
                       onClick={() => handleDelete(artisanDatum.id)}
