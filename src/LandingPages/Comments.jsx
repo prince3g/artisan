@@ -167,16 +167,18 @@ const Comments = ({ artisanUniqueId }) => {
                           <span>{review.reviewer_name_display}</span>
                           <p>{new Date(review.created_at).toLocaleDateString()}</p>
 
-                          <span>{renderStars(review.rating)}</span>
+                          {/* <span>{renderStars(review.rating)}</span> */}
                           {/* <p>{review.review_text}</p> */}
-                          <p>{review.review_text.split(" ").slice(0, 20).join(" ")}{review.review_text.split(" ").length > 10 ? "..." : ""}</p>
+                          {/* <p>{review.review_text.split(" ").slice(0, 20).join(" ")}{review.review_text.split(" ").length > 10 ? "..." : ""}</p> */}
 
                         </div>
                       </div>
                     </div>
+
+
                     <div className='s-comment-2'>
-                      {/* <span>{renderStars(review.rating)}</span>
-                      <p>{review.review_text}</p> */}
+                      <span>{renderStars(review.rating)}</span>
+                      <p>{review.review_text}</p>
                     </div>
                   </div>
                 </div>

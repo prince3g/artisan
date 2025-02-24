@@ -224,14 +224,25 @@ const ArtisanSignUp = () => {
             body: JSON.stringify(requestPayload),
         });
 
-        if (!response1.ok) {
-            const errorData = await response1.json();
-            const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
-            setError(errorMessage);
-            setLoading(false);
-            return;
-        }
+        // if (!response1.ok) {
+        //     const errorData = await response1.json();
+        //     const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
+        //     setError(errorMessage);
+        //     setLoading(false);
+        //     return;
+        // }
 
+        if (!response1.ok) {
+          const errorData = await response1.json();
+          
+          // Extract errors from all fields dynamically
+          const errorMessages = Object.values(errorData).flat().join(", ");
+          
+          setError(errorMessages || "An error occurred.");
+          setLoading(false);
+          return;
+      }
+      
         const response1Data = await response1.json();
         //console.log("First request successful:", response1Data);
         sessionStorage.setItem('unique_user_id', response1Data.unique_id);

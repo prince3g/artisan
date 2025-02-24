@@ -25,20 +25,14 @@ import { Link } from "react-router-dom";
 const ArtisanReviews = () => {
 
      const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-      const location = useLocation();
-      const navigate = useNavigate();
-      const searchParams = new URLSearchParams(location.search);
+     const location = useLocation();
+     const artisanDatum = location.state || {};
     
       // Extracting data from the URL
     
-      const service = decodeURIComponent(searchParams.get('service') || '');
-      const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
-      const service_details = decodeURIComponent(searchParams.get('service_details') || '');
-      const artisan_location = decodeURIComponent(searchParams.get('artisan_location') || '');
-      // const artisan_unique_id = decodeURIComponent(searchParams.get('artisan_unique_id') || '');
-      const artisan_phone = decodeURIComponent(searchParams.get('artisan_phone') || '');
-    
-      const artisan_unique_id = sessionStorage.getItem('unique_user_id');
+      const artisan_unique_id = artisanDatum.artisanDatum.user.unique_id;
+      const artisan_firstNAme = artisanDatum.artisanDatum.user.first_name;
+      const artisan_lastNAme = artisanDatum.artisanDatum.user.last_name;
       
       
       const [isExpanded, setIsExpanded] = useState(false);
@@ -170,7 +164,7 @@ const ArtisanReviews = () => {
   return (
     <div className="Gen_Admin_BBD">
       <div className="top-sec-main Gen_Admin_Header">
-        <h3>Prince Godson</h3>
+        <h3>{artisan_firstNAme} {artisan_lastNAme}</h3>
       </div>
 
 

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PlacHolderImg1 from './Img/hu/hu1.jpg';
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
-
-import { Link } from "react-router-dom";
 
 const RegisteredArtisans = () => {
   const [flash, setFlash] = useState(null);    
@@ -19,7 +17,6 @@ const RegisteredArtisans = () => {
   const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-  const [loadingStatus, setLoadingStatus] = useState({});
   const [loadingStatus, setLoadingStatus] = useState({});
 
   const fetchArtisans = async (url) => {
@@ -106,10 +103,7 @@ const RegisteredArtisans = () => {
       alert(error.message);
     } finally {
       setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: false }));
-    } finally {
-      setLoadingStatus((prev) => ({ ...prev, [`${uniqueId}-${type}`]: false }));
     }
-
   };
 
   const handleProfileClick = (artisanDatum) => {
@@ -125,7 +119,7 @@ const RegisteredArtisans = () => {
   };
 
 
-return (
+  return (
     <div className="tran-card">
       <div className="tran-card-tableSec">
         {flash && (
@@ -150,6 +144,7 @@ return (
           <tbody>
             {artisanData.map((artisanDatum) => (
               <tr key={artisanDatum.id}>
+                
                 <td className="slt-td">
                   <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
 
@@ -161,6 +156,7 @@ return (
                     </div>
                   </a>
                 </td>
+
                 <td>{artisanDatum.user.email}</td>
                 <td>{artisanDatum.user.phone}</td>
                 <td><span>{artisanDatum.location}</span></td>
@@ -168,16 +164,15 @@ return (
                 <td>
                   <div className="action-btn">
 
-                    <a href="#" className="accept-Btn" onClick={() => handleProfileClick(artisanDatum)}>Profile</a>
+                    {/* <a href="#" className="accept-Btn" onClick={() => handleProfileClick(artisanDatum)}>Profile</a> */}
+
+
                     <span className="active-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_approved, "approve")}>
                       {loadingStatus[`${artisanDatum.user.unique_id}-approve`] ? (artisanDatum.user.is_approved ? "Deactivating..." : "Activating...") : (artisanDatum.user.is_approved ? "Deactivate" : "Activate")}
                     </span>
                     <span className="suspend-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}>
                       {loadingStatus[`${artisanDatum.user.unique_id}-suspend`] ? (artisanDatum.user.is_suspended ? "Unsuspending..." : "Suspending...") : (artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend")}
-                    <span className="suspend-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_suspended, "suspend")}>
-                      {loadingStatus[`${artisanDatum.user.unique_id}-suspend`] ? (artisanDatum.user.is_suspended ? "Unsuspending..." : "Suspending...") : (artisanDatum.user.is_suspended ? "Unsuspend" : "Suspend")}
                     </span>
-
 
                     <span
                       className="Remove-Btn"
@@ -187,13 +182,20 @@ return (
                     </span>
                   </div>
                   <div className="action-btn secc-bagbs-asa">
-                  <Link to="/admin/artisan-reviews" className="reviews-Btn">Reviews</Link>
+                    
+                  <Link to="/admin/artisan-cridentials" className="accept-Btn">Cridentials
+                  </Link>
+                  
+                  <Link to={{
+                    pathname: "/admin/artisan-reviews", }}  state={{ artisanDatum }} className="reviews-Btn">Reviews
+                  </Link>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
         {error && <p className="error">Error: {error}</p>}
       </div>
             {/* Pagination buttons */}
