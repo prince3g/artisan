@@ -3,6 +3,8 @@ import PlacHolderImg1 from './Img/hu/hu1.jpg';
 import { useNavigate } from "react-router-dom";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
+import { Link } from "react-router-dom";
+
 const RegisteredArtisans = () => {
   const [flash, setFlash] = useState(null);    
   const showMessage = (message, type) => {
@@ -148,14 +150,15 @@ return (
             {artisanData.map((artisanDatum) => (
               <tr key={artisanDatum.id}>
                 <td className="slt-td">
-                  <div className="td-grid">
+                  <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
+
                     <div className="td-grid-img">
                       <img src={artisanDatum.user_image || PlacHolderImg1} alt="Artisan" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
                     </div>
-                  </div>
+                  </a>
                 </td>
                 <td>{artisanDatum.user.email}</td>
                 <td>{artisanDatum.user.phone}</td>
@@ -179,6 +182,9 @@ return (
                     >
                       {deletingId === artisanDatum.id ? "Deleting..." : "Remove"}
                     </span>
+                  </div>
+                  <div className="action-btn secc-bagbs-asa">
+                  <Link to="/admin/artisan-reviews" className="reviews-Btn">Reviews</Link>
                   </div>
                 </td>
               </tr>

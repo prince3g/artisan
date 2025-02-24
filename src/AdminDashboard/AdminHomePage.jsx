@@ -143,7 +143,7 @@ const AdminHomePage = () => {
 
             <div className="tran-card-header">
                 <h2>SimserviceHub Artisan</h2>
-                <a href="/pending-r.html">View more</a>
+                <a href="/admin/artisans">View more</a>
             </div>
             <RegisteredArtisans />
         </div>

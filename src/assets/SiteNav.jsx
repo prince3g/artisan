@@ -458,11 +458,11 @@ function SiteNav() {
                 <StarRateIcon /> Reviews
               </Link>
             </li>
-            {/* <li>
-              <Link to="/artisan-dashboard/payment" onClick={CloseArtisanProfileMenu}>
-                <PaymentIcon /> Payment
+            <li>
+              <Link to="/subscription" onClick={CloseArtisanProfileMenu}>
+                <PaymentIcon /> Plans
               </Link>
-            </li> */}
+            </li>
             <li>
               <button className="logout-btnn" onClick={() => {
                       CloseProfileMenuForUsers();

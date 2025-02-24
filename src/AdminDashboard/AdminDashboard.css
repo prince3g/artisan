@@ -789,10 +789,13 @@
 .tran-card-tableSec{
 	width: 100%;
 	overflow-x: auto;
+}
+
+.PPtran-card-tableSec{
   padding:20px 100px;
 }
 @media screen and (max-width:1000px){
-  .tran-card-tableSec{
+  .PPtran-card-tableSec{
     padding: 20px 30px !important;
   }
 }
@@ -836,8 +839,13 @@
     display: grid;
     grid-template-columns:auto 1fr;
     grid-gap:10px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: underline;
 }
-
+.td-grid:hover{
+  color: #B1BD3B;
+  text-decoration: underline;
+}
 .td-grid-img{
     position: relative;
     width: 100%;
@@ -1299,4 +1307,210 @@ td .rejected-ammount,
 
 .admin-ggg-subi .subb-box{
   padding-bottom: 30px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Credentials Page Container */
+.credentials-container {
+ position: relative;
+ width: 100%;
+ height: auto;
+}
+
+/* No Credentials Message */
+.no-credentials {
+  font-size: 16px;
+  color: gray;
+}
+
+/* Credentials List */
+.credentials-list {
+  position: relative;
+ width: 100%;
+ height: auto;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ grid-gap: 20px;
+ gap: 20px;
+ grid-template-rows: auto;
+}
+
+/* Credential Item */
+.credential-item {
+  background: white;
+}
+
+/* Credential Image */
+.credential-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+}
+
+/* Credential Actions */
+.credential-actions {
+  margin-top: 5px;
+}
+
+.modal button,
+.credential-actions button {
+  padding: 5px 12px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 3px;
+  background-color: transparent;
+}
+
+.credential-actions button.view-btn {
+  background: #B1BD3B;
+  color: #fff;
+}
+
+.credential-actions button.remove-btn {
+  border-color: #B1BD3B;
+  color: #B1BD3B;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image {
+  max-width: 90vw;
+  max-height: 80vh;
+}
+
+.modal button.close-btn {
+  margin-top: 10px;
+  background: #ff2f2f;
+  color: white;
+  position: absolute;
+  bottom: 40px;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal button.close-btn:hover{
+  background: #333;
+}
+
+
+
+
+/* secc-bagbs-asa */
+
+.secc-bagbs-asa{
+  margin-top: 7px;
+}
+
+.reviews-Btn{
+  background-color: #F29D56 !important;
+  color: #fff !important;
 }
