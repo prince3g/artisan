@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PlacHolderImg1 from './Img/hu/hu1.jpg';
 import { useNavigate } from "react-router-dom";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 import { Link } from "react-router-dom";
 
