@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './Css/Main.css';
-import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
-import PageServices from '../data/PageServices';
 import { Link } from 'react-router-dom';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 
-const LeaveReview = () => {
+const LeaveReview1 = () => {
 
   const [flash, setFlash] = useState(null);    
   const showMessage = (message, type) => {
     setFlash({ message, type });
   };
 
-  const [artisanProfiles, setArtisanProfiles] = useState([]);
-  const [selectedArtisan, setSelectedArtisan] = useState(null);
-  const [query, setQuery] = useState('');
 
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const navigate = useNavigate();
@@ -25,9 +20,6 @@ const LeaveReview = () => {
   const artisan_unique_id = decodeURIComponent(searchParams.get('artisanUniqueID') || '');
   
 
-
-  const [suggestions, setSuggestions] = useState([]);
-  const [error, setError] = useState('');
   const [reliabilityYesNo, setReliabilityYesNo] = useState('');
   const [activeReliabilityButton, setActiveReliabilityButton] = useState(null);
   const [isCheckedReliability, setIsCheckedReliability] = useState(false);
@@ -38,11 +30,7 @@ const LeaveReview = () => {
   const [activeCourtesyButton, setActiveCourtesyButton] = useState(null);
   const [isCheckedCourtesy, setIsCheckedCourtesy] = useState(false);
 
-  
-  const [selectedTrade, setSelectedTrade] = useState('');
-  const [selectedTradeId, setSelectedTradeId] = useState(null);
-  const [serviceCategories, setServiceCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   
@@ -60,50 +48,12 @@ const LeaveReview = () => {
     comment: '',
     service_required: '',
     date_of_experience: '',
-   //  value_of_work: null,
     contact_name: '',
     contact_email: '',
     mobile_number: '',
   });
 
-  useEffect(() => {
-    const fetchArtisanProfiles = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile-no-pagination/`);
-        const data = await response.json();
-        setArtisanProfiles(data);
-      } catch {
-        setError('Error fetching artisan profiles. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
   
-    fetchArtisanProfiles();
-  }, [djangoHostname]);
-  
- 
-  const filteredArtisans = artisanProfiles.filter(artisan =>
-    `${artisan.user.first_name} ${artisan.user.last_name}`
-      .toLowerCase()
-      .includes(query.toLowerCase())
-  );
-  
-
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const handleArtisanSelect = (artisan) => {
-    setSelectedArtisan(artisan);
-    setQuery(`${artisan.user.first_name} ${artisan.user.last_name}`);
-    setArtisanProfiles([]);
-  };
-
-
-  // Handle input change for review fields
   const handleInputChangeReview = (field, value) => {
     setReviewData((prev) => ({ ...prev, [field]: value }));
   };
@@ -113,7 +63,7 @@ const LeaveReview = () => {
     if (!isCheckedReliability && !isCheckedWorkmanship && !isCheckedTidiness && !isCheckedCourtesy) {
       setReviewData((prev) => ({
         ...prev,
-        [`${field}_rating`]: value,  // Dynamically update the rating field
+        [`${field}_rating`]: value,  
       }));
     }
   };
@@ -135,66 +85,67 @@ const LeaveReview = () => {
 
   
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-  
-    const error = validateReviewData();
-    if (error) {
-      console.log(error);
-      alert(error);
-      return;
-    }
-  
-    // Ensure that if a rating is set to null due to 'Not applicable' checkbox, it's handled properly
-    const reviewPayload = {
-      // service_category: reviewData.service_category_id,
-      artisan: reviewData.artisan,
-      reviewer_name: reviewData.customer_id || null,
-      // customer_id: reviewData.customer_id,
-      rating: reviewData.reliability_rating || null,
-      reliability_rating: reviewData.reliability_rating || null,
-      workmanship_rating: reviewData.workmanship_rating || null,
-      tidiness_rating: reviewData.tidiness_rating || null,
-      date_of_experience: reviewData.date_of_experience || null,
-      courtesy_rating: reviewData.courtesy_rating || null,
-      review_title: reviewData.review_title,
-      review_text: reviewData.comment,
-      // value_of_work: reviewData.value_of_work,
-      contact_name: reviewData.contact_name,
-      contact_email: reviewData.contact_email,
-      mobile_number: reviewData.mobile_number,
-    };
-  
-    // Make the POST request
-    const url = `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`;
-    //const url = `${djangoHostname}/api/tradeReviews/auth/api/trade-reviews/`;
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reviewPayload),
-      });
-  
-      if (response.ok) {
-        //alert('Review submitted successfully!');
-        showMessage("Review submitted successfully!!!", "success");
-        navigate('/');
-      } else {
-        const errorData = await response.json();
-        console.error('Error:', errorData);
-        showMessage('Failed to submit the review. Please try again.', 'failure');
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      showMessage('An error occurred while submitting the review.', 'failure');
-    } finally {
-      setIsSubmitting(false);
-    }
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setIsSubmitting(true);
+
+  const error = validateReviewData();
+  if (error) {
+    showMessage(error, "error");
+    return;
+  }
+
+  const reviewPayload = {
+    artisan: artisan_unique_id,
+    reviewer_name: reviewData.customer_id || null,
+    rating: reviewData.reliability_rating || null,
+    reliability_rating: reviewData.reliability_rating || null,
+    workmanship_rating: reviewData.workmanship_rating || null,
+    tidiness_rating: reviewData.tidiness_rating || null,
+    date_of_experience: reviewData.date_of_experience || null,
+    courtesy_rating: reviewData.courtesy_rating || null,
+    review_title: reviewData.review_title,
+    review_text: reviewData.comment,
+    contact_name: reviewData.contact_name,
+    contact_email: reviewData.contact_email,
+    mobile_number: reviewData.mobile_number,
   };
-  
+
+  const url = `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/`;
+
+//   console.log("artisan")
+//   console.log(artisan_unique_id)
+//   console.log("artisan")
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reviewPayload),
+    });
+
+    if (response.ok) {
+      showMessage("Review submitted successfully!", "success");
+      navigate('/');
+    } else {
+      const errorData = await response.json();
+      if (errorData) {
+        let errorMessage = "Failed to submit the review due to the following errors:";
+        Object.entries(errorData).forEach(([field, messages]) => {
+          errorMessage += `\n- ${field}: ${messages.map(msg => msg).join(", ")}`;
+        });
+        showMessage(errorMessage, "failure");
+      } else {
+        showMessage("Failed to submit the review. Please try again.", "failure");
+      }
+    }
+  } catch (err) {
+    showMessage("An error occurred while submitting the review.", "failure");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
   const validateReviewData = () => {
     // if (!reviewData.service_category_id) return "Please select a trade.";
     if (!reviewData.reliability_rating) return "Please rate reliability.";
@@ -208,34 +159,10 @@ const LeaveReview = () => {
     if (!reviewData.mobile_number) return "Please provide your mobile number.";
     if (!reviewData.customer_id) return "Please login to continue.";
 
-    // console.log("reviewData")
-    // console.log(reviewData)
-    // console.log("reviewData")
+ 
     return null;
   };
    
-  const debounceFetchArtisans = debounce(async (query) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?search=${query}`);
-      const data = await response.json();
-      setArtisanProfiles(data);
-    } catch (error) {
-      setError('Error fetching artisan profiles.');
-    } finally {
-      setLoading(false);
-    }
-  }, 500);
-
-
-
-  const handleSuggestionClick = (service) => {
-    setSelectedTrade(service.name);
-    setSelectedTradeId(service.unique_id);
-    setReviewData((prev) => ({ ...prev, service_category_id: service.unique_id }));
-    setSuggestions([]);
-};
-
 
   const handleCheckboxChangeReliability = () => {
     setIsCheckedReliability(!isCheckedReliability);
@@ -244,40 +171,6 @@ const LeaveReview = () => {
       setReviewData((prev) => ({
         ...prev,
         reliability_rating: null,  // Set rating to null
-      }));
-    }
-  };
-  
-
-  const handleCheckboxChangeWorkmanship = () => {
-    setIsCheckedWorkmanship(!isCheckedWorkmanship);
-    if (!isCheckedWorkmanship) {
-      setActiveWorkmanshipButton(null);  // Reset rating
-      setReviewData((prev) => ({
-        ...prev,
-        workmanship_rating: null,  // Reset the rating value
-      }));
-    }
-  };
-  
-  const handleCheckboxChangeTidiness = () => {
-    setIsCheckedTidiness(!isCheckedTidiness);
-    if (!isCheckedTidiness) {
-      setActiveTidinessButton(null);
-      setReviewData((prev) => ({
-        ...prev,
-        tidiness_rating: null,  // Reset the rating value
-      }));
-    }
-  };
-  
-  const handleCheckboxChangeCourtesy = () => {
-    setIsCheckedCourtesy(!isCheckedCourtesy);
-    if (!isCheckedCourtesy) {
-      setActiveCourtesyButton(null);
-      setReviewData((prev) => ({
-        ...prev,
-        courtesy_rating: null,  // Reset the rating value
       }));
     }
   };
@@ -314,34 +207,9 @@ const LeaveReview = () => {
             </div>
             <div className="Gradnded-Box-Body">
               <div className="Gland-Quest">
-                                
-                <div className="Gland-Quest-data">
-                <label htmlFor="artisanSelect">Which artisan would you like to review?</label>
-                <input
-                  type="text"
-                  placeholder="Start typing the name of the artisan..."
-                  value={query}
-                  onChange={handleInputChange}
-                  disabled={loading}
-                />
 
-                {loading && <div className="loading-spinner">Loading...</div>}
-                {!loading && filteredArtisans.length > 0 && (
-                    <ul className="suggestions-list">
-                      {filteredArtisans.map((artisan) => (
-                        <li key={artisan.id} onClick={() => handleArtisanSelect(artisan)}>
-                          {artisan.user.first_name} {artisan.user.last_name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
 
-                    {error && <div className="error-message">{error}</div>}
-                  </div>
-
- 
-
-                {selectedArtisan  && (
+                {artisan_unique_id  && (
                   <div className="glahs-sec">
                     <div className="Gland-Quest-data">
                       <label htmlFor="serviceSelect">Was any work carried out?</label>
@@ -545,6 +413,6 @@ const LeaveReview = () => {
   );
 };
 
-export default LeaveReview;
+export default LeaveReview1;
 
 

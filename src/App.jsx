@@ -178,6 +178,7 @@ import ArtisanProfile from './LandingPages/ArtisanProfile';
 import PostJob from './LandingPages/PostJob';
 import HowSimsWorks from './LandingPages/HowSimsWorks';
 import LeaveReview from './LandingPages/LeaveReview';
+import LeaveReview1 from './LandingPages/LeaveReview1';
 import RequestQuote from './LandingPages/RequestQuote';
 import SavedTrades from './LandingPages/SavedTrades';
 import AdviceCentre from './LandingPages/AdviceCentre';
@@ -219,6 +220,7 @@ import SubscriptionPage from './LandingPages/SubscriptionPage';
 import VettingPage from './LandingPages/VettingPage';
 import ContractAgreement from './LandingPages/ContractAgreement';
 import PendingAproval from './LandingPages/PendingAproval';
+import PendingApprovalCheck from './LandingPages/PendingApprovalCheck';
 import ChangePass from './LandingPages/ChangePass';
 import ForgotPassword from './LandingPages/ForgotPassword';
 
@@ -254,6 +256,7 @@ function App() {
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/how-sim-works" element={<HowSimsWorks />} />
           <Route path="/leave-review" element={<LeaveReview />} />
+          <Route path="/leave-reviews" element={<LeaveReview1 />} />
           <Route path="/request-quote" element={<RequestQuote />} />
           <Route path="/saved-trades" element={<SavedTrades />} />
           <Route path="/advice-centre" element={<AdviceCentre />} />
@@ -280,11 +283,15 @@ function App() {
           <Route path="/customer-signup" element={<CostumerLogin4 />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/post-code" element={<PostCode />} />
+
           <Route path="/completed-registeration" element={<CompletedReg />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/vetting-page" element={<VettingPage />} />
+          {/* <Route path="/pending-approval" element={<PendingAproval />} /> */}
+          <Route path="/pending-approval" element={<PendingApprovalCheck />} />
+
           <Route path="/contract-agreement" element={<ContractAgreement />} />
-          <Route path="/pending-approval" element={<PendingAproval />} />
+          
           <Route path="/change-password" element={<ChangePass />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/payment" element={<PaymentPage />} />

@@ -895,3 +895,9 @@
   background-color: #96a131 !important;
   border-color: #96a131 !important;
 }
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

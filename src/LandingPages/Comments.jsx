@@ -37,6 +37,8 @@ const Comments = ({ artisanUniqueId }) => {
         const avgRating = data.length > 0 ? (totalRatings / data.length).toFixed(1) : '0.0';
         setAverageRating(avgRating);
 
+
+
         // Count reviews by star rating and calculate sub-ratings
         const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
         let reliabilitySum = 0,
@@ -79,6 +81,10 @@ const Comments = ({ artisanUniqueId }) => {
   };
 
   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
+
+  // console.log("totalReviews")
+  // console.log(totalReviews)
+  // console.log("totalReviews")
 
 
   return (
@@ -125,7 +131,7 @@ const Comments = ({ artisanUniqueId }) => {
               ))}
 
               <div className='Gland-Btns'>
-                <Link to={`/leave-review?artisanUniqueID=${artisanUniqueId}`}>
+                <Link to={`/leave-reviews?artisanUniqueID=${artisanUniqueId}`}>
                   <Star /> Leave a Review
                 </Link>
                 <Link
@@ -160,12 +166,17 @@ const Comments = ({ artisanUniqueId }) => {
                         <div className='s-comment-11'>
                           <span>{review.reviewer_name_display}</span>
                           <p>{new Date(review.created_at).toLocaleDateString()}</p>
+
+                          <span>{renderStars(review.rating)}</span>
+                          {/* <p>{review.review_text}</p> */}
+                          <p>{review.review_text.split(" ").slice(0, 20).join(" ")}{review.review_text.split(" ").length > 10 ? "..." : ""}</p>
+
                         </div>
                       </div>
                     </div>
                     <div className='s-comment-2'>
-                      <span>{renderStars(review.rating)}</span>
-                      <p>{review.review_text}</p>
+                      {/* <span>{renderStars(review.rating)}</span>
+                      <p>{review.review_text}</p> */}
                     </div>
                   </div>
                 </div>

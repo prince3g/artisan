@@ -6,24 +6,23 @@ import Handyman from '@mui/icons-material/Handyman';
 import MyLocation from '@mui/icons-material/MyLocation';
 import Visibility from '@mui/icons-material/Visibility';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
 import HghImg1 from '../LandingPages/Img/hghImgs/1.png';
 import HghImg2 from '../LandingPages/Img/hghImgs/2.png';
 import HghImg3 from '../LandingPages/Img/hghImgs/3.png';
 
 
-
 const Userdashbaord = () => {
-
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanData, setArtisanData] = useState([]);
     const [numArtisanData, setNumArtisanData] = useState([]);
-
     
     useEffect(() => {
       const fetchArtisans = async () => {
         try {
-          const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
+          const user_unique_user_id = sessionStorage.getItem('unique_user_id');
+
+          const response = await fetch(`${djangoHostname}/api/messaging/auth/messages/senders_to_user/?receiver_id=${user_unique_user_id}`, {
+            
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -65,7 +64,7 @@ const Userdashbaord = () => {
         <div className='garoo-Gird-part2'>
           {numArtisanData === 0 ? (
             <div className="no-artisans">
-              <p>No artisan in this category</p>
+              <p>You have chatted with any Artisan</p>
             </div>
           ) : (
             artisanData.map((artisan, index) => (
@@ -74,21 +73,21 @@ const Userdashbaord = () => {
                   <div className='Carded-Box-1'>
                     <img
                       src={HghImg1 || 'default-image-path.png'}
-                      alt={`${artisan.user.first_name}`}
+                      alt={`${artisan.first_name}`}
                     />
                   </div>
                   <div className='Carded-Box-2'>
                     <div className='oo-dlsts'>
                       <h3>
-                        {artisan.user.first_name} {artisan.user.last_name}
+                        {artisan.first_name} {artisan.last_name}
                         <span>
-                          <Handyman /> {artisan.service_details.name}
+                          <Handyman /> 
                         </span>
                       </h3>
                       <div className='oo-dlsts-110'>
                         <div className='oo-dlsts-OO1'>
-                         <Link to={`/chat-with-artisan?artisanUniqueID=${artisan.user.unique_id}&service=${artisan.service_details.unique_id}`} 
-                          className='route-to-chat-btn'><span>0</span>Chat(s)</Link>
+                         <Link to={`/chat-with-artisan?artisanUniqueID=${artisan.unique_id}&service=${artisan.unique_id}`} 
+                          className='route-to-chat-btn'><span>{artisan.message_count}</span>Chat(s)</Link>
                         </div>
                         <div className='oo-dlsts-OO2'>
                           <h4>
@@ -114,22 +113,20 @@ const Userdashbaord = () => {
                           <Favorite />
                         </button>
                         <Link
-                          to={`/artisan-profile?service_details=${encodeURIComponent(
-                            artisan.service_details.name)}
-                          &artisan_location=${encodeURIComponent(
-                            artisan.location )}
-                            &artisan_phone=${encodeURIComponent(
-                            artisan.user.phone)}
-                          &artisan_unique_id=${encodeURIComponent(
-                            artisan.user.unique_id)}
-                          &artisan_name=${encodeURIComponent(
-                            artisan.user.first_name +
-                              ' ' +
-                              artisan.user.last_name
+                          to={`/artisan-profile?
+                          )}&artisan_location=${encodeURIComponent(
+                            artisan.location?.trim() || ''
+                          )}&artisan_phone=${encodeURIComponent(
+                            artisan.phone.trim()
+                          )}&artisan_unique_id=${encodeURIComponent(
+                            artisan.unique_id.trim()
+                          )}&artisan_name=${encodeURIComponent(
+                            `${artisan.first_name.trim()} ${artisan.last_name.trim()}`
                           )}`}
                         >
                           View Profile
                         </Link>
+
                       </div>
                     </div>
                   </div>

@@ -366,14 +366,14 @@ function SiteNav() {
                 <DashboardIcon /> Dashboard
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/user-dashboard/edit-profile" onClick={() => {
                       CloseProfileMenuForUsers();
                       handleVisitProfile();
                     }}>
                 <SettingsIcon /> Profile Setting
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/saved-trades" onClick={CloseProfileMenuForUsers}>
                 <FavoriteIcon /> Saved Trades

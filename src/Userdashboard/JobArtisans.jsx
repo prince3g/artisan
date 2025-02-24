@@ -167,7 +167,7 @@ const JobArtisans = () => {
       const fetchJobs = async () => {
         try {
 
-           const response = await fetch(`${djangoHostname}/api/auth/quotes/api/quote_request/artisans-for-job/?job_id=${job_unique_id}`);
+           const response = await fetch(`${djangoHostname}/api/auth/quotes/quote_request/artisans-for-job/?job_id=${job_unique_id}`);
           
           if (!response.ok) {
             // Handle errors appropriately
@@ -264,8 +264,8 @@ const JobArtisans = () => {
                             <h3>{artisan.artisan.first_name} {artisan.artisan.last_name} <span><Handyman /> {serviceDetailsProfession}</span></h3>
                             <div className='oo-dlsts-110'>
                               <div className='oo-dlsts-OO1'>
-                                {/* <h5><MyLocation /> {artisan.location}</h5> */}
-                                <h5><MyLocation /> Umuahia Abia state</h5>
+                                <h5><MyLocation /> {artisan.artisan.business_location}</h5>
+                                {/* <h5><MyLocation /> Umuahia Abia state</h5> */}
                               </div>
                               <div className='oo-dlsts-OO2'>
                                 {/* <h4><span> <Visibility /> {artisan.views}</span> <span><Star /> {artisan.rating} qwerty</span></h4> */}

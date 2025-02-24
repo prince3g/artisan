@@ -16,26 +16,42 @@ const VettingPage = () => {
   const [otherDoc, setOtherDoc] = useState(null);
   const [docType, setDocType] = useState("NIN");
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+  const allowedFileTypes = ["image/png", "image/jpeg", "image/jpg", "application/pdf"];
 
   const handleFileChange = (e, setter) => {
-    setter(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file && !allowedFileTypes.includes(file.type)) {
+      showMessage("Invalid file type. Only PNG, JPG, JPEG, and PDF are allowed.", "failure");
+      return;
+    }
+    setter(file);
   };
+  
+  // const handleFileChange = (e, setter) => {
+  //   setter(e.target.files[0]);
+  // };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    if (!proofOfAddress && !ninDoc && !otherDoc) {
+      showMessage("Please upload at least one document before proceeding.", "failure");
+      return;
+    }
+  
     const unique_user_id = sessionStorage.getItem("unique_user_id");
     if (!unique_user_id) {
       showMessage("User ID not found. Please log in again.", "failure");
       return;
     }
-
+  
     setIsLoading(true);
     const formData = new FormData();
     if (proofOfAddress) formData.append("proof_of_address", proofOfAddress);
     if (ninDoc) formData.append("NIN_doc", ninDoc);
     if (otherDoc) formData.append("other_doc", otherDoc);
-
+  
     try {
       const response = await fetch(
         `${djangoHostname}/api/accounts/auth/api/user/${unique_user_id}/update/`,
@@ -44,20 +60,27 @@ const VettingPage = () => {
           body: formData,
         }
       );
-
+  
+      const responseData = await response.json(); // Convert response to JSON
+  
       if (!response.ok) {
-        throw new Error("Failed to update documents");
+        // Extract error message from API response
+        const errorMessages = Object.values(responseData).flat().join("\n");
+        throw new Error(errorMessages || "Failed to update documents");
       }
-
-      showMessage("Documents updated successfully!", "success"); 
-      navigate("/pending-approval");
+  
+      showMessage("Documents updated successfully!", "success");
+      
+      navigate("/subscription");
     } catch (error) {
       console.error("Error updating documents:", error);
-      showMessage(`Error updating documents. Please try again. ${error}`, "failure"); 
+      showMessage(`Error: ${error.message}`, "failure");
     } finally {
       setIsLoading(false);
     }
   };
+  
+
 
   return (
     <div className="Gradnded-page">
