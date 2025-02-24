@@ -241,12 +241,15 @@ function PageReloader() {
 }
 
 function App() {
+  const isAdminDashboardPage = location.pathname.startsWith('/admin');
   return (
     <Router>
       <PageReloader />
       <CookieConsent />
       <ScrollToTop />
-      <SiteNav />
+
+
+      {!isAdminDashboardPage && <SiteNav />}
 
       <main>
         <Routes>
@@ -301,7 +304,7 @@ function App() {
         </Routes>
       </main>
 
-      <Footer />
+      {!isAdminDashboardPage && <Footer />}
     </Router>
   );
 }
