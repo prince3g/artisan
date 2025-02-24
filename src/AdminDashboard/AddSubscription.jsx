@@ -173,6 +173,7 @@ const showMessage = (message, type) => {
             </button>
           </div>
         </form>
+        </form>
       </div>
     </div>
   );
