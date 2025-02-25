@@ -20,6 +20,9 @@ import ChatBanner from './Img/nochat-banner.svg';
 import Comments from './Comments';
 
 
+import CustomerNotice from '../assets/CustomerNotice';
+
+
 import { Link } from "react-router-dom";
 
 const ArtisanProfile = () => {
@@ -190,6 +193,9 @@ const ArtisanProfile = () => {
           </div> */}
         </div>
       </div>
+
+
+      <CustomerNotice />
 
 
     </div>

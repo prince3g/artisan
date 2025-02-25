@@ -112,7 +112,7 @@ const VettingPage = () => {
                   <select onChange={(e) => setDocType(e.target.value)}>
                     <option value="National Identification Number">National Identification Number</option>
                     <option value="Driver's Licence">Driver's Licence</option>
-                    <option value="National Identity">National Identity</option>
+                    <option value="International Passport">International Passport</option>
                     <option value="Others">Others</option>
                   </select>
                   <input
