@@ -99,6 +99,7 @@ function Home() {
     }
   };
 
+  
   const handleSearch = () => {
     if (currentSearch === 'trade') {
       const trade = services.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());

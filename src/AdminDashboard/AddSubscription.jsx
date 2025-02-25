@@ -65,6 +65,9 @@ const showMessage = (message, type) => {
       if (!response.ok) {
         console.error("API Error Response:", responseData);
         setErrors(responseData);
+        console.log("responseData");
+        console.log(responseData);
+        console.log("responseData");
         return;
       }
 
@@ -91,7 +94,7 @@ const showMessage = (message, type) => {
         />
         )}
         <form className="tran-card-tableSec" onSubmit={handleSubmit}>
-        <form className="tran-card-tableSec PPtran-card-tableSec">
+        {/* <form className="tran-card-tableSec PPtran-card-tableSec"> */}
           <div className="top-sec-main Gen_Admin_Header">
             <h3>Add Subscription Plan</h3>
           </div>
@@ -139,7 +142,7 @@ const showMessage = (message, type) => {
               ))}
             </div>
           </div>
-          
+
 
           <div className="cccrs-secs">
             <div className="Gland-Quest-data">
@@ -172,7 +175,6 @@ const showMessage = (message, type) => {
               {loading ? "Creating..." : "Add Plan"}
             </button>
           </div>
-        </form>
         </form>
       </div>
     </div>
