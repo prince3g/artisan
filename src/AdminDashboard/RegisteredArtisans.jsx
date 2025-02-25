@@ -106,6 +106,7 @@ const RegisteredArtisans = () => {
     }
   };
 
+  
   const handleProfileClick = (artisanDatum) => {
     const queryParams = new URLSearchParams({
       service_details: artisanDatum.service_details.name,
