@@ -44,13 +44,14 @@ const ArtisanHomePage = () => {
 
 
                 
-                // console.log("data.results[0]")
-                // console.log(data.results[0])
-                // console.log("data.results[0]")
+                console.log("data.results[0]")
+                console.log(data.results[0])
+                console.log("data.results[0]")
 
 
                 sessionStorage.setItem("artisanCategory", artisan.service_details.unique_id);
                 sessionStorage.setItem("artisanCategoryName", artisan.service_details.postName);
+                
             } else {
                 console.error("No artisan data found.");
             }
