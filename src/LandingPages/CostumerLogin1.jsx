@@ -158,7 +158,7 @@ const CostumerLogin1 = () => {
                 <div className="Gradnded-main">
                     <div className="Gradnded-Box Shirolls_Box">
                         <div className="Gradnded-Box-header">
-                            <h2 className="big-text">Sign in or create an account</h2>
+                            <h2 className="big-text">Sign in or Create an Account</h2>
                             <p>
                                 With a simservicehub account, you can easily chat with, manage, and hire tradespeople for your job. Enter your email address, and we'll send you a verification email to begin.
                             </p>

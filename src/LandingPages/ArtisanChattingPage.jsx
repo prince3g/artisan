@@ -189,7 +189,7 @@ const ArtisanChattingPage = () => {
         return;
       }
       try {
-        const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${sanitizedId}`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${sanitizedId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -16,7 +16,7 @@ function AdminNav({ toggleNav }) {
 
 
   const email = sessionStorage.getItem("email");
-  const userId = sessionStorage.getItem("user_id");
+  const unique_user_id = sessionStorage.getItem("unique_user_id");
 
   const [userImage, setUserImage] = useState(""); // State to store the user image URL
 
@@ -25,18 +25,21 @@ function AdminNav({ toggleNav }) {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `${djangoHostname}/api/accounts/auth/api/users/${userId}/`
+          `${djangoHostname}/api/accounts/auth/api/users/${unique_user_id}/`
         );
+        // console.log("response.data")
+        // console.log(response.data)
+        // console.log("response.data")
         setUserImage(response.data.user_image); // Update the state with the user image URL
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
-    if (userId) {
+    if (unique_user_id) {
       fetchUserData();
     }
-  }, [djangoHostname, userId]);
+  }, [djangoHostname, unique_user_id]);
 
   return (
     <div className="AdminNav">
@@ -58,7 +61,7 @@ function AdminNav({ toggleNav }) {
                 <li>
                   <Link to="/" className="mM_Home_aa">
                     <img src={HomeIcon} alt="Home Icon" />
-                    Home
+                    Home 
                   </Link>
                 </li>
                 <li>
