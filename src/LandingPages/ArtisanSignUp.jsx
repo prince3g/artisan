@@ -98,7 +98,7 @@ const ArtisanSignUp = () => {
 
   const [formData, setFormData] = useState({
     trade: "",
-    businessName: "",
+    business_name: "",
     location: "",
     business_location: "",
     lookingFor: "",
@@ -207,15 +207,18 @@ const ArtisanSignUp = () => {
         last_name: formData.last_name,
         password: formData.password,
         email: formData.businessEmail,
-        address: formData.location,
+        // address: formData.location,
         user_type: "artisan",
         phone: formData.businessPhone,
-        business_location: formData.business_location,
         mobile_number: formData.mobile_number,
-        about_artisan: formData.about_artisan,
     };
 
     try {
+
+      // console.log("User requestPayload")
+      // console.log(requestPayload)
+      // console.log("User requestPayload")
+
         const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/`, {
             method: "POST",
             headers: {
@@ -223,14 +226,6 @@ const ArtisanSignUp = () => {
             },
             body: JSON.stringify(requestPayload),
         });
-
-        // if (!response1.ok) {
-        //     const errorData = await response1.json();
-        //     const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
-        //     setError(errorMessage);
-        //     setLoading(false);
-        //     return;
-        // }
 
         if (!response1.ok) {
           const errorData = await response1.json();
@@ -249,7 +244,7 @@ const ArtisanSignUp = () => {
         sessionStorage.setItem('artisanID', response1Data.id);
         sessionStorage.setItem('user_type', response1Data.user_type);
         // sessionStorage.setItem('Address', response1Data.address);
-        sessionStorage.setItem('Address', response1Data.business_location);
+        
 
         if (!selectedTrade || !selectedTrade.unique_id) {
             setError("Please select a valid trade.");
@@ -258,8 +253,10 @@ const ArtisanSignUp = () => {
         }
 
         const artisanProfilePayload = {
+          
+            about_artisan: formData.about_artisan,
             service_details_id: unique_id,
-            businessName: formData.businessName,
+            business_name: formData.business_name,
             lookingFor: formData.lookingFor,
             businessType: formData.businessType,
             //service_cost: formData.service_cost,
@@ -268,7 +265,13 @@ const ArtisanSignUp = () => {
             experience: formData.experience || 0,
             postcode: formData.postcode,
             user_id: response1Data.unique_id,
+            business_location: formData.business_location,
         };
+
+        
+      // console.log("Artisan artisanProfilePayload")
+      // console.log(artisanProfilePayload)
+      // console.log("Artisan artisanProfilePayload")
 
         const response2 = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/`, {
             method: "POST",
@@ -444,8 +447,8 @@ const ArtisanSignUp = () => {
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">What is your business called?</label>
                     <input type="text"
-                     name="businessName" 
-                     value={formData.businessName}
+                     name="business_name" 
+                     value={formData.business_name}
                      onChange={handleInputChange}
                      placeholder="Enter your business name*" />
                   </div>

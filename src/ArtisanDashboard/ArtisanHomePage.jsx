@@ -27,7 +27,8 @@ const ArtisanHomePage = () => {
           }
     
           try {
-            const response = await fetch(`${djangoHostname}/api/profiles/auth/api/artisan-profile/?unique_id=${unique_user_id}`, {
+            const response = await fetch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${unique_user_id}`, {
+               
               method: 'GET',
             
               headers: { 'Content-Type': 'application/json' },
@@ -39,22 +40,12 @@ const ArtisanHomePage = () => {
     
             const data = await response.json();
 
-            if (data.results && data.results.length > 0) {
-                const artisan = data.results[0]; // Access first item in the array
+                // console.log("data.results[0]")
+                // console.log(data)
+                // console.log("data.results[0]")
 
-
-                
-                console.log("data.results[0]")
-                console.log(data.results[0])
-                console.log("data.results[0]")
-
-
-                sessionStorage.setItem("artisanCategory", artisan.service_details.unique_id);
-                sessionStorage.setItem("artisanCategoryName", artisan.service_details.postName);
-                
-            } else {
-                console.error("No artisan data found.");
-            }
+                sessionStorage.setItem("artisanCategory", data.service_details.unique_id);
+                sessionStorage.setItem("artisanCategoryName", data.service_details.postName);
             
           } catch (error) {
             console.error('Error fetching artisan data:', error);

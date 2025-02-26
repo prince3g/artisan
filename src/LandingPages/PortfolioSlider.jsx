@@ -34,12 +34,12 @@ import image3 from "./Img/PortImgs/3.jpg";
 import video1 from "./Img/PortImgs/video1.mp4";
 
 
-const mediaData = [
-  { type: "image", src: image1 },
-  { type: "image", src: image2 },
-  { type: "video", src: video1 },
-  { type: "image", src: image3 },
-];
+// const mediaData = [
+//   { type: "image", src: image1 },
+//   { type: "image", src: image2 },
+//   { type: "video", src: video1 },
+//   { type: "image", src: image3 },
+// ];
 
 const PortfolioSlider = (artisanUniqueID) => {
 
@@ -50,7 +50,7 @@ const PortfolioSlider = (artisanUniqueID) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isTableVisible, setIsTableVisible] = useState(false);
   const [availability, setAvailability] = useState([]);
-
+  const [mediaData, setMediaData] = useState([]); // State for media data
 
   const settings = {
     dots: false,
@@ -107,7 +107,7 @@ const PortfolioSlider = (artisanUniqueID) => {
       try {
 
       const sanitizedId = artisanUniqueID.artisanUniqueID.replace(/\/$/, ""); // Remove trailing slash
-      const response = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${sanitizedId}`, {
+      const response = await fetch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${sanitizedId}`, {
       
           method: 'GET',
           headers: {
@@ -121,9 +121,27 @@ const PortfolioSlider = (artisanUniqueID) => {
         }
     
         const data = await response.json();
-        //console.log("Fetched Artisan Data:", data);
+       //  console.log("Fetched Artisan Data:", data);
         setArtisanData(data);
         parseAvailabilityData(data.availability);
+
+
+        // console.log("data.previous_jobs")
+        // console.log(data.previous_jobs)
+        // console.log("data.previous_jobs")
+
+        // Construct mediaData from previous_jobs
+        if (data.previous_jobs && Array.isArray(data.previous_jobs)) {
+          const mediaFiles = data.previous_jobs.map((filePath) => {
+            const fileType = filePath.split('.').pop().toLowerCase();
+            return {
+              type: fileType === 'mp4' ? 'video' : 'image', // Determine file type
+              src: `${djangoHostname}/media/${filePath}`, // Construct full URL
+            };
+          });
+          setMediaData(mediaFiles);
+        }
+        
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
@@ -133,6 +151,8 @@ const PortfolioSlider = (artisanUniqueID) => {
     fetchArtisanDetail();
   }, []); // Use artisanUniqueId and djangoHostname in dependency array
   
+  // Fetch artisan data
+
   const parseAvailabilityData = (availabilityData) => {
     if (availabilityData?.AllDay?.enabled) {
       // If "All Day" is enabled, show only that
@@ -167,6 +187,23 @@ const PortfolioSlider = (artisanUniqueID) => {
       setIsTableVisible(!isTableVisible);
     };
   
+
+    // Handle skills field
+    let parsedSkills = [];
+    if (typeof artisanData.skills === "string") {
+      try {
+        // Try parsing as JSON
+        parsedSkills = JSON.parse(artisanData.skills);
+      } catch (error) {
+        // If parsing fails, assume it's a comma-separated string
+        parsedSkills = artisanData.skills.split(",").map((skill) => skill.trim());
+      }
+    } else if (Array.isArray(artisanData.skills)) {
+      // If it's already an array, use it directly
+      parsedSkills = artisanData.skills;
+          }
+
+
   return (
     <div className="portfolio-slider">
     <div className="poooap-Header">
@@ -206,13 +243,13 @@ const PortfolioSlider = (artisanUniqueID) => {
         <h3>
           {artisanData.service_details?.name 
             ? artisanData.service_details.name 
-            : "Artisan Skills"}
-          <span>&nbsp; &nbsp; {artisanData.skills ? artisanData.skills.length : 0} &nbsp; &nbsp; Skills</span>
+            : "Artisan Skills"} 
+          <span>&nbsp; &nbsp; {artisanData.skills ? JSON.parse(artisanData.skills).length : 0} &nbsp; &nbsp; Skills</span>
         </h3>
 
           <div className="Ull-is">
             {artisanData.skills ? (
-              artisanData.skills.map((skill, index) => (
+              JSON.parse(artisanData.skills).map((skill, index) => (
                 <li key={index}>
                   <CheckCircleIcon />
                   {skill.trim()}
@@ -261,21 +298,16 @@ const PortfolioSlider = (artisanUniqueID) => {
 
       {/* Main Media Slider */}
       <Slider {...settings} ref={mainSliderRef}>
-        {mediaData.map((media, index) => (
-          <div key={index}>
-            {media.type === "image" ? (
-              <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
-            ) : (
-              <video
-                src={media.src}
-                controls
-                className="main-media"
-                alt={`Media ${index + 1}`}
-              />
-            )}
-          </div>
-        ))}
-      </Slider>
+          {mediaData.map((media, index) => (
+            <div key={index}>
+              {media.type === "image" ? (
+                <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
+              ) : (
+                <video src={media.src} controls className="main-media" alt={`Media ${index + 1}`} />
+              )}
+            </div>
+          ))}
+        </Slider>
 
       {/* Thumbnail Navigation */}
       <div className="thumbnails">

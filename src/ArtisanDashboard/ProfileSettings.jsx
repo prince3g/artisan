@@ -35,6 +35,9 @@ const ProfileSettings = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const artisan_unique_id = sessionStorage.getItem('unique_user_id');
   const inputRef = useRef(null);
+  
+  const [qualificationsFiles, setQualificationsFiles] = useState([]);
+  const [previousJobsFiles, setPreviousJobsFiles] = useState([]);
 
     useEffect(() => {
       let isMounted = true;
@@ -112,7 +115,6 @@ const ProfileSettings = () => {
     postcode: "",
   });
 
-  // Fetch user and artisan profile data on component mount
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -125,11 +127,44 @@ const ProfileSettings = () => {
   
         // Fetch artisan profile data
         const artisanResponse = await fetch(
-          `${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`
+          `${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${artisan_unique_id}`
         );
         const artisanData = await artisanResponse.json();
-
-         setService_name(artisanData.service_details.name)
+  
+        console.log("artisanData", artisanData);
+  
+        // Handle skills field
+        let parsedSkills = JSON.parse(artisanData.skills)
+        
+        // Prepopulate qualifications and previous_jobs
+        const prepopulateFiles = async (filePaths, setFiles) => {
+          const files = [];
+          for (const path of filePaths) {
+            try {
+              // Ensure the path starts with /media/
+              const fullPath = path.startsWith("/media/") ? path : `/media/${path}`;
+              console.log("Fetching file:", `${djangoHostname}${fullPath}`); // Debugging
+              const response = await fetch(`${djangoHostname}${fullPath}`);
+              if (!response.ok) {
+                console.warn(`File not found: ${path}`);
+                continue; // Skip missing files
+              }
+              const blob = await response.blob();
+              const file = new File([blob], path.split("/").pop(), { type: blob.type });
+              files.push(file);
+            } catch (error) {
+              console.error(`Error fetching file ${path}:`, error);
+            }
+          }
+          setFiles(files);
+        };
+        if (artisanData.qualifications && artisanData.qualifications.length > 0) {
+          await prepopulateFiles(artisanData.qualifications, setQualificationsFiles);
+        }
+  
+        if (artisanData.previous_jobs && artisanData.previous_jobs.length > 0) {
+          await prepopulateFiles(artisanData.previous_jobs, setPreviousJobsFiles);
+        }
   
         // Update formData and skills state with fetched data
         setFormData((prevData) => ({
@@ -139,18 +174,18 @@ const ProfileSettings = () => {
           businessEmail: userData.email,
           businessPhone: userData.phone,
           mobile_number: userData.mobile_number,
-          about_artisan: userData.about_artisan,
+          about_artisan: artisanData.about_artisan,
           business_name: artisanData.business_name,
           business_location: artisanData.business_location,
           lookingFor: artisanData.lookingFor,
           businessType: artisanData.businessType,
           employeeCount: artisanData.employeeCount,
           postcode: artisanData.postcode,
-          skills: artisanData.skills || [], // Sync skills in formData
+          skills: parsedSkills, // Use parsed skills
         }));
   
         // Update the skills state
-        setSkills(artisanData.skills || []);
+        setSkills(parsedSkills);
   
         // Set selected trade if available
         if (artisanData.service_details_id) {
@@ -169,7 +204,7 @@ const ProfileSettings = () => {
   
     fetchData();
   }, [artisan_unique_id, djangoHostname]);
-  
+
   useEffect(() => {
     const fetchServices = async () => {
       setLoading(true);
@@ -239,96 +274,98 @@ const ProfileSettings = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+  
     const requestPayload = {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        password: formData.password,
-        email: formData.businessEmail,
-        phone: formData.businessPhone,
-        mobile_number: formData.mobile_number,
-        about_artisan: formData.about_artisan,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      password: formData.password,
+      email: formData.businessEmail,
+      phone: formData.businessPhone,
+      mobile_number: formData.mobile_number,
     };
-
+  
     try {
-        const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestPayload),
-        });
-
-        if (!response1.ok) {
-            const errorData = await response1.json();
-            const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
-            setError(errorMessage);
-            setLoading(false);
-            
-         
-            return;
-        }
-
-
-        const response1Data = await response1.json();
-        //console.log("First request successful:", response1Data);
-        sessionStorage.setItem('unique_user_id', response1Data.unique_id);
-        sessionStorage.setItem('artisanID', response1Data.id);
-        sessionStorage.setItem('user_type', response1Data.user_type);
-
-        if (!selectedTrade || !selectedTrade.unique_id) {
-            setError("Please select a valid trade.");
-            alert("Please select a valid trade.");
-            setLoading(false);
-            return;
-        }
-
-        const artisanProfilePayload = {
-            service_details_id: unique_id,
-            business_name: formData.business_name,
-            location: formData.location,
-            lookingFor: formData.lookingFor,
-            businessType: formData.businessType,
-            //service_cost: formData.service_cost,
-            employeeCount: formData.employeeCount,
-            skills: formData.skills.map((skill) => String(skill)),
-            experience: formData.experience || 0,
-            business_location: formData.business_location,
-            previous_jobs: formData.previous_jobs,
-            qualifications: formData.qualifications,
-            postcode: formData.postcode,
-            user_id: response1Data.unique_id,
-        };
-
-        const response2 = await fetch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${artisan_unique_id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(artisanProfilePayload),
-        });
-
-        if (!response2.ok) {
-            const errorData = await response2.json();
-            const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
-            setError(errorMessage);
-        } else {
-            const result = await response2.json();
-
-            sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
-            sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
-
-
-            navigate("/artisan-dashboard");
-        }
-    } catch (error) {
-        setError(error.message || "An unexpected error occurred. Please try again later.");
-    } finally {
+      const response1 = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestPayload),
+      });
+  
+      if (!response1.ok) {
+        const errorData = await response1.json();
+        const errorMessage = errorData.email ? errorData.email[0] : "An error occurred.";
+        setError(errorMessage);
         setLoading(false);
+        return;
+      }
+  
+      const response1Data = await response1.json();
+      sessionStorage.setItem('unique_user_id', response1Data.unique_id);
+      sessionStorage.setItem('artisanID', response1Data.id);
+      sessionStorage.setItem('user_type', response1Data.user_type);
+  
+      if (!selectedTrade || !selectedTrade.unique_id) {
+        setError("Please select a valid trade.");
+        alert("Please select a valid trade.");
+        setLoading(false);
+        return;
+      }
+  
+      const formDataPayload = new FormData();
+      formDataPayload.append("service_details_id", unique_id);
+      formDataPayload.append("business_name", formData.business_name);
+      formDataPayload.append("location", formData.location);
+      formDataPayload.append("lookingFor", formData.lookingFor);
+      formDataPayload.append("businessType", formData.businessType);
+      formDataPayload.append("employeeCount", formData.employeeCount);
+      formDataPayload.append("skills", JSON.stringify(formData.skills.map((skill) => String(skill))));
+      formDataPayload.append("experience", formData.experience || 0);
+      formDataPayload.append("business_location", formData.business_location);
+      formDataPayload.append("postcode", formData.postcode);
+      formDataPayload.append("user_id", response1Data.unique_id);
+      formDataPayload.append("about_artisan", formData.about_artisan);
+  
+      // Append qualifications files
+      qualificationsFiles.forEach((file, index) => {
+        if (file instanceof File) {
+          formDataPayload.append("qualifications", file);
+        } else {
+          console.error("Invalid file detected:", file);
+        }
+      });
+  
+      // Append previousJobsFiles files
+      previousJobsFiles.forEach((file, index) => {
+        if (file instanceof File) {
+          formDataPayload.append("previous_jobs", file);
+        } else {
+          console.error("Invalid file detected:", file);
+        }
+      });
+  
+      const response2 = await fetch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${artisan_unique_id}`, {
+        method: "PATCH",
+        body: formDataPayload, // Don't set Content-Type manually
+      });
+  
+      if (!response2.ok) {
+        const errorData = await response2.json();
+        const errorMessage = errorData.detail ? errorData.detail : "An error occurred.";
+        setError(errorMessage);
+      } else {
+        const result = await response2.json();
+        sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
+        sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
+        // navigate("/artisan-dashboard");
+      }
+    } catch (error) {
+      setError(error.message || "An unexpected error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
     }
-};
-
-
+  };
 
   const handleInputClick = () => {
     if (!query || !query.trim()) {
@@ -351,7 +388,6 @@ const ProfileSettings = () => {
     }
   };
   
-  
   const removeSkill = (skillToRemove) => {
     setSkills((prevSkills) => {
       const updatedSkills = prevSkills.filter((skill) => skill !== skillToRemove);
@@ -373,18 +409,7 @@ const ProfileSettings = () => {
   };
 
 
-  const [qualificationsFiles, setQualificationsFiles] = useState([]);
-  const [previousJobsFiles, setPreviousJobsFiles] = useState([]);
   
-  // const OOhandleFileChange = (e) => {
-  //   const newFiles = [...e.target.files];
-  //   setQualificationsFiles((prevFiles) => [...prevFiles, ...newFiles]);
-  // };
-  
-  // const SShandleFileChange = (e) => {
-  //   const newFiles = [...e.target.files];
-  //   setPreviousJobsFiles((prevFiles) => [...prevFiles, ...newFiles]);
-  // };
   const OOhandleFileChange = (e) => {
     const newFiles = [...e.target.files];
     setQualificationsFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -399,12 +424,9 @@ const ProfileSettings = () => {
     setQualificationsFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
   
-
-  
   const SShandleRemoveFile = (index) => {
     setPreviousJobsFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
-
 
   return (
     <div className="Gradnded-page">
@@ -423,7 +445,7 @@ const ProfileSettings = () => {
                   <input
                     type="text"
                     placeholder="Search category"
-                    value={selectedTrade.name || service_name} // Use selectedTrade.name when it's set, otherwise fallback to query
+                    value={selectedTrade.name || query} // Use selectedTrade.name when it's set, otherwise fallback to query
                     onChange={handleInputChange}
                     onClick={handleInputClick}
                   />
@@ -555,76 +577,76 @@ const ProfileSettings = () => {
               </div>
             </div>
             <div className="Gland-Quest-data all-prolFilw">
-                <label>Upload Qualifications</label>
-                <input
-                  type="file"
-                  accept="image/*,application/pdf"
-                  multiple
-                  onChange={OOhandleFileChange}
-                  className="file-input"
-                />
-                <div className="thumbnail-container">
-                  {qualificationsFiles.map((file, index) => (
-                    <div key={index} className="thumbnail">
-                      {file.type.startsWith("image") ? (
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt="thumbnail"
-                          className="thumbnail-image"
-                        />
-                      ) : (
-                        <video
-                          src={URL.createObjectURL(file)}
-                          className="thumbnail-video"
-                          controls
-                        ></video>
-                      )}
-                      <button
-                        onClick={() => OOhandleRemoveFile(index)}
-                        className="remove-button"
-                      >
-                        X
-                      </button>
-                    </div>
-                  ))}
-                </div>
+            <label>Upload Qualifications</label>
+            <input
+              type="file"
+              accept="image/*,application/pdf"
+              multiple
+              onChange={OOhandleFileChange}
+              className="file-input"
+            />
+              <div className="thumbnail-container">
+                {qualificationsFiles.map((file, index) => (
+                  <div key={index} className="thumbnail">
+                    {file.type.startsWith("image") ? (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="thumbnail"
+                        className="thumbnail-image"
+                      />
+                    ) : (
+                      <video
+                        src={URL.createObjectURL(file)}
+                        className="thumbnail-video"
+                        controls
+                      ></video>
+                    )}
+                    <button
+                      onClick={() => OOhandleRemoveFile(index)}
+                      className="remove-button"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              <div className="Gland-Quest-data all-prolFilw">
-                <label>Upload Your Previous Jobs</label>
-                <input
-                  type="file"
-                  accept="image/*, video/*"
-                  multiple
-                  onChange={SShandleFileChange}
-                  className="file-input"
-                />
-                <div className="thumbnail-container">
-                  {previousJobsFiles.map((file, index) => (
-                    <div key={index} className="thumbnail">
-                      {file.type.startsWith("image") ? (
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt="thumbnail"
-                          className="thumbnail-image"
-                        />
-                      ) : (
-                        <video
-                          src={URL.createObjectURL(file)}
-                          className="thumbnail-video"
-                          controls
-                        ></video>
-                      )}
-                      <button
-                        onClick={() => SShandleRemoveFile(index)}
-                        className="remove-button"
-                      >
-                        X
-                      </button>
-                    </div>
-                  ))}
-                </div>
+            <div className="Gland-Quest-data all-prolFilw">
+              <label>Upload Your Previous Jobs</label>
+              <input
+                type="file"
+                accept="image/*, video/*"
+                multiple
+                onChange={SShandleFileChange}
+                className="file-input"
+              />
+              <div className="thumbnail-container">
+                {previousJobsFiles.map((file, index) => (
+                  <div key={index} className="thumbnail">
+                    {file.type.startsWith("image") ? (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="thumbnail"
+                        className="thumbnail-image"
+                      />
+                    ) : (
+                      <video
+                        src={URL.createObjectURL(file)}
+                        className="thumbnail-video"
+                        controls
+                      ></video>
+                    )}
+                    <button
+                      onClick={() => SShandleRemoveFile(index)}
+                      className="remove-button"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
+            </div>
 
             <div className="Gland-Cnt-Btn">
             <button

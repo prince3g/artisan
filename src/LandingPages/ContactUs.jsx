@@ -6,13 +6,14 @@ import CallIcon from './Img/call-icon.svg';
 import { Link } from 'react-router-dom';
 import FlashMessage from "../FlashMessage/FlashMessage.jsx"
 
+
 function ContactUs() {
 
   const [flash, setFlash] = useState(null);
     
   const showMessage = (message, type) => {
-        setFlash({ message, type });
-      };
+      setFlash({ message, type });
+  };
 
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [fullName, setFullName] = useState('');
@@ -34,7 +35,7 @@ function ContactUs() {
         fullName,
         email,
         phone,
-        serviceInterest,
+        // serviceInterest,
         message,
       });
 

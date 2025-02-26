@@ -64,7 +64,7 @@ const Userdashbaord = () => {
         <div className='garoo-Gird-part2'>
           {numArtisanData === 0 ? (
             <div className="no-artisans">
-              <p>You have chatted with any Artisan</p>
+              <p>You have not chatted with any Artisan</p>
             </div>
           ) : (
             artisanData.map((artisan, index) => (
@@ -113,19 +113,19 @@ const Userdashbaord = () => {
                           <Favorite />
                         </button>
                         <Link
-                          to={`/artisan-profile?
-                          )}&artisan_location=${encodeURIComponent(
+                          to={`/artisan-profile?artisan_location=${encodeURIComponent(
                             artisan.location?.trim() || ''
                           )}&artisan_phone=${encodeURIComponent(
-                            artisan.phone.trim()
+                            artisan.phone?.trim() || ''
                           )}&artisan_unique_id=${encodeURIComponent(
-                            artisan.unique_id.trim()
+                            artisan.unique_id?.trim() || ''
                           )}&artisan_name=${encodeURIComponent(
                             `${artisan.first_name.trim()} ${artisan.last_name.trim()}`
                           )}`}
                         >
                           View Profile
                         </Link>
+
 
                       </div>
                     </div>
