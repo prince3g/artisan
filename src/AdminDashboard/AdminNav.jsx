@@ -7,7 +7,7 @@ import HomeIcon from './Img/home-icon.svg';
 import NoticeIcon from './Img/nofi-icon.svg';
 import Logo from '../assets/Img/site-logo.png';
 import SearchIcon from './Img/search-icon.svg';
-import AdminUu from './Img/admin_uu.jpg';
+import AdminUu from './Img/user-placeholder.png';
 
 
 function AdminNav({ toggleNav }) {

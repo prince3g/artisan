@@ -135,7 +135,7 @@ function ContactUs() {
                     />
                   </div>
                 </div>
-
+                <div className='message-DFlex'>
                   <div className='message-form-input'>
                     <input
                       type='tel'
@@ -146,7 +146,7 @@ function ContactUs() {
                       onChange={(e) => setPhone(e.target.value)}
                     />
                   </div>
-                  {/* <div className='message-form-input'>
+                  <div className='message-form-input'>
                     <select
                       name='serviceInterest'
                       required
@@ -154,12 +154,12 @@ function ContactUs() {
                       onChange={(e) => setServiceInterest(e.target.value)}
                     >
                       <option value=''>-- Select Service --</option>
-                      <option value='Service 1'>Service 1</option>
-                      <option value='Service 2'>Service 2</option>
-                      <option value='Service 3'>Service 3</option>
-                      <option value='Service 4'>Service 4</option>
+                      <option value='Customer'>Customer</option>
+                      <option value='Artisan'>Artisan</option>
                     </select>
-                  </div> */}
+                  </div>
+
+                  </div>
 
                 <div className='message-form-input'>
                   <textarea
