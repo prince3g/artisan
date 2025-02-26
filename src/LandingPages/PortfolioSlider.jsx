@@ -188,7 +188,6 @@ const PortfolioSlider = (artisanUniqueID) => {
     };
   
 
-    // Handle skills field
     let parsedSkills = [];
     if (typeof artisanData.skills === "string") {
       try {
@@ -201,8 +200,7 @@ const PortfolioSlider = (artisanUniqueID) => {
     } else if (Array.isArray(artisanData.skills)) {
       // If it's already an array, use it directly
       parsedSkills = artisanData.skills;
-          }
-
+    }
 
   return (
     <div className="portfolio-slider">
@@ -240,16 +238,16 @@ const PortfolioSlider = (artisanUniqueID) => {
       </h2>
       {isVisible && (
          <ul>
-        <h3>
-          {artisanData.service_details?.name 
-            ? artisanData.service_details.name 
-            : "Artisan Skills"} 
-          <span>&nbsp; &nbsp; {artisanData.skills ? JSON.parse(artisanData.skills).length : 0} &nbsp; &nbsp; Skills</span>
-        </h3>
+          <h3>
+            {artisanData.service_details?.name 
+              ? artisanData.service_details.name 
+              : "Artisan Skills"} 
+            <span>&nbsp; &nbsp; {parsedSkills.length} &nbsp; &nbsp; Skills</span>
+          </h3>
 
           <div className="Ull-is">
-            {artisanData.skills ? (
-              JSON.parse(artisanData.skills).map((skill, index) => (
+            {parsedSkills.length > 0 ? (
+              parsedSkills.map((skill, index) => (
                 <li key={index}>
                   <CheckCircleIcon />
                   {skill.trim()}

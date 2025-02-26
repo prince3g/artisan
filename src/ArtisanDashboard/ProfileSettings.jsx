@@ -134,7 +134,19 @@ const ProfileSettings = () => {
         console.log("artisanData", artisanData);
   
         // Handle skills field
-        let parsedSkills = JSON.parse(artisanData.skills)
+        let parsedSkills = [];
+        if (typeof artisanData.skills === "string") {
+          try {
+            // Try parsing as JSON
+            parsedSkills = JSON.parse(artisanData.skills);
+          } catch (error) {
+            // If parsing fails, assume it's a comma-separated string
+            parsedSkills = artisanData.skills.split(",").map((skill) => skill.trim());
+          }
+        } else if (Array.isArray(artisanData.skills)) {
+          // If it's already an array, use it directly
+          parsedSkills = artisanData.skills;
+        }
         
         // Prepopulate qualifications and previous_jobs
         const prepopulateFiles = async (filePaths, setFiles) => {
@@ -358,7 +370,7 @@ const ProfileSettings = () => {
         const result = await response2.json();
         sessionStorage.setItem('artisanCategoryName', result.data.service_details.name);
         sessionStorage.setItem('artisanCategory', result.data.service_details.unique_id);
-        // navigate("/artisan-dashboard");
+        navigate("/artisan-dashboard");
       }
     } catch (error) {
       setError(error.message || "An unexpected error occurred. Please try again later.");
