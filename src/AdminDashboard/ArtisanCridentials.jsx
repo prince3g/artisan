@@ -167,6 +167,7 @@ const ArtisanCredentials = () => {
                   className="modal-image"
                 />
                 <div className="modal-actions">
+
                   <button
                     onClick={() =>
                       handleDownloadReceipt(
@@ -179,12 +180,16 @@ const ArtisanCredentials = () => {
                   >
                     {loadingDownload ? "Downloading..." : "Download"}
                   </button>
+
+
                   <button
                     onClick={() => setSelectedCredential(null)}
                     className="close-btn"
                   >
                     Close
                   </button>
+
+                  
                 </div>
               </div>
             </div>

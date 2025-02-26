@@ -1514,3 +1514,20 @@ td .rejected-ammount,
   background-color: #F29D56 !important;
   color: #fff !important;
 }
+
+
+.modal-actions{
+  display: inline-flex !important;
+  width: 100% !important;
+  position: absolute !important;
+  bottom: 20px !important;
+  justify-content:  center !important;
+  align-items: center !important;
+  left: 0px !important;
+}
+
+.modal-actions button{
+  position: relative !important;
+  margin: 0px !important;
+  bottom: 0px !important;
+}
