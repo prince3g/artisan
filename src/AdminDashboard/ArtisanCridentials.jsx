@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios"; // Import axios for making HTTP requests
 import "../LandingPages/Css/Main.css";
 
 const ArtisanCredentials = () => {
@@ -7,10 +8,7 @@ const ArtisanCredentials = () => {
   const location = useLocation();
   const artisanDatum = location.state?.artisanDatum || {};
 
-  console.log("artisanDatum", artisanDatum);
-
   // Base URL for media files
-  // const baseUrl = "http://127.0.0.1:9090/media/";
   const baseUrl = `${djangoHostname}/media/`;
 
   // Function to resolve URLs
@@ -42,6 +40,7 @@ const ArtisanCredentials = () => {
   const [credentialList, setCredentialList] = useState(availableCredentials);
   const [selectedCredential, setSelectedCredential] = useState(null);
   const [downloadableCredentials, setDownloadableCredentials] = useState([]);
+  const [loadingDownload, setLoadingDownload] = useState(false); // Loading state for download
 
   // Remove credential and add it to downloadable list
   const removeCredential = (index) => {
@@ -50,14 +49,44 @@ const ArtisanCredentials = () => {
     setDownloadableCredentials([...downloadableCredentials, removedCredential]);
   };
 
-  // Download image
-  const downloadImage = (url) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = url.split("/").pop(); // Use the last part of the URL as the filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // Download logic
+  const handleDownloadReceipt = async (receiptUrl, name) => {
+    setLoadingDownload(true); // Start loader for download state
+
+    try {
+      const response = await axios.get(receiptUrl, {
+        responseType: "blob", // Ensure response is treated as a Blob
+      });
+
+      // Fallback if Content-Type is not provided
+      const contentType = response.data.type || "application/octet-stream";
+      const blob = new Blob([response.data], { type: contentType });
+
+      // Create URL for the Blob
+      const downloadUrl = window.URL.createObjectURL(blob);
+
+      // Create a temporary link element
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = name; // Set the file name
+
+      // Append link to the document and initiate download
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up the URL and link element
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(link);
+
+      // Show success message (you can replace this with your own notification system)
+      console.log("Your Certificate is downloading");
+    } catch (error) {
+      console.error("Error downloading receipt:", error);
+      // Show error message (you can replace this with your own notification system)
+      console.error("An error occurred during the download. Please try again.");
+    } finally {
+      setLoadingDownload(false); // Stop loader
+    }
   };
 
   return (
@@ -112,10 +141,16 @@ const ArtisanCredentials = () => {
                   <div className="credential-actions">
                     <p className="credential-type">{credential.type}</p>
                     <button
-                      onClick={() => downloadImage(credential.url)}
+                      onClick={() =>
+                        handleDownloadReceipt(
+                          credential.url,
+                          credential.type + ".jpg" // Set a meaningful filename
+                        )
+                      }
                       className="download-btn"
+                      disabled={loadingDownload} // Disable button during download
                     >
-                      Download
+                      {loadingDownload ? "Downloading..." : "Download"}
                     </button>
                   </div>
                 </div>
@@ -123,31 +158,6 @@ const ArtisanCredentials = () => {
             </div>
           )}
 
-          {/* {selectedCredential && (
-            <div className="modal">
-              <div className="modal-content">
-                <img
-                  src={encodeURI(selectedCredential)} // Encode URL to handle spaces/special characters
-                  alt="Credential Full View"
-                  className="modal-image"
-                />
-                <div className="modal-actions">
-                  <button
-                    onClick={() => downloadImage(selectedCredential)}
-                    className="download-btn"
-                  >
-                    Download
-                  </button>
-                  <button
-                    onClick={() => setSelectedCredential(null)}
-                    className="close-btn"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          )} */}
           {selectedCredential && (
             <div className="modal">
               <div className="modal-content">
@@ -158,10 +168,16 @@ const ArtisanCredentials = () => {
                 />
                 <div className="modal-actions">
                   <button
-                    onClick={() => downloadImage(selectedCredential)}
+                    onClick={() =>
+                      handleDownloadReceipt(
+                        selectedCredential,
+                        "credential.jpg" // Set a meaningful filename
+                      )
+                    }
                     className="download-btn"
+                    disabled={loadingDownload} // Disable button during download
                   >
-                    Download
+                    {loadingDownload ? "Downloading..." : "Download"}
                   </button>
                   <button
                     onClick={() => setSelectedCredential(null)}
