@@ -150,7 +150,7 @@ const RegisteredArtisans = () => {
                   <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
 
                     <div className="td-grid-img">
-                      <img src={artisanDatum.user_image || PlacHolderImg1} alt="Artisan" />
+                      <img src={artisanDatum.user_image} alt="Artisan" />
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
@@ -160,13 +160,10 @@ const RegisteredArtisans = () => {
 
                 <td>{artisanDatum.user.email}</td>
                 <td>{artisanDatum.user.phone}</td>
-                <td><span>{artisanDatum.location}</span></td>
+                <td><span>{artisanDatum.business_location}</span></td>
                 <td>{new Date(artisanDatum.user.date_joined).toLocaleDateString()}</td>
                 <td>
                   <div className="action-btn">
-
-                    {/* <a href="#" className="accept-Btn" onClick={() => handleProfileClick(artisanDatum)}>Profile</a> */}
-
 
                     <span className="active-Btn" onClick={() => toggleStatus(artisanDatum.user.unique_id, artisanDatum.user.is_approved, "approve")}>
                       {loadingStatus[`${artisanDatum.user.unique_id}-approve`] ? (artisanDatum.user.is_approved ? "Deactivating..." : "Activating...") : (artisanDatum.user.is_approved ? "Deactivate" : "Activate")}
@@ -182,11 +179,12 @@ const RegisteredArtisans = () => {
                       {deletingId === artisanDatum.id ? "Deleting..." : "Remove"}
                     </span>
                   </div>
-                  <div className="action-btn secc-bagbs-asa">
-                    
-                  <Link to="/admin/artisan-cridentials" className="accept-Btn">Cridentials
+                  <div className="action-btn secc-bagbs-asa"> 
+                  {/* <Link to="/admin/artisan-cridentials" className="accept-Btn">Credentials
+                  </Link> */}
+                  <Link to={{
+                    pathname: "/admin/artisan-cridentials", }}  state={{ artisanDatum }} className="accept-Btn">Credentials
                   </Link>
-                  
                   <Link to={{
                     pathname: "/admin/artisan-reviews", }}  state={{ artisanDatum }} className="reviews-Btn">Reviews
                   </Link>

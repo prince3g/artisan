@@ -91,7 +91,7 @@ const RegisteredUsers = () => {
               <th>Customer Name</th>
               <th>Email Address</th>
               <th>Phone Number</th>
-              <th>Location</th>
+              {/* <th>Location</th> */}
               <th>Registration Date</th>
               <th>Action</th>
             </tr>
@@ -111,9 +111,9 @@ const RegisteredUsers = () => {
                 </td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
-                <td>
+                {/* <td>
                   <span>{user.address}</span>
-                </td>
+                </td> */}
                 <td>{new Date(user.date_joined).toLocaleDateString()}</td>
                 <td>
                   <div className="action-btn">
