@@ -927,3 +927,7 @@
   background-color: #f44336; /* Red */
   color: white;
 }
+.download-btn:disabled {
+  background-color: #ccc; /* Gray out the button */
+  cursor: not-allowed; /* Show not-allowed cursor */
+}
