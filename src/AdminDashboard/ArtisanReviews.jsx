@@ -15,8 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import "../LandingPages/Css/Main.css";
 
 
-import Comments from '../LandingPages/Comments';
-
+import Comments from './Comments';
 
 import { Link } from "react-router-dom";
 

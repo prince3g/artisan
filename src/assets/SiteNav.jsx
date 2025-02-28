@@ -130,6 +130,7 @@ function SiteNav() {
   // }
 
   // Determine links based on user_type
+
   const getAccountLink = () => {
     if (userType === "customer") return "/user-dashboard";
     if (userType === "artisan") return "/artisan-dashboard";
