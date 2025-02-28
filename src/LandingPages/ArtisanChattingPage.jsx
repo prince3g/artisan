@@ -24,6 +24,8 @@ const ArtisanChattingPage = () => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
 
+  const [parsedSkills, setParsedSkills] = useState([]);
+
   const service = decodeURIComponent(searchParams.get('service') || '');
   const artisan_name = decodeURIComponent(searchParams.get('artisan_name') || '');
   const service_details = decodeURIComponent(searchParams.get('service_details') || '');
@@ -203,6 +205,28 @@ const ArtisanChattingPage = () => {
 
         const data = await response.json();
         setArtisanData(data);
+
+                // Handle skills field
+          let parsedSkills = [];
+          if (typeof data.skills === "string") {
+            try {
+              // Try parsing as JSON
+              parsedSkills = JSON.parse(data.skills);
+              setParsedSkills(parsedSkills);
+            } catch (error) {
+              // If parsing fails, assume it's a comma-separated string
+              parsedSkills = data.skills.split(",").map((skill) => skill.trim());
+              setParsedSkills(parsedSkills);
+            }
+          } else if (Array.isArray(data.skills)) {
+            // If it's already an array, use it directly
+            parsedSkills = data.skills;
+            setParsedSkills(parsedSkills);
+          }
+
+      
+
+        
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       }
@@ -351,7 +375,8 @@ const ArtisanChattingPage = () => {
                   </div>
                   <div className="ooais-Part">
                     <h4>Skills</h4>
-                    <ul>
+
+                    {/* <ul>
                       {artisanData.skills
                         ? artisanData.skills.map((skill, index) => (
                             <li key={index}>
@@ -360,7 +385,17 @@ const ArtisanChattingPage = () => {
                             </li>
                           ))
                         : <li>No skills available</li>}
-                    </ul>
+                    </ul> */}
+
+                    {parsedSkills.length > 0
+                      ? parsedSkills.map((skill, index) => (
+                          <li key={index}>
+                            <CheckCircleIcon />
+                            {skill.trim()}
+                          </li>
+                        ))
+                      : <li>No skills available</li>}
+
                   </div>
                 </div>
               </div>

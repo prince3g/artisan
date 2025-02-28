@@ -178,11 +178,11 @@ const ArtisanHomePage = () => {
                                     <p>No trade selected</p>
                                 )}
                             </div>
-                            <div className="Top_DltIm_Btns">
+                            {/* <div className="Top_DltIm_Btns">
                                 <button className="compley-bbTann"><CheckCircleIcon /> Complete</button>
                                 <button onClick={handleChatClick}><ChatIcon /></button>
                                 <button className="remove-Btnnna"><DeleteIcon /></button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="Client_Chat_Sec">
                         <div className="Chattt-Topp-3">
