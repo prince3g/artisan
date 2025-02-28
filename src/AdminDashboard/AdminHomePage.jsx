@@ -138,6 +138,14 @@ const AdminHomePage = () => {
                         {/* Display job count */}
                         <h2>{jobCount}</h2>
                     </li>
+
+                    <li>
+                        <h3>Pending Jobs</h3>
+                        {/* Display job count */}
+                        <h2>0</h2>
+                    </li>
+
+
                 </ul>
             </div>
 

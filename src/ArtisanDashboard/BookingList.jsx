@@ -91,6 +91,8 @@ export default function BookingList() {
                                                     Job Description
                                                 </Link> */}
 
+                                                <div className="OOO-PP-Btnss">
+
                                                 <Link 
                                                     to={{
                                                     pathname: "/artisan-dashboard/job-description1" ,
@@ -100,6 +102,11 @@ export default function BookingList() {
                                                 >
                                                     Job Description
                                                 </Link>
+
+                                                <button className="AA_Job_CMPT_BTN">Complete Job</button>
+
+                                                </div>
+                                                
                                             </td>
                                         </tr>
                                     );
