@@ -645,7 +645,7 @@ const ArtisanSignUp = () => {
 
               <div className="ghha-foot">
                 <p>We will contact you by phone, SMS or email to give you more information about how our products and services can help your business. 
-                You can opt out at any time by emailing <a href="#">newjoiners@simservicehub.com</a></p>       
+                You can opt out at any time by emailing <a href="mailto:info@simservicehub.com">info@simservicehub.com</a></p>       
             </div>
     
           </div>

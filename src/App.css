@@ -2391,3 +2391,49 @@ input[type="password"] {
   background-color: #fff !important;
   cursor: auto !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* OOO-PP-Btnss */
+
+.OOO-PP-Btnss{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+
+
+
+
+/* AA_Job_CMPT_BTN */
+
+.AA_Job_CMPT_BTN{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 15px;
+  background-color: #B1BD3B;
+  color: #fff !important;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.AA_Job_CMPT_BTN:hover{
+  background-color: #96a133 !important;
+}
