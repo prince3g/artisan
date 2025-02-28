@@ -138,7 +138,7 @@ const AdminDashboard = () => {
     setUserEmail(email);
 
     // Check if the email is authorized
-    if (email !== "ekehanson@gmail.com" && email !== "ekenehanson@gmail.com") {
+    if (email !== "support@simservicehub.com" && email !== "ekenehanson@gmail.com") {
       navigate("/login"); // Redirect to an unauthorized page or login page
     }
   }, [navigate]);
