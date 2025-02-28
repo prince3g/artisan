@@ -463,7 +463,7 @@ function Home() {
     <div className='hgahgs-Card-Dlt'>
     <h3>Request a Quote</h3>
     <p>Tell us your requirements, and we’ll connect you with up to three verified Artisan.  </p>
-    <Link to="/request-quote" >Request a Quote</Link>
+    <Link to="/post-job" >Request a Quote</Link>
   </div>
   </div>
 

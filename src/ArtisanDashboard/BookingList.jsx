@@ -87,19 +87,21 @@ export default function BookingList() {
                                                 {booking.status}
                                             </td>
                                             <td>
+
                                                 {/* <Link to={`/artisan-dashboard/view-job-description/${quote.job_request.unique_id}`} className="gagf-dessdioa-btn">
                                                     Job Description
                                                 </Link> */}
 
-                                                <Link 
-                                                    to={{
-                                                    pathname: "/artisan-dashboard/job-description1" ,
-                                                    }} 
-                                                    state={{ quote }}
-                                                    className="gagf-dessdioa-btn"
-                                                >
-                                                    Job Description
-                                                </Link>
+                                            <Link 
+                                                to={{
+                                                pathname: "/artisan-dashboard/job-description1" ,
+                                                }} 
+                                                state={{ quote }}
+                                                className="gagf-dessdioa-btn"
+                                            >
+                                                Job Description
+                                            </Link>
+
                                             </td>
                                         </tr>
                                     );
