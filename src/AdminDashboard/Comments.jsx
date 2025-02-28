@@ -86,7 +86,6 @@ const Comments = ({ artisanUniqueId }) => {
   // console.log(totalReviews)
   // console.log("totalReviews")
 
-
   return (
     <div className='comment-sec'>
       <div className='rating-secc'>
