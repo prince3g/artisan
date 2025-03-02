@@ -140,7 +140,7 @@ const ArtisanHomePage = () => {
                         <div className="AA_Dash_Left_Box">
                             <div className="recent_trades_sec">
                                 <div className="AA_Dash_Left_Top">
-                                    <h3>Recent Trades <span>{Object.keys(groupedMessages).length} </span></h3>
+                                    <h3>Recent Customer Message<span>{Object.keys(groupedMessages).length} </span></h3>
                                 </div>
                                 <div className="Trade_Secs">
                                     {Object.keys(groupedMessages).map((email, index) => (
@@ -175,7 +175,8 @@ const ArtisanHomePage = () => {
                                         </div>
                                     </>
                                 ) : (
-                                    <p>No trade selected</p>
+                                    <p></p>
+                                    // <p>No trade selected</p>
                                 )}
                             </div>
                             {/* <div className="Top_DltIm_Btns">

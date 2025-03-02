@@ -9,34 +9,57 @@ export default function BookingList() {
     const [error, setError] = useState(null);
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     useEffect(() => {
+        // const fetchBookings = async () => {
+        //     try {
+        //         const artisan_id = sessionStorage.getItem("unique_user_id");
+        //         if (!artisan_id) {
+        //             throw new Error("No artisan ID found in session storage.");
+        //         }
+
+        //         const response = await axios.get(
+        //             `${djangoHostname}/api/auth/quotes/quote_request/artisan-bookings/?artisan_id=${artisan_id}`
+        //         );
+
+        //         setBookings(response.data);
+                
+        //         console.log("response.data");
+        //         console.log(response.data[0]);
+        //         console.log("response.data");
+        //     } catch (err) {
+        //         setError(err.message);
+        //     } finally {
+        //         setLoading(false);
+        //     }
+        // };
         const fetchBookings = async () => {
             try {
                 const artisan_id = sessionStorage.getItem("unique_user_id");
                 if (!artisan_id) {
                     throw new Error("No artisan ID found in session storage.");
                 }
-
+        
                 const response = await axios.get(
                     `${djangoHostname}/api/auth/quotes/quote_request/artisan-bookings/?artisan_id=${artisan_id}`
                 );
-
+        
                 setBookings(response.data);
-                
-                // console.log("response.data");
-                // console.log(response.data[0]);
-                // console.log("response.data");
             } catch (err) {
-                setError(err.message);
+                if (err.response) {
+                    // Extract meaningful error message from API response
+                    setError(err.response.data.error || "An error occurred while fetching bookings.");
+                } else {
+                    setError(err.message);
+                }
             } finally {
                 setLoading(false);
             }
         };
-
+        
         fetchBookings();
     }, []);
 
     if (loading) return <p>Loading bookings...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="Pricing_Sec">
