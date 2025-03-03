@@ -1,83 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import CloseIcon from '@mui/icons-material/Close';
-// import axios from 'axios'; // Import axios for making HTTP requests
-// import './Userdashbaord.css';
-// import FlashMessage from "../FlashMessage/FlashMessage.jsx";
-
-// const ViewQuote = () => {
-
-//   const [flash, setFlash] = useState(null);    
-//   const showMessage = (message, type) => {
-//     setFlash({ message, type });
-//   };
-
-//   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
-//   const [showArtisanDetails, setShowArtisanDetails] = useState(false);
-//   const navigate = useNavigate();
-
-//   const [bid_amount, setBid_amount] = useState("");
-//   const [job_duration, setJob_duration] = useState("");
-
-//   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
-//   const location = useLocation();
-//   const artisan = location.state || {};
-
-//   //console.log("artisan", artisan);
-
-//   useEffect(() => {
-//     if (artisan.artisan?.quote) {
-//       setBid_amount(artisan.artisan.quote.bid_amount);
-//       setJob_duration(artisan.artisan.quote.job_duration);
-//     }
-//   }, [artisan]);
-
-//   const handleAcceptQuote = async () => {
-
-//     try {
-//       const unique_id = artisan.artisan.quote.unique_id;
-//       const response = await axios.post(
-//         `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept/`
-//       );
-  
-//       if (response.status === 201) {
-//         showMessage("You have accepted the quote successfully", "success");
-//         setShowPaymentOptions(true);
-//         setShowArtisanDetails(false);
-//       } else {
-//         console.error("Failed to accept quote:", response.data);
-//       }
-//     } catch (error) {
-//       if (error.response && error.response.data && error.response.data.error) {
-//         const errorMessage = error.response.data.error;
-  
-//         showMessage(errorMessage, "error");
-  
-//         if (errorMessage === "This quote has already been accepted") {
-//           setShowPaymentOptions(true);
-//           setShowArtisanDetails(false);
-//         }
-        
-//         console.log(errorMessage);
-//       } else {
-//         showMessage("An error occurred while accepting the quote", "error");
-//       }
-//       console.error("Error accepting quote:", error);
-//     }
-//   };
-  
-//   const handleClosePaymentOptions = () => {
-//     setShowPaymentOptions(false);
-//     setShowArtisanDetails(false);
-//   };
-
-//   const handleShowArtisanDetails = () => {
-//     setShowArtisanDetails(true);
-//   };
-
-
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -150,6 +70,7 @@ const showMessage = (message, type) => {
     try {
       const unique_id = artisan.artisan.quote.unique_id;
       const response = await axios.post(
+
         `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept/`
       );
   
@@ -179,6 +100,11 @@ const showMessage = (message, type) => {
     }finally {
       setIsLoading(false); // Stop loader
     }
+  };
+  const acceptQuote = async () => {
+   
+    setShowPaymentOptions(true);
+    setShowArtisanDetails(false);
   };
 
   return (
@@ -229,7 +155,7 @@ const showMessage = (message, type) => {
                   </div>
 
                   <div className="aaggs-sec-btns">
-                  <button className="accpt-qqut" onClick={handleAcceptQuote} disabled={isLoading}>
+                  <button className="accpt-qqut" onClick={acceptQuote} disabled={isLoading}>
                     {isLoading ? "Accepting..." : "Accept Quote"}
                   </button>
 
@@ -269,7 +195,12 @@ const showMessage = (message, type) => {
                     <li><p>Account Type</p><span>{payoutDetails.account_type}</span></li>
                   </ul>
                   <div className="bbann-dltss-btns">
-                    <button className="bba-btn1">Complete Payment</button>
+                    {/* <button className="bba-btn1">I have Completed Payment</button> */}
+
+                    <button className="bba-btn1" onClick={handleAcceptQuote} disabled={isLoading}>
+                    {isLoading ? "Recording Response..." : "I have Completed Payment"}
+                  </button>
+
                     <button className="bba-btn2" onClick={() => setShowArtisanDetails(false)}>Cancel</button>
                   </div>
                 </div>

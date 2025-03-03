@@ -38,7 +38,7 @@ export default function ArtisanAvailability() {
     const handleSave = async () => {
         setLoading(true);
         try {
-            await axios.patch(`${djangoHostname}/api/profiles/auth/artisan-profile/?unique_id=${unique_user_id}`, { availability });
+            await axios.patch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${unique_user_id}`, { availability });
 
             alert("Availability updated successfully");
         } catch (error) {
