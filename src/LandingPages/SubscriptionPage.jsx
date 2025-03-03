@@ -33,6 +33,7 @@ const SubscriptionPage = () => {
         subscribed_duration: 1  // Default to 1 month
     };
 
+    
     try {
         const response = await fetch(`${djangoHostname}/api/subscription/auth/api/user-subscriptions/`, {
             method: "POST",

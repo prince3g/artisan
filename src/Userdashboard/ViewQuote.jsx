@@ -5,8 +5,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import './Userdashbaord.css';
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
+import { PaystackButton } from "react-paystack";
 
 const ViewQuote = () => {
+
+  const publicKey = "pk_test_3444178a2e2dda33f778668a54dc53bc712d04a3"; 
 
 const [flash, setFlash] = useState(null);    
 const showMessage = (message, type) => {
@@ -27,9 +30,7 @@ const showMessage = (message, type) => {
   const [bid_amount, setBid_amount] = useState("");
   const [job_duration, setJob_duration] = useState("");
 
-  // console.log("artisan")
-  // console.log(artisan.artisan)
-  // console.log("artisan")
+
 
   useEffect(() => {
     if (artisan.artisan?.quote) {
@@ -61,10 +62,47 @@ const showMessage = (message, type) => {
     setShowArtisanDetails(true);
     fetchPayoutDetails(); // Fetch payout details when the section is shown
   };
+  
+    // console.log("Selected Plan:", plan);
+    const authToken = sessionStorage.getItem("access_token");
+    const email = sessionStorage.getItem("user_email");
+    const firstName = sessionStorage.getItem("user_first_name");
+    const lastName = sessionStorage.getItem("user_last_name");
+    
+    if (!authToken || !email || !firstName || !lastName) {
+      showMessage("Please Login or Register to continue", "failure");
+      setTimeout(() => {
+        showMessage("", "failure");
+          navigate("/login");
+      }, 3000);
+      return;
+  }
+
+  const handleSuccess = (reference) => {
+    console.log("Payment successful!", reference);
+    handleAcceptQuoteViaEscrow()
+    // Handle success logic (e.g., updating backend, showing confirmation)
+  };
+
+  const handleClose = () => {
+    console.log("Payment closed");
+    // Handle the case where the user closes the payment modal
+  };
+
+  const componentProps = {
+    email,
+    firstName,
+    lastName,
+    amount: bid_amount * 100,
+    publicKey,
+    text: "PAY VIA ESCROW",
+    onSuccess: handleSuccess,
+    onClose: handleClose,
+  };
 
 
 
-  const handleAcceptQuote = async () => {
+  const handleAcceptQuoteViaArtisan = async () => {
     setIsLoading(true); // Start loader
 
     try {
@@ -101,6 +139,45 @@ const showMessage = (message, type) => {
       setIsLoading(false); // Stop loader
     }
   };
+
+  const handleAcceptQuoteViaEscrow = async () => {
+    setIsLoading(true); // Start loader
+
+    try {
+      const unique_id = artisan.artisan.quote.unique_id;
+      const response = await axios.post(
+
+        `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept/`
+      );
+  
+      if (response.status === 201) {
+        showMessage("You have accepted the quote successfully", "success");
+        setShowPaymentOptions(true);
+        setShowArtisanDetails(false);
+      } else {
+        console.error("Failed to accept quote:", response.data);
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        const errorMessage = error.response.data.error;
+  
+        showMessage(errorMessage, "failure");
+  
+        if (errorMessage === "This quote has already been accepted") {
+          setShowPaymentOptions(true);
+          setShowArtisanDetails(false);
+        }
+        
+       //  console.log(errorMessage);
+      } else {
+        showMessage("An error occurred while accepting the quote", "error");
+      }
+      console.error("Error accepting quote:", error);
+    }finally {
+      setIsLoading(false); // Stop loader
+    }
+  };
+
   const acceptQuote = async () => {
    
     setShowPaymentOptions(true);
@@ -175,7 +252,8 @@ const showMessage = (message, type) => {
               <span className="Close-qquqps-Box" onClick={() => setShowPaymentOptions(false)}><CloseIcon /></span>
               <div className="hga-seds" style={{ display: showArtisanDetails ? 'none' : 'block' }}>
                 <div className="qquqps-Cont exctip-pay">
-                  <h3>PAY VIA ESCROW</h3>
+                  {/* <h3>PAY VIA ESCROW</h3> */}
+                   <PaystackButton {...componentProps} />
                   <p>Escrow holds your payment, as soon as the artisan completes their job, the payment is made to the artisan</p>
                 </div>
 
@@ -197,7 +275,7 @@ const showMessage = (message, type) => {
                   <div className="bbann-dltss-btns">
                     {/* <button className="bba-btn1">I have Completed Payment</button> */}
 
-                    <button className="bba-btn1" onClick={handleAcceptQuote} disabled={isLoading}>
+                    <button className="bba-btn1" onClick={handleAcceptQuoteViaArtisan} disabled={isLoading}>
                     {isLoading ? "Recording Response..." : "I have Completed Payment"}
                   </button>
 
