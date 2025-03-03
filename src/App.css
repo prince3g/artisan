@@ -2427,13 +2427,14 @@ input[type="password"] {
   justify-content: center;
   text-align: center;
   padding: 8px 15px;
-  background-color: #B1BD3B;
-  color: #fff !important;
+  background-color: #F1F1F1;
+  color: #000 !important;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .AA_Job_CMPT_BTN:hover{
-  background-color: #96a133 !important;
+  background-color: #cccbcb !important;
 }

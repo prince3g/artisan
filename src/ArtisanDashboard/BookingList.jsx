@@ -2,12 +2,45 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./ArtisanDashboard.css";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 export default function BookingList() {
+
+    const [flash, setFlash] = useState(null);    
+    const showMessage = (message, type) => {
+      setFlash({ message, type });
+    };
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+    const handleCompleteJob = async (uniqueId, currentStatus) => {
+        try {
+            const newStatus = !currentStatus; // Toggle the artisan_done value
+
+            const response = await axios.patch(
+                `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${uniqueId}`,
+                { artisan_done: newStatus },
+                { headers: { "Content-Type": "application/json" } }
+            );
+
+            // Update the state after successful update
+            setBookings((prevBookings) =>
+                prevBookings.map((booking) =>
+                    booking.quote.job_request.unique_id === uniqueId
+                        ? { ...booking, artisan_done: newStatus }
+                        : booking
+                )
+            );
+
+            showMessage("Job status updated successfully!", "success");
+        } catch (err) {
+            console.error("Error updating job status:", err);
+            showMessage("Failed to update job status.", "failure");
+        }
+    };
+
     useEffect(() => {
         // const fetchBookings = async () => {
         //     try {
@@ -43,6 +76,8 @@ export default function BookingList() {
                 );
         
                 setBookings(response.data);
+
+                // console.log(response.data)
             } catch (err) {
                 if (err.response) {
                     // Extract meaningful error message from API response
@@ -67,6 +102,13 @@ export default function BookingList() {
                 <div className="Pricing_top">
                     <h2>Booking List</h2>
                 </div>
+                {flash && (
+                <FlashMessage
+                    message={flash.message}
+                    type={flash.type}
+                    onClose={() => setFlash(null)}
+                />
+                )}
 
                 <div className="Table_Sec boook-Table-Sec">
                     <table className="Upload_Table oooa-tb">
@@ -106,14 +148,10 @@ export default function BookingList() {
                                             <td>{(parseFloat(quote.bid_amount) - parseFloat(quote.freelancer_service_fee)).toLocaleString()}</td>
                                             <td>{quote.job_duration}</td>
                                             <td>{new Date(quote.created_at).toLocaleDateString()}</td>
-                                            <td className={booking.status === "completed" ? "completed-td" : "active-td"}>
-                                                {booking.status}
+                                            <td className={quote.job_request.artisan_done ? "completed-td" : "active-td"}>
+                                                {quote.job_request.customer_done ? "Done" : "Pending"}
                                             </td>
                                             <td>
-
-                                                {/* <Link to={`/artisan-dashboard/view-job-description/${quote.job_request.unique_id}`} className="gagf-dessdioa-btn">
-                                                    Job Description
-                                                </Link> */}
 
                                                 <div className="OOO-PP-Btnss">
 
@@ -127,19 +165,15 @@ export default function BookingList() {
                                                     Job Description
                                                 </Link>
 
-                                                <button className="AA_Job_CMPT_BTN">Complete Job</button>
+                                                {/* <button className="AA_Job_CMPT_BTN">Complete Job</button> */}
+                                                <button 
+                                                        className="AA_Job_CMPT_BTN"
+                                                        onClick={() => handleCompleteJob(quote.job_request.unique_id, quote.job_request.artisan_done)}
+                                                    >
+                                                        {quote.job_request.artisan_done ? "Mark as Incomplete" : "Mark as Completed"}
+                                                    </button>
 
                                                 </div>
-                                                
-                                            <Link 
-                                                to={{
-                                                pathname: "/artisan-dashboard/job-description1" ,
-                                                }} 
-                                                state={{ quote }}
-                                                className="gagf-dessdioa-btn"
-                                            >
-                                                Job Description
-                                            </Link>
 
                                             </td>
                                         </tr>

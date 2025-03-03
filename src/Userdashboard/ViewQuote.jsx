@@ -9,7 +9,7 @@ import { PaystackButton } from "react-paystack";
 
 const ViewQuote = () => {
 
-  const publicKey = "pk_test_3444178a2e2dda33f778668a54dc53bc712d04a3"; 
+  const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
 
 const [flash, setFlash] = useState(null);    
 const showMessage = (message, type) => {
@@ -29,7 +29,6 @@ const showMessage = (message, type) => {
 
   const [bid_amount, setBid_amount] = useState("");
   const [job_duration, setJob_duration] = useState("");
-
 
 
   useEffect(() => {
@@ -132,7 +131,7 @@ const showMessage = (message, type) => {
         
        //  console.log(errorMessage);
       } else {
-        showMessage("An error occurred while accepting the quote", "error");
+        showMessage("An error occurred while accepting the quote", "faulure");
       }
       console.error("Error accepting quote:", error);
     }finally {

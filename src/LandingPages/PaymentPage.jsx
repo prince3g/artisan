@@ -3,8 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import { PaystackButton } from "react-paystack";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const PaymentPage  = () => {
+
+  
+const [flash, setFlash] = useState(null);    
+const showMessage = (message, type) => {
+  setFlash({ message, type });
+};
+
   const navigate = useNavigate();
   const location = useLocation();
   const plan = location.state?.plan || {};
@@ -18,23 +26,49 @@ const PaymentPage  = () => {
   const lastName = sessionStorage.getItem("user_last_name");
   
   if (!authToken || !email || !firstName || !lastName) {
-    setFlashMessage("Please Login or Register to continue");
+    showMessage("Please Login or Register to continue", "failure");
     setTimeout(() => {
-        setFlashMessage("");
+      showMessage("");
         navigate("/login");
     }, 3000);
     return;
 }
 
-    const publicKey = "pk_test_3444178a2e2dda33f778668a54dc53bc712d04a3"; 
+    const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
     const amount = plan.price * 100; // Amount in kobo (100 kobo = 1 Naira)
   
   
-    const handleSuccess = (reference) => {
-      //console.log("Payment successful!", reference);
-      handleSubscribeClick(plan.unique_id)
-      // Handle success logic (e.g., updating backend, showing confirmation)
-    };
+    const handleSuccess = async (reference) => {
+      console.log("Payment successful!", reference);
+      
+      try {
+          const response = await fetch(`${djangoHostname}/api/paystack/verify-payment/`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${authToken}`
+              },
+              body: JSON.stringify({ reference: reference.reference }) // Send reference to backend
+          });
+  
+          if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.detail || "Payment verification failed");
+          }
+  
+          const result = await response.json();
+  
+          // If verification is successful, subscribe the user
+          if (result.status === "success") {
+              handleSubscribeClick(plan.unique_id);
+          } else {
+              console.error("Payment verification failed", result);
+          }
+      } catch (error) {
+          console.error("Error verifying payment:", error);
+      }
+  };
+  
   
     const handleClose = () => {
       console.log("Payment closed");
@@ -99,6 +133,15 @@ const handleSubscribeClick = async (planId) => {
       <div className='large-container'>
         <div className='Arrri-Pahgs-main Succ-Sec'>
           <div className="paymend-Seecc">
+            
+            {flash && (
+              <FlashMessage
+                  message={flash.message}
+                  type={flash.type}
+                  onClose={() => setFlash(null)}
+              />
+              )}
+
             <div className="paymend-Seecc-1">
               <h1 className='big-text'>{plan.name || "Plan"}</h1>
               <h3>
