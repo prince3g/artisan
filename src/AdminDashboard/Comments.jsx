@@ -157,6 +157,7 @@ const Comments = ({ artisanUniqueId }) => {
                 <div key={review.id} className='comments-sec-box'>
                   <div className='s-comment'>
                     <div className='s-comment-1'>
+                      <button className='comt-remove-btn'>Remove</button>
                       <div className='s-comment-1-flex'>
                         <div className='s-comment-10'>
                           <span>{review.reviewer_name_display.charAt(0).toUpperCase()}</span>

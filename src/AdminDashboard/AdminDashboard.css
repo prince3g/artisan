@@ -1531,3 +1531,36 @@ td .rejected-ammount,
   margin: 0px !important;
   bottom: 0px !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* comt-remove-btn */
+
+.comt-remove-btn{
+  position: relative;
+  padding: 5px 10px;
+  background-color: transparent;
+  border: 1px solid #ff2f2f;
+  color: #ff2f2f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.comt-remove-btn:hover{
+  background-color: #ff2f2f;
+  color: #fff;
+}
