@@ -61,42 +61,7 @@ const JobArtisans = () => {
     }, [djangoHostname, job_unique_id]);
 
 
-    const mockApiResponse = [
-      {
-        id: 1,
-        name: "Ndubusis Prince Godson",
-        profession: "Electrician",
-        location: "Umuahia Abia state",
-        views: "16.2k",
-        rating: 16,
-        status: "Actively Searching",
-        topRated: true,
-        image: HghImg1
-      },
-      {
-        id: 2,
-        name: "Chukwudi Emmanuel",
-        profession: "Electrician",
-        location: "Lagos State",
-        views: "12.5k",
-        rating: 14,
-        status: "Available for Work",
-        topRated: false,
-        image: HghImg2
-      },
-      {
-        id: 3,
-        name: "Michael Adekunle",
-        profession: "Electrician",
-        location: "Abuja FCT",
-        views: "8.9k",
-        rating: 10,
-        status: "Busy",
-        topRated: false,
-        image: HghImg3
-      }
-    ];
-  
+
 
   return (
     <div className="ooUserdashbaord-Page">
@@ -122,8 +87,9 @@ const JobArtisans = () => {
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
                 <div className='garoo-Gird-part2'>
-                  {artisans.map((artisan) => (
-                    <div className='Carded-Box' key={artisan.id}>
+
+                {artisans.map((artisan, index) => (
+                    <div className='Carded-Box' key={artisan.artisan?.unique_id || `artisan-${index}`}>
                       <div className='Carded-Box-Grid'>
                         <div className='Carded-Box-1'>
 
@@ -158,7 +124,7 @@ const JobArtisans = () => {
                             <div className='GLnad-btns-2'>
                               {/* <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link> */}
 
-                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote </Link>
+                              {/* <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote </Link> */}
 
                               <Link
                                 to={`/artisan-profile?service_details=${encodeURIComponent(

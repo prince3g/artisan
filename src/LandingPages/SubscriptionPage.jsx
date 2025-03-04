@@ -10,6 +10,60 @@ const SubscriptionPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+  
+  const handleSubscribeClick = async (planId) => {
+    setIsSubscribing(planId);
+    const authToken = sessionStorage.getItem("access_token");
+    const authUserId = sessionStorage.getItem("unique_user_id");
+
+    if (!authToken) {
+        setFlashMessage("Please login or register to continue");
+        setTimeout(() => {
+            setFlashMessage("");
+            navigate("/login");
+        }, 3000);
+        setIsSubscribing(null);
+        return;
+    }
+
+    const payload = {
+        user: authUserId,
+        subscription_plan: planId,
+        subscribed_duration: 1  // Default to 1 month
+    };
+
+    
+    try {
+        const response = await fetch(`${djangoHostname}/api/subscription/auth/api/user-subscriptions/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${authToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Failed to subscribe");
+        }
+
+        const result = await response.json();
+
+        navigate("/dashboard");
+        // window.location.href = result.payment_link;  // Redirect to Remita payment page
+
+    } catch (error) {
+        console.error("Error subscribing:", error);
+        setFlashMessage(error.message || "An unexpected error occurred");
+        setTimeout(() => setFlashMessage(""), 3000);
+    } finally {
+        setIsSubscribing(null);
+    }
+};
+
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -67,7 +121,16 @@ const SubscriptionPage = () => {
                     <li key={index}>{benefit}</li>
                   ))}
                 </ol>
-                <Link to="/payment" className='Fin-subbnna-btn'>Subscribe</Link>
+                {/* <Link to="/payment" className='Fin-subbnna-btn'>Subscribe</Link> */}
+                <Link 
+                  to={{
+                    pathname: "/payment",
+                  }} 
+                  state={{ plan }}
+                  className='Fin-subbnna-btn'
+                >
+                  Subscribe
+                </Link>
               </div>
             ))}
           </div>

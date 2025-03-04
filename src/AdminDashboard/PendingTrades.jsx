@@ -11,7 +11,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import UserPlaceholder from "./Img/user-placeholder.png";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
-const PostedJobs = () => {
+const PendingTrades = () => {
 
   const [flash, setFlash] = useState(null);    
   const showMessage = (message, type) => {
@@ -33,12 +33,19 @@ const PostedJobs = () => {
           throw new Error("Failed to fetch jobs");
         }
         const data = await response.json();
-        setJobs(data.results); // Set jobs data
+
+        // Filter only completed jobs
+        const inCompletedJobs = data.results.filter(
+          //(job) => !job.artisan_done && job.customer_done && job.admin_done
+          (job) => !job.customer_done
+        );
+        setJobs(inCompletedJobs);
+        
+        //setJobs(data.results); // Set jobs data
 
         // console.log("data.results")
         // console.log(data.results)
         // console.log("data.results")
-        
       } catch (error) {
         setError(error.message); // Set error message
       } finally {
@@ -146,14 +153,24 @@ const PostedJobs = () => {
                             
                             >Job Description</Link> */}
 
-                            <Link 
+                            {/* <Link 
                               to={{
                                 pathname: "/admin/job-description",
                               }} 
                               state={{ job }}
                             >
                               Job Description
+                            </Link> */}
+
+                            <Link 
+                                to={{
+                                  pathname: "/admin/job-artisans",
+                                }} 
+                                state={{ job }}
+                              >
+                                View Artisans
                             </Link>
+
                             <button
                               className="rwmovooo-btn"
                               onClick={() => handleDelete(job.id)}
@@ -187,5 +204,5 @@ const PostedJobs = () => {
   );
 };
 
-export default PostedJobs;
+export default PendingTrades;
 

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react"; 
 import PlacHolderImg1 from './Img/hu/hu1.jpg';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const RegisteredUsers = () => {
+
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [users, setUsers] = useState([]);
   const [nextPage, setNextPage] = useState(null);
@@ -54,27 +60,29 @@ const RegisteredUsers = () => {
   };
 
   // Handle deletion of a user
-  const handleDelete = async (id) => {
+  const handleDelete = async (unique_id) => {
     if (!window.confirm("Are you sure you want to delete this customer?")) {
       return;
     }
 
-    setDeletingId(id);
+    setDeletingId(unique_id);
 
     try {
       const response = await fetch(
-        `${djangoHostname}/api/profiles/auth/api/artisan-profile/${id}/`,
+        `${djangoHostname}/api/accounts/auth/api/users/${unique_id}/`,
         {
           method: "DELETE",
         }
       );
 
       if (!response.ok) {
+        showMessage("Failed to delete the user", "failure");
         throw new Error("Failed to delete the user.");
+        
       }
-
+      showMessage("User deleted successfully", "success");
       // Update the users list after deletion
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      setUsers((prevUsers) => prevUsers.filter((user) => user.unique_id !== unique_id));
     } catch (error) {
       alert(error.message);
     } finally {
@@ -119,9 +127,9 @@ const RegisteredUsers = () => {
                   <div className="action-btn">
                     <span
                       className="Remove-Btn"
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(user.unique_id)}
                     >
-                      {deletingId === user.id ? "Deleting..." : "Remove"}
+                      {deletingId === user.unique_id ? "Deleting..." : "Remove"}
                     </span>
                   </div>
                 </td>

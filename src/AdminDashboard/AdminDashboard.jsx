@@ -113,6 +113,8 @@ import AdminFooter from './AdminFooter';
 import ArtisansPage from './ArtisansPage';
 import CustomersPage from './CustomersPage';
 import CompletedTrades from './CompletedTrades';
+import PendingTrades from './PendingTrades';
+import JobArtisans from './JobArtisans';
 import AdminNotification from './AdminNotification';
 import ProfileSettings from './ProfileSettings';
 import PostedJobs from './PostedJobs';
@@ -138,7 +140,7 @@ const AdminDashboard = () => {
     setUserEmail(email);
 
     // Check if the email is authorized
-    if (email !== "ekehanson@gmail.com" && email !== "ekenehanson@gmail.com") {
+    if (email !== "support@simservicehub.com" && email !== "ekenehanson@gmail.com") {
       navigate("/login"); // Redirect to an unauthorized page or login page
     }
   }, [navigate]);
@@ -165,6 +167,8 @@ const AdminDashboard = () => {
               <Route path="/artisans" element={<ArtisansPage />} />
               <Route path="/registered-customers" element={<CustomersPage />} />
               <Route path="/completed-trades" element={<CompletedTrades />} />
+              <Route path="/pending-trades" element={<PendingTrades />} />
+              <Route path="/job-artisans" element={<JobArtisans />} />
               <Route path="/notification" element={<AdminNotification />} />
               <Route path="/profile-settings" element={<ProfileSettings />} />
               <Route path="/posted-jobs" element={<PostedJobs />} />

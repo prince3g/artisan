@@ -18,6 +18,10 @@ const EditSubscriptionPlan = () => {
   // Get the passed plan data from location.state
   const plan = location.state?.plan;
 
+//  console.log("plan")
+//  console.log(plan.unique_id)
+//  console.log("plan")
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [promoPrice, setPromoPrice] = useState("");
@@ -59,6 +63,10 @@ const EditSubscriptionPlan = () => {
   };
 
   const handleSubmit = async (e) => {
+
+    // alert("READY")
+    // console.log("READY")
+
     e.preventDefault();
     setLoading(true);
     setErrors({});
@@ -73,7 +81,7 @@ const EditSubscriptionPlan = () => {
 
     try {
       const response = await fetch(`${djangoHostname}/api/auth/subscriptions/api/subscriptions/${plan.id}/`, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPlan),
       });
@@ -88,7 +96,7 @@ const EditSubscriptionPlan = () => {
 
       //alert("Subscription plan updated successfully!");
       showMessage("Subscription plan updated successfully!", "success");
-      navigate("/admin/subscriptions"); // Redirect back to subscription list
+      //navigate("/admin/subscriptions"); // Redirect back to subscription list
     } catch (error) {
       alert(`Error: ${error.message}`);
     } finally {
@@ -178,7 +186,7 @@ const EditSubscriptionPlan = () => {
           </div>
 
           <div className="Gland-Cnt-Btn">
-            <button type="submit" className="post-job-btn" disabled={loading}>
+            <button type="submit" className="post-job-btn" disabled={loading} onClick={handleSubmit}>
               {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>

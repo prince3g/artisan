@@ -86,7 +86,6 @@ const Comments = ({ artisanUniqueId }) => {
   // console.log(totalReviews)
   // console.log("totalReviews")
 
-
   return (
     <div className='comment-sec'>
       <div className='rating-secc'>
@@ -132,12 +131,7 @@ const Comments = ({ artisanUniqueId }) => {
 
               <div className='Gland-Btns'>
                 
-                <Link
-                  to={`/chat-with-artisan?artisanUniqueID=${artisanUniqueId}&service=${artisanUniqueId}`}
-                  className='Chhah-btns'
-                >
-                  <MessageIcon /> See Review
-                </Link>
+               
               </div>
             </div>
           </div>
@@ -166,10 +160,7 @@ const Comments = ({ artisanUniqueId }) => {
                           <span>{review.reviewer_name_display}</span>
                           <p>{new Date(review.created_at).toLocaleDateString()}</p>
 
-                          {/* <span>{renderStars(review.rating)}</span> */}
-                          {/* <p>{review.review_text}</p> */}
-                          {/* <p>{review.review_text.split(" ").slice(0, 20).join(" ")}{review.review_text.split(" ").length > 10 ? "..." : ""}</p> */}
-
+                     
                         </div>
                       </div>
                     </div>
