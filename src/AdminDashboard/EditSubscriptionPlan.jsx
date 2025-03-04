@@ -64,8 +64,8 @@ const EditSubscriptionPlan = () => {
 
   const handleSubmit = async (e) => {
 
-    alert("READY")
-    console.log("READY")
+    // alert("READY")
+    // console.log("READY")
 
     e.preventDefault();
     setLoading(true);
