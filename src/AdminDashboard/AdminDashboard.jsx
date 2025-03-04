@@ -113,6 +113,8 @@ import AdminFooter from './AdminFooter';
 import ArtisansPage from './ArtisansPage';
 import CustomersPage from './CustomersPage';
 import CompletedTrades from './CompletedTrades';
+import PendingTrades from './PendingTrades';
+import JobArtisans from './JobArtisans';
 import AdminNotification from './AdminNotification';
 import ProfileSettings from './ProfileSettings';
 import PostedJobs from './PostedJobs';
@@ -165,6 +167,8 @@ const AdminDashboard = () => {
               <Route path="/artisans" element={<ArtisansPage />} />
               <Route path="/registered-customers" element={<CustomersPage />} />
               <Route path="/completed-trades" element={<CompletedTrades />} />
+              <Route path="/pending-trades" element={<PendingTrades />} />
+              <Route path="/job-artisans" element={<JobArtisans />} />
               <Route path="/notification" element={<AdminNotification />} />
               <Route path="/profile-settings" element={<ProfileSettings />} />
               <Route path="/posted-jobs" element={<PostedJobs />} />

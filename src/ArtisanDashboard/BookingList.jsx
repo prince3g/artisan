@@ -15,31 +15,67 @@ export default function BookingList() {
     const [error, setError] = useState(null);
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
-    const handleCompleteJob = async (uniqueId, currentStatus) => {
-        try {
-            const newStatus = !currentStatus; // Toggle the artisan_done value
+    // const handleCompleteJob = async (uniqueId, currentStatus) => {
+    //     try {
+    //         const newStatus = !currentStatus; // Toggle the artisan_done value
 
-            const response = await axios.patch(
-                `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${uniqueId}`,
-                { artisan_done: newStatus },
-                { headers: { "Content-Type": "application/json" } }
-            );
+    //         const response = await axios.patch(
+    //             `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${uniqueId}`,
+    //             { artisan_done: newStatus },
+    //             { headers: { "Content-Type": "application/json" } }
+    //         );
 
-            // Update the state after successful update
-            setBookings((prevBookings) =>
-                prevBookings.map((booking) =>
-                    booking.quote.job_request.unique_id === uniqueId
-                        ? { ...booking, artisan_done: newStatus }
-                        : booking
-                )
-            );
+    //         // Update the state after successful update
+    //         setBookings((prevBookings) =>
+    //             prevBookings.map((booking) =>
+    //                 booking.quote.job_request.unique_id === uniqueId
+    //                     ? { ...booking, artisan_done: newStatus }
+    //                     : booking
+    //             )
+    //         );
 
-            showMessage("Job status updated successfully!", "success");
-        } catch (err) {
-            console.error("Error updating job status:", err);
-            showMessage("Failed to update job status.", "failure");
-        }
-    };
+    //         showMessage("Job status updated successfully!", "success");
+    //     } catch (err) {
+    //         console.error("Error updating job status:", err);
+    //         showMessage("Failed to update job status.", "failure");
+    //     }
+    // };
+
+    const [loadingJob, setLoadingJob] = useState(null);
+
+const handleCompleteJob = async (uniqueId, currentStatus) => {
+    setLoadingJob(uniqueId); // Set loading state for the current job
+
+    try {
+        const newStatus = !currentStatus; // Toggle the artisan_done value
+
+        const artisan_unique_id = sessionStorage.getItem('unique_user_id');
+
+        console.log("artisan_unique_id", artisan_unique_id);
+        const response = await axios.patch(
+            `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${uniqueId}`,
+            { artisan_done: newStatus, artisan: artisan_unique_id },
+            // { artisan_done: newStatus },
+            { headers: { "Content-Type": "application/json" } }
+        );
+
+        // Update the state after successful update
+        setBookings((prevBookings) =>
+            prevBookings.map((booking) =>
+                booking.quote.job_request.unique_id === uniqueId
+                    ? { ...booking, quote: { ...booking.quote, job_request: { ...booking.quote.job_request, artisan_done: newStatus } } }
+                    : booking
+            )
+        );
+
+        showMessage("Job status updated successfully!", "success");
+    } catch (err) {
+        console.error("Error updating job status:", err);
+        showMessage("Failed to update job status.", "failure");
+    } finally {
+        setLoadingJob(null); // Reset loading state
+    }
+};
 
     useEffect(() => {
         // const fetchBookings = async () => {
@@ -77,7 +113,7 @@ export default function BookingList() {
         
                 setBookings(response.data);
 
-                // console.log(response.data)
+                console.log(response.data)
             } catch (err) {
                 if (err.response) {
                     // Extract meaningful error message from API response
@@ -115,7 +151,7 @@ export default function BookingList() {
                         <thead>
                             <tr>
                                 <th>S/N</th>
-                                <th>Artisan's Name</th>
+                                <th>Customer</th>
                                 <th>Phone Number</th>
                                 <th>Location</th>
                                 <th>Job Title</th>
@@ -139,8 +175,8 @@ export default function BookingList() {
                                     return (
                                         <tr key={booking.unique_id}>
                                             <td>{index + 1}</td>
-                                            <td>{quote.artisan.first_name} {quote.artisan.last_name}</td>
-                                            <td>{quote.artisan.phone}</td>
+                                            <td>{booking.customer.first_name} {booking.customer.last_name}</td>
+                                            <td>{booking.customer.phone}</td>
                                             <td>{quote.job_request.location}</td>
                                             <td>{quote.job_request.title}</td>
                                             <td>{parseFloat(quote.bid_amount).toLocaleString()}</td>
@@ -162,16 +198,16 @@ export default function BookingList() {
                                                     state={{ quote }}
                                                     className="gagf-dessdioa-btn"
                                                 >
-                                                    Job Description
+                                                 Description
                                                 </Link>
-
-                                                {/* <button className="AA_Job_CMPT_BTN">Complete Job</button> */}
                                                 <button 
-                                                        className="AA_Job_CMPT_BTN"
-                                                        onClick={() => handleCompleteJob(quote.job_request.unique_id, quote.job_request.artisan_done)}
-                                                    >
-                                                        {quote.job_request.artisan_done ? "Mark as Incomplete" : "Mark as Completed"}
-                                                    </button>
+                                                    className="AA_Job_CMPT_BTN"
+                                                    onClick={() => handleCompleteJob(quote.job_request.unique_id, quote.job_request.artisan_done)}
+                                                    disabled={loadingJob === quote.job_request.unique_id} // Disable button while loading
+                                                >
+                                                    {loadingJob === quote.job_request.unique_id ? "Marking..." : (quote.job_request.artisan_done ? "Mark Incomplete" : "Mark Completed")}
+                                                </button>
+
 
                                                 </div>
 

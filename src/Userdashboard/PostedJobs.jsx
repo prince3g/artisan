@@ -7,38 +7,110 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Visibility from '@mui/icons-material/Visibility';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
+
 
 const PostedJobs = () => {
+
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
+
+  const [loadingJobId, setLoadingJobId] = useState(null);
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const user_unique_user_id = sessionStorage.getItem('unique_user_id');
   
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/user-jobs/?user_id=${user_unique_user_id}`);
+  //       if (!response.ok) {
+  //         // Handle errors appropriately
+  //         const errorData = await response.json();
+  //         throw new Error(errorData.detail || 'An error occurred while fetching jobs.');
+  //       }
+  //       const data = await response.json();
+  //       setJobs(data);
+
+  //       console.log("data")
+  //       console.log(data)
+  //       console.log("data")
+
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   };
+
+  //   fetchJobs();
+  // }, [djangoHostname, user_unique_user_id]);
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/user-jobs/?user_id=${user_unique_user_id}`);
         if (!response.ok) {
-          // Handle errors appropriately
           const errorData = await response.json();
           throw new Error(errorData.detail || 'An error occurred while fetching jobs.');
         }
         const data = await response.json();
-        setJobs(data);
-
-        // console.log("data")
-        // console.log(data)
-        // console.log("data")
-
+        
+        // Sort jobs in LIFO order (newest first)
+        const sortedJobs = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  
+        setJobs(sortedJobs);
+  
       } catch (error) {
         setError(error.message);
       }
     };
-
+  
     fetchJobs();
   }, [djangoHostname, user_unique_user_id]);
-
+  
+  
+  const handleMarkAsCompleted = async (job) => {
+    setLoadingJobId(job.id); // Set loading state for this job
+    const updatedValue = !job.customer_done; // Toggle value
+  
+    try {
+      const response = await fetch(
+        `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${job.unique_id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ customer_done: updatedValue }),
+        }
+      );
+  
+      if (response.ok) {
+        // Update local state with the new value
+        setJobs((prevJobs) =>
+          prevJobs.map((j) =>
+            j.id === job.id ? { ...j, customer_done: updatedValue } : j
+          )
+        );
+        showMessage(`Job ${job.title} marked as ${updatedValue ? 'completed' : 'not completed'}`, 'success');
+       // console.log(`Job ${job.id} marked as ${updatedValue ? 'completed' : 'not completed'}`);
+      } else {
+        console.error('Failed to update job status');
+        showMessage('Failed to update job status', 'failure');
+      }
+    } catch (error) {
+      console.error('Error updating job status:', error);
+      showMessage(`Error updating job status: ${error}`, 'failure');
+    } finally {
+      setLoadingJobId(null); // Reset loading state
+    }
+  };
+  
+  
   // Function to handle job removal
   const handleRemoveJob = async (jobId) => {
     const confirmed = window.confirm("Are you sure you want to remove this job?");
@@ -54,7 +126,7 @@ const PostedJobs = () => {
         if (response.ok) {
           // Remove the job from the local state
           setJobs(prevJobs => prevJobs.filter(job => job.id !== jobId));
-          console.log('Job removed successfully');
+          //console.log('Job removed successfully');
         } else {
           console.error('Failed to remove job');
         }
@@ -65,7 +137,7 @@ const PostedJobs = () => {
       console.log('Job removal cancelled');
     }
   };
-
+  
   return (
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
@@ -84,6 +156,14 @@ const PostedJobs = () => {
             <div className="Gradnded-Box-header">
               <h2 className="big-text">Posted Jobs</h2>
             </div>
+
+            {flash && (
+              <FlashMessage
+                  message={flash.message}
+                  type={flash.type}
+                  onClose={() => setFlash(null)}
+              />
+              )}
 
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
@@ -134,8 +214,19 @@ const PostedJobs = () => {
                                 className="rwmovooo-btn" 
                                 onClick={() => handleRemoveJob(job.id)} 
                               >
-                                <DeleteIcon /><span> Remove Job</span>
+                                <DeleteIcon /><span> Delete</span>
                               </button>
+                              <button 
+                                className="GLnad-btns-2" 
+                                onClick={() => handleMarkAsCompleted(job)}
+                                disabled={loadingJobId === job.id} // Disable button while loading
+                              >
+                                <CheckCircleIcon />
+                                <span>
+                                  {loadingJobId === job.id ? 'Marking...' : (job.customer_done ? 'Mark as Incomplete' : 'Mark as Completed')}
+                                </span>
+                              </button>
+
                             </div>
                           </div>
                         </div>

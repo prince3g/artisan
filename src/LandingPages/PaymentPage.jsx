@@ -13,6 +13,8 @@ const showMessage = (message, type) => {
   setFlash({ message, type });
 };
 
+const [isSubscribing, setIsSubscribing] = useState(null);
+
   const navigate = useNavigate();
   const location = useLocation();
   const plan = location.state?.plan || {};
@@ -25,17 +27,20 @@ const showMessage = (message, type) => {
   const firstName = sessionStorage.getItem("user_first_name");
   const lastName = sessionStorage.getItem("user_last_name");
   
-  if (!authToken || !email || !firstName || !lastName) {
-    showMessage("Please Login or Register to continue", "failure");
-    setTimeout(() => {
-      showMessage("");
+  useEffect(() => {
+    if (!authToken || !email || !firstName || !lastName) {
+      showMessage("Please Login or Register to continue", "failure");
+      setTimeout(() => {
+        showMessage("");
         navigate("/login");
-    }, 3000);
-    return;
-}
+      }, 3000);
+    }
+  }, [authToken, email, firstName, lastName, navigate]);
+  
 
     const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
-    const amount = plan.price * 100; // Amount in kobo (100 kobo = 1 Naira)
+    const amount = (plan?.price || 0) * 100;
+
   
   
     const handleSuccess = async (reference) => {
@@ -121,8 +126,8 @@ const handleSubscribeClick = async (planId) => {
   
       } catch (error) {
           console.error("Error subscribing:", error);
-          setFlashMessage(error.message || "An unexpected error occurred");
-          setTimeout(() => setFlashMessage(""), 3000);
+          showMessage(error.message || "An unexpected error occurred");
+          setTimeout(() => showMessage(""), 3000);
       } finally {
           setIsSubscribing(null);
       }
