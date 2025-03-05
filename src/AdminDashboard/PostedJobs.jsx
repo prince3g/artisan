@@ -105,82 +105,81 @@ const PostedJobs = () => {
 
           <div className="Habgb-sec">
             <div className="My-Artisan-Body">
-              <div className="garoo-Gird-part2">
-                {jobs.map((job) => (
-                  <div className="Carded-Box" key={job.id}>
-                    <div className="Carded-Box-Gridd">
-                      <div className="Carded-Box-2">
-                        <div className="oo-dlsts">
-                          <h3>
-                            {job.title}{" "}
-                            <span>
-                              <AccessTimeIcon /> {new Date(job.created_at).toLocaleDateString()}
-                            </span>
-                          </h3>
-                          <div className="oo-dlsts-110">
-                            <div className="oo-dlsts-OO1">
-                              <h5>
-                                <MyLocation /> {job.location}
-                              </h5>
-                            </div>
-                            <div className="oo-dlsts-OO2">
-                              <h4>
-                                <span>
-                                  <Visibility /> 16.2k
-                                </span>
-                              </h4>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="GLnad-btns">
-                          <div className="GLnad-btns-1">
-                            <span>{job.service_details.postName}</span>
-                            <span>
-                              {/* <BusinessCenterIcon /> 20 Applications */}
-                              <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application" }
-                            </span>
-                          </div>
-                          <div className="GLnad-btns-2">
-                            {/* <Link to="/admin/job-description"
-                           
-                            
-                            >Job Description</Link> */}
-
-                            <Link 
-                              to={{
-                                pathname: "/admin/job-description",
-                              }} 
-                              state={{ job }}
-                            >
-                              Job Description
-                            </Link>
-                            <button
-                              className="rwmovooo-btn"
-                              onClick={() => handleDelete(job.id)}
-                              disabled={deletingJobId === job.id}
-                            >
-                              <DeleteIcon />
+              {jobs.length === 0 ? (
+                <p className="no-posted-job-message">No job has been posted yet.</p>
+              ) : (
+                <div className="garoo-Gird-part2">
+                  {jobs.map((job) => (
+                    <div className="Carded-Box" key={job.id}>
+                      <div className="Carded-Box-Gridd">
+                        <div className="Carded-Box-2">
+                          <div className="oo-dlsts">
+                            <h3>
+                              {job.title}{" "}
                               <span>
-                                {deletingJobId === job.id ? "Deleting..." : "Remove Job"}
+                                <AccessTimeIcon /> {new Date(job.created_at).toLocaleDateString()}
                               </span>
-                            </button>
+                            </h3>
+                            <div className="oo-dlsts-110">
+                              <div className="oo-dlsts-OO1">
+                                <h5>
+                                  <MyLocation /> {job.location}
+                                </h5>
+                              </div>
+                              <div className="oo-dlsts-OO2">
+                                <h4>
+                                  <span>
+                                    <Visibility /> 16.2k
+                                  </span>
+                                </h4>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div className="ahhgs-sec">
-                          <h3>
-                            <img src={UserPlaceholder} alt="User" /> {job.customer}
-                          </h3>
-                          <p>
-                            <CheckCircleIcon /> {job.status === "open" ? "Active" : "Inactive"}
-                          </p>
+                          <div className="GLnad-btns">
+                            <div className="GLnad-btns-1">
+                              <span>{job.service_details.postName}</span>
+                              <span>
+                                <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application"}
+                              </span>
+                            </div>
+                            <div className="GLnad-btns-2">
+                              <Link 
+                                to={{
+                                  pathname: "/admin/job-description",
+                                }} 
+                                state={{ job }}
+                              >
+                                Job Description
+                              </Link>
+                              <button
+                                className="rwmovooo-btn"
+                                onClick={() => handleDelete(job.id)}
+                                disabled={deletingJobId === job.id}
+                              >
+                                <DeleteIcon />
+                                <span>
+                                  {deletingJobId === job.id ? "Deleting..." : "Remove Job"}
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                          <div className="ahhgs-sec">
+                            <h3>
+                              <img src={UserPlaceholder} alt="User" /> {job.customer}
+                            </h3>
+                            <p>
+                              <CheckCircleIcon /> {job.status === "open" ? "Active" : "Inactive"}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -167,10 +167,12 @@ const PostedJobs = () => {
 
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
+
+                
                 <div className="garoo-Gird-part2">
                   {error ? (
-                    <div className="error-message">
-                      <p>{error}</p>
+                    <div className="error-message no-artisans-message">
+                      <p>You have not posted any job</p>
                     </div>
                   ) : (
                     Array.isArray(jobs) && jobs.map(job => (

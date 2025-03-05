@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+
 const SendQuote = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [bidAmount, setBidAmount] = useState("");
   const [jobDuration, setJobDuration] = useState("1 week");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,6 +37,7 @@ const SendQuote = () => {
       job_duration: jobDuration,
     };
   
+
     try {
       const response = await fetch(`${djangoHostname}/api/auth/quotes/quote_request/`, {
         method: "POST",
@@ -42,20 +45,22 @@ const SendQuote = () => {
         body: JSON.stringify(payload),
       });
   
-      const data = await response.json(); // Parse JSON response
+      const data = await response.json(); 
   
       if (!response.ok) {
-        throw new Error(data.error || "An unexpected error occurred."); // Get backend error
+        throw new Error(data.error || "An unexpected error occurred."); 
       }
   
-      navigate("/artisan-dashboard"); // Redirect on success
+      navigate("/artisan-dashboard"); 
     } catch (err) {
-      setError(err.message); // Display error message properly
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-  
+ 
+
+
   return (
     <div className="ooUserdashbaord-Page">
       <div className="site-container">
@@ -122,6 +127,14 @@ const SendQuote = () => {
                         onChange={(e) => setJobDuration(e.target.value)}
                         disabled={loading}
                       >
+                        <option>1 Hour</option>
+                        <option>4 Hours</option>
+                        <option>8 Hours</option>
+                        <option>12 Hours</option>
+                        <option>1 day</option>
+                        <option>2 days</option>
+                        <option>4 days</option>
+                        <option>6 days</option>
                         <option>1 week</option>
                         <option>2 weeks</option>
                         <option>3 weeks</option>
@@ -130,10 +143,8 @@ const SendQuote = () => {
                       </select>
                     </div>
                   </div>
-
                   {/* Error Message */}
                   {error && <p style={{ color: "red" }}>{error}</p>}
-
                   {/* Buttons */}
                   <div className="aaggs-sec-btns">
                     <button className="accpt-qqut" onClick={handleSubmit} disabled={loading}>
@@ -143,7 +154,6 @@ const SendQuote = () => {
                       Cancel
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>

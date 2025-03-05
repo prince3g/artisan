@@ -5,8 +5,16 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PortfolioSlider from './PortfolioSlider';
 import MessageIcon from '@mui/icons-material/Message';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const Comments = ({ artisanUniqueId }) => {
+  const [loadingDelete, setLoadingDelete] = useState(null);
+
+  const [flash, setFlash] = useState(null);    
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
+
 
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [reviews, setReviews] = useState([]);
@@ -30,8 +38,12 @@ const Comments = ({ artisanUniqueId }) => {
           `${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/artisan/${artisanUniqueId}/`
         );
         const data = response.data;
-
+        
         setReviews(data);
+
+        // console.log("totalReviews")
+        // console.log(reviews)
+        // console.log("totalReviews")
         // Calculate average rating
         const totalRatings = data.reduce((sum, review) => sum + (review.rating || 0), 0);
         const avgRating = data.length > 0 ? (totalRatings / data.length).toFixed(1) : '0.0';
@@ -82,12 +94,37 @@ const Comments = ({ artisanUniqueId }) => {
 
   const totalReviews = Object.values(ratingCounts).reduce((sum, count) => sum + count, 0);
 
-  // console.log("totalReviews")
-  // console.log(totalReviews)
-  // console.log("totalReviews")
+
+
+  const deleteReview = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) {
+      return;
+    }
+    setLoadingDelete(reviewId);
+    try {
+      await axios.delete(`${djangoHostname}/api/artisanReview/auth/api/artisan-reviews/delete-by-unique-id/${reviewId}/`);
+
+      showMessage("Review Deleted successfully", "success");
+
+      setReviews(reviews.filter((review) => review.unique_id !== reviewId));
+    } catch (err) {
+      console.error('Error deleting review:', err);
+    } finally {
+      setLoadingDelete(null);
+    }
+  };
 
   return (
     <div className='comment-sec'>
+
+    {flash && (
+      <FlashMessage
+          message={flash.message}
+          type={flash.type}
+          onClose={() => setFlash(null)}
+      />
+      )}
+
       <div className='rating-secc'>
         <div className='rating-secc-box'>
           <p>
@@ -151,7 +188,14 @@ const Comments = ({ artisanUniqueId }) => {
                 <div key={review.id} className='comments-sec-box'>
                   <div className='s-comment'>
                     <div className='s-comment-1'>
-                      <button className='comt-remove-btn'>Remove</button>
+                      
+                    <button 
+                      className='comt-remove-btn' 
+                      onClick={() => deleteReview(review.unique_id)} 
+                      disabled={loadingDelete === review.unique_id}>
+                      {loadingDelete === review.unique_id ? 'Deleting ...' : 'Remove'}
+                    </button>
+
                       <div className='s-comment-1-flex'>
                         <div className='s-comment-10'>
                           <span>{review.reviewer_name_display.charAt(0).toUpperCase()}</span>

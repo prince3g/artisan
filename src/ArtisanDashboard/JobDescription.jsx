@@ -125,8 +125,8 @@ const JobDescription = () => {
                <div className="kklauis-seds">
                 <h3>What to do</h3>
                 <p>{job.job.service_details?.name} {" "}</p>
-                <p>Electrical fault repairs</p>
-                <h3>Issues description</h3>
+                {/* <p>Electrical fault repairs</p>
+                <h3>Issues description</h3> */}
                 <p>{job.job?.service_description} {" "}</p>
                 <h3>More decription</h3>
                 <p>{job.job?.description} {" "}</p>

@@ -2438,3 +2438,22 @@ input[type="password"] {
 .AA_Job_CMPT_BTN:hover{
   background-color: #cccbcb !important;
 }
+
+
+.qquqps-Cont  button{
+  padding: 10px;
+  border-radius: 8PX;
+  background-color: transparent;
+  border:1px solid  #B1BD3B;
+  color: #B1BD3B;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.qquqps-Cont  button:hover{
+  background-color: #B1BD3B;
+  color: #fff;
+}
+.qquqps-Cont{
+  background-color: #fff !important;
+}

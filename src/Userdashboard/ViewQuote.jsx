@@ -9,8 +9,8 @@ import { PaystackButton } from "react-paystack";
 
 const ViewQuote = () => {
 
-  // const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
-  const publicKey = "pk_test_3c39bf0db28b4821705b2795dbc51dfc94239b9d"; 
+// const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
+  const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
 
 const [flash, setFlash] = useState(null);    
 const showMessage = (message, type) => {
@@ -178,17 +178,17 @@ const showMessage = (message, type) => {
         payment_reference: reference.reference, // Include reference
       };
   
-      // console.log("unique_id")
-      // console.log(unique_id)
-      // console.log("unique_id")
+      console.log("unique_id")
+      console.log(unique_id)
+      console.log("unique_id")
 
       const response = await axios.post(
         `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept_quote_via_escrow/`,
-        payload, // Send the payload here
+        payload,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`, // If authentication is required
+            Authorization: `Bearer ${authToken}`,
           },
         }
       );
@@ -218,9 +218,8 @@ const showMessage = (message, type) => {
       setIsLoading(false); // Stop loader
     }
   };
-  
+    
   const acceptQuote = async () => {
-   
     setShowPaymentOptions(true);
     setShowArtisanDetails(false);
   };
@@ -386,7 +385,7 @@ const showMessage = (message, type) => {
                       {isLoading ? "Accepting..." : "Accept Quote"}
                     </button>
                     <button className="dec-qqut" onClick={() => navigate(-1)} disabled={isLoading}>
-                      Decline Quote
+                      Go Back
                     </button>
                   </div>
                 </div>
@@ -401,15 +400,15 @@ const showMessage = (message, type) => {
               <div className="qquqps-Box">
                 <span className="Close-qquqps-Box" onClick={() => setShowPaymentOptions(false)}><CloseIcon /></span>
                 <div className="hga-seds" style={{ display: showArtisanDetails ? 'none' : 'block' }}>
-                  <div className="qquqps-Cont exctip-pay">
+                  <div className="qquqps-Cont ">
                     <PaystackButton {...componentProps} />
                     <p>Escrow holds your payment, as soon as the artisan completes their job, the payment is made to the artisan</p>
                   </div>
   
-                  <div className="qquqps-Cont" onClick={handleShowArtisanDetails}>
+                  {/* <div className="qquqps-Cont" onClick={handleShowArtisanDetails}>
                     <h3>PAY DIRECTLY TO ARTISAN</h3>
                     <p>You can pay the artisan directly for their services. This ensures a fast, secure transaction while supporting their work without intermediaries.</p>
-                  </div>
+                  </div> */}
                 </div>
   
                 {showArtisanDetails && payoutDetails && (

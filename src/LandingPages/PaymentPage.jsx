@@ -32,7 +32,8 @@ const PaymentPage  = () => {
     }
   }, [authToken, email, firstName, lastName, navigate]);
 
-  const publicKey = "pk_test_3c39bf0db28b4821705b2795dbc51dfc94239b9d"; 
+  const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
+  
   const amount = (plan?.price || 0) * 100;
 
   const handleSuccess = async (reference) => {
@@ -88,12 +89,14 @@ const PaymentPage  = () => {
     const authToken = sessionStorage.getItem("access_token");
     const authUserId = sessionStorage.getItem("unique_user_id");
 
+
     const payload = {
       payment_reference: payment_reference,
       user: authUserId,
       subscription_plan: planId,
       subscribed_duration: 1  
     };
+
 
     try {
         const response = await fetch(`${djangoHostname}/api/auth/subscriptions/api/user-subscriptions/`, {
@@ -110,10 +113,12 @@ const PaymentPage  = () => {
             throw new Error(errorData.detail || "Failed to subscribe");
         }
 
-        navigate("/artisan-dashboard/");
+        sessionStorage.setItem('isSubscribed', true);
+        navigate("/pending-approval");
+
     } catch (error) {
-        console.error("Error subscribing:", error);
-        showMessage(error.message || "An unexpected error occurred");
+       // console.error("Error subscribing:", error);
+        showMessage(error.message || "An unexpected error occurred", "failure");
         setTimeout(() => showMessage(""), 3000);
     } finally {
         setIsSubscribing(false);
