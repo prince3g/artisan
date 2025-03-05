@@ -134,6 +134,7 @@ const RegisteredArtisans = () => {
         <table className="table">
           <thead>
             <tr>
+              <th>Code</th>
               <th>Artisan Name</th>
               <th>Email Address</th>
               <th>Phone Number</th>
@@ -145,12 +146,13 @@ const RegisteredArtisans = () => {
           <tbody>
             {artisanData.map((artisanDatum) => (
               <tr key={artisanDatum.id}>
+                <td>{artisanDatum.user.identification_code}</td>
                 
                 <td className="slt-td">
                   <a href="#!" to="/artisan-profile" className="td-grid" onClick={() => handleProfileClick(artisanDatum)}>
 
                     <div className="td-grid-img">
-                      <img src={artisanDatum.user_image} alt="Artisan" />
+                      {/* <img src={artisanDatum.user_image} alt="Artisan" /> */}
                     </div>
                     <div className="td-grid-txt">
                       <p>{artisanDatum.user.first_name} {artisanDatum.user.last_name}</p>
@@ -159,6 +161,7 @@ const RegisteredArtisans = () => {
                 </td>
 
                 <td>{artisanDatum.user.email}</td>
+                
                 <td>{artisanDatum.user.phone}</td>
                 <td><span>{artisanDatum.business_location}</span></td>
                 <td>{new Date(artisanDatum.user.date_joined).toLocaleDateString()}</td>

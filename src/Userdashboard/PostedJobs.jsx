@@ -25,30 +25,6 @@ const PostedJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchJobs = async () => {
-  //     try {
-  //       const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/user-jobs/?user_id=${user_unique_user_id}`);
-  //       if (!response.ok) {
-  //         // Handle errors appropriately
-  //         const errorData = await response.json();
-  //         throw new Error(errorData.detail || 'An error occurred while fetching jobs.');
-  //       }
-  //       const data = await response.json();
-  //       setJobs(data);
-
-  //       console.log("data")
-  //       console.log(data)
-  //       console.log("data")
-
-  //     } catch (error) {
-  //       setError(error.message);
-  //     }
-  //   };
-
-  //   fetchJobs();
-  // }, [djangoHostname, user_unique_user_id]);
-
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -76,39 +52,80 @@ const PostedJobs = () => {
   const handleMarkAsCompleted = async (job) => {
     setLoadingJobId(job.id); // Set loading state for this job
     const updatedValue = !job.customer_done; // Toggle value
-  
+
     try {
-      const response = await fetch(
-        `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${job.unique_id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ customer_done: updatedValue }),
-        }
-      );
-  
-      if (response.ok) {
-        // Update local state with the new value
-        setJobs((prevJobs) =>
-          prevJobs.map((j) =>
-            j.id === job.id ? { ...j, customer_done: updatedValue } : j
-          )
+        const response = await fetch(
+            `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${job.unique_id}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ customer_done: updatedValue }),
+            }
         );
-        showMessage(`Job ${job.title} marked as ${updatedValue ? 'completed' : 'not completed'}`, 'success');
-       // console.log(`Job ${job.id} marked as ${updatedValue ? 'completed' : 'not completed'}`);
-      } else {
-        console.error('Failed to update job status');
-        showMessage('Failed to update job status', 'failure');
-      }
+
+        if (response.ok) {
+            // Update local state with the new value
+            setJobs((prevJobs) =>
+                prevJobs.map((j) =>
+                    j.id === job.id ? { ...j, customer_done: updatedValue } : j
+                )
+            );
+            showMessage(`Job ${job.title} marked as ${updatedValue ? 'completed' : 'not completed'}`, 'success');
+
+            // Send notification after marking as completed
+            await sendNotification(job);
+        } else {
+            console.error('Failed to update job status');
+            showMessage('Failed to update job status', 'failure');
+        }
     } catch (error) {
-      console.error('Error updating job status:', error);
-      showMessage(`Error updating job status: ${error}`, 'failure');
+        console.error('Error updating job status:', error);
+        showMessage(`Error updating job status: ${error}`, 'failure');
     } finally {
-      setLoadingJobId(null); // Reset loading state
+        setLoadingJobId(null); // Reset loading state
     }
-  };
+};
+
+// Function to send notification after job completion
+const sendNotification = async (job) => {
+
+  // console.log("job")
+  // console.log(job)
+  // console.log("job")
+
+    const notificationData = {
+        artisan_id: job.artisan.unique_id, // Ensure this is available in the job object
+        customer_id: user_unique_user_id, // Ensure this is available in the job object
+        job_request_id: job.unique_id,
+        notification_message: `${job.customer} has marked the Job \"${job.title}\" as been completed by ${job.artisan.first_name}  ${job.artisan.last_name}`,
+        notification_type: "job_completed"
+    };
+
+    // console.log("notificationData")
+    // console.log(notificationData)
+    // console.log("notificationData")
+
+    try {
+        const response = await fetch(`${djangoHostname}/api/auth/notification/notification_request/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(notificationData),
+        });
+
+        if (response.ok) {
+            console.log("Notification sent successfully");
+        } else {
+            console.error("Failed to send notification");
+        }
+    } catch (error) {
+        console.error("Error sending notification:", error);
+    }
+};
+
   
   
   // Function to handle job removal
@@ -167,12 +184,10 @@ const PostedJobs = () => {
 
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
-
-                
                 <div className="garoo-Gird-part2">
                   {error ? (
-                    <div className="error-message no-artisans-message">
-                      <p>You have not posted any job</p>
+                    <div className="error-message">
+                      <p>{error}</p>
                     </div>
                   ) : (
                     Array.isArray(jobs) && jobs.map(job => (
@@ -218,7 +233,8 @@ const PostedJobs = () => {
                               >
                                 <DeleteIcon /><span> Delete</span>
                               </button>
-                              <button 
+
+                              {/* <button 
                                 className="GLnad-btns-2" 
                                 onClick={() => handleMarkAsCompleted(job)}
                                 disabled={loadingJobId === job.id} // Disable button while loading
@@ -227,7 +243,19 @@ const PostedJobs = () => {
                                 <span>
                                   {loadingJobId === job.id ? 'Marking...' : (job.customer_done ? 'Mark as Incomplete' : 'Mark as Completed')}
                                 </span>
+                              </button> */}
+
+                              <button 
+                                className="GLnad-btns-2" 
+                                onClick={() => handleMarkAsCompleted(job)}
+                                disabled={loadingJobId === job.id || job.customer_done} // Disable if loading or already completed
+                              >
+                                <CheckCircleIcon />
+                                <span>
+                                  {loadingJobId === job.id ? 'Marking...' : (job.customer_done ? 'Completed' : 'Mark as Completed')}
+                                </span>
                               </button>
+
 
                             </div>
                           </div>

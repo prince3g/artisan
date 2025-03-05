@@ -99,7 +99,8 @@ const CompletedTrades = () => {
 
         const completedJobs = data.results.filter(
           //(job) => job.artisan_done
-          (job) => job.artisan_done && job.customer_done
+          (job) => job.customer_done
+         // (job) => job.artisan_done && job.customer_done
           // (job) => job.artisan_done && job.customer_done && job.admin_done
         );
         setJobs(completedJobs);

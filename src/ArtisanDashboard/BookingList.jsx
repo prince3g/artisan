@@ -51,7 +51,8 @@ const handleCompleteJob = async (uniqueId, currentStatus) => {
 
         const artisan_unique_id = sessionStorage.getItem('unique_user_id');
 
-        console.log("artisan_unique_id", artisan_unique_id);
+       // console.log("artisan_unique_id", artisan_unique_id);
+
         const response = await axios.patch(
             `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${uniqueId}`,
             { artisan_done: newStatus, artisan: artisan_unique_id },

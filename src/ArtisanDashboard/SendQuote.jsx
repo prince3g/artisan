@@ -1,9 +1,15 @@
 
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const SendQuote = () => {
+
+    const [flash, setFlash] = useState(null);    
+    const showMessage = (message, type) => {
+      setFlash({ message, type });
+    };
+
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [bidAmount, setBidAmount] = useState("");
   const [jobDuration, setJobDuration] = useState("1 week");
@@ -50,6 +56,9 @@ const SendQuote = () => {
       if (!response.ok) {
         throw new Error(data.error || "An unexpected error occurred."); 
       }
+
+      alert("Quote sent successfully");
+      showMessage(`Quote sent successfully`, 'success');
   
       navigate("/artisan-dashboard"); 
     } catch (err) {
@@ -69,6 +78,15 @@ const SendQuote = () => {
             <div className="Gradnded-Box-header">
               <h2 className="big-text">Send Quote</h2>
             </div>
+
+            {flash && (
+              <FlashMessage
+                  message={flash.message}
+                  type={flash.type}
+                  onClose={() => setFlash(null)}
+              />
+              )}
+
 
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
