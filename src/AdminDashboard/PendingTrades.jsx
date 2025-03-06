@@ -96,7 +96,7 @@ const PendingTrades = () => {
       <div className="Gradnded-main">
         <div className="Gradnded-Box AA_hha">
           <div className="Gradnded-Box-header">
-            <h2 className="big-text">Posted Jobs</h2>
+            <h2 className="big-text">Pending Jobs</h2>
           </div>
 
           {flash && (
