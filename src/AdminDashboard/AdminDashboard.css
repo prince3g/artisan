@@ -1145,15 +1145,13 @@ td .rejected-ammount,
 .rev-card{
   position: relative;
   width: 100%;
-  padding: 10px 0px;
-  margin-bottom: 10px;
 }
 .rev-card:first-child{
   border-top: 0px;
 }
 .card-dltrr{
   position: relative;
-  padding:10px 0px;
+  padding:0px 0px;
   width: 100%;
   height: auto;
 }
@@ -1203,7 +1201,7 @@ td .rejected-ammount,
   text-align: right;
   font-size: 13px;
   border-top: 1px solid #e1e8ed;
-  margin-top: 20px;
+  margin-top: 0px;
   color:#6d728b;
 }
 

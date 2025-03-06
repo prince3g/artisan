@@ -15,6 +15,7 @@ const Footer = () => {
           <li><Link to="/contact-us">Contact Us</Link></li>
           <li><Link to="/faq">FAQs</Link></li>
         </ul>
+
         <div className="footer-social">
           <a href="https://www.facebook.com/share/14kCHuSwvh/" target="_blank" rel="noopener noreferrer">
             <Facebook style={{ fontSize: 30 }} />
@@ -29,6 +30,16 @@ const Footer = () => {
             <LinkedIn style={{ fontSize: 30 }} />
           </a>
         </div>
+        
+        <ul className="footer-links ghag-footer">
+          <li>Data and privacy policy: compliance@simu-l.com</li>
+          <li>Email: General enquiries:	Info@simservicehub.com</li>
+          <li> Email: Account, Maintenance and IT request	Support@simservicehub.com</li>
+          <li> Email:  Vetting and Complaince	Compliance@simu-l.com</li>
+          <li> Email:  Customer Services	Simulcontactcenter@simu-l.com</li>
+          <li>Email:  Careers	Careers@simu-l.com </li>
+        </ul>
+
         <p className="footer-copyright">
            {currentYear} Simul Management Solutions Ltd - All rights reserved
         </p>
