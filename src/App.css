@@ -376,7 +376,16 @@
   align-items: center;
   margin: 10px;
 }
-
+.ghag-footer{
+  margin-top: 20px;
+}
+.ghag-footer li{
+  padding: 3px 10px;
+  border-right: 1px solid #cacaca;
+  transition: all 0.3s ease-in-out;
+  font-size: 12px;
+  margin: 5px !important;
+}
 .footer-links li a{
   padding: 3px 10px;
   border-right: 1px solid #cacaca;
