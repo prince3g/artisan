@@ -130,6 +130,7 @@ const CompletedTrades = () => {
                 <th>Customer</th>
                 <th>Artisan</th>
                 <th>Artisan Email</th>
+                <th>Address</th>
                 <th>Trade Title</th>
                 <th>Date</th>
                 <th>Status</th>
@@ -167,9 +168,9 @@ const CompletedTrades = () => {
                   </td>
 
                   <td>
-                    <span><b>Bank:</b> First bank</span>
-                    <span><b>Acc Name:</b> Prince Godson</span>
-                    <span><b>Acc Number:</b> 0000999871880w</span>
+                    <span><b>Bank:</b> First bank</span><br></br>
+                    <span><b>Acc Name:</b> Prince Godson</span><br></br>
+                    <span><b>Acc Number:</b> 0000999871880w</span><br></br>
                   </td>
                 </tr>
               ))}
