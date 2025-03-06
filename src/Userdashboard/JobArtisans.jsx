@@ -60,44 +60,6 @@ const JobArtisans = () => {
       fetchJobs();
     }, [djangoHostname, job_unique_id]);
 
-
-    const mockApiResponse = [
-      {
-        id: 1,
-        name: "Ndubusis Prince Godson",
-        profession: "Electrician",
-        location: "Umuahia Abia state",
-        views: "16.2k",
-        rating: 16,
-        status: "Actively Searching",
-        topRated: true,
-        image: HghImg1
-      },
-      {
-        id: 2,
-        name: "Chukwudi Emmanuel",
-        profession: "Electrician",
-        location: "Lagos State",
-        views: "12.5k",
-        rating: 14,
-        status: "Available for Work",
-        topRated: false,
-        image: HghImg2
-      },
-      {
-        id: 3,
-        name: "Michael Adekunle",
-        profession: "Electrician",
-        location: "Abuja FCT",
-        views: "8.9k",
-        rating: 10,
-        status: "Busy",
-        topRated: false,
-        image: HghImg3
-      }
-    ];
-  
-
   return (
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
@@ -121,12 +83,15 @@ const JobArtisans = () => {
 
             <div className="Habgb-sec">
               <div className="My-Artisan-Body">
-                <div className='garoo-Gird-part2'>
-                  {artisans.map((artisan) => (
+               
+              <div className='garoo-Gird-part2'>
+                {artisans.length === 0 ? (
+                  <p className="no-artisans-message">No Artisan has applied yet for this Job</p>
+                ) : (
+                  artisans.map((artisan) => (
                     <div className='Carded-Box' key={artisan.id}>
                       <div className='Carded-Box-Grid'>
                         <div className='Carded-Box-1'>
-
                           <img src={HghImg1} alt={artisan.artisan.first_name} />
                         </div>
 
@@ -136,57 +101,41 @@ const JobArtisans = () => {
                             <div className='oo-dlsts-110'>
                               <div className='oo-dlsts-OO1'>
                                 <h5><MyLocation /> {artisan.artisan.business_location}</h5>
-                                {/* <h5><MyLocation /> Umuahia Abia state</h5> */}
                               </div>
                               <div className='oo-dlsts-OO2'>
-                                {/* <h4><span> <Visibility /> {artisan.views}</span> <span><Star /> {artisan.rating} qwerty</span></h4> */}
                                 <h4><span> <Visibility /> 16.2k</span> <span><Star />16</span></h4>
                               </div>
                             </div>
-
                           </div>
                           <div className='GLnad-btns'>
                             <div className='GLnad-btns-1'>
-
-                              {/* <span>{artisan.status}</span>
-                              {artisan.topRated && <span><Star /> Top Rated</span>} */}
-
                               <span>Actively Searching</span>
                               <span><Star /> Top Rated</span>
                             </div>
 
                             <div className='GLnad-btns-2'>
-                              {/* <Link to="/user-dashboard/view-quote" className="Vw-qquote-btnna">View Quote</Link> */}
-
-                              <Link  to={{pathname: "/user-dashboard/view-quote",}} state={{ artisan }}> View Quote </Link>
-
-                              <Link
-                                to={`/artisan-profile?service_details=${encodeURIComponent(
-                                  artisan.artisan.service_details?.name || ""
-                                )}&service=${encodeURIComponent(
-                                  artisan.artisan.service_details?.postname || ""
-                                )}&artisan_location=${encodeURIComponent(
-                                  artisan.artisan.user?.location || "N/A"
-                                )}&artisan_phone=${encodeURIComponent(
-                                  artisan.artisan?.phone || ""
-                                )}&artisan_unique_id=${encodeURIComponent(
-                                  artisan.artisan?.unique_id || ""
-                                )}&artisan_name=${encodeURIComponent(
-                                  `${artisan.artisan?.first_name || ""} ${artisan.artisan?.last_name || ""}`
-                                )}`}
-                              >
+                              <Link to={{ pathname: "/user-dashboard/view-quote" }} state={{ artisan }}>View Quote</Link>
+                              <Link to={`/artisan-profile?service_details=${encodeURIComponent(artisan.artisan.service_details?.name || "")}
+                                &service=${encodeURIComponent(artisan.artisan.service_details?.postname || "")}
+                                &artisan_location=${encodeURIComponent(artisan.artisan.user?.location || "N/A")}
+                                &artisan_phone=${encodeURIComponent(artisan.artisan?.phone || "")}
+                                &artisan_unique_id=${encodeURIComponent(artisan.artisan?.unique_id || "")}
+                                &artisan_name=${encodeURIComponent(`${artisan.artisan?.first_name || ""} ${artisan.artisan?.last_name || ""}`)}`}>
                                 Profile
                               </Link>
-
-                              
-
-                             </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  ))
+                )}
+              </div>
+
+
+                
+
+
               </div>
             </div>
           </div>

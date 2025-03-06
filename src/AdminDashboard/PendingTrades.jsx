@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
@@ -42,10 +40,11 @@ const PendingTrades = () => {
         setJobs(inCompletedJobs);
         
         //setJobs(data.results); // Set jobs data
-
         // console.log("data.results")
         // console.log(data.results)
         // console.log("data.results")
+
+
       } catch (error) {
         setError(error.message); // Set error message
       } finally {
@@ -56,7 +55,6 @@ const PendingTrades = () => {
     fetchJobs();
   }, []);
 
-  
   const handleDelete = async (jobId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this job?");
     if (confirmDelete) {
@@ -85,7 +83,6 @@ const PendingTrades = () => {
     }
   };
   
-
   if (loading) {
     return <p>Loading jobs...</p>;
   }

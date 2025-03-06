@@ -1562,3 +1562,11 @@ td .rejected-ammount,
   background-color: #ff2f2f;
   color: #fff;
 }
+
+.no-posted-job-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #888;
+  margin: 20px 0;
+}

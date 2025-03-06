@@ -388,4 +388,11 @@ a.edit-Bntnn:hover{
     z-index: 1000;
 }
 
+.no-artisans-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #888;
+    margin: 20px 0;
+  }
   

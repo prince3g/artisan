@@ -1,13 +1,18 @@
 
 
-import React from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CompletedImg from "./Img/completed-banner.svg";
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";  
 
 const CompletedReg = ({ userData }) => {
   const navigate = useNavigate();
 
+      const [flash, setFlash] = useState(null);    
+      const showMessage = (message, type) => {
+        setFlash({ message, type });
+      };
+    
 
 
   const handleBackClick = () => {
@@ -18,6 +23,15 @@ const CompletedReg = ({ userData }) => {
     <div className="Arrri-Pahgs">
       <div className="large-container">
         <div className="Arrri-Pahgs-main Succ-Sec">
+
+        {flash && (
+          <FlashMessage
+              message={flash.message}
+              type={flash.type}
+              onClose={() => setFlash(null)}
+          />
+        )}
+        
           <div className="Succ-Box">
             <img src={CompletedImg} alt="Completed" />
             <h3>Congratulations {userData?.user?.first_name}  {userData?.user?.last_name}</h3>
