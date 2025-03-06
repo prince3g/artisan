@@ -1,79 +1,3 @@
-// import React from "react";
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
-// const CompletedTrades = () => {
-//   const tabledatas = [
-//     {
-//       vendorName: "Prince Godson",
-//       email: "prince@example.com",
-//       phoneNumber: "123-456-7890",
-//       artisan: "John Doe",
-//       tradeTitle: "Woodworking",
-//       date: "12/12/2022",
-//     },
-//     {
-//       vendorName: "Jane Doe",
-//       email: "jane@example.com",
-//       phoneNumber: "987-654-3210",
-//       artisan: "Mary Smith",
-//       tradeTitle: "Plumbing",
-//       date: "10/10/2022",
-//     },
-//   ];
-
-//   return (
-//     <div className="Gen_Admin_BBD">
-//       <div className="top-sec-main Gen_Admin_Header">
-//         <h3>Completed Trades</h3>
-//       </div>
-
-//       <div className="tran-card">
-//         <div className="tran-card-tableSec">
-//           <table className="table">
-//             <thead>
-//               <tr>
-//                 <th>Customer</th>
-//                 <th>Email</th>
-//                 <th>Phone number</th>
-//                 <th>Artisan</th>
-//                 <th>Trade Title</th>
-//                 <th>Date</th>
-//                 <th>Status</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {tabledatas.map((tabledata, index) => (
-//                 <tr key={index}>
-//                   <td>
-//                     <div className="td-grid">
-
-//                       <div className="td-grid-txt">
-//                         <p>{tabledata.vendorName}</p>
-//                       </div>
-//                     </div>
-//                   </td>
-//                   <td>{tabledata.email}</td>
-//                   <td>{tabledata.phoneNumber}</td>
-//                   <td>{tabledata.artisan}</td>
-//                   <td>{tabledata.tradeTitle}</td>
-//                   <td>{tabledata.date}</td>
-//                   <td>
-//                     <span className="status-icon">
-//                       <CheckCircleIcon />
-//                       <span>Completed</span>
-//                     </span>
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CompletedTrades;
 import React, { useEffect, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
@@ -82,6 +6,9 @@ const CompletedTrades = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -113,6 +40,30 @@ const CompletedTrades = () => {
     fetchJobs();
   }, [djangoHostname]);
 
+//   useEffect(() => {
+//   const fetchPayoutDetails = async () => {
+
+//     const artisan_unique_id = artisan.artisan?.quote?.artisan?.unique_id
+//     try {
+//       const response = await axios.get(
+//         `${djangoHostname}/api/auth/payouts/payouts/${artisan_unique_id}/`
+        
+//       );
+//       setPayoutDetails(response.data);
+
+//       // console.log("response.data")
+//       // console.log(response.data)
+//       // console.log("response.data")
+      
+//     } catch (error) {
+//       console.error("Error fetching payout details:", error);
+//     }
+//   };
+//   fetchPayoutDetails();
+// }, [djangoHostname, user_unique_user_id]);
+
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -130,7 +81,7 @@ const CompletedTrades = () => {
                 <th>Customer</th>
                 <th>Artisan</th>
                 <th>Artisan Email</th>
-                <th>Address</th>
+                {/* <th>Address</th> */}
                 <th>Trade Title</th>
                 <th>Date</th>
                 <th>Status</th>
@@ -157,7 +108,7 @@ const CompletedTrades = () => {
                       ? `${job.artisan.email}, ${job.artisan.phone}`
                       : "No Artisan Assigned"}
                   </td>
-                  <td>{job.location || "N/A"}</td>
+                  {/* <td>{job.location || "N/A"}</td> */}
                   <td>{job.title}</td>
                   <td>{new Date(job.created_at).toLocaleDateString()}</td>
                   <td>
@@ -168,9 +119,10 @@ const CompletedTrades = () => {
                   </td>
 
                   <td>
-                    <span><b>Bank:</b> First bank</span><br></br>
-                    <span><b>Acc Name:</b> Prince Godson</span><br></br>
-                    <span><b>Acc Number:</b> 0000999871880w</span><br></br>
+                    <span><b>Bank: </b>{job.artisan.bank_name}</span><br></br>
+                    <span><b>Acc Name: </b>{job.artisan.account_name}</span><br></br>
+                    <span><b>Acc Number: </b>{job.artisan.account_number}</span><br></br>
+                    <span><b>Acc Type: </b>{job.artisan.account_type}</span><br></br>
                   </td>
                 </tr>
               ))}

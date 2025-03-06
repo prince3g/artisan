@@ -9,13 +9,64 @@ import CloseIcon from '@mui/icons-material/Close';
 import Star from '@mui/icons-material/Star';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ChatWithClient from './ChatWithClient';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 
 const ArtisanHomePage = () => {
+
+      const [flash, setFlash] = useState(null);    
+      const showMessage = (message, type) => {
+        setFlash({ message, type });
+      };
     
     const [clients, setClients] = useState([]);
     const [groupedMessages, setGroupedMessages] = useState({}); // State for grouped messages
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
+
+    useEffect(() => {
+        const unique_user_id = sessionStorage.getItem("unique_user_id");
+    
+        const checkUserSuspension = async () => {
+            if (!unique_user_id?.trim()) {
+                console.error("Unique User ID is missing");
+                return;
+            }
+    
+            try {
+                const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${unique_user_id}/`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                });
+    
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    
+                const data = await response.json();
+
+                // console.log("data")
+                // console.log(data)
+                // console.log("data")
+    
+                const user = data;  
+    
+                if (user && user.is_suspended) {
+                    showMessage("Your account has been suspended. You will be logged out.", "failure");
+                
+                    setTimeout(() => {
+                        sessionStorage.clear();
+                        window.location.href = "/login"; // Redirect to login page
+                    }, 5000); // Delay of 5 seconds
+                }
+                
+    
+            } catch (error) {
+                console.error("Error checking user suspension:", error);
+            }
+        };
+    
+        checkUserSuspension();
+    }, []);
+    
 
     useEffect(() => {
         const unique_user_id = sessionStorage.getItem("unique_user_id");
@@ -137,6 +188,8 @@ const ArtisanHomePage = () => {
             <div className="large-container">
                 <div className="Artisan_Dashbaord_Page_Grid">
                     <div className="Artisan_Dashbaord_Page_Left">
+                        
+
                         <div className="AA_Dash_Left_Box">
                             <div className="recent_trades_sec">
                                 <div className="AA_Dash_Left_Top">
@@ -158,6 +211,15 @@ const ArtisanHomePage = () => {
                             </div>
                         </div>
                     </div>
+
+                    {flash && (
+                        <FlashMessage
+                            message={flash.message}
+                            type={flash.type}
+                            onClose={() => setFlash(null)}
+                        />
+                        )}
+                        
                     <div className={`Artisan_Dashbaord_Page_Right ${showClientDetails ? 'Show_Clit_Dlt' : ''} ${showChatSection ? 'Show_Client_Chat_Sec' : ''}`}>
                         <div className="Client_Dlts">
                             <div className="Chattt-Topp-3 jjhs-close">

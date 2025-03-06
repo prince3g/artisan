@@ -28,62 +28,6 @@ const CostumerLogin1 = () => {
         if (savedPhone) setPhone(savedPhone);
     }, []);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     if (inputType === "email") {
-    //         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    //         if (!email) {
-    //             setError("Please enter your email.");
-    //             return;
-    //         } else if (!emailRegex.test(email)) {
-    //             setError("Please enter a valid email.");
-    //             return;
-    //         }
-    //     } else if (inputType === "phone") {
-    //         const phoneRegex = /^\+[1-9]{1}[0-9]{3,14}$/;
-    //         if (!phone) {
-    //             setError("Please enter your phone number.");
-    //             return;
-    //         } else if (!phoneRegex.test(phone)) {
-    //             setError("Please enter a valid phone number with country code (e.g., +2348146955393).");
-    //             return;
-    //         }
-    //     }
-
-    //     setError("");
-    //     setLoading(true);
-
-    //     try {
-    //         const data = inputType === "email" ? { email } : { phone };
-    //         const response = await axios.post(`${djangoHostname}/api/accounts/auth/api/send-login-token/`, data);
-
-    //         if (response.status === 200) {
-    //             navigate("/verify-email", { state: { email, phone, inputType } });
-
-
-
-                
-    //             // Save the email/phone if "Remember Me" is checked
-    //             if (rememberMe) {
-    //                 if (inputType === "email") {
-    //                     sessionStorage.setItem("email", email);
-    //                 } else {
-    //                     sessionStorage.setItem("phone", phone);
-    //                 }
-    //             }
-    //         }
-    //     } catch (error) {
-    //         if (error.response && error.response.data && error.response.data.error) {
-    //             setError(error.response.data.error);
-    //         } else {
-    //             setError("Failed to send token. Please try again later.");
-    //         }
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -120,17 +64,18 @@ const CostumerLogin1 = () => {
         } catch (error) {
             if (error.response) {
                 const errorMessage = error.response.data.error;
+    
                 if (error.response.status === 403 && errorMessage === "User has not been approved") {
                     const uniqueId = error.response.data.unique_id;
-
-                    showMessage("You have not been approved yet, Please wait after 24 hours or contact the admin", "failure");
-
-                    // alert("Yoh!!")
-
+    
+                    showMessage("You have not been approved yet. Please wait 24 hours or contact the admin.", "failure");
+    
                     setTimeout(() => {
                         navigate("/pending-approval", { state: { uniqueId } });
-                    }, 5000); // Delay navigation by 3 seconds to allow FlashMessage to display
-
+                    }, 5000);
+    
+                } else if (error.response.status === 403 && errorMessage === "Your account has been suspended") {
+                    showMessage("Your account has been suspended. Please contact support for further assistance.", "failure");
                 } else {
                     setError(errorMessage || "Failed to send token. Please try again later.");
                 }
@@ -141,6 +86,7 @@ const CostumerLogin1 = () => {
             setLoading(false);
         }
     };
+    
 
     
     return (
