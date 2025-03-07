@@ -440,16 +440,8 @@ const PortfolioSlider = (artisanUniqueID) => {
             <span>Checked</span>
           </td>
         </tr>
-        <tr>
-          <td>
-            <p>
-              <MoneyOffIcon style={{ marginRight: '8px' }} />
-            </p>
-          </td>
-          <td>
-            <span>No</span>
-          </td>
-        </tr>
+      
+
       </table>
       </div>
     </div>
