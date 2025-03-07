@@ -13,9 +13,13 @@ const SendQuote = () => {
   const location = useLocation();
   const quote = location.state || null; // Check if a quote exists
 
+  // console.log("quote")
+  // console.log(quote)
+  // console.log("quote")
+
   // Prepopulate form fields if quote exists
-  const [bidAmount, setBidAmount] = useState(quote?.bid_amount || "");
-  const [jobDuration, setJobDuration] = useState(quote?.job_duration || "1 week");
+  const [bidAmount, setBidAmount] = useState(quote.quote?.bid_amount || "");
+  const [jobDuration, setJobDuration] = useState(quote.quote?.job_duration || "1 week");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -23,41 +27,100 @@ const SendQuote = () => {
   const receiveAmount = bidAmount ? (bidAmount - serviceFee).toFixed(2) : "0.00";
   const uniqueUserId = sessionStorage.getItem("unique_user_id");
 
+  // const handleSubmit = async () => {
+  //   if (!bidAmount || !jobDuration) {
+  //     setError("Please enter a bid amount and select a duration.");
+  //     return;
+  //   }
+
+  //   setLoading(true);
+  //   setError(null);
+
+  //   const payload = {
+  //     artisan_id: uniqueUserId,
+  //     job_request_id: quote.quote?.job_request?.unique_id,
+  //     bid_amount: bidAmount,
+  //     freelancer_service_fee: serviceFee,
+  //     job_duration: jobDuration,
+  //   };
+
+  //   const requestOptions = {
+  //     method: quote ? "PATCH" : "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(payload),
+  //   };
+
+  //   console.log("payload")
+  //   console.log(payload)
+  //   console.log("payload")
+
+  //   const endpoint = quote
+  //     ? `${djangoHostname}/api/auth/quotes/quote_request/${quote.quote.unique_id}/`
+  //     : `${djangoHostname}/api/auth/quotes/quote_request/`;
+
+  //   try {
+  //     const response = await fetch(endpoint, requestOptions);
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(data.error || "An unexpected error occurred.");
+  //     }
+
+  //     showMessage(`Quote ${quote ? "updated" : "sent"} successfully`, "success");
+  //     navigate("/artisan-dashboard");
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async () => {
     if (!bidAmount || !jobDuration) {
       setError("Please enter a bid amount and select a duration.");
       return;
     }
-
+  
     setLoading(true);
     setError(null);
-
-    const payload = {
-      artisan_id: uniqueUserId,
-      job_request_id: quote?.job_request?.unique_id,
+  
+    let payload = {
       bid_amount: bidAmount,
       freelancer_service_fee: serviceFee,
       job_duration: jobDuration,
     };
-
+  
+    if (!quote) {
+      // Include these fields only for POST requests
+      payload = {
+        ...payload,
+        artisan_id: uniqueUserId,
+        job_request_id: quote?.quote?.job_request?.unique_id,
+      };
+    }
+  
     const requestOptions = {
       method: quote ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     };
-
+  
+    console.log("payload");
+    console.log(payload);
+    console.log("payload");
+  
     const endpoint = quote
-      ? `${djangoHostname}/api/auth/quotes/quote_request/${quote.unique_id}/`
+      ? `${djangoHostname}/api/auth/quotes/quote_request/${quote.quote.unique_id}/`
       : `${djangoHostname}/api/auth/quotes/quote_request/`;
-
+  
     try {
       const response = await fetch(endpoint, requestOptions);
       const data = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(data.error || "An unexpected error occurred.");
       }
-
+  
       showMessage(`Quote ${quote ? "updated" : "sent"} successfully`, "success");
       navigate("/artisan-dashboard");
     } catch (err) {
@@ -66,7 +129,7 @@ const SendQuote = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="ooUserdashbaord-Page">
       <div className="site-container">
