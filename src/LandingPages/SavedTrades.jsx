@@ -13,6 +13,7 @@ import HghImg1 from './Img/hghImgs/1.png';
 import HghImg2 from './Img/hghImgs/2.png';
 import HghImg3 from './Img/hghImgs/3.png';
 
+
 const SavedTrades = () => {
 
       const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
