@@ -230,7 +230,7 @@ const SearchResult = () => {
             <div className="garoo-Gird-part2">
               {filteredArtisanData.length === 0 ? (
                 <div className="no-artisans">
-                  <p>No artisan in this category{postCode ? ` with postcode ${postCode}` : ''}</p>
+                  <p>No artisan in this category {postCode ? ` with postcode ${postCode}` : ''}  {searchParams.get('location') ? ` in  ${searchParams.get('location')}` : ''}</p>
                 </div>
               ) : (
                 filteredArtisanData.map((artisan, index) => (
