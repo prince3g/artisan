@@ -22,15 +22,15 @@ const PaymentPage  = () => {
   const lastName = sessionStorage.getItem("user_last_name");
   const unique_user_id = sessionStorage.getItem('unique_user_id');
 
-  useEffect(() => {
-    if (!authToken || !email || !firstName || !lastName) {
-      showMessage("Please Login or Register to continue", "failure");
-      setTimeout(() => {
-        showMessage("");
-        navigate("/login");
-      }, 3000);
-    }
-  }, [authToken, email, firstName, lastName, navigate]);
+  // useEffect(() => {
+  //   if (!authToken || !email || !firstName || !lastName) {
+  //     showMessage("Please Login or Register to continue", "failure");
+  //     setTimeout(() => {
+  //       showMessage("");
+  //       navigate("/login");
+  //     }, 3000);
+  //   }
+  // }, [authToken, email, firstName, lastName, navigate]);
 
   const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
   
@@ -89,14 +89,12 @@ const PaymentPage  = () => {
     const authToken = sessionStorage.getItem("access_token");
     const authUserId = sessionStorage.getItem("unique_user_id");
 
-
     const payload = {
       payment_reference: payment_reference,
       user: authUserId,
       subscription_plan: planId,
       subscribed_duration: 1  
     };
-
 
     try {
         const response = await fetch(`${djangoHostname}/api/auth/subscriptions/api/user-subscriptions/`, {

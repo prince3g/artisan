@@ -10,7 +10,6 @@ const SubscriptionPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   
   const handleSubscribeClick = async (planId) => {
     setIsSubscribing(planId);
@@ -62,7 +61,6 @@ const SubscriptionPage = () => {
         setIsSubscribing(null);
     }
 };
-
 
   useEffect(() => {
     const fetchPlans = async () => {

@@ -39,6 +39,7 @@ const loadGoogleMapsScript = (callback) => {
 const ArtisanSignUp = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const inputRef = useRef(null);
+  const [selectedState, setSelectedState] = useState("");
 
     useEffect(() => {
       let isMounted = true;
@@ -100,6 +101,7 @@ const ArtisanSignUp = () => {
     trade: "",
     business_name: "",
     location: "",
+    artisan_state: "",
     business_location: "",
     lookingFor: "",
     businessType: "",
@@ -141,11 +143,20 @@ const ArtisanSignUp = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "states") {
+      setSelectedState(value);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    // setFormData((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
   
     if (name === "trade") {
       const input = value.trim();
@@ -232,6 +243,7 @@ const ArtisanSignUp = () => {
           
           // Extract errors from all fields dynamically
           const errorMessages = Object.values(errorData).flat().join(", ");
+
           
           setError(errorMessages || "An error occurred.");
           setLoading(false);
@@ -239,7 +251,9 @@ const ArtisanSignUp = () => {
       }
       
         const response1Data = await response1.json();
-        //console.log("First request successful:", response1Data);
+
+        // console.log("First request successful:", response1Data);
+
         sessionStorage.setItem('unique_user_id', response1Data.unique_id);
         sessionStorage.setItem('artisanID', response1Data.id);
         sessionStorage.setItem('user_type', response1Data.user_type);
@@ -266,9 +280,9 @@ const ArtisanSignUp = () => {
             postcode: formData.postcode,
             user_id: response1Data.unique_id,
             business_location: formData.business_location,
+            artisan_state: selectedState,
         };
 
-        
       // console.log("Artisan artisanProfilePayload")
       // console.log(artisanProfilePayload)
       // console.log("Artisan artisanProfilePayload")
@@ -331,11 +345,50 @@ const ArtisanSignUp = () => {
 
   const [activeIndex, setActiveIndex] = useState({});
 
-  const handleItemClick = (ulIndex, liIndex) => {
+  // const handleItemClick = (ulIndex, liIndex) => {
+  //   setActiveIndex((prevState) => ({
+  //     ...prevState,
+  //     [ulIndex]: liIndex,
+  //   }));
+  // };
+
+   // Update handleItemClick to capture the selected options from lists
+   const handleItemClick = (ulIndex, liIndex) => {
     setActiveIndex((prevState) => ({
       ...prevState,
       [ulIndex]: liIndex,
     }));
+
+    // Capture the selected option based on the list index
+    const selectedOption = [
+      [
+        "I'm looking to fill the gaps in my diary",
+        "I need a steady flow of leads",
+        "I need as many leads as possible",
+        "I just want a Simservicehub profile",
+        "I'm not sure",
+      ],
+      ["Self Employed", "Limited company", "Looking to start a business"],
+      ["1", "2-5", "6-9", "10+"],
+    ][ulIndex][liIndex];
+
+    // Update formData with the selected option
+    if (ulIndex === 0) {
+      setFormData((prevData) => ({
+        ...prevData,
+        lookingFor: selectedOption,
+      }));
+    } else if (ulIndex === 1) {
+      setFormData((prevData) => ({
+        ...prevData,
+        businessType: selectedOption,
+      }));
+    } else if (ulIndex === 2) {
+      setFormData((prevData) => ({
+        ...prevData,
+        employeeCount: selectedOption,
+      }));
+    }
   };
 
   const renderList = (items, ulIndex) => {
@@ -455,46 +508,46 @@ const ArtisanSignUp = () => {
             
                   <div className="Gland-Quest-data">
                     <label htmlFor="serviceSelect">State</label>
-                    <select name="states" id="states">
-    <option value="">Select a State</option>
-    <option value="abia">Abia</option>
-    <option value="adamawa">Adamawa</option>
-    <option value="akwa-ibom">Akwa Ibom</option>
-    <option value="anambra">Anambra</option>
-    <option value="bauchi">Bauchi</option>
-    <option value="bayelsa">Bayelsa</option>
-    <option value="benue">Benue</option>
-    <option value="borno">Borno</option>
-    <option value="cross-river">Cross River</option>
-    <option value="delta">Delta</option>
-    <option value="ebonyi">Ebonyi</option>
-    <option value="edo">Edo</option>
-    <option value="ekiti">Ekiti</option>
-    <option value="enugu">Enugu</option>
-    <option value="gombe">Gombe</option>
-    <option value="imo">Imo</option>
-    <option value="jigawa">Jigawa</option>
-    <option value="kaduna">Kaduna</option>
-    <option value="kano">Kano</option>
-    <option value="katsina">Katsina</option>
-    <option value="kebbi">Kebbi</option>
-    <option value="kogi">Kogi</option>
-    <option value="kwara">Kwara</option>
-    <option value="lagos">Lagos</option>
-    <option value="nasarawa">Nasarawa</option>
-    <option value="niger">Niger</option>
-    <option value="ogun">Ogun</option>
-    <option value="ondo">Ondo</option>
-    <option value="osun">Osun</option>
-    <option value="oyo">Oyo</option>
-    <option value="plateau">Plateau</option>
-    <option value="rivers">Rivers</option>
-    <option value="sokoto">Sokoto</option>
-    <option value="taraba">Taraba</option>
-    <option value="yobe">Yobe</option>
-    <option value="zamfara">Zamfara</option>
-    <option value="fct">Federal Capital Territory (FCT)</option>
-</select>
+                    <select name="states" id="states" value={selectedState} onChange={handleInputChange}>
+                      <option value="">Select a State</option>
+                      <option value="Abia">Abia</option>
+                      <option value="Adamawa">Adamawa</option>
+                      <option value="Akwa Ibom">Akwa Ibom</option>
+                      <option value="anambra">Anambra</option>
+                      <option value="Anambra">Bauchi</option>
+                      <option value="Bayelsa">Bayelsa</option>
+                      <option value="Benue">Benue</option>
+                      <option value="Borno">Borno</option>
+                      <option value="Cross River">Cross River</option>
+                      <option value="Delta">Delta</option>
+                      <option value="Ebonyi">Ebonyi</option>
+                      <option value="Edo">Edo</option>
+                      <option value="Ekiti">Ekiti</option>
+                      <option value="Enugu">Enugu</option>
+                      <option value="Gombe">Gombe</option>
+                      <option value="Imo">Imo</option>
+                      <option value="Jigawa">Jigawa</option>
+                      <option value="Kaduna">Kaduna</option>
+                      <option value="Kano">Kano</option>
+                      <option value="Katsina">Katsina</option>
+                      <option value="Kebbi">Kebbi</option>
+                      <option value="Kogi">Kogi</option>
+                      <option value="Kwara">Kwara</option>
+                      <option value="Lagos">Lagos</option>
+                      <option value="Nasarawa">Nasarawa</option>
+                      <option value="Niger">Niger</option>
+                      <option value="Ogun">Ogun</option>
+                      <option value="Ondo">Ondo</option>
+                      <option value="Osun">Osun</option>
+                      <option value="Oyo">Oyo</option>
+                      <option value="Plateau">Plateau</option>
+                      <option value="Rivers">Rivers</option>
+                      <option value="Sokoto">Sokoto</option>
+                      <option value="Taraba">Taraba</option>
+                      <option value="Yobe">Yobe</option>
+                      <option value="Zamfara">Zamfara</option>
+                      <option value="Federal Capital Territory (FCT)">Federal Capital Territory (FCT)</option>
+                    </select>
 
                   </div>
             
@@ -575,17 +628,6 @@ const ArtisanSignUp = () => {
                     </div>
                   </div>
 
-                  {/* <div className="Gland-Quest-data">
-                      <label>Cost of services/skills (Optional)</label>
-                      <input
-                          type="Number"
-                          placeholder="Enter Amount"
-
-                          name="service_cost"
-                          value={formData.service_cost}
-                          onChange={handleInputChange}
-                      />
-                  </div> */}
             
             
                   <div className="Gland-Quest-data">
@@ -602,9 +644,6 @@ const ArtisanSignUp = () => {
 
                     <div className="Gland-Quest-data">
                       <label>Address</label>
-                    {/* <input type="text"  name="" placeholder="Post code" /> */}
-
-                            {/* Address Search (Postcode will be extracted from selected address) */}
                             <input
                               type="text"
                               placeholder="Search for your address"

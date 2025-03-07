@@ -28,7 +28,7 @@ const ArtisanPayout = () => {
   useEffect(() => {
     const fetchPayoutDetails = async () => {
       try {
-        const response = await fetch(`${djangoHostname}/api/auth/payouts/payouts/${artisanId}/`);
+        const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisanId}/`);
         if (!response.ok) throw new Error("Failed to fetch payout details");
 
         const data = await response.json();
@@ -65,7 +65,7 @@ const ArtisanPayout = () => {
     setErrors({});
 
     try {
-      const response = await fetch(`${djangoHostname}/api/auth/payouts/payouts/${artisanId}/`, {
+      const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${artisanId}/`, {
         method: "PATCH", // Use PATCH to update existing data
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -89,6 +89,7 @@ const ArtisanPayout = () => {
     }
   };
 
+  
   return (
     <div className="Gradnded-page">
       <div className="site-container">

@@ -34,7 +34,6 @@ import BookingList from './BookingList';
 
 
 
-
 const ArtisanDashboard = () => {
 
 

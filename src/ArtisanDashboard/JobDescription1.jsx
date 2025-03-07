@@ -15,17 +15,15 @@ const JobDescription1 = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const { quote } = location.state || {}; // Destructure `quote` from `location.state`
+    const { quote } = location.state || {}; 
 
     const showMessage = (message, type) => {
         setFlash({ message, type });
     };
 
     if (!quote) {
-        return <p>No quote data available.</p>; // Handle case where state is not passed
+        return <p>No quote data available.</p>; 
     }
-
-    // console.log("quote:", quote); // Debugging: Log the quote object
 
     return (
         <div className="ooUserdashbaord-Page">

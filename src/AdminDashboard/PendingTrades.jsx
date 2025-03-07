@@ -96,7 +96,7 @@ const PendingTrades = () => {
       <div className="Gradnded-main">
         <div className="Gradnded-Box AA_hha">
           <div className="Gradnded-Box-header">
-            <h2 className="big-text">Posted Jobs</h2>
+            <h2 className="big-text">Pending Jobs</h2>
           </div>
 
           {flash && (
@@ -110,7 +110,14 @@ const PendingTrades = () => {
           <div className="Habgb-sec">
             <div className="My-Artisan-Body">
               <div className="garoo-Gird-part2">
-                {jobs.map((job) => (
+
+
+              {jobs.length === 0 ? (
+                <p style={{ textAlign: "center", fontSize: "18px", color: "#888", marginTop: "20px" }}>
+                  There are no pending jobs.
+                </p>
+              ) : (
+                jobs.map((job) => (
                   <div className="Carded-Box" key={job.id}>
                     <div className="Carded-Box-Gridd">
                       <div className="Carded-Box-2">
@@ -140,34 +147,17 @@ const PendingTrades = () => {
                           <div className="GLnad-btns-1">
                             <span>{job.service_details.postName}</span>
                             <span>
-                              {/* <BusinessCenterIcon /> 20 Applications */}
-                              <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application" }
+                              <BusinessCenterIcon /> {job?.num_appllications}{" "}
+                              {job?.num_appllications > 1 ? "Applications" : "Application"}
                             </span>
                           </div>
                           <div className="GLnad-btns-2">
-                            {/* <Link to="/admin/job-description"
-                           
-                            
-                            >Job Description</Link> */}
-
-                            {/* <Link 
-                              to={{
-                                pathname: "/admin/job-description",
-                              }} 
+                            <Link 
+                              to={{ pathname: "/admin/job-artisans" }} 
                               state={{ job }}
                             >
-                              Job Description
-                            </Link> */}
-
-                            <Link 
-                                to={{
-                                  pathname: "/admin/job-artisans",
-                                }} 
-                                state={{ job }}
-                              >
-                                View Artisans
+                              View Artisans
                             </Link>
-
                             <button
                               className="rwmovooo-btn"
                               onClick={() => handleDelete(job.id)}
@@ -191,7 +181,9 @@ const PendingTrades = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))
+              )}
+
               </div>
             </div>
           </div>

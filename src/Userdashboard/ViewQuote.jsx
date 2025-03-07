@@ -9,13 +9,14 @@ import { PaystackButton } from "react-paystack";
 
 const ViewQuote = () => {
 
-// const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
+// TEST PUBLIC KEY: 
 const publicKey = "pk_live_298148d200fe6524e3e74ff64bbefa4a9d9d739b"; 
 
-// TEST PUBLIC KEY
+// TEST PUBLIC KEY: 
 // const publicKey = "pk_test_3c39bf0db28b4821705b2795dbc51dfc94239b9d"; 
 
-const [flash, setFlash] = useState(null);    
+const [flash, setFlash] = useState(null); 
+
 const showMessage = (message, type) => {
   setFlash({ message, type });
 };
@@ -47,7 +48,7 @@ const showMessage = (message, type) => {
     const artisan_unique_id = artisan.artisan?.quote?.artisan?.unique_id
     try {
       const response = await axios.get(
-        `${djangoHostname}/api/auth/payouts/payouts/${artisan_unique_id}/`
+        `${djangoHostname}/api/accounts/auth/api/users/${artisan_unique_id}/`
         
       );
       setPayoutDetails(response.data);
@@ -83,37 +84,41 @@ const showMessage = (message, type) => {
 
   const handleSuccess = async (reference) => {
     setIsLoading(true); // Disable screen immediately
-   //console.log("Payment successful!", reference);
     const authUserId = sessionStorage.getItem("unique_user_id");
 
-    try {
-        const response = await fetch(`${djangoHostname}/api/accounts/auth/paystack/verify-payment/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
-            },
-            body: JSON.stringify({ reference: reference.reference , payment_type: "subscription", user: authUserId }) 
-        });
+    handleAcceptQuoteViaEscrow(reference.reference);
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || "Payment verification failed");
-        }
+    // try {
+    //     const response = await fetch(`${djangoHostname}/api/accounts/auth/paystack/verify-payment/`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Bearer ${authToken}`
+    //         },
+    //         body: JSON.stringify({ reference: reference.reference, payment_type: "subscription", user: authUserId }) 
+    //     });
 
-        const result = await response.json();
+    //     if (!response.ok) {
+    //         const errorData = await response.json();
+    //         throw new Error(errorData.detail || "Payment verification failed");
+    //     }
 
-        if (result.status === "success") {
-            await handleAcceptQuoteViaEscrow(reference.reference);
-        } else {
-            console.error("Payment verification failed", result);
-        }
-    } catch (error) {
-        console.error("Error verifying payment:", error);
-    } finally {
-        setIsLoading(false); // Re-enable screen after completion
-    }
+    //     const result = await response.json();
+
+    //     if (result.status === "success") {
+    //         await handleAcceptQuoteViaEscrow(reference.reference);
+    //     } else {
+    //         showMessage("Payment verification failed. Please try again.", "failure");
+    //         console.error("Payment verification failed", result);
+    //     }
+    // } catch (error) {
+    //     showMessage(error.message, "failure");
+    //     console.error("Error verifying payment:", error);
+    // } finally {
+    //     setIsLoading(false); // Re-enable screen after completion
+    // }
 };
+
  const handleClose = () => {
     console.log("Payment closed");
     // Handle the case where the user closes the payment modal
@@ -131,7 +136,6 @@ const showMessage = (message, type) => {
     onSuccess: handleSuccess,
     onClose: handleClose,
 };
-
 
 
   // const handleAcceptQuoteViaArtisan = async () => {
@@ -206,7 +210,6 @@ const showMessage = (message, type) => {
   // };
 
   const handleAcceptQuoteViaEscrow = async (reference) => {
-
 
     try {
       // console.log("About to add artisan)");
@@ -289,6 +292,7 @@ const showMessage = (message, type) => {
     setShowPaymentOptions(true);
     setShowArtisanDetails(false);
   };
+
 
 
   return (

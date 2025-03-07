@@ -114,7 +114,7 @@ const handleCompleteJob = async (uniqueId, currentStatus) => {
         
                 setBookings(response.data);
 
-                console.log(response.data)
+                // console.log(response.data)
             } catch (err) {
                 if (err.response) {
                     // Extract meaningful error message from API response
@@ -204,11 +204,10 @@ const handleCompleteJob = async (uniqueId, currentStatus) => {
                                                 <button 
                                                     className="AA_Job_CMPT_BTN"
                                                     onClick={() => handleCompleteJob(quote.job_request.unique_id, quote.job_request.artisan_done)}
-                                                    disabled={loadingJob === quote.job_request.unique_id} // Disable button while loading
+                                                    disabled={loadingJob === quote.job_request.unique_id || quote.job_request.artisan_done} // Disable if loading or already completed
                                                 >
-                                                    {loadingJob === quote.job_request.unique_id ? "Marking..." : (quote.job_request.artisan_done ? "Mark Incomplete" : "Mark Completed")}
+                                                    {loadingJob === quote.job_request.unique_id ? "Marking..." : (quote.job_request.artisan_done ? "Completed" : "Mark Completed")}
                                                 </button>
-
 
                                                 </div>
 

@@ -8,9 +8,11 @@ const Subscriptions = () => {
   const apiUrl = `${djangoHostname}/api/auth/subscriptions/api/subscriptions/`;
   const navigate = useNavigate();
 
+
   const [subscriptionPlans, setSubscriptionPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -29,6 +31,7 @@ const Subscriptions = () => {
     };
     fetchSubscriptions();
   }, [apiUrl]);
+  
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this plan?")) {
