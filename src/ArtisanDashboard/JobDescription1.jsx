@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Visibility from '@mui/icons-material/Visibility';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -11,11 +11,28 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const JobDescription1 = () => {
+    const [hasQuote, setHasQuote] = useState(false);
+    const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [flash, setFlash] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const { quote } = location.state || {}; 
+    const jobId = quote?.job_request?.unique_id;
+    const artisanId = quote?.artisan?.unique_id;
+
+    useEffect(() => {
+        if (jobId && artisanId) {
+            fetch(`${djangoHostname}/api/auth/quotes/quote_request/quote_for_a_job_by_an_artisan_job/?job_id=${jobId}&artisan_id=${artisanId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && Object.keys(data).length > 0) {
+                        setHasQuote(true); // If the API returns data, update the state
+                    }
+                })
+                .catch(error => console.error("Error fetching quote:", error));
+        }
+    }, [jobId, artisanId]);
 
     const showMessage = (message, type) => {
         setFlash({ message, type });
@@ -97,14 +114,17 @@ const JobDescription1 = () => {
                                                         </span>
                                                     </div>
                                                     <div className="GLnad-btns-2">
+                                                    <div className="GLnad-btns-2">
                                                         <Link
                                                             to={{
                                                                 pathname: "/artisan-dashboard/send-quote",
                                                             }}
-                                                            state={{ quote }}
+                                                            {...(hasQuote ? { state: { quote } } : {})} // Only add state if hasQuote is true
                                                         >
-                                                            Send Quote
+                                                            {hasQuote ? "Resend Quote" : "Send Quote"}
                                                         </Link>
+                                                    </div>
+
                                                     </div>
                                                 </div>
                                             </div>

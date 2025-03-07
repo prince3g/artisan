@@ -82,6 +82,7 @@ const CostumerLogin2 = () => {
         sessionStorage.setItem('user_last_name', response.data.last_name);
         sessionStorage.setItem('access_token', response.data.access);
         sessionStorage.setItem('refresh_token', response.data.refresh);
+        sessionStorage.setItem('isSubscribed', response.data.isSubscribed);
         sessionStorage.setItem('user_date_joined', response.data.user_date_joined);
 
         // Route based on user type

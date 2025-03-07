@@ -37,8 +37,13 @@ const PostedJobs = () => {
         
         // Sort jobs in LIFO order (newest first)
         const sortedJobs = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        // Filter jobs where customer_done is true
+        const filteredJobs = sortedJobs.filter(job => job.customer_done === false);
+
+        setJobs(filteredJobs || []); // Ensure data is an array
   
-        setJobs(sortedJobs);
+        // setJobs(sortedJobs);
   
       } catch (error) {
         setError(error.message);

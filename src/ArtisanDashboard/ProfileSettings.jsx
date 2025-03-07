@@ -99,7 +99,7 @@ const ProfileSettings = () => {
   const [formData, setFormData] = useState({
     trade: "",
     business_name: "",
-    business_location: "",
+    artisan_state: "",
     qualifications: "",
     previous_jobs: "",
     lookingFor: "",
@@ -188,7 +188,7 @@ const ProfileSettings = () => {
           mobile_number: userData.mobile_number,
           about_artisan: artisanData.about_artisan,
           business_name: artisanData.business_name,
-          business_location: artisanData.business_location,
+          artisan_state: artisanData.artisan_state,
           lookingFor: artisanData.lookingFor,
           businessType: artisanData.businessType,
           employeeCount: artisanData.employeeCount,
@@ -334,7 +334,7 @@ const ProfileSettings = () => {
       formDataPayload.append("employeeCount", formData.employeeCount);
       formDataPayload.append("skills", JSON.stringify(formData.skills.map((skill) => String(skill))));
       formDataPayload.append("experience", formData.experience || 0);
-      formDataPayload.append("business_location", formData.business_location);
+      formDataPayload.append("artisan_state", formData.artisan_state);
       formDataPayload.append("postcode", formData.postcode);
       formDataPayload.append("user_id", response1Data.unique_id);
       formDataPayload.append("about_artisan", formData.about_artisan);
@@ -495,8 +495,8 @@ const ProfileSettings = () => {
                     <label htmlFor="serviceSelect">Where is your business located?</label>
                     <input 
                      type="text"
-                     name="business_location"
-                     value={formData.business_location}
+                     name="artisan_state"
+                     value={formData.artisan_state}
                      onChange={handleInputChange}
                      placeholder="Enter your business address*" />
                   </div>

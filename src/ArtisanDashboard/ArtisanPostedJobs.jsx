@@ -32,7 +32,7 @@ const ArtisanPostedJobs = () => {
           const data = await response.json();
           
           // Filter jobs where customer_done is true
-          const filteredJobs = data.filter(job => job.customer_done === false && job.job_quote_accepted === true);
+          const filteredJobs = data.filter(job => job.customer_done === false || job.job_quote_accepted === false);
       
           setJobs(filteredJobs || []); // Ensure data is an array
           // console.log("Filtered jobs:", filteredJobs);

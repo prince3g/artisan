@@ -15,6 +15,12 @@ const AdminNotification = () => {
     try {
       const response = await axios.get(url);
       setNotifications(response.data.results);
+
+      console.log("response.data.results");
+      console.log(response.data.results);
+      console.log("response.data.results");
+
+
       setNextPage(response.data.next);
       setPreviousPage(response.data.previous);
       setCount(response.data.count); // Set the total count of notifications
@@ -63,7 +69,9 @@ const AdminNotification = () => {
                     </div>
                     <div className="mlt">
                       <p>{notification.notification_message}</p>
-                      <span>{new Date(notification.created_at).toLocaleTimeString()}</span>
+                      {/* <span>{new Date(notification.created_at).toLocaleTimeString()}</span> */}
+                      <span>{new Date(notification.created_at).toLocaleString()}</span>
+
                     </div>
                   </div>
                   

@@ -151,8 +151,6 @@ const PostJob = () => {
   };
   
 
-
-
   return (
     <div className="Gradnded-page">
       <div className='navigating-ttarvs'>
