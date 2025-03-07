@@ -210,7 +210,7 @@ const PortfolioSlider = (artisanUniqueID) => {
       
       <div className="Uuua-sec">
                     <div className="Uuua-1">
-                      <img src={UserImg} alt="User" />
+                      <img src={artisanData.user_image} alt="User" />
                     </div>
                     <div className="Uuua-2">
                       <div>
@@ -292,61 +292,61 @@ const PortfolioSlider = (artisanUniqueID) => {
         )}
       </div>
 
-<div className="jahs-slider">
+    <div className="jahs-slider">
 
-      {/* Main Media Slider */}
-      <Slider {...settings} ref={mainSliderRef}>
-          {mediaData.map((media, index) => (
-            <div key={index}>
-              {media.type === "image" ? (
-                <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
-              ) : (
-                <video src={media.src} controls className="main-media" alt={`Media ${index + 1}`} />
-              )}
-            </div>
-          ))}
-        </Slider>
+          {/* Main Media Slider */}
+          <Slider {...settings} ref={mainSliderRef}>
+              {mediaData.map((media, index) => (
+                <div key={index}>
+                  {media.type === "image" ? (
+                    <img src={media.src} alt={`Media ${index + 1}`} className="main-media" />
+                  ) : (
+                    <video src={media.src} controls className="main-media" alt={`Media ${index + 1}`} />
+                  )}
+                </div>
+              ))}
+            </Slider>
 
-      {/* Thumbnail Navigation */}
-      <div className="thumbnails">
-        <Slider {...thumbnailSettings}>
-          {mediaData.map((media, index) => (
-            <div
-              key={index}
-              className={`thumbnail ${currentSlide === index ? "active" : ""}`}
-              onClick={() => mainSliderRef.current.slickGoTo(index)} // Navigate to clicked thumbnail
+          {/* Thumbnail Navigation */}
+          <div className="thumbnails">
+            <Slider {...thumbnailSettings}>
+              {mediaData.map((media, index) => (
+                <div
+                  key={index}
+                  className={`thumbnail ${currentSlide === index ? "active" : ""}`}
+                  onClick={() => mainSliderRef.current.slickGoTo(index)} // Navigate to clicked thumbnail
+                >
+                  {media.type === "image" ? (
+                    <img src={media.src} alt={`Thumbnail ${index + 1}`} className="thumbnail-image" />
+                  ) : (
+                    <video
+                      src={media.src}
+                      muted
+                      className="thumbnail-image"
+                      alt={`Thumbnail ${index + 1}`}
+                    />
+                  )}
+                </div>
+              ))}
+            </Slider>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="navigation-buttons">
+            <IconButton
+              onClick={() => mainSliderRef.current.slickPrev()}
+              className="nav-button prev-button"
             >
-              {media.type === "image" ? (
-                <img src={media.src} alt={`Thumbnail ${index + 1}`} className="thumbnail-image" />
-              ) : (
-                <video
-                  src={media.src}
-                  muted
-                  className="thumbnail-image"
-                  alt={`Thumbnail ${index + 1}`}
-                />
-              )}
-            </div>
-          ))}
-        </Slider>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="navigation-buttons">
-        <IconButton
-          onClick={() => mainSliderRef.current.slickPrev()}
-          className="nav-button prev-button"
-        >
-          <ArrowBack />
-        </IconButton>
-        <IconButton
-          onClick={() => mainSliderRef.current.slickNext()}
-          className="nav-button next-button"
-        >
-          <ArrowForward />
-        </IconButton>
-      </div>
-    </div>
+              <ArrowBack />
+            </IconButton>
+            <IconButton
+              onClick={() => mainSliderRef.current.slickNext()}
+              className="nav-button next-button"
+            >
+              <ArrowForward />
+            </IconButton>
+          </div>
+        </div>
 
 
     <div className="Rogoos-sec">
@@ -443,7 +443,7 @@ const PortfolioSlider = (artisanUniqueID) => {
         <tr>
           <td>
             <p>
-              <MoneyOffIcon style={{ marginRight: '8px' }} /> VAT
+              <MoneyOffIcon style={{ marginRight: '8px' }} />
             </p>
           </td>
           <td>
@@ -459,7 +459,7 @@ const PortfolioSlider = (artisanUniqueID) => {
 
     <div className="KKhas-sec">
       <h2>Company Info</h2>
-      <p>I'm a great and deligent plumber and I love serving my clients very well, and I make sure I deliver well. I'm a great and deligent plumber and I love serving my clients very well, and I make sure I deliver well. I'm a great and deligent plumber and I love serving my clients very well, and I make sure I deliver well.</p>
+      <p>{artisanData.about_artisan}</p>
     </div>
 
     <div className="Onyes-sec">

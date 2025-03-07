@@ -23,22 +23,26 @@ const ArtisanPostedJobs = () => {
         return;
       }}
 
-
-    const fetchJobs = async () => {
-      try {
-        const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/by-service/?service_details=${artisanCategory}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch jobs");
+      const fetchJobs = async () => {
+        try {
+          const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/by-service/?service_details=${artisanCategory}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch jobs");
+          }
+          const data = await response.json();
+          
+          // Filter jobs where customer_done is true
+          const filteredJobs = data.filter(job => job.customer_done === false && job.job_quote_accepted === true);
+      
+          setJobs(filteredJobs || []); // Ensure data is an array
+          // console.log("Filtered jobs:", filteredJobs);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
         }
-        const data = await response.json();
-        setJobs(data || []); // Ensure data is an array
-        // console.log("Fetched jobs:", data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
+      
 
     fetchJobs();
 

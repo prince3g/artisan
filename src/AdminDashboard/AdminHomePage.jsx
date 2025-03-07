@@ -9,6 +9,9 @@ const AdminHomePage = () => {
     const [artisanCount, setArtisanCount] = useState(0); // State to store artisan count
     const [customerCount, setCustomerCount] = useState(0); // State to store artisan count
     const [jobCount, setJobCount] = useState(0); // State to store job count
+    const [postedJobCount, setPostedJobCount] = useState(0); // State to store job count
+    const [pendingJobCount, setPendingdJobCount] = useState(0); // State to store job count
+    const [completedJobCount, setCompletedJobCount] = useState(0); // State to store job count
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
 
@@ -19,7 +22,6 @@ const AdminHomePage = () => {
         }
       }, []);
       
-
     // Fetch artisan count
     useEffect(() => {
         const fetchArtisans = async () => {
@@ -31,10 +33,8 @@ const AdminHomePage = () => {
                 }
                 const data = await response.json();
                 setArtisanCount(data.count); // Use the length of the array to get the count
-                
-            // console.log("data")
-            // console.log(data)
-            // console.log("data")
+
+                //setPendingdJobCount(data.count); // Use the length of the array to get the count
 
             } catch (error) {
                 setError(error.message);
@@ -44,7 +44,6 @@ const AdminHomePage = () => {
         fetchArtisans();
     }, []); // Empty dependency array ensures this runs only once
 
-    // Fetch job count
     useEffect(() => {
         const fetchJobs = async () => {
             try {
@@ -54,21 +53,28 @@ const AdminHomePage = () => {
                     throw new Error(errorData.detail || 'An error occurred while fetching jobs.');
                 }
                 const data = await response.json();
+    
+                // console.log("data", data);
+    
+                setPostedJobCount(data.count); // Set total job count
+    
+                // Calculate completed and pending jobs
+                const completedJobs = data.results.filter(job => job.customer_done).length;
+                const pendingJobs = data.results.filter(job => !job.customer_done).length;
 
-                
-            // console.log("data")
-            // console.log(data)
-            // console.log("data")
-
-                setJobCount(data.count); // Set the job count from API response
+                //console.log(data.results.filter(job => !job.customer_done).length)
+    
+                setCompletedJobCount(completedJobs);
+                setPendingdJobCount(pendingJobs);
+    
             } catch (error) {
                 setError(error.message);
             }
         };
-
+    
         fetchJobs();
-    }, []); // Empty dependency array ensures this runs only once
-
+    }, []);
+    
 
       useEffect(() => {
         const fetchUsers = async () => {
@@ -131,18 +137,18 @@ const AdminHomePage = () => {
                     </li>
                     <li>
                         <h3>Completed Trades</h3>
-                        <h2>0</h2>
+                        <h2>{completedJobCount}</h2>
                     </li>
                     <li>
                         <h3>Posted Jobs</h3>
                         {/* Display job count */}
-                        <h2>{jobCount}</h2>
+                        <h2>{postedJobCount}</h2>
                     </li>
 
                     <li>
                         <h3>Pending Jobs</h3>
                         {/* Display job count */}
-                        <h2>0</h2>
+                        <h2>{pendingJobCount}</h2>
                     </li>
 
 
@@ -159,3 +165,5 @@ const AdminHomePage = () => {
 };
 
 export default AdminHomePage;
+
+

@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const SendQuote = () => {
-
     const [flash, setFlash] = useState(null);    
     const showMessage = (message, type) => {
       setFlash({ message, type });
@@ -15,7 +14,6 @@ const SendQuote = () => {
   const [jobDuration, setJobDuration] = useState("1 week");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   const navigate = useNavigate();
   const location = useLocation();
