@@ -29,6 +29,7 @@ function Home() {
   const [popupContent, setPopupContent] = useState(null);
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedServiceDetailsId, setSelectedServiceDetailsId] = useState(null);
 
   // Fetch artisan-profile data from the API
   useEffect(() => {
@@ -99,7 +100,6 @@ function Home() {
     }
   };
 
-  
   const handleSearch = () => {
     if (currentSearch === 'trade') {
       const trade = services.find((t) => t.name.toLowerCase() === inputValue.toLowerCase());
@@ -159,6 +159,7 @@ function Home() {
     const selectedTrade = services.find((t) => t.name === tradeName);
     if (selectedTrade) {
       setSelectedTrade(selectedTrade);
+      setSelectedServiceDetailsId(selectedTrade.unique_id);
       setPopupContent({
         title: `What do you need a ${selectedTrade.name} for?`,
         list: selectedTrade.services,
@@ -170,8 +171,27 @@ function Home() {
     }
   };
 
-  const handleServiceSelection = (service) => {
-    if (selectedTrade) {
+  const handleServiceSelection = async (service) => {
+    if (currentSearch === 'location') {
+            // console.log("selectedServiceDetailsId")
+        // console.log(selectedServiceDetailsId)
+        // console.log("selectedServiceDetailsId")
+
+        // const response = await fetch(
+        //   `${djangoHostname}/api/profiles/auth/api/artisan-profile-by-state/?artisan_state=${inputValue}&service_details_id=${selectedServiceDetailsId}`
+        // );
+        // const data = await response.json();
+
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
+
+  
+      navigate(`/search-results?location=${inputValue}&service_details_id=${selectedServiceDetailsId}&service=${service}&services=${encodeURIComponent(
+          JSON.stringify(selectedTrade.services)
+        )}`);
+
+    } else if (selectedTrade) {
       navigate(
         `/search-results?trade=${selectedTrade.name}&service_details_id=${selectedTrade.unique_id}&service=${service}&services=${encodeURIComponent(
           JSON.stringify(selectedTrade.services)
@@ -179,6 +199,7 @@ function Home() {
       );
     }
   };
+
 
   const handleClosePopup = () => {
     setInputValue('');

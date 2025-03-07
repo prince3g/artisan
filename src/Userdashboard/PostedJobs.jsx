@@ -61,7 +61,7 @@ const PostedJobs = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ customer_done: updatedValue }),
+                body: JSON.stringify({ customer_done: updatedValue, status: "completed" }),
             }
         );
 
@@ -72,7 +72,7 @@ const PostedJobs = () => {
                     j.id === job.id ? { ...j, customer_done: updatedValue } : j
                 )
             );
-            showMessage(`Job ${job.title} marked as ${updatedValue ? 'completed' : 'not completed'}`, 'success');
+            showMessage(`Job ${job.title} marked as ${updatedValue ? 'Completed' : 'Not Completed'}`, 'success');
 
             // Send notification after marking as completed
             await sendNotification(job);
@@ -91,9 +91,9 @@ const PostedJobs = () => {
 // Function to send notification after job completion
 const sendNotification = async (job) => {
 
-  // console.log("job")
-  // console.log(job)
-  // console.log("job")
+    // console.log("job")
+    // console.log(job)
+    // console.log("job")
 
     const notificationData = {
         artisan_id: job.artisan.unique_id, // Ensure this is available in the job object
@@ -208,7 +208,9 @@ const sendNotification = async (job) => {
 
                           <div className='GLnad-btns ggfa-btns'>
                             <div className='GLnad-btns-1'>
-                              <span>Active</span>
+                              {/* <span>{job.status}</span> */}
+                              <span>{job.status.charAt(0).toUpperCase() + job.status.slice(1)}</span>
+
                               <span>
                                 {/* <BusinessCenterIcon /> 23 Applications */}
                                 <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application" }
@@ -227,12 +229,12 @@ const sendNotification = async (job) => {
                                   View Artisans
                                 </Link>
 
-                              <button 
+                              {/* <button 
                                 className="rwmovooo-btn" 
                                 onClick={() => handleRemoveJob(job.id)} 
                               >
                                 <DeleteIcon /><span> Delete</span>
-                              </button>
+                              </button> */}
 
                               {/* <button 
                                 className="GLnad-btns-2" 

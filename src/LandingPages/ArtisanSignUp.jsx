@@ -257,6 +257,7 @@ const ArtisanSignUp = () => {
         sessionStorage.setItem('unique_user_id', response1Data.unique_id);
         sessionStorage.setItem('artisanID', response1Data.id);
         sessionStorage.setItem('user_type', response1Data.user_type);
+        sessionStorage.setItem('user_email', response1Data.email);
         // sessionStorage.setItem('Address', response1Data.address);
         
 

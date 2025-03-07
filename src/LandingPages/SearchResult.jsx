@@ -21,6 +21,7 @@ const SearchResult = () => {
   const [loading, setLoading] = useState(true); // Add loading state
   const location = useLocation();
   const navigate = useNavigate();
+
   const searchParams = new URLSearchParams(location.search);
   const trade = searchParams.get('trade');
   const service = searchParams.get('service');
@@ -28,48 +29,92 @@ const SearchResult = () => {
   const service_details_id = decodeURIComponent(searchParams.get('service_details_id'));
   const postCode = searchParams.get('postCode'); // Extract postCode from the URL
 
+  // useEffect(() => {
+  //   const fetchArtisans = async () => {
+  //     try {
+  //       setLoading(true); // Set loading to true when the request starts
+  //       const response = await fetch(
+  //         `${djangoHostname}/api/profiles/auth/artisans/by-service/${service_details_id}/`,
+  //         {
+  //           method: 'GET',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       const data = await response.json();
+  //       setArtisanData(data);
+
+  //       // console.log("data")
+  //       // console.log(data)
+  //       // console.log("data")
+
+  //       // Filter artisans by postCode if provided
+  //       if (postCode) {
+  //         const filteredData = data.filter((artisan) => artisan.postcode === postCode);
+  //         setFilteredArtisanData(filteredData);
+  //       } else {
+  //         setFilteredArtisanData(data); // If no postCode, show all artisans
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching artisan data:', error);
+  //     } finally {
+  //       setLoading(false); // Set loading to false when the request completes
+  //     }
+  //   };
+
+  //   fetchArtisans();
+  // }, [service_details_id, postCode]); // Add postCode as a dependency
+
   useEffect(() => {
     const fetchArtisans = async () => {
       try {
-        setLoading(true); // Set loading to true when the request starts
-        const response = await fetch(
-          `${djangoHostname}/api/profiles/auth/artisans/by-service/${service_details_id}/`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
+        setLoading(true);
+  
+        let endpoint = '';
+        const locationParam = searchParams.get('location');
+  
+        if (locationParam) {
+          // Fetch by location
+          endpoint = `${djangoHostname}/api/profiles/auth/api/artisan-profile-by-state/?artisan_state=${locationParam}&service_details_id=${service_details_id}`;
+        } else {
+          // Fetch by service details
+          endpoint = `${djangoHostname}/api/profiles/auth/artisans/by-service/${service_details_id}/`;
+        }
+  
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+  
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+  
         const data = await response.json();
         setArtisanData(data);
-
-        // console.log("data")
-        // console.log(data)
-        // console.log("data")
-
-        // Filter artisans by postCode if provided
+  
         if (postCode) {
-          const filteredData = data.filter((artisan) => artisan.postcode === postCode);
-          setFilteredArtisanData(filteredData);
+          setFilteredArtisanData(data.filter((artisan) => artisan.postcode === postCode));
         } else {
-          setFilteredArtisanData(data); // If no postCode, show all artisans
+          setFilteredArtisanData(data);
         }
       } catch (error) {
         console.error('Error fetching artisan data:', error);
       } finally {
-        setLoading(false); // Set loading to false when the request completes
+        setLoading(false);
       }
     };
-
+  
     fetchArtisans();
-  }, [service_details_id, postCode]); // Add postCode as a dependency
+  }, [service_details_id, postCode, searchParams.get('location')]); // Added location as a dependency
 
+  
   const handleServiceClick = (clickedService) => {
     navigate(
       `/search-results?trade=${trade}&service=${clickedService}&services=${encodeURIComponent(
@@ -77,6 +122,7 @@ const SearchResult = () => {
       )}&postCode=${postCode || ''}` // Preserve postCode in the URL
     );
   };
+
 
   return (
     <div className="Search-Page">
@@ -102,9 +148,10 @@ const SearchResult = () => {
 
       <div className="Serahc-page-Box-Header">
         <div className="site-container">
-          <h2>
-            Artisan(s) for <span>{service}</span>
-          </h2>
+        <h2>
+          Artisan(s) for <span>{service} in {searchParams.get('location') || ''}</span>
+        </h2>
+
           <div className="Ppa-bagdes">
             <div className="Ppa-bagdes-ga">
               <span>{trade}</span>
