@@ -32,13 +32,14 @@ const Footer = () => {
         </div>
         
         <ul className="footer-links ghag-footer">
-          <li>Data and privacy policy: compliance@simu-l.com</li>
-          <li>Email: General enquiries:	Info@simservicehub.com</li>
-          <li> Email: Account, Maintenance and IT request	Support@simservicehub.com</li>
-          <li> Email:  Vetting and Complaince	Compliance@simu-l.com</li>
-          <li> Email:  Customer Services	Simulcontactcenter@simu-l.com</li>
-          <li>Email:  Careers	Careers@simu-l.com </li>
+            <li>Data and privacy policy: <a href="mailto:compliance@simu-l.com">compliance@simu-l.com</a></li>
+            <li>General enquiries: <a href="mailto:Info@simservicehub.com">Info@simservicehub.com</a></li>
+            <li>Account, Maintenance and IT request: <a href="mailto:Support@simservicehub.com">Support@simservicehub.com</a></li>
+            <li>Vetting and Compliance: <a href="mailto:Compliance@simu-l.com">Compliance@simu-l.com</a></li>
+            <li>Customer Services: <a href="mailto:Simulcontactcenter@simu-l.com">Simulcontactcenter@simu-l.com</a></li>
+            <li>Careers: <a href="mailto:Careers@simu-l.com">Careers@simu-l.com</a></li>
         </ul>
+
 
         <p className="footer-copyright">
            {currentYear} Simul Management Solutions Ltd - All rights reserved

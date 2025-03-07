@@ -18,6 +18,10 @@ import ChatInput from './ChatInput';
 import ChatBanner from './Img/nochat-banner.svg';
 import { Link } from 'react-router-dom';
 
+
+import ProfilePlaceholder from '../assets/Img/user-placeholder.png';
+
+
 const ArtisanChattingPage = () => {
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const location = useLocation();
@@ -320,7 +324,7 @@ const ArtisanChattingPage = () => {
 
                   <div className="Uuua-sec">
                     <div className="Uuua-1">
-                      <img src={UserImg} alt="User" />
+                      <img src={ProfilePlaceholder} alt="User" />
                     </div>
                     <div className="Uuua-2">
                       <div>
