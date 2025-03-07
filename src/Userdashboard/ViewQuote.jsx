@@ -138,76 +138,76 @@ const showMessage = (message, type) => {
 };
 
 
-  const handleAcceptQuoteViaArtisan = async () => {
+  // const handleAcceptQuoteViaArtisan = async () => {
 
-    try {
-      console.log("About to add artisan)");
-    const response12 = await axios.patch(
-        `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${artisan.artisan.quote.job_request.unique_id}`,
-        JSON.stringify({ artisan: artisan.artisan.artisan.unique_id}), // Convert to JSON
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          params: {
-            artisan: artisan.unique_id, // Use params instead of query string in URL
-          },
-        }
-      );
+  //   try {
+  //     console.log("About to add artisan)");
+  //   const response12 = await axios.patch(
+  //       `${djangoHostname}/api/jobs/auth/api/jobs/edit-by-unique-id/?unique_id=${artisan.artisan.quote.job_request.unique_id}`,
+  //       JSON.stringify({ artisan: artisan.artisan.artisan.unique_id}), // Convert to JSON
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         params: {
+  //           artisan: artisan.unique_id, // Use params instead of query string in URL
+  //         },
+  //       }
+  //     );
       
     
-      //console.log("Response:", response12);
+  //     //console.log("Response:", response12);
     
-      if (response12.status === 200 || response12.status === 201) {
-        console.log("Successfully added artisan!");
-        alert("Artisan added successfully!");
-      } else {
-        console.error("Unexpected response:", response12);
-        alert("Failed to add artisan. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error adding artisan:", error);
-      console.log(`Error adding artisan: ${error.response?.data?.message || error.message}`);
-      alert(`Error adding artisan: ${error.response?.data?.message || error.message}`);
-    }
+  //     if (response12.status === 200 || response12.status === 201) {
+  //       console.log("Successfully added artisan!");
+  //       alert("Artisan added successfully!");
+  //     } else {
+  //       console.error("Unexpected response:", response12);
+  //       alert("Failed to add artisan. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding artisan:", error);
+  //     console.log(`Error adding artisan: ${error.response?.data?.message || error.message}`);
+  //     alert(`Error adding artisan: ${error.response?.data?.message || error.message}`);
+  //   }
     
 
-    setIsLoading(true); // Start loader
+  //   setIsLoading(true); // Start loader
 
-    try {
-      const unique_id = artisan.artisan.quote.unique_id;
-      const response = await axios.post(
+  //   try {
+  //     const unique_id = artisan.artisan.quote.unique_id;
+  //     const response = await axios.post(
 
-        `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept_quote_via_artisan/`
-      );
+  //       `${djangoHostname}/api/auth/quotes/quote_request/${unique_id}/accept_quote_via_artisan/`
+  //     );
   
-      if (response.status === 201) {
-        showMessage("You have accepted the quote successfully", "success");
-        setShowPaymentOptions(true);
-        setShowArtisanDetails(false);
-      } else {
-        console.error("Failed to accept quote:", response.data);
-      }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        const errorMessage = error.response.data.error;
+  //     if (response.status === 201) {
+  //       showMessage("You have accepted the quote successfully", "success");
+  //       setShowPaymentOptions(true);
+  //       setShowArtisanDetails(false);
+  //     } else {
+  //       console.error("Failed to accept quote:", response.data);
+  //     }
+  //   } catch (error) {
+  //     if (error.response && error.response.data && error.response.data.error) {
+  //       const errorMessage = error.response.data.error;
   
-        showMessage(errorMessage, "failure");
+  //       showMessage(errorMessage, "failure");
   
-        if (errorMessage === "This quote has already been accepted") {
-          setShowPaymentOptions(true);
-          setShowArtisanDetails(false);
-        }
+  //       if (errorMessage === "This quote has already been accepted") {
+  //         setShowPaymentOptions(true);
+  //         setShowArtisanDetails(false);
+  //       }
         
-       //  console.log(errorMessage);
-      } else {
-        showMessage("An error occurred while accepting the quote", "faulure");
-      }
-      console.error("Error accepting quote:", error);
-    }finally {
-      setIsLoading(false); // Stop loader
-    }
-  };
+  //      //  console.log(errorMessage);
+  //     } else {
+  //       showMessage("An error occurred while accepting the quote", "faulure");
+  //     }
+  //     console.error("Error accepting quote:", error);
+  //   }finally {
+  //     setIsLoading(false); // Stop loader
+  //   }
+  // };
 
   const handleAcceptQuoteViaEscrow = async (reference) => {
 
@@ -372,10 +372,10 @@ const showMessage = (message, type) => {
                     <p>Escrow holds your payment, as soon as the artisan completes their job, the payment is made to the artisan</p>
                   </div>
   
-                  <div className="qquqps-Cont" onClick={handleShowArtisanDetails}>
+                  {/* <div className="qquqps-Cont" onClick={handleShowArtisanDetails}>
                     <h3>PAY DIRECTLY TO ARTISAN</h3>
                     <p>You can pay the artisan directly for their services. This ensures a fast, secure transaction while supporting their work without intermediaries.</p>
-                  </div>
+                  </div> */}
                 </div>
   
                 {showArtisanDetails && payoutDetails && (
