@@ -135,7 +135,7 @@ const SubscriptionPage = () => {
 
           <div className="Gland-Cnt-Btn ujh-btns">
             <button type="button" className="back-btn" onClick={handleBackClick}>Back</button>
-            <Link to="/pending-approval">Next</Link>
+            {/* <Link to="/pending-approval">Next</Link> */}
           </div>
         </div>
       </div>

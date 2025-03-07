@@ -29,9 +29,9 @@ const RegisteredArtisans = () => {
       const data = await response.json();
       setArtisanData(data.results);
 
-      // console.log("data.results")
-      // console.log(data.results)
-      // console.log("data.results")
+      console.log("data.results")
+      console.log(data.results)
+      console.log("data.results")
       
       setNextPage(data.next);
       setPrevPage(data.previous);
@@ -163,7 +163,7 @@ const RegisteredArtisans = () => {
                 <td>{artisanDatum.user.email}</td>
                 
                 <td>{artisanDatum.user.phone}</td>
-                <td><span>{artisanDatum.business_location}</span></td>
+                <td><span>{artisanDatum.artisan_state}</span></td>
                 <td>{new Date(artisanDatum.user.date_joined).toLocaleDateString()}</td>
                 <td>
                   <div className="action-btn">

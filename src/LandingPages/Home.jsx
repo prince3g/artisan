@@ -13,7 +13,6 @@ import HghImg2 from './Img/hghImgs/2.png';
 import HghImg3 from './Img/hghImgs/3.png';
 import LocationList from '../assets/LocationList';
 import WhyBanner from './Img/why-Banner.png';
-import PageServices from '../data/PageServices';
 import locations from '../data/Locations';
 
 function Home() {
@@ -173,20 +172,7 @@ function Home() {
 
   const handleServiceSelection = async (service) => {
     if (currentSearch === 'location') {
-            // console.log("selectedServiceDetailsId")
-        // console.log(selectedServiceDetailsId)
-        // console.log("selectedServiceDetailsId")
-
-        // const response = await fetch(
-        //   `${djangoHostname}/api/profiles/auth/api/artisan-profile-by-state/?artisan_state=${inputValue}&service_details_id=${selectedServiceDetailsId}`
-        // );
-        // const data = await response.json();
-
-        // console.log("data")
-        // console.log(data)
-        // console.log("data")
-
-  
+ 
       navigate(`/search-results?location=${inputValue}&service_details_id=${selectedServiceDetailsId}&service=${service}&services=${encodeURIComponent(
           JSON.stringify(selectedTrade.services)
         )}`);
@@ -503,10 +489,6 @@ function Home() {
 </div>
 
   <LocationList />
-
-
-
-
 
     </div>
   );
