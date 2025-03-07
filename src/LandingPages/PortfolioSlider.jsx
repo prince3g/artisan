@@ -34,6 +34,9 @@ import image3 from "./Img/PortImgs/3.jpg";
 import video1 from "./Img/PortImgs/video1.mp4";
 
 
+import ProfilePlaceholder from '../assets/Img/user-placeholder.png';
+
+
 // const mediaData = [
 //   { type: "image", src: image1 },
 //   { type: "image", src: image2 },
@@ -210,7 +213,7 @@ const PortfolioSlider = (artisanUniqueID) => {
       
       <div className="Uuua-sec">
                     <div className="Uuua-1">
-                      <img src={artisanData.user_image} alt="User" />
+                      <img src={artisanData.user_image || ProfilePlaceholder} alt="User" />
                     </div>
                     <div className="Uuua-2">
                       <div>
