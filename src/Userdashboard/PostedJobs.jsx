@@ -234,24 +234,6 @@ const sendNotification = async (job) => {
                                   View Artisans
                                 </Link>
 
-                              {/* <button 
-                                className="rwmovooo-btn" 
-                                onClick={() => handleRemoveJob(job.id)} 
-                              >
-                                <DeleteIcon /><span> Delete</span>
-                              </button> */}
-
-                              {/* <button 
-                                className="GLnad-btns-2" 
-                                onClick={() => handleMarkAsCompleted(job)}
-                                disabled={loadingJobId === job.id} // Disable button while loading
-                              >
-                                <CheckCircleIcon />
-                                <span>
-                                  {loadingJobId === job.id ? 'Marking...' : (job.customer_done ? 'Mark as Incomplete' : 'Mark as Completed')}
-                                </span>
-                              </button> */}
-
                               <button 
                                 className="GLnad-btns-2" 
                                 onClick={() => handleMarkAsCompleted(job)}

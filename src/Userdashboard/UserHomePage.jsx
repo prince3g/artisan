@@ -162,7 +162,7 @@ const UserHomePage = () => {
           throw new Error("Failed to fetch user data");
         }
         const data = await response.json();
-        
+        // console.log(data);
         // Update user image if available
         if (data.user_image) {
           setUserImage(data.user_image);

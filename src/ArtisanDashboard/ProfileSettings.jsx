@@ -32,6 +32,8 @@ const loadGoogleMapsScript = (callback) => {
 
 
 const ProfileSettings = () => {
+
+  const [profilePhoto, setProfilePhoto] = useState(null);
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const artisan_unique_id = sessionStorage.getItem('unique_user_id');
   const inputRef = useRef(null);
@@ -338,6 +340,8 @@ const ProfileSettings = () => {
       formDataPayload.append("postcode", formData.postcode);
       formDataPayload.append("user_id", response1Data.unique_id);
       formDataPayload.append("about_artisan", formData.about_artisan);
+
+      if (profilePhoto) formDataPayload.append("user_image", profilePhoto);
   
       // Append qualifications files
       qualificationsFiles.forEach((file, index) => {

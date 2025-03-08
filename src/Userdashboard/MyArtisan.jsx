@@ -9,12 +9,20 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HghImg1 from '../LandingPages/Img/hghImgs/1.png';
 import HghImg2 from '../LandingPages/Img/hghImgs/2.png';
 import HghImg3 from '../LandingPages/Img/hghImgs/3.png';
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 
 const Userdashbaord = () => {
+  const [flash, setFlash] = useState(null); 
+  
+  const showMessage = (message, type) => {
+    setFlash({ message, type });
+  };
     const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
     const [artisanData, setArtisanData] = useState([]);
     const [numArtisanData, setNumArtisanData] = useState([]);
+     const [favoriteArtisans, setFavoriteArtisans] = useState(new Set());
+     const unique_user_id = sessionStorage.getItem('unique_user_id');
     
     useEffect(() => {
       const fetchArtisans = async () => {
@@ -52,12 +60,49 @@ const Userdashbaord = () => {
       fetchArtisans();
     }, []);  
   
+    // const handleFavoriteToggle = async (artisanId) => {
+    //   try {
+    //     const isFavorite = favoriteArtisans.has(artisanId);
+    //     const method = isFavorite ? 'DELETE' : 'POST';
+    
+    //     const response = await fetch(`${djangoHostname}/api/profiles/auth/api/add_favorite/${artisanId}/`, {
+    //       method: method,
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       credentials: 'include',
+    //       body: JSON.stringify({
+    //         unique_user_id, // Ensure this is correctly set
+    //         artisan_unique_id: artisanId, // Sending both user ID and artisan ID in the payload
+    //       }),
+    //     });
+    
+    //     if (response.ok) {
+    //       setFavoriteArtisans((prevFavorites) => {
+    //         const updatedFavorites = new Set(prevFavorites);
+    //         if (isFavorite) {
+    //           updatedFavorites.delete(artisanId); // Remove from favorites
+    //           showMessage("You have successfully deleted this artisan from  your favourite list ", "failure");
+    //         } else {
+    //           updatedFavorites.add(artisanId); // Add to favorites
+    //           showMessage("You have successfully added this artisan to your favourite list ", "success");
+    //         }
+    //         return updatedFavorites;
+    //       });
+    //     } else {
+    //       console.error(`Error ${isFavorite ? 'removing' : 'adding'} favorite:`, await response.json());
+    //     }
+    //   } catch (error) {
+    //     console.error('Error handling favorite:', error);
+    //   }
+    // };
+  
     const handleFavoriteToggle = async (artisanId) => {
       try {
         const isFavorite = favoriteArtisans.has(artisanId);
         const method = isFavorite ? 'DELETE' : 'POST';
     
-        const response = await fetch(`${djangoHostname}/api/add_favorite/${artisanId}/`, {
+        const response = await fetch(`${djangoHostname}/api/profiles/auth/api/add_favorite/${artisanId}/`, {
           method: method,
           headers: {
             'Content-Type': 'application/json',
@@ -74,8 +119,10 @@ const Userdashbaord = () => {
             const updatedFavorites = new Set(prevFavorites);
             if (isFavorite) {
               updatedFavorites.delete(artisanId); // Remove from favorites
+              showMessage("You have successfully deleted this artisan from your favourite list", "failure");
             } else {
               updatedFavorites.add(artisanId); // Add to favorites
+              showMessage("You have successfully added this artisan to your favourite list", "success");
             }
             return updatedFavorites;
           });
@@ -86,8 +133,8 @@ const Userdashbaord = () => {
         console.error('Error handling favorite:', error);
       }
     };
-  
-     
+    
+    
   return (
    <div className="My-Artisan-Sec">
      <div className="My-Artisan-Head">
@@ -95,11 +142,13 @@ const Userdashbaord = () => {
      </div>
 
      <div className="Gradnded-Box-Body">
+
+     {flash && <FlashMessage message={flash.message} type={flash.type} onClose={() => setFlash(null)} />}
              
      <div className='garoo-Gird-part2'>
         <div className='garoo-Gird-part2'>
           {numArtisanData === 0 ? (
-            <div className="no-artisans">
+            <div className="no-artisans-message">
               <p>You have not chatted with any Artisan</p>
             </div>
           ) : (
@@ -146,9 +195,9 @@ const Userdashbaord = () => {
                       </div>
 
                       <div className='GLnad-btns-2'>
-                        <button>
+                        {/* <button>
                           <Favorite />
-                        </button>
+                        </button> */}
 
                       <button onClick={() => handleFavoriteToggle(artisan.unique_id)}>
                         <Favorite

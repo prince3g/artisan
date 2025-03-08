@@ -106,7 +106,7 @@ const EditProfile = () => {
 
         // Parse the response JSON
         const data = await response.json();
-
+        // console.log(data);
         // Optionally, save the updated values in sessionStorage
         if (data.phone) sessionStorage.setItem("user_phone", data.phone);
         if (data.first_name) sessionStorage.setItem("user_first_name", data.first_name);

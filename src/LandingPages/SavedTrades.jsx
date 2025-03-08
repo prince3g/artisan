@@ -8,10 +8,17 @@ import Handyman from '@mui/icons-material/Handyman';
 import MyLocation from '@mui/icons-material/MyLocation';
 import Visibility from '@mui/icons-material/Visibility';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 import HghImg1 from './Img/hghImgs/1.png';
 
 const SavedTrades = () => {
+
+   const [flash, setFlash] = useState(null); 
+
+   const showMessage = (message, type) => {
+     setFlash({ message, type });
+   };
+
   const [favoriteArtisans, setFavoriteArtisans] = useState(new Set());
   const unique_user_id = sessionStorage.getItem('unique_user_id');
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
@@ -39,7 +46,7 @@ const SavedTrades = () => {
         }
 
         const data = await response.json();
-        console.log('fetchFavorites data:', data);
+       // console.log('fetchFavorites data:', data);
 
         // Ensure data is in the expected format
         if (data && Array.isArray(data.favorites)) {
@@ -68,7 +75,7 @@ const SavedTrades = () => {
       const isFavorite = favoriteArtisans.has(artisanId);
       const method = isFavorite ? 'DELETE' : 'POST';
   
-      const response = await fetch(`${djangoHostname}/api/add_favorite/${artisanId}/`, {
+      const response = await fetch(`${djangoHostname}/api/profiles/auth/api/add_favorite/${artisanId}/`, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
@@ -85,8 +92,10 @@ const SavedTrades = () => {
           const updatedFavorites = new Set(prevFavorites);
           if (isFavorite) {
             updatedFavorites.delete(artisanId); // Remove from favorites
+            showMessage("You have successfully deleted this artisan from  your favourite list ", "failure");
           } else {
             updatedFavorites.add(artisanId); // Add to favorites
+            showMessage("You have successfully added this artisan to your favourite list ", "success");
           }
           return updatedFavorites;
         });
@@ -97,6 +106,7 @@ const SavedTrades = () => {
       console.error('Error handling favorite:', error);
     }
   };
+
 
   
   return (
@@ -113,6 +123,7 @@ const SavedTrades = () => {
         <div className="Gradnded-main">
           <div className="Gradnded-Box">
             <div className="Gradnded-Box-header">
+            {flash && <FlashMessage message={flash.message} type={flash.type} onClose={() => setFlash(null)} />}
               <h2 className="big-text">Saved Trades</h2>
             </div>
             <div className="Gradnded-Box-Body">
@@ -193,7 +204,7 @@ const SavedTrades = () => {
                   ))}
                 </div>
               ) : (
-                <div className="no-artisans">
+                <div className="no-artisans-message">
                   <p>You have not added any favorite artisan yet.</p>
                 </div>
               )}
