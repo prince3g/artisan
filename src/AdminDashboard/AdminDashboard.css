@@ -1247,6 +1247,11 @@ td .rejected-ammount,
 
 .mlt p{
   color: #505050;
+  font-size: 14px !important;
+}
+
+.mlt span{
+  font-size: 11px !important;
 }
 
 

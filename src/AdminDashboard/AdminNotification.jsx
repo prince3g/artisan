@@ -63,13 +63,11 @@ const AdminNotification = () => {
               <div className="rev-card" key={index}>
                 <div className="card-dltrr">
                   <div className="card-dltrr-flexed">
-                    <div className="mmt">
-                      <NotificationsIcon style={{ color: "#555" }} />
-                    </div>
+                    <div className="mmt"></div>
                     <div className="mlt">
-                      <p>{notification.notification_message}</p>
-                      {/* <span>{new Date(notification.created_at).toLocaleTimeString()}</span> */}
                       <span>{new Date(notification.created_at).toLocaleString()}</span>
+                      <p>{notification.notification_message} </p>
+                      {/* <span>{new Date(notification.created_at).toLocaleTimeString()}</span> */}
 
                     </div>
                   </div>
