@@ -8,9 +8,9 @@ import { CheckCircle, Verified, People, Close, ArrowForward } from '@mui/icons-m
 import StepImg1 from './Img/StepImg/1.png';
 import StepImg2 from './Img/StepImg/2.png';
 import StepImg3 from './Img/StepImg/3.png';
-import HghImg1 from './Img/hghImgs/1.png';
-import HghImg2 from './Img/hghImgs/2.png';
-import HghImg3 from './Img/hghImgs/3.png';
+import HghImg1 from './Img/Gland/1.png';
+import HghImg2 from './Img/Gland/2.png';
+import HghImg3 from './Img/Gland/3.png';
 import LocationList from '../assets/LocationList';
 import WhyBanner from './Img/why-Banner.png';
 import locations from '../data/Locations';
