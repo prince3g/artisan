@@ -323,12 +323,12 @@ function AdminNav({ toggleNav }) {
               </ul>
             </div>
             <div className="Aa_R_Dd">
-              <div className="Admin_Search_Sec">
+              {/* <div className="Admin_Search_Sec">
                 <button>
                   <img src={SearchIcon} alt="Search Icon" />
                 </button>
                 <input type="text" placeholder="Search" />
-              </div>
+              </div> */}
               <ul>
                 <li>
                   <Link to="/admin/notification">
@@ -337,7 +337,7 @@ function AdminNav({ toggleNav }) {
                 </li>
                 <li>
                   <button className="logoOut_Aa" onClick={handleLogout}>
-                    Logout
+                    Logout 
                   </button>
                 </li>
               </ul>

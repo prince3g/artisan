@@ -1,27 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Link, useLocation, useNavigate} from "react-router-dom";
-
 import Visibility from '@mui/icons-material/Visibility';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete"; 
-
 import MyLocation from '@mui/icons-material/MyLocation';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-
 import UserPlaceholder from './Img/user-placeholder.png';
-
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
-
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 const JobDescription = () => {
 
+    const [hasQuote, setHasQuote] = useState(false);
+    const [quote, setQuote] = useState("");
     const [flash, setFlash] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-  
+    const [deletingJobId, setDeletingJobId] = useState(null); // Track job being deleted
     const showMessage = (message, type) => {
       setFlash({ message, type });
     };
@@ -32,15 +29,43 @@ const JobDescription = () => {
   const location = useLocation();
   const job = location.state || {};
 
-  // console.log("job.job.num_appllications")
-  // console.log(job.job.num_appllications)
-  // console.log("job.job.num_appllications")
+  console.log("job.job.num_appllications")
+  console.log(job.job.unique_id)
+  console.log("job.job.num_appllications")
+
+  const jobId = job.job?.unique_id;
+  const artisanId  = sessionStorage.getItem("unique_user_id");
 
 
-  const [deletingJobId, setDeletingJobId] = useState(null); // Track job being deleted
-  
+  useEffect(() => {
+      if (jobId && artisanId) {
+
+
+      fetch(`${djangoHostname}/api/auth/quotes/quote_request/quote_for_a_job_by_an_artisan_job/?job_id=${jobId}&artisan_id=${artisanId}`)
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.warn("Quote not found. Setting hasQuote to false.");
+                    setHasQuote(false);
+                    return null;
+                }
+                throw new Error("Failed to fetch quote");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data) {
+                setHasQuote(true);
+                setQuote(data);
+                console.log("Fetched quote:", data);
+            }
+        })
+        .catch(error => console.error("Error fetching quote:", error));
+
+            }
+  }, [jobId, artisanId]);
     
-    const handleDelete = async (jobId) => {
+  const handleDelete = async (jobId) => {
       const confirmDelete = window.confirm("Are you sure you want to delete this job?");
       if (confirmDelete) {
         setDeletingJobId(jobId); // Set the job being deleted
@@ -145,11 +170,20 @@ const JobDescription = () => {
 
                    {/* <Link to="/artisan-dashboard/send-quote">Send Quote</Link> */}
 
-                  <Link 
+                  {/* <Link 
                       to={{
                       pathname: "/artisan-dashboard/send-quote",}} 
                       state={{job}}>Send Quote
-                  </Link>
+                  </Link> */}
+                 <Link
+                    to={{
+                        pathname: "/artisan-dashboard/send-quote",
+                    }}
+                    {...(hasQuote ? { state: { quote } } : { state: { job } })} // Only pass quote if hasQuote is true
+                >
+                    {hasQuote ? "Resend Quote" : "Send Quote"}
+                </Link>
+
 
                  </div>
                </div>

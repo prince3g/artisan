@@ -76,7 +76,7 @@ const showMessage = (message, type) => {
     if (!authToken || !email || !firstName || !lastName) {
       showMessage("Please Login or Register to continue", "failure");
       setTimeout(() => {
-        showMessage("", "failure");
+        // showMessage("", "failure");
           navigate("/login");
       }, 3000);
       return;
@@ -229,8 +229,9 @@ const showMessage = (message, type) => {
   
     
       if (response12.status === 200 || response12.status === 201) {
-        console.log("Successfully added artisan to the job!");
+        // console.log("Successfully added artisan to the job!");
         //alert("Artisan added successfully!");
+        
       } else {
         console.error("Unexpected response:", response12);
         alert("Failed to add artisan. Please try again.");

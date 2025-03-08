@@ -1130,3 +1130,23 @@
   .gagf-dessdioa-btn:hover{
     background-color: #a3ae3d;
   }
+
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.blinking {
+    color: red;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+.no-artisans-message {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #888;
+    margin: 20px 0;
+  }

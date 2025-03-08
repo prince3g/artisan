@@ -11,46 +11,77 @@ const ArtisanPostedJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
 
   useEffect(() => {
     const artisanCategory = sessionStorage.getItem("artisanCategory");
+    const artisanId = sessionStorage.getItem("unique_user_id");
 
-     
-    const fetchArtisanDetail = async () => {
-      if (!artisanCategory?.trim()) {
-        console.error('Artisan Unique ID is missing');
-        return;
-      }}
+    if (!artisanId) {
+      setError("User ID is missing.");
+      setLoading(false);
+      return;
+    }
 
-      const fetchJobs = async () => {
-        try {
-          const response = await fetch(`${djangoHostname}/api/jobs/auth/api/jobs/by-service/?service_details=${artisanCategory}`);
-          if (!response.ok) {
-            throw new Error("Failed to fetch jobs");
-          }
-          const data = await response.json();
-          
-          // Filter jobs where customer_done is true
-          const filteredJobs = data.filter(job => job.customer_done === false || job.job_quote_accepted === false);
-      
-          setJobs(filteredJobs || []); // Ensure data is an array
-          // console.log("Filtered jobs:", filteredJobs);
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
+    const checkSubscription = async () => {
+      try {
+        const response = await fetch(
+          `https://api.cmvp.simu-l.com/api/auth/subscriptions/api/user-subscriptions/active/?user=${artisanId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to check subscription");
         }
-      };
-      
+        const subscriptionData = await response.json();
 
-    fetchJobs();
+        if (subscriptionData && subscriptionData.is_active) {
+          setHasActiveSubscription(true);
+          fetchJobs();
+        } else {
+          setHasActiveSubscription(false);
+        }
+      } catch (error) {
+        console.error("Subscription check error:", error);
+        setHasActiveSubscription(false);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    fetchArtisanDetail();
-  }, [ djangoHostname]);
+    const fetchJobs = async () => {
+      if (!artisanCategory?.trim()) {
+        console.error("Artisan Category is missing");
+        return;
+      }
 
-  if (loading) return <p>Loading jobs...</p>;
-  if (error) return <p>No Jobs Posted yet in your service category</p>;
+      try {
+        const response = await fetch(
+          `${djangoHostname}/api/jobs/auth/api/jobs/by-service/?service_details=${artisanCategory}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        const data = await response.json();
+
+        const sortedJobs = data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        const filteredJobs = sortedJobs.filter(
+          (job) => job.customer_done === false || job.job_quote_accepted === false
+        );
+
+        setJobs(filteredJobs || []);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    checkSubscription();
+  }, [djangoHostname]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!hasActiveSubscription) return <p  className="no-artisans-message">Please Subscribe to see Posted jobs.</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="ooUserdashbaord-Page">
@@ -71,30 +102,40 @@ const ArtisanPostedJobs = () => {
                           <div className="Carded-Box-2">
                             <div className="oo-dlsts">
                               <h3>
-                                {job.title} <span><AccessTimeIcon /> {new Date(job.created_at).toLocaleDateString()}</span>
+                                {job.title}{" "}
+                                <span>
+                                  <AccessTimeIcon />{" "}
+                                  {new Date(job.created_at).toLocaleDateString()}
+                                </span>
                               </h3>
                               <div className="oo-dlsts-110">
                                 <div className="oo-dlsts-OO1">
-                                  <h5><MyLocation /> {job.location}</h5>
+                                  <h5>
+                                    <MyLocation /> {job.location}
+                                  </h5>
                                 </div>
                                 <div className="oo-dlsts-OO2">
-                                  {/* <h4><span><Visibility /> {job.views}</span></h4> */}
-                                  <h4><span><Visibility /> 10.5k</span></h4>
+                                  <h4>
+                                    <span>
+                                      <Visibility /> 10.5k
+                                    </span>
+                                  </h4>
                                 </div>
                               </div>
                             </div>
                             <div className="GLnad-btns">
                               <div className="GLnad-btns-1">
                                 <span>{job.complexity}</span>
-                                {/* <span><BusinessCenterIcon />23 Applications</span> */}
-                                <BusinessCenterIcon /> {job?.num_appllications} {job?.num_appllications > 1 ? "Applications" : "Application" }
+                                <BusinessCenterIcon /> {job?.num_appllications}{" "}
+                                {job?.num_appllications > 1
+                                  ? "Applications"
+                                  : "Application"}
                               </div>
                               <div className="GLnad-btns-2">
-                                {/* <Link to="/artisan-dashboard/job-description">Job Description</Link> */}
-                                <Link 
+                                <Link
                                   to={{
                                     pathname: "/artisan-dashboard/job-description",
-                                  }} 
+                                  }}
                                   state={{ job }}
                                 >
                                   Job Description
@@ -102,15 +143,20 @@ const ArtisanPostedJobs = () => {
                               </div>
                             </div>
                             <div className="ahhgs-sec">
-                              <h3><img src={UserPlaceholder} alt="User" /> {job.customer}</h3>
-                              <p><CheckCircleIcon /> {job.status}</p>
+                              <h3>
+                                <img src={UserPlaceholder} alt="User" />{" "}
+                                {job.customer}
+                              </h3>
+                              <p>
+                                <CheckCircleIcon /> {job.status}
+                              </p>
                             </div>
                           </div>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p>No jobs available.</p>
+                    <p className="no-artisans-message">No jobs available.</p>
                   )}
                 </div>
               </div>

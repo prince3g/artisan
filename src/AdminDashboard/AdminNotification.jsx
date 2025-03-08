@@ -16,10 +16,9 @@ const AdminNotification = () => {
       const response = await axios.get(url);
       setNotifications(response.data.results);
 
-      console.log("response.data.results");
-      console.log(response.data.results);
-      console.log("response.data.results");
-
+      // console.log("response.data.results");
+      // console.log(response.data.results);
+      // console.log("response.data.results");
 
       setNextPage(response.data.next);
       setPreviousPage(response.data.previous);

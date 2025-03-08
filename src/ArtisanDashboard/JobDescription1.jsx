@@ -28,6 +28,9 @@ const JobDescription1 = () => {
                 .then(data => {
                     if (data && Object.keys(data).length > 0) {
                         setHasQuote(true); // If the API returns data, update the state
+                        // console.log("data")
+                        // console.log(data)
+                        // console.log("data")
                     }
                 })
                 .catch(error => console.error("Error fetching quote:", error));
@@ -115,14 +118,14 @@ const JobDescription1 = () => {
                                                     </div>
                                                     <div className="GLnad-btns-2">
                                                     <div className="GLnad-btns-2">
-                                                        <Link
+                                                        {/* <Link
                                                             to={{
                                                                 pathname: "/artisan-dashboard/send-quote",
                                                             }}
                                                             {...(hasQuote ? { state: { quote } } : {})} // Only add state if hasQuote is true
                                                         >
                                                             {hasQuote ? "Resend Quote" : "Send Quote"}
-                                                        </Link>
+                                                        </Link> */}
                                                     </div>
 
                                                     </div>

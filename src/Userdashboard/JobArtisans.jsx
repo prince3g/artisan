@@ -60,6 +60,42 @@ const JobArtisans = () => {
       fetchJobs();
     }, [djangoHostname, job_unique_id]);
 
+
+    const handleFavoriteToggle = async (artisanId) => {
+      try {
+        const isFavorite = favoriteArtisans.has(artisanId);
+        const method = isFavorite ? 'DELETE' : 'POST';
+    
+        const response = await fetch(`${djangoHostname}/api/add_favorite/${artisanId}/`, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            unique_user_id, // Ensure this is correctly set
+            artisan_unique_id: artisanId, // Sending both user ID and artisan ID in the payload
+          }),
+        });
+    
+        if (response.ok) {
+          setFavoriteArtisans((prevFavorites) => {
+            const updatedFavorites = new Set(prevFavorites);
+            if (isFavorite) {
+              updatedFavorites.delete(artisanId); // Remove from favorites
+            } else {
+              updatedFavorites.add(artisanId); // Add to favorites
+            }
+            return updatedFavorites;
+          });
+        } else {
+          console.error(`Error ${isFavorite ? 'removing' : 'adding'} favorite:`, await response.json());
+        }
+      } catch (error) {
+        console.error('Error handling favorite:', error);
+      }
+    };
+  
   return (
     <div className="ooUserdashbaord-Page">
       <div className="navigating-ttarvs">
