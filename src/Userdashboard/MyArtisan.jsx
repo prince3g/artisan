@@ -52,6 +52,42 @@ const Userdashbaord = () => {
       fetchArtisans();
     }, []);  
   
+    const handleFavoriteToggle = async (artisanId) => {
+      try {
+        const isFavorite = favoriteArtisans.has(artisanId);
+        const method = isFavorite ? 'DELETE' : 'POST';
+    
+        const response = await fetch(`${djangoHostname}/api/add_favorite/${artisanId}/`, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            unique_user_id, // Ensure this is correctly set
+            artisan_unique_id: artisanId, // Sending both user ID and artisan ID in the payload
+          }),
+        });
+    
+        if (response.ok) {
+          setFavoriteArtisans((prevFavorites) => {
+            const updatedFavorites = new Set(prevFavorites);
+            if (isFavorite) {
+              updatedFavorites.delete(artisanId); // Remove from favorites
+            } else {
+              updatedFavorites.add(artisanId); // Add to favorites
+            }
+            return updatedFavorites;
+          });
+        } else {
+          console.error(`Error ${isFavorite ? 'removing' : 'adding'} favorite:`, await response.json());
+        }
+      } catch (error) {
+        console.error('Error handling favorite:', error);
+      }
+    };
+  
+     
   return (
    <div className="My-Artisan-Sec">
      <div className="My-Artisan-Head">
@@ -108,10 +144,18 @@ const Userdashbaord = () => {
                           <Star /> Top Rated
                         </span>
                       </div>
+
                       <div className='GLnad-btns-2'>
                         <button>
                           <Favorite />
                         </button>
+
+                      <button onClick={() => handleFavoriteToggle(artisan.unique_id)}>
+                        <Favorite
+                          color={favoriteArtisans.has(artisan.unique_id) ? 'error' : 'inherit'}
+                        />
+                      </button>
+
                         <Link
                           to={`/artisan-profile?artisan_location=${encodeURIComponent(
                             artisan.location?.trim() || ''
@@ -125,7 +169,6 @@ const Userdashbaord = () => {
                         >
                           View Profile
                         </Link>
-
 
                       </div>
                     </div>
