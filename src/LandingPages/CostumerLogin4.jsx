@@ -157,6 +157,13 @@ const CostumerLogin4 = () => {
                                         />
                                     </div>
 
+                                    <div className="Gland-Quest-data all-prolFilw">
+                                        <label>Upload Profile Photo</label>
+                                        <input
+                                            type="file"
+                                        />
+                                    </div>
+
                                     <div className="Gland-Quest-data">
                                         <label>Password</label>
                                         <div className="password-input-container">
