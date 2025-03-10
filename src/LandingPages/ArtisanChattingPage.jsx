@@ -210,6 +210,10 @@ const ArtisanChattingPage = () => {
         const data = await response.json();
         setArtisanData(data);
 
+        // console.log("data")
+        // console.log(data)
+        // console.log("data")
+
                 // Handle skills field
           let parsedSkills = [];
           if (typeof data.skills === "string") {
@@ -324,7 +328,11 @@ const ArtisanChattingPage = () => {
 
                   <div className="Uuua-sec">
                     <div className="Uuua-1">
-                      <img src={ProfilePlaceholder} alt="User" />
+                      {/* <img src={ProfilePlaceholder} alt="User" /> */}
+                      <img
+                      src={ `${djangoHostname}${artisanData.user_image}`  || ProfilePlaceholder}
+                      alt={`${artisanData?.user?.first_name}`}
+                    />
                     </div>
                     <div className="Uuua-2">
                       <div>
@@ -337,7 +345,7 @@ const ArtisanChattingPage = () => {
                             <Star />
                             <Star />
                           </span>{' '}
-                          <span>Reviews (150)</span>
+                          {/* <span>Reviews (150)</span> */}
                         </h6>
                       </div>
                     </div>
@@ -354,7 +362,7 @@ const ArtisanChattingPage = () => {
                           : 'Artisan Skills'}
                       </span>
                       <span>
-                        <MyLocation /> {artisanData.location ? `${artisanData.location}` : 'Address'}
+                        <MyLocation /> {artisanData.artisan_state ? `${artisanData.artisan_state}` : 'Address'}
                       </span>
                     </p>
                     <h4>
@@ -369,8 +377,8 @@ const ArtisanChattingPage = () => {
                   <div className="ooais-Part">
                     <h4>About</h4>
                     <p className={`about-text ${isExpanded ? 'expanded' : ''}`}>
-                      {artisanData.user?.about_artisan && artisanData.user?.about_artisan
-                        ? `${artisanData.user.about_artisan}`
+                      {artisanData?.about_artisan
+                        ? `${artisanData.about_artisan}`
                         : 'Artisan Name'}
                     </p>
                     <span className="viewMoreOrLess" onClick={handleToggleView}>

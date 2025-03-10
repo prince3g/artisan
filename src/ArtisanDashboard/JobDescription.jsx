@@ -29,9 +29,9 @@ const JobDescription = () => {
   const location = useLocation();
   const job = location.state || {};
 
-  console.log("job.job.num_appllications")
-  console.log(job.job.unique_id)
-  console.log("job.job.num_appllications")
+  // console.log("job.job")
+  // console.log(job.job)
+  // console.log("job.job")
 
   const jobId = job.job?.unique_id;
   const artisanId  = sessionStorage.getItem("unique_user_id");
@@ -57,7 +57,7 @@ const JobDescription = () => {
             if (data) {
                 setHasQuote(true);
                 setQuote(data);
-                console.log("Fetched quote:", data);
+                // console.log("Fetched quote:", data);
             }
         })
         .catch(error => console.error("Error fetching quote:", error));
@@ -142,7 +142,8 @@ const JobDescription = () => {
 
                <div className="ahhgs-sec">
                 <h3>
-                  <img src={UserPlaceholder} alt="User" /> {job.job?.customer}
+                  {/* <img src={UserPlaceholder} alt="User" /> */}
+                   {job.job?.customer}
                 </h3>
                 <p><CheckCircleIcon /> Active</p>
                </div>

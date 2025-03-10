@@ -69,6 +69,7 @@ const ArtisanPostedJobs = () => {
         const filteredJobs = sortedJobs.filter(
           (job) => job.customer_done === false || job.job_quote_accepted === false
         );
+        // console.log("filteredJobs", filteredJobs);
 
         setJobs(filteredJobs || []);
       } catch (error) {
@@ -144,7 +145,7 @@ const ArtisanPostedJobs = () => {
                             </div>
                             <div className="ahhgs-sec">
                               <h3>
-                                <img src={UserPlaceholder} alt="User" />{" "}
+                                {/* <img src={UserPlaceholder} alt="User" />{" "} */}
                                 {job.customer}
                               </h3>
                               <p>

@@ -694,13 +694,13 @@ const ArtisanSignUp = () => {
                       placeholder="Tell us about yourself.."
                     />
                     </div>
-                    
+{/*                     
                 <div className="Gland-Quest-data all-prolFilw">
                   <label>Upload Profile Photo</label>
                   <input
                     type="file"
                   />
-                </div>
+                </div> */}
 
 
                   </div>

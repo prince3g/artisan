@@ -128,7 +128,7 @@ const JobArtisans = () => {
                     <div className='Carded-Box' key={artisan.id}>
                       <div className='Carded-Box-Grid'>
                         <div className='Carded-Box-1'>
-                          <img src={HghImg1} alt={artisan.artisan.first_name} />
+                          {/* <img src={HghImg1} alt={artisan.artisan.first_name} /> */}
                         </div>
 
                         <div className='Carded-Box-2'>
@@ -136,7 +136,7 @@ const JobArtisans = () => {
                             <h3>{artisan.artisan.first_name} {artisan.artisan.last_name} <span><Handyman /> {serviceDetailsProfession}</span></h3>
                             <div className='oo-dlsts-110'>
                               <div className='oo-dlsts-OO1'>
-                                <h5><MyLocation /> {artisan.artisan.business_location}</h5>
+                                <h5><MyLocation /> {artisan.artisan.artisan_state}</h5>
                               </div>
                               <div className='oo-dlsts-OO2'>
                                 <h4><span> <Visibility /> 16.2k</span> <span><Star />16</span></h4>

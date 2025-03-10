@@ -84,7 +84,7 @@ const JobDescription1 = () => {
 
                                                 <div className="ahhgs-sec">
                                                     <h3>
-                                                        <img src={UserPlaceholder} alt="User" />{" "}
+                                                        {/* <img src={UserPlaceholder} alt="User" />{" "} */}
                                                         {quote.artisan?.first_name} {quote.artisan?.last_name}
                                                     </h3>
                                                     <p>
@@ -95,8 +95,8 @@ const JobDescription1 = () => {
                                                 <div className="kklauis-seds">
                                                     <h3>What to do</h3>
                                                     <p>{quote.job_request?.service_description}</p>
-                                                    <h3>Issues description</h3>
-                                                    <p>{quote.job_request?.description}</p>
+                                                    {/* <h3>Issues description</h3>
+                                                    <p>{quote.job_request?.description}</p> */}
                                                     <h3>More description</h3>
                                                     <p>{quote.job_request?.description}</p>
                                                 </div>

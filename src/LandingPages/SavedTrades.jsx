@@ -137,8 +137,12 @@ const SavedTrades = () => {
                     <div className="Carded-Box" key={index}>
                       <div className="Carded-Box-Grid">
                         <div className="Carded-Box-1">
-                          <img
+                          {/* <img
                             src={HghImg1 || 'default-image-path.png'}
+                            alt={`${artisan.user.first_name}`}
+                          /> */}
+                          <img
+                            src={ `${djangoHostname}${artisan.user_image}`  || HghImg1}
                             alt={`${artisan.user.first_name}`}
                           />
                         </div>

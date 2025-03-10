@@ -130,7 +130,7 @@ const PortfolioSlider = (artisanUniqueID) => {
 
 
         // console.log("data.previous_jobs")
-        // console.log(data.previous_jobs)
+        // console.log(data)
         // console.log("data.previous_jobs")
 
         // Construct mediaData from previous_jobs
@@ -213,7 +213,12 @@ const PortfolioSlider = (artisanUniqueID) => {
       
       <div className="Uuua-sec">
                     <div className="Uuua-1">
-                      <img src={artisanData.user_image || ProfilePlaceholder} alt="User" />
+                      
+                     <img
+                      src={ `${djangoHostname}${artisanData.user_image}`  || ProfilePlaceholder}
+                      alt={`${artisanData?.user?.first_name}`}
+                    />
+                     
                     </div>
                     <div className="Uuua-2">
                       <div>

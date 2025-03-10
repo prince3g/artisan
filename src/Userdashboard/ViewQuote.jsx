@@ -231,7 +231,15 @@ const showMessage = (message, type) => {
       if (response12.status === 200 || response12.status === 201) {
         // console.log("Successfully added artisan to the job!");
         //alert("Artisan added successfully!");
-        
+
+        setTimeout(() => {
+          // showMessage("", "failure");
+          window.location.reload();
+        }, 1000);
+
+        // window.location.reload(); // Refresh the page
+
+       
       } else {
         console.error("Unexpected response:", response12);
         alert("Failed to add artisan. Please try again.");

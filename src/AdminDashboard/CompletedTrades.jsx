@@ -119,10 +119,10 @@ const CompletedTrades = () => {
                   </td>
 
                   <td>
-                    <span><b>Bank: </b>{job.artisan.bank_name}</span><br></br>
-                    <span><b>Acc Name: </b>{job.artisan.account_name}</span><br></br>
-                    <span><b>Acc Number: </b>{job.artisan.account_number}</span><br></br>
-                    <span><b>Acc Type: </b>{job.artisan.account_type}</span><br></br>
+                    <span><b>Bank: </b>{job?.artisan?.bank_name}</span><br></br>
+                    <span><b>Acc Name: </b>{job?.artisan?.account_name}</span><br></br>
+                    <span><b>Acc Number: </b>{job?.artisan?.account_number}</span><br></br>
+                    <span><b>Acc Type: </b>{job?.artisan?.account_type}</span><br></br>
                   </td>
                 </tr>
               ))}

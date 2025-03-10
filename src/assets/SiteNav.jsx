@@ -24,10 +24,18 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import StarRateIcon from "@mui/icons-material/StarRate"; 
 import PaymentIcon from "@mui/icons-material/Payment"; 
 
-
+import FlashMessage from "../FlashMessage/FlashMessage.jsx";
 
 
 function SiteNav() {
+
+   const [flash, setFlash] = useState(null); 
+
+   const showMessage = (message, type) => {
+     setFlash({ message, type });
+   };
+
+  const djangoHostname = import.meta.env.VITE_DJANGO_HOSTNAME;
   const [isNavActive, setIsNavActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [userType, setUserType] = useState("");
@@ -35,7 +43,8 @@ function SiteNav() {
   const [user_first_name, setUserFirstName] = useState("");
   const [user_last_name, setUserLastName] = useState("");
   const [user_date_joined, setUserUserDateJoined] = useState("");
-
+  const [userImage, setUserImage] = useState(""); // Default placeholder image
+  
 
   useEffect(() => {
     setILoggedIn(sessionStorage.getItem("access_token"));
@@ -108,6 +117,12 @@ function SiteNav() {
     window.location.href = "/";
   };
 
+  const handleDeleteAccount = () => {
+
+    showMessage("Please send an account delete request to support@simservicehub.com ", "failure");
+
+  };
+
   const handleVisitProfile = () => {
   if(userType === "customer"){
     window.location.href = "/user-dashboard";
@@ -119,17 +134,7 @@ function SiteNav() {
       window.location.href = "/admin";
     }
   }
-  // const handleVisitProfile1 = () => {
- 
-  //  if(userType === "artisan"){
-  //     window.location.href = "/artisan-dashboard/profile-settings";
-  //   }
-  //   else if(userType === "super_admin"){
-  //     window.location.href = "/admin";
-  //   }
-  // }
 
-  // Determine links based on user_type
 
   const getAccountLink = () => {
     if (userType === "customer") return "/user-dashboard";
@@ -209,9 +214,50 @@ function SiteNav() {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
+ 
+
+useEffect(() => {
+  const user_unique_user_id = sessionStorage.getItem("unique_user_id");
+  const user_type = sessionStorage.getItem("user_type"); // Assuming user type is stored in sessionStorage
+
+  const fetchUserData = async (url) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      if (data.user_image) {
+
+        // console.log("data")
+        // console.log(data.user_image)
+        // console.log("data")
+
+        setUserImage(data.user_image);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  if (isLoggedIn) {
+    if (user_type === "artisan") {
+      fetchUserData(
+        `${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${user_unique_user_id}`
+      );
+    } else {
+      fetchUserData(
+        `${djangoHostname}/api/accounts/auth/api/users/${user_unique_user_id}/`
+      );
+    }
+  }
+}, []);
+
+
   return (
     <nav className={`SiteNav ${isNavActive ? "active-NavMbl" : ""}`}>
       <div className="large-container">
+         {flash && <FlashMessage message={flash.message} type={flash.type} onClose={() => setFlash(null)} />}
         <div className="Nav-Content">
           <Link to="/" className="Nav-logo this-mobile" onClick={handleNavLinkClick}>
             <img src={SiteLogo} alt="Site Logo" />
@@ -235,53 +281,6 @@ function SiteNav() {
               </li>
               <li><Link to="/about" onClick={handleNavLinkClick}>About Us</Link></li>
             </ul>
-
-
-            {/* <ul className="Ul-Last">
-              {isLoggedIn && userType === "artisan" ? (
-                <li>
-                  <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
-                </li>
-              ) : (
-                <li>
-                  <Link to="/artisan-overview" className="trade-login" onClick={handleNavLinkClick}>Artisan Sign-Up</Link>
-                </li>
-              )}
-
-              {isLoggedIn && (userType === "customer" || userType === "super_admin") ? (
-                <li>
-                  <Link to={getAccountLink()} onClick={handleNavLinkClick}>Account</Link>
-                </li>
-              ) : (
-                <li>
-                  <Link to="/customer-signup" className="home-login" onClick={handleNavLinkClick}>
-                    Customer Signup
-                  </Link>
-                </li>
-              )}
-
-              {isLoggedIn ? (
-                <li>
-                  <Link
-                    to="/"
-                    className="trade-login"
-                    onClick={() => {
-                      handleLogout();
-                      handleNavLinkClick();
-                    }}
-                  >
-                    Logout
-                  </Link>
-                </li>
-              ) : (
-                <li>
-                  <Link to="/login" className="trade-login" onClick={handleNavLinkClick}>
-                    Login
-                  </Link>
-                </li>
-              )}
-
-            </ul> */}
 
 
             <ul className="Ul-Last">
@@ -328,14 +327,6 @@ function SiteNav() {
           </Link>
         ) : null}
 
-         {/* Customer Profile drop down Button  isLoggedIn && (userType === "customer"*/}               
-          {/* <Link to="/account">
-          <svg xmlns="http://www.w3.org/2000/svg" width="37.5" height="30" viewBox="0 0 20 16" fill="#B1BD3B"><path d="M10 0C5.58 0 2 3.58 2 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2.4c1.33 0 2.4 1.07 2.4 2.4S11.33 7.2 10 7.2 7.6 6.13 7.6 4.8 8.67 2.4 10 2.4zm0 11.36c-2 0-3.77-1.02-4.8-2.58.02-1.59 3.2-2.46 4.8-2.46 1.59 0 4.78.87 4.8 2.46a5.742 5.742 0 0 1-4.8 2.58z"></path></svg>
-          </Link> */}
-
-
-
-        {/* Customer Profile drop down Button */}
         {isLoggedIn && (userType === "customer") ? (
 
         <button onClick={ProfileMenuForUsers}>
@@ -347,7 +338,13 @@ function SiteNav() {
         <div className="Main-Gen-DropDwn" ref={userDropdownRef}>
           <div className="Genns-Top">
             <div className="Genns-Top-1">
-              <img src={ProfilePlaceholder} alt="Profile" />
+              <img src={userImage || ProfilePlaceholder} alt="Profile" />
+
+              {/* <img
+                      src={ `${djangoHostname}${artisanData.user_image}`  || ProfilePlaceholder}
+                      alt={`${artisanData?.user?.first_name}`}
+                    /> */}
+
             </div>
             <div className="Genns-Top-2">
               <div>
@@ -390,7 +387,14 @@ function SiteNav() {
               </button>
             </li>
             <li>
-              <button className="deletAcc-btnn" onClick={CloseProfileMenuForUsers}>
+              <button className="deletAcc-btnn"
+              //  onClick={CloseProfileMenuForUsers}
+              
+              onClick={() => {
+                CloseProfileMenuForUsers();
+                handleDeleteAccount();
+              }}
+              >
                 <DeleteIcon /> Delete Account
               </button>
             </li>
@@ -414,7 +418,12 @@ function SiteNav() {
         <div className="Main-Gen-DropDwn"  ref={artisanDropdownRef}>
             <div className="Genns-Top">
             <div className="Genns-Top-1">
-              <img src={ProfilePlaceholder} alt="Profile" />
+              
+            {/* <img src= {userImage || ProfilePlaceholder} alt="Profile" /> */}
+
+            <img
+              src={ `${djangoHostname}${userImage}`  || ProfilePlaceholder} alt="Profile"
+            />
             </div>
             <div className="Genns-Top-2">
               <div>
@@ -473,7 +482,14 @@ function SiteNav() {
               </button>
             </li>
             <li>
-              <button className="deletAcc-btnn" onClick={CloseArtisanProfileMenu}>
+              <button className="deletAcc-btnn" 
+              onClick={() => {
+
+                console.log("Wanted to delete my account")
+                CloseArtisanProfileMenu();
+                handleDeleteAccount();
+              }}
+              >
                 <DeleteIcon /> Delete Account
               </button>
             </li>

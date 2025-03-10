@@ -156,10 +156,15 @@ const Userdashbaord = () => {
               <div className='Carded-Box' key={index}>
                 <div className='Carded-Box-Grid'>
                   <div className='Carded-Box-1'>
-                    <img
+                    {/* <img
                       src={HghImg1 || 'default-image-path.png'}
                       alt={`${artisan.first_name}`}
-                    />
+                    /> */}
+
+                     {/* <img
+                      src={ `${djangoHostname}${artisan.user_image}`  || HghImg1}
+                      alt={`${artisan.first_name}`}
+                    /> */}
                   </div>
                   <div className='Carded-Box-2'>
                     <div className='oo-dlsts'>

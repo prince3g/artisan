@@ -115,7 +115,7 @@ const AdminLeftNav = () => {
             <NotificationsIcon /> Notification
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             to="/admin/profile-settings"
             className={
@@ -125,7 +125,7 @@ const AdminLeftNav = () => {
           >
             <SettingsIcon /> Profile Settings
           </Link>
-        </li>
+        </li> */}
         <li>
           <button onClick={handleLogout}>
             <LogoutIcon /> Logout

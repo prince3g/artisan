@@ -29,9 +29,9 @@ const RegisteredArtisans = () => {
       const data = await response.json();
       setArtisanData(data.results);
 
-      console.log("data.results")
-      console.log(data.results)
-      console.log("data.results")
+      // console.log("data.results")
+      // console.log(data.results)
+      // console.log("data.results")
       
       setNextPage(data.next);
       setPrevPage(data.previous);

@@ -42,7 +42,7 @@ const ArtisanTopNav = () => {
       const user_unique_user_id = sessionStorage.getItem('unique_user_id');
       const fetchUserData = async () => {
         try {
-          const response = await fetch(`${djangoHostname}/api/accounts/auth/api/users/${user_unique_user_id}/`);
+          const response = await fetch(`${djangoHostname}/api/profiles/auth/single-artisan-profile/?unique_id=${user_unique_user_id}`);
           if (!response.ok) {
             throw new Error("Failed to fetch user data");
           }
@@ -64,14 +64,14 @@ const ArtisanTopNav = () => {
         fetchUserData();
       }
     }, [user_unique_user_id]);
-  
 
   return (
   <div className="Artisan-TopNav">
     <div className="large-container">
     <div className="Artisan-TopNav-Main">
     <div className="Artisan-TopNav-Main-1">
-        <img src={userImage}></img>
+
+        <img src={ `${djangoHostname}${userImage}`  || HghImg1}></img>
         <h3>{last_name} {first_name} <span>{artisanCategoryName}</span></h3>
     </div>
     <div className="Artisan-TopNav-Main-2">
